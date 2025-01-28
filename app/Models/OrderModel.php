@@ -4,16 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BusinessModel extends Model
+class OrderModel extends Model
 {
-    protected $table            = 'business_mst';
-    protected $primaryKey       = 'businessId';
+    protected $table            = 'order_mst';
+    protected $primaryKey       = 'orderId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-
-    protected $allowedFields    = ['businessId', 'businessName','email', 'businessDesc', 'timings', 'aboutUs', 'address', 'tags', 'businessCategoryId', 'photoUrl', 'photoBase64Url', 'logoUrl', 'themeColor', 'primaryContactNo', 'secondaryContactNo', 'pageUrl', 'userId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['orderId', 'customerName', 'contactNumber', 'deliveryDate','email', 'shipToStreetAddress', 'shipToPhone', 'shipToCity', 'pincode', 'sku', 'productName', 'modifiedBy', 'modifiedDate', 'createdBy', 'createdDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,4 +43,13 @@ class BusinessModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function __construct($db = null)
+    {
+        parent::__construct();
+
+        if ($db) {
+            $this->db = $db; // Assign the tenant's database connection
+        }
+    }
 }

@@ -4,16 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BusinessModel extends Model
+class MemberModel extends Model
 {
-    protected $table            = 'business_mst';
-    protected $primaryKey       = 'businessId';
+    protected $table            = 'member_mst';
+    protected $primaryKey       = 'memberId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-
-    protected $allowedFields    = ['businessId', 'businessName','email', 'businessDesc', 'timings', 'aboutUs', 'address', 'tags', 'businessCategoryId', 'photoUrl', 'photoBase64Url', 'logoUrl', 'themeColor', 'primaryContactNo', 'secondaryContactNo', 'pageUrl', 'userId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['memberId', 'type','name', 'dob', 'bloodGroup', 'email', 'mobileNo', 'address', 'state', 'district', 'taluka', 'pincode', 'fees', 'file', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -24,9 +23,9 @@ class BusinessModel extends Model
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'createdDate';
-    protected $updatedField  = 'modifiedDate';
-    protected $deletedField  = 'deletedDate';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];

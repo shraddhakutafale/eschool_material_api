@@ -171,4 +171,14 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('purchase/update', 'Purchase::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('purchase/getallwebsite', 'Purchase::getPurchasesWebsite',['filter' => ['tenantFilter']]); // Get all purchase for website
     $routes->post('purchase/delete', 'Purchase::delete',['filter' => ['authFilter','tenantFilter']]);
+
+      //Routes for lead
+      $routes->get('lead/getall', 'Lead::index',['filter' => ['authFilter', 'tenantFilter']]);
+      $routes->post('lead/getallpaging', 'Lead::getLeadsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+      $routes->get('lead/view/(:segment)', 'Lead::show/$1',['filter' => 'authFilter']);
+      $routes->post('lead/create', 'Lead::create',['filter' => ['authFilter','tenantFilter']]);
+      $routes->post('lead/update', 'Lead::update',['filter' => ['authFilter','tenantFilter']]);
+      $routes->get('lead/getallwebsite', 'Lead::getLeadsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+      $routes->post('lead/delete', 'Lead::delete',['filter' => ['authFilter','tenantFilter']]); 
+
 });

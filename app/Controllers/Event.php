@@ -104,13 +104,10 @@ class Event extends BaseController
         $rules = [
             'eventName' => ['rules' => 'required'],
             'eventDesc' => ['rules' => 'required'],
-            'logoImage' => ['rules' => 'required'],
 
             'venue' => ['rules' => 'required'],
-            'autherName' => ['rules' => 'required'],
             'startDate' => ['rules' => 'required'],
             'endDate' => ['rules' => 'required'],
-            'tags' => ['rules' => 'required'],
 
         ];
   
@@ -186,9 +183,7 @@ class Event extends BaseController
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
                ' eventName'=> $input->eventName,
-                'autherName'=>$input->autherName,
                 'eventDesc'=> $input->eventDesc,
-                'logoImage'=> $input->logoImage,
 
                 'venue'=> $input->venue,
                 'endDate'=>$input->endDate,

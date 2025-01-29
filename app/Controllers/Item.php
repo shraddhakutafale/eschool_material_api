@@ -30,7 +30,12 @@ class Item extends BaseController
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $itemModel = new ItemModel($db);
-        return $this->respond(['items' => $itemModel->findAll()], 200);
+        $response = [
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $itemModel->findAll(),
+        ];
+        return $this->respond($response, 200);
     }
 
     public function getItemsPaging()
@@ -104,12 +109,10 @@ class Item extends BaseController
         $input = $this->request->getJSON();
         $rules = [
             'itemName'=> ['rules' => 'required'], 
-            'categoryName'=> ['rules' => 'required'], 
-            'brandName'=> ['rules' => 'required'], 
-            'unit'=> ['rules' => 'required'],
+            'categoryName'=> ['rules' => 'required'],
             'price'=> ['rules' => 'required'],
             'discount'=> ['rules' => 'required'], 
-            'description'=> ['rules' => 'required'],
+            
         ];
   
         if($this->validate($rules)){

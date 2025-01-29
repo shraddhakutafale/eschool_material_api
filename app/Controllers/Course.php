@@ -159,7 +159,13 @@ class Course extends BaseController
             'price' => ['rules' => 'required'],
             'tags' => ['rules' => 'required'],
             'duration' => ['rules' => 'required'],
-            'coverImage' => ['rules' => 'required'],
+            'discount' => ['rules' => 'required'],
+            'tags' => ['rules' => 'required'],
+
+
+            'startDate' => ['rules' => 'required'],
+
+
 
         ];
     

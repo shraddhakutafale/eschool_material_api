@@ -109,10 +109,16 @@ class Item extends BaseController
         $input = $this->request->getJSON();
         $rules = [
             'itemName'=> ['rules' => 'required'], 
+            'brandName'=> ['rules' => 'required'], 
             'categoryName'=> ['rules' => 'required'],
+            'costPrice'=> ['rules' => 'required'],
             'price'=> ['rules' => 'required'],
             'discount'=> ['rules' => 'required'], 
-            
+            'gstPercentage'=> ['rules' => 'required'], 
+            'barcode'=> ['rules' => 'required'], 
+            'hsnCode'=> ['rules' => 'required'], 
+            'minStockLevel'=> ['rules' => 'required'], 
+            'description'=> ['rules' => 'required'],             
         ];
   
         if($this->validate($rules)){

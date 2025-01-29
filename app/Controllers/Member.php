@@ -119,7 +119,7 @@ class Member extends BaseController
 
                 'type' => ['rules' => 'required'],
                 'name' => ['rules' => 'required'],
-                'emailId' => ['rules' => 'required'],
+                'email' => ['rules' => 'required'],
                 'mobileNo' => ['rules' => 'required'],
                 'dob' => ['rules' => 'required'],
                 'bloodGroup' => ['rules' => 'required'],
@@ -129,7 +129,6 @@ class Member extends BaseController
                 'taluka' => ['rules' => 'required'],
                 'pincode' => ['rules' => 'required'],
                 'fees' => ['rules' => 'required'],
-                'file' => ['rules' => 'required'],
 
         ];
         if($this->validate($rules)){
@@ -208,7 +207,7 @@ class Member extends BaseController
             $updateData = [
             'type' =>$input->type,
             'name' =>$input->name,
-            'emailId' => $input->emailId,
+            'email' => $input->email,
             'mobileNo' => $input->mobileNo,
             'dob' => $input->dob,
             'bloodGroup' => $input->bloodGroup,
@@ -218,7 +217,6 @@ class Member extends BaseController
             'taluka' => $input->taluka,
             'pincode' => $input->pincode,
             'fees' => $input->fees,
-            'file' => $input->file,
 
 
             ];

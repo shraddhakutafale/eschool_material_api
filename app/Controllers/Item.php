@@ -136,6 +136,28 @@ class Item extends BaseController
                 throw new \Exception('Invalid tenant configuration.');
             }
 
+            // Handle image upload
+            $image = $this->request->getFile('coverImage');
+            $imageName = null;
+    
+            if ($image && $image->isValid() && !$image->hasMoved()) {
+                // Define upload path
+                $uploadPath = WRITEPATH . 'uploads/course_images/';
+    
+                // Ensure the directory exists
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0777, true);
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $imageName = $image->getRandomName();
+                $image->move($uploadPath, $imageName);
+    
+                // Get the URL of the uploaded image
+                $imageUrl = base_url() . '/uploads/itemImages/' . $imageName;
+                $input->coverImage = $imageUrl;  // Save the image URL
+            }
+
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
             $model = new ItemModel($db);
@@ -194,17 +216,17 @@ class Item extends BaseController
 
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-            'itemName'=> $input->itemName,
-            'categoryName'=> $input->categoryName,
-            'brandName'=> $input->brandName,
-            'price'=> $input->price,
-            'costPrice'=> $input->costPrice,
-            'gstPercentage'=> $input->gstPercentage,
-            'discount'=> $input->discount,
-            'barcode'=> $input->barcode,
-            'hsnCode'=> $input->hsnCode,
-            'minStockLevel'=> $input->minStockLevel,
-            'description'=> $input->description,
+                'itemName' => $input->itemName,
+                'brandName' => $input->brandName,
+                'categoryName' => $input->categoryName,
+                'costPrice' => $input->costPrice,
+                'price' => $input->price,
+                'discount' => $input->discount,
+                'gstPercentage' => $input->gstPercentage,
+                'barcode' => $input->barcode,
+                'hsnCode' => $input->hsnCode,
+                'minStockLevel' => $input->minStockLevel,
+                'description' => $input->description
             ];
 
             // Update the course with new data

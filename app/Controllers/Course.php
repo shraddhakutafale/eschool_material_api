@@ -98,56 +98,6 @@ class Course extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $courses], 200);
     }
 
-    // public function create()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //         'courseName' => ['rules' => 'required'],
-    //         'courseDesc' => ['rules' => 'required'],
-    //         'price' => ['rules' => 'required'],
-    //         'tags' => ['rules' => 'required'],
-    //         'duration' => ['rules' => 'required'],
-        //         'coverImage' => ['rules' => 'required'],
-
-
-
-
-            
-    //     ];
-  
-    //     if($this->validate($rules)){
-    //         // Retrieve tenantConfig from the headers
-    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    //         if (!$tenantConfigHeader) {
-    //             throw new \Exception('Tenant configuration not found.');
-    //         }
-
-    //         // Decode the tenantConfig JSON
-    //         $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    //         if (!$tenantConfig) {
-    //             throw new \Exception('Invalid tenant configuration.');
-    //         }
-
-    //         // Connect to the tenant's database
-    //         $db = Database::connect($tenantConfig);
-    //         $model = new CourseModel($db);
-        
-    //         $model->insert($input);
-             
-    //         return $this->respond(['status'=>true,'message' => 'Course Added Successfully'], 200);
-    //     }else{
-    //         $response = [
-    //             'status'=>false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response , 409);
-             
-    //     }
-            
-    // }
-
     public function create()
     {
         $input = $this->request->getJSON();
@@ -157,16 +107,9 @@ class Course extends BaseController
             'courseName' => ['rules' => 'required'],
             'courseDesc' => ['rules' => 'required'],
             'price' => ['rules' => 'required'],
-            'tags' => ['rules' => 'required'],
             'duration' => ['rules' => 'required'],
             'discount' => ['rules' => 'required'],
-            'tags' => ['rules' => 'required'],
-
-
             'startDate' => ['rules' => 'required'],
-
-
-
         ];
     
         // Validate the incoming data
@@ -274,10 +217,8 @@ class Course extends BaseController
                 'courseName' => $input->courseName,
                 'courseDesc' => $input->courseDesc,
                 'price' => $input->price,
-                'tags' => $input->tags,
                 'discount' => $input->discount,
                 'startDate' => $input->startDate,
-                'coverImage' => $input->coverImage,
                 'duration' => $input->duration,
                 'finalPrice' => $input->finalPrice,
             ];
@@ -302,7 +243,7 @@ class Course extends BaseController
     }
 
 
-        public function delete()
+    public function delete()
     {
         $input = $this->request->getJSON();
         
@@ -338,8 +279,10 @@ class Course extends BaseController
                 return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
             }
 
-            // Proceed to delete the course
-            $deleted = $model->delete($courseId);
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($courseId, $updateData);
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Course Deleted Successfully'], 200);

@@ -241,6 +241,7 @@ class Item extends BaseController
         // Validation rules for the course
         $rules = [
             'itemId' => ['rules' => 'required'], // Ensure eventId is provided and is numeric
+            
         ];
 
         // Validate the input

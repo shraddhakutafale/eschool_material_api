@@ -79,6 +79,16 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('member/getallwebsite', 'Member::getMembersWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
     $routes->post('member/delete', 'Member::delete',['filter' => ['authFilter','tenantFilter']]); 
 
+     
+    //Routes for student
+    $routes->get('student/getall', 'Student::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('student/getallpaging', 'Student::getStudentsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('student/view/(:segment)', 'Student::show/$1',['filter' => 'authFilter']);
+    $routes->post('student/create', 'Student::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('student/update', 'Student::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('student/getallwebsite', 'Student::getStudentsWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
+    $routes->post('student/delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]); 
+
      //Routes for item
      $routes->get('item/getall', 'Item::index',['filter' => ['authFilter', 'tenantFilter']]);
      $routes->post('item/getallpaging', 'Item::getItemsPaging',['filter' => ['authFilter', 'tenantFilter']]);

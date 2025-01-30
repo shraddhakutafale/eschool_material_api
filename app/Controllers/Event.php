@@ -147,6 +147,7 @@ class Event extends BaseController
     public function update()
     {
         $input = $this->request->getJSON();
+        print_r($input);
         
         // Validation rules for the course
         $rules = [
@@ -182,6 +183,7 @@ class Event extends BaseController
 
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
+
                ' eventName'=> $input->eventName,
                 'eventDesc'=> $input->eventDesc,
 
@@ -247,7 +249,10 @@ class Event extends BaseController
             }
 
             // Proceed to delete the course
-            $deleted = $model->delete($eventId);
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($eventId, $updateData);
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Course Deleted Successfully'], 200);

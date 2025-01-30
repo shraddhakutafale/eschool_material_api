@@ -263,7 +263,12 @@ class Customer extends BaseController
             }
 
             // Proceed to delete the customer
-            $deleted = $model->delete($customerId);
+            // Proceed to delete the course
+            $updateData = [
+         'isDeleted' => 1,
+];
+$deleted = $model->update($customerId, $updateData);
+
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Customer Deleted Successfully'], 200);

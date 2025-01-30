@@ -241,7 +241,6 @@ class Item extends BaseController
         // Validation rules for the course
         $rules = [
             'itemId' => ['rules' => 'required'], // Ensure eventId is provided and is numeric
-            
         ];
 
         // Validate the input
@@ -271,8 +270,10 @@ class Item extends BaseController
                 return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
             }
 
-            // Proceed to delete the course
-            $deleted = $model->delete($itemId);
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($itemId, $updateData);
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Course Deleted Successfully'], 200);

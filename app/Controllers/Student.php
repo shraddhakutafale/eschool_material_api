@@ -106,16 +106,6 @@ class Student extends BaseController
 
         $input = $this->request->getJSON();
         $rules = [
-            // 'name' => ['rules' => 'required'],
-            // 'mobileNo' => ['rules' => 'required'],
-            // 'alternateMobileNo' => ['rules' => 'required'],
-            // 'emailId' => ['rules' => 'required'],
-            // 'websiteUrl' => ['rules' => 'required'],
-            // 'landlineNo' => ['rules' => 'required'],
-            // 'businessAddress' => ['rules' => 'required'],
-            // 'permanantAddress' =>['rules' => 'required'], 
-            // 'businessPincode' =>['rules' => 'required'], 
-            // 'permanantPincode' =>['rules' => 'required'],
 
                 'studentCode' => ['rules' => 'required'],
                 'generalRegisterNo' => ['rules' => 'required'],
@@ -123,15 +113,15 @@ class Student extends BaseController
                 'middleName' => ['rules' => 'required'],
                 'lastName' => ['rules' => 'required'],
                 'motherName' => ['rules' => 'required'],
-                'gender' => ['rules' => 'required'],
+                'gender' => ['rules' => ''],
                 'birthDate' => ['rules' => 'required'],
-                'birthPlace' => ['rules' => 'required'],
-                'nationality' => ['rules' => 'required'],
-                'religion' => ['rules' => 'required'],
-                'category' => ['rules' => 'required'],
-                'caste' => ['rules' => 'required'],
-                'subCaste' => ['rules' => 'required'],
-                'motherTongue' => ['rules' => 'required'],
+                'birthPlace' => ['rules' => ''],
+                'nationality' => ['rules' => ''],
+                'religion' => ['rules' => ''],
+                'category' => ['rules' => ''],
+                'caste' => ['rules' => ''],
+                'subCaste' => ['rules' => ''],
+                'motherTongue' => ['rules' => ''],
                 'bloodGroup' => ['rules' => 'required'],
                 'aadharNo' => ['rules' => 'required'],
                 'medium' => ['rules' => 'required'],
@@ -295,7 +285,10 @@ class Student extends BaseController
             }
 
             // Proceed to delete the student
-            $deleted = $model->delete($studentId);
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($memberId, $updateData);
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Student Deleted Successfully'], 200);

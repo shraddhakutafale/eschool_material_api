@@ -108,6 +108,7 @@ class Item extends BaseController
     {
         $input = $this->request->getJSON();
         $rules = [
+            // 'itemId'=> ['rules' => 'required'],
             'itemName'=> ['rules' => 'required'], 
             'brandName'=> ['rules' => 'required'], 
             'categoryName'=> ['rules' => 'required'],
@@ -155,7 +156,6 @@ class Item extends BaseController
     }
 
 
-
     public function update()
     {
         $input = $this->request->getJSON();
@@ -194,23 +194,16 @@ class Item extends BaseController
 
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-            //    ' eventName'=> $input->eventName,
-            //     'autherName'=>$input->autherName,
-            //     'eventDesc'=> $input->eventDesc,
-            //     'venue'=> $input->venue,
-            //     'endDate'=>$input->endDate,
-            //     'startDate'=>$input->startDate
-             'itemName'=> $input->itemName,
+            'itemName'=> $input->itemName,
             'categoryName'=> $input->categoryName,
             'brandName'=> $input->brandName,
-            'unit'=> $input->unit,
             'price'=> $input->price,
-            // 'costPrice'=> $input->costPrice,
-            // 'gstPercentage'=> $input->gstPercentage,
+            'costPrice'=> $input->costPrice,
+            'gstPercentage'=> $input->gstPercentage,
             'discount'=> $input->discount,
-            // 'barcode'=> $input->barcode,
-            // 'hsnCode'=> $input->hsnCode,
-            // 'minStockLevel'=> $input->minStockLevel,
+            'barcode'=> $input->barcode,
+            'hsnCode'=> $input->hsnCode,
+            'minStockLevel'=> $input->minStockLevel,
             'description'=> $input->description,
             ];
 
@@ -276,7 +269,7 @@ class Item extends BaseController
             $deleted = $model->update($itemId, $updateData);
 
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Course Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Item Deleted Successfully'], 200);
             } else {
                 return $this->fail(['status' => false, 'message' => 'Failed to delete course'], 500);
             }

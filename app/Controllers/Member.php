@@ -123,11 +123,11 @@ class Member extends BaseController
                 'mobileNo' => ['rules' => 'required'],
                 'dob' => ['rules' => 'required'],
                 'bloodGroup' => ['rules' => 'required'],
-                'address' => ['rules' => 'required'],
-                'state' => ['rules' => 'required'],
-                'district' => ['rules' => 'required'],
-                'taluka' => ['rules' => 'required'],
-                'pincode' => ['rules' => 'required'],
+                'address' => ['rules' => ''],
+                'state' => ['rules' => ''],
+                'district' => ['rules' => ''],
+                'taluka' => ['rules' => ''],
+                'pincode' => ['rules' => ''],
                 'fees' => ['rules' => 'required'],
 
         ];
@@ -278,7 +278,10 @@ class Member extends BaseController
             }
 
             // Proceed to delete the member
-            $deleted = $model->delete($memberId);
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($memberId, $updateData);
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Member Deleted Successfully'], 200);

@@ -5,20 +5,38 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
-
+use App\Models\LeadModel;
+use App\Models\LeadSourceModel;
+use App\Models\LeadInterestedModel;
 
 class Lead extends BaseController
 {
-
     use ResponseTrait;
 
+    // Get all leads
+    public function index()
+    {
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
 
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        $leadModel = new LeadModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $leadModel->findAll()], 200);
+    }
+
+    // Create a new lead
     public function create()
     {
-        // Get the input data (assumed to be in JSON format)
         $input = $this->request->getJSON();
-    
-        // Define validation rules for lead fields
         $rules = [
             'fName' => ['rules' => 'required|string'],
             'lName' => ['rules' => 'required|string'],
@@ -26,36 +44,28 @@ class Lead extends BaseController
             'secondaryMobileNo' => ['rules' => 'permit_empty|numeric|min_length[10]|max_length[15]'],
             'whatsAppNo' => ['rules' => 'permit_empty|numeric|min_length[10]|max_length[15]'],
             'email' => ['rules' => 'required|valid_email'],
-            'interestedCategory' => ['rules' => 'required'],
-            'interestedCategoryId' => ['rules' => 'required'],
-            'leadSourceCategoryId' => ['rules' => 'required'],
-            'leadSourceValue' => ['rules' => 'permit_empty'],
         ];
-    
-        // Validate the input data using the rules
-        if($this->validate($rules)) {
+
+        if ($this->validate($rules)) {
             // Retrieve tenantConfig from the headers
             $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
             if (!$tenantConfigHeader) {
                 throw new \Exception('Tenant configuration not found.');
             }
-    
+
             // Decode the tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-    
             if (!$tenantConfig) {
                 throw new \Exception('Invalid tenant configuration.');
             }
-    
+
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
-            
-            // Assuming there's a LeadModel to handle lead-related operations
-            $model = new leadModel($db);
-    
+            $model = new LeadModel($db);
+
             // Insert the lead data into the database
             $model->insert($input);
-    
+
             // Return a success response
             return $this->respond(['status' => true, 'message' => 'Lead Created Successfully'], 200);
         } else {
@@ -68,66 +78,164 @@ class Lead extends BaseController
             return $this->fail($response, 409);
         }
     }
-    
-    
-    public function index()
+
+    // Update an existing lead
+    public function update()
     {
-         // Retrieve tenantConfig from the headers
-         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-         if (!$tenantConfigHeader) {
-             throw new \Exception('Tenant configuration not found.');
-         }
- 
-         // Decode the tenantConfig JSON
-         $tenantConfig = json_decode($tenantConfigHeader, true);
+        $input = $this->request->getJSON();
 
-         if (!$tenantConfig) {
-             throw new \Exception('Invalid tenant configuration.');
-         }
- 
-         // Connect to the tenant's database
-         $db = Database::connect($tenantConfig);
-         // Load UserModel with the tenant database connection
-         $leadModel = new \App\Models\LeadModel($db);
-         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $leadModel->findAll()], 200);
-        
+        // Validation rules for the lead
+        $rules = [
+            'leadId' => ['rules' => 'required|numeric'], // Ensure leadId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new LeadModel($db);  // Use LeadModel for lead-related operations
+
+            // Retrieve the lead by leadId
+            $leadId = $input->leadId;
+            $lead = $model->find($leadId); // Assuming find method retrieves the lead
+
+            if (!$lead) {
+                return $this->fail(['status' => false, 'message' => 'Lead not found'], 404);
+            }
+
+            // Prepare the data to be updated (exclude leadId if it's included)
+            $updateData = [
+                'fName' => $input->fName,
+                'lName' => $input->lName,
+                'primaryMobileNo' => $input->primaryMobileNo,
+                'secondaryMobileNo' => $input->secondaryMobileNo,
+                'whatsAppNo' => $input->whatsAppNo,
+                'email' => $input->email
+            ];
+
+            // Update the lead with new data
+            $updated = $model->update($leadId, $updateData);
+
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Lead Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update lead'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
     }
 
-    public function getAllLeadSource(){
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-         if (!$tenantConfigHeader) {
-             throw new \Exception('Tenant configuration not found.');
-         }
- 
-         // Decode the tenantConfig JSON
-         $tenantConfig = json_decode($tenantConfigHeader, true);
+    // Delete a lead
+    public function delete()
+    {
+        $input = $this->request->getJSON();
 
-         if (!$tenantConfig) {
-             throw new \Exception('Invalid tenant configuration.');
-         }
- 
-         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        $leadSourceModel = new \App\Models\LeadSourceModel($db);
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $leadSourceModel->findAll()], 200);
+        // Validation rules for the lead
+        $rules = [
+            'leadId' => ['rules' => 'required'], // Ensure leadId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new LeadModel($db);
+
+            // Retrieve the lead by leadId
+            $leadId = $input->leadId;
+            $lead = $model->find($leadId); // Assuming find method retrieves the lead
+
+            if (!$lead) {
+                return $this->fail(['status' => false, 'message' => 'Lead not found'], 404);
+            }
+
+            // Proceed to delete the lead
+            $deleted = $model->delete($leadId);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Lead Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete lead'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
     }
 
-    public function getAllLeadInterested(){
+    // Get all lead sources
+    public function getAllLeadSource()
+    {
         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-         if (!$tenantConfigHeader) {
-             throw new \Exception('Tenant configuration not found.');
-         }
- 
-         // Decode the tenantConfig JSON
-         $tenantConfig = json_decode($tenantConfigHeader, true);
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
 
-         if (!$tenantConfig) {
-             throw new \Exception('Invalid tenant configuration.');
-         }
- 
-         // Connect to the tenant's database
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
-        $leadInterestedModel = new \App\Models\LeadInterestedModel($db);
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $leadInterestedModel->findAll()], 200);
+        $leadSourceModel = new LeadSourceModel($db);
+        return $this->respond(["status" => true, "message" => "All Lead Sources Fetched", "data" => $leadSourceModel->findAll()], 200);
+    }
+
+    // Get all lead interests
+    public function getAllLeadInterested()
+    {
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        $leadInterestedModel = new LeadInterestedModel($db);
+        return $this->respond(["status" => true, "message" => "All Lead Interests Fetched", "data" => $leadInterestedModel->findAll()], 200);
     }
 }

@@ -148,12 +148,12 @@ class Event extends BaseController
     {
         $input = $this->request->getJSON();
         print_r($input);
-        
-        // Validation rules for the course
+    
+        // Validation rules for the event
         $rules = [
             'eventId' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
         ];
-
+    
         // Validate the input
         if ($this->validate($rules)) {
             // Retrieve tenantConfig from the headers
@@ -161,44 +161,42 @@ class Event extends BaseController
             if (!$tenantConfigHeader) {
                 throw new \Exception('Tenant configuration not found.');
             }
-
+    
             // Decode the tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-
+    
             if (!$tenantConfig) {
                 throw new \Exception('Invalid tenant configuration.');
             }
-
+    
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
-            $model = new EventModel($db);
-
-            // Retrieve the course by eventId
+            $model = new EventModel($db);  // Use EventModel for event-related operations
+    
+            // Retrieve the event by eventId
             $eventId = $input->eventId;
-            $event = $model->find($eventId); // Assuming find method retrieves the course
-
+            $event = $model->find($eventId); // Assuming find method retrieves the event
+    
             if (!$event) {
-                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Event not found'], 404);
             }
-
+    
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-
-               ' eventName'=> $input->eventName,
-                'eventDesc'=> $input->eventDesc,
-
-                'venue'=> $input->venue,
-                'endDate'=>$input->endDate,
-                'startDate'=>$input->startDate
+                'eventName' => $input->eventName,
+                'eventDesc' => $input->eventDesc,
+                'venue' => $input->venue,
+                'startDate' => $input->startDate,
+                'endDate' => $input->endDate
             ];
-
-            // Update the course with new data
+    
+            // Update the event with new data
             $updated = $model->update($eventId, $updateData);
-
+    
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Course Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Event Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update course'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update event'], 500);
             }
         } else {
             // Validation failed
@@ -210,6 +208,7 @@ class Event extends BaseController
             return $this->fail($response, 409);
         }
     }
+    
 
 
     public function delete()

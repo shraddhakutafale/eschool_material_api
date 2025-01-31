@@ -3,36 +3,40 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\MemberModel;
 use CodeIgniter\API\ResponseTrait;
+use App\Models\MemberModel;
 use Config\Database;
 
 class Member extends BaseController
 {
     use ResponseTrait;
+
     public function index()
     {
-         // Retrieve tenantConfig from the headers
-         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-         if (!$tenantConfigHeader) {
-             throw new \Exception('Tenant configuration not found.');
-         }
- 
-         // Decode the tenantConfig JSON
-         $tenantConfig = json_decode($tenantConfigHeader, true);
- 
-         if (!$tenantConfig) {
-             throw new \Exception('Invalid tenant configuration.');
-         }
- 
-         // Connect to the tenant's database
-         $db = Database::connect($tenantConfig);
-         // Load UserModel with the tenant database connection
-         $MemberModel = new MemberModel($db);
-         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $MemberModel->findAll()], 200);
-    }
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
 
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $memberModel = new MemberModel($db);
+        $response = [
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $memberModel->findAll(),
+        ];
+        return $this->respond($response, 200);
+    }
 
     public function getMembersPaging()
     {
@@ -40,7 +44,7 @@ class Member extends BaseController
 
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
+        // Define the number of members per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
 
         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
@@ -59,23 +63,22 @@ class Member extends BaseController
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $MemberModel = new MemberModel($db);
-        $member = $MemberModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+        $members = $MemberModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
         $pager = $MemberModel->pager;
 
         $response = [
             "status" => true,
             "message" => "All Data Fetched",
-            "data" => $member,
+            "data" => $members,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
+                "totalMembers" => $pager->getTotal(),
                 "perPage" => $perPage
             ]   
         ];
         return $this->respond($response, 200);
     }
-
 
     public function getMembersWebsite()
     {
@@ -96,84 +99,69 @@ class Member extends BaseController
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $MemberModel = new MemberModel($db);
-        $member = $MemberModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $member], 200);
+        $members = $MemberModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $members], 200);
     }
 
-
+  
     public function create()
     {
-
         $input = $this->request->getJSON();
         $rules = [
-            // 'name' => ['rules' => 'required'],
-            // 'mobileNo' => ['rules' => 'required'],
-            // 'alternateMobileNo' => ['rules' => 'required'],
-            // 'emailId' => ['rules' => 'required'],
-            // 'websiteUrl' => ['rules' => 'required'],
-            // 'landlineNo' => ['rules' => 'required'],
-            // 'businessAddress' => ['rules' => 'required'],
-            // 'permanantAddress' =>['rules' => 'required'], 
-            // 'businessPincode' =>['rules' => 'required'], 
-            // 'permanantPincode' =>['rules' => 'required'],
-
-                'type' => ['rules' => 'required'],
-                'name' => ['rules' => 'required'],
-                'email' => ['rules' => 'required'],
-                'mobileNo' => ['rules' => 'required'],
-                'dob' => ['rules' => 'required'],
-                'bloodGroup' => ['rules' => 'required'],
-                'address' => ['rules' => ''],
-                'state' => ['rules' => ''],
-                'district' => ['rules' => ''],
-                'taluka' => ['rules' => ''],
-                'pincode' => ['rules' => ''],
-                'fees' => ['rules' => 'required'],
-
+            'type'=> ['rules' => 'required'], 
+            'name'=> ['rules' => 'required'], 
+            'dob'=> ['rules' => 'required'],
+            'bloodGroup'=> ['rules' => 'required'],
+            'email'=> ['rules' => 'required'],
+            'mobileNo'=> ['rules' => 'required'], 
+            'address'=> ['rules' => 'required'], 
+            'state'=> ['rules' => 'required'], 
+            'district'=> ['rules' => 'required'], 
+            'taluka'=> ['rules' => 'required'], 
+            'pincode'=> ['rules' => 'required'], 
+            'fees'=> ['rules' => 'required'],         
         ];
+  
         if($this->validate($rules)){
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
 
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
 
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
 
-        // Connect to the tenant's database
-        $db = \Config\Database::connect($tenantConfig);
-        $model = new \App\Models\MemberModel($db);
-
-        // Member creation logic
-        $input = $this->request->getJSON();
-        $model->insert($input);
-
-        return $this->respond(["status" => true, 'message' => ' Member Registered Successfully'], 200);
-
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new MemberModel($db);
+        
+            $model->insert($input);
+             
+            return $this->respond(['status'=>true,'message' => 'Member Added Successfully'], 200);
         }else{
-          $response = [
-            'status'=>false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-           ];
-          return $this->fail($response , 409);
-           
-         }
+            $response = [
+                'status'=>false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response , 409);
+             
+        }
+            
     }
-
 
     public function update()
     {
         $input = $this->request->getJSON();
         
-        // Validation rules for the member
+        // Validation rules for the course
         $rules = [
-            'memberId' => ['rules' => 'required|numeric'], // Ensure memberId is provided and is numeric
+            'memberId' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
         ];
 
         // Validate the input
@@ -195,39 +183,37 @@ class Member extends BaseController
             $db = Database::connect($tenantConfig);
             $model = new MemberModel($db);
 
-            // Retrieve the member by memberId
+            // Retrieve the course by eventId
             $memberId = $input->memberId;
-            $member = $model->find($memberId); // Assuming find method retrieves the member
+            $member = $model->find($memberId); // Assuming find method retrieves the course
 
             if (!$member) {
-                return $this->fail(['status' => false, 'message' => 'Member not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude memberId if it's included)
+            // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-            'type' =>$input->type,
-            'name' =>$input->name,
-            'email' => $input->email,
-            'mobileNo' => $input->mobileNo,
-            'dob' => $input->dob,
-            'bloodGroup' => $input->bloodGroup,
-            'address' => $input->address,
-            'state' => $input->state,
-            'district' => $input->district,
-            'taluka' => $input->taluka,
-            'pincode' => $input->pincode,
-            'fees' => $input->fees,
-
-
+                'type' => $input->type,
+                'name' => $input->name,
+                'dob' => $input->dob,
+                'bloodGroup' => $input->bloodGroup,
+                'email' => $input->email,
+                'mobileNo' => $input->mobileNo,
+                'address' => $input->address,
+                'state' => $input->state,
+                'district' => $input->district,
+                'taluka' => $input->taluka,
+                'pincode' => $input->pincode,
+                'fees' => $input->fees,
             ];
 
-            // Update the member with new data
+            // Update the course with new data
             $updated = $model->update($memberId, $updateData);
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Member Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update member'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update course'], 500);
             }
         } else {
             // Validation failed
@@ -245,9 +231,9 @@ class Member extends BaseController
     {
         $input = $this->request->getJSON();
         
-        // Validation rules for the member
+        // Validation rules for the course
         $rules = [
-            'memberId' => ['rules' => 'required'], // Ensure memberId is provided and is numeric
+            'memberId' => ['rules' => 'required'], 
         ];
 
         // Validate the input
@@ -269,15 +255,14 @@ class Member extends BaseController
             $db = Database::connect($tenantConfig);
             $model = new MemberModel($db);
 
-            // Retrieve the member by memberId
+            // Retrieve the course by eventId
             $memberId = $input->memberId;
-            $member = $model->find($memberId); // Assuming find method retrieves the member
+            $member = $model->find($memberId); // Assuming find method retrieves the course
 
             if (!$member) {
-                return $this->fail(['status' => false, 'message' => 'Member not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
             }
 
-            // Proceed to delete the member
             $updateData = [
                 'isDeleted' => 1,
             ];
@@ -286,7 +271,7 @@ class Member extends BaseController
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Member Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete member'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete course'], 500);
             }
         } else {
             // Validation failed

@@ -227,7 +227,7 @@ class Item extends BaseController
                 'barcode' => $input->barcode,
                 'hsnCode' => $input->hsnCode,
                 'minStockLevel' => $input->minStockLevel,
-                'description' => $input->description
+                'description' => $input->description,
             ];
 
             // Update the course with new data

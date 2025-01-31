@@ -3,36 +3,35 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\StudentModel;
 use CodeIgniter\API\ResponseTrait;
+use App\Models\StudentModel;
 use Config\Database;
 
 class Student extends BaseController
 {
     use ResponseTrait;
+
     public function index()
     {
-         // Retrieve tenantConfig from the headers
-         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-         if (!$tenantConfigHeader) {
-             throw new \Exception('Tenant configuration not found.');
-         }
- 
-         // Decode the tenantConfig JSON
-         $tenantConfig = json_decode($tenantConfigHeader, true);
- 
-         if (!$tenantConfig) {
-             throw new \Exception('Invalid tenant configuration.');
-         }
- 
-         // Connect to the tenant's database
-         $db = Database::connect($tenantConfig);
-         // Load UserModel with the tenant database connection
-         $StudentModel = new StudentModel($db);
-         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $StudentModel->findAll()], 200);
-    }
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
 
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $studentModel = new StudentModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $studentModel->findAll()], 200);
+    }
 
     public function getStudentsPaging()
     {
@@ -58,14 +57,14 @@ class Student extends BaseController
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
-        $StudentModel = new StudentModel($db);
-        $student = $StudentModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $StudentModel->pager;
+        $studentModel = new StudentModel($db);
+        $students = $studentModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+        $pager = $studentModel->pager;
 
         $response = [
             "status" => true,
             "message" => "All Data Fetched",
-            "data" => $student,
+            "data" => $students,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
@@ -75,7 +74,6 @@ class Student extends BaseController
         ];
         return $this->respond($response, 200);
     }
-
 
     public function getStudentsWebsite()
     {
@@ -95,82 +93,85 @@ class Student extends BaseController
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
-        $StudentModel = new StudentModel($db);
-        $student = $StudentModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $student], 200);
+        $studentModel = new StudentModel($db);
+        $students = $studentModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $students], 200);
     }
-
 
     public function create()
     {
-
         $input = $this->request->getJSON();
+        
+        // Validation rules for other fields
         $rules = [
-
-                'studentCode' => ['rules' => 'required'],
-                'generalRegisterNo' => ['rules' => 'required'],
-                'firstName' => ['rules' => 'required'],
-                'middleName' => ['rules' => 'required'],
-                'lastName' => ['rules' => 'required'],
-                'motherName' => ['rules' => 'required'],
-                'gender' => ['rules' => ''],
-                'birthDate' => ['rules' => 'required'],
-                'birthPlace' => ['rules' => ''],
-                'nationality' => ['rules' => ''],
-                'religion' => ['rules' => ''],
-                'category' => ['rules' => ''],
-                'caste' => ['rules' => ''],
-                'subCaste' => ['rules' => ''],
-                'motherTongue' => ['rules' => ''],
-                'bloodGroup' => ['rules' => 'required'],
-                'aadharNo' => ['rules' => 'required'],
-                'medium' => ['rules' => 'required'],
-                'physicallyHandicapped' => ['rules' => 'required'],
-                'educationalGap' => ['rules' => 'required'],
-
-
+            'studentCode'=> ['rules' => 'required'], 
+            'firstName'=> ['rules' => 'required'],
+            // 'middleName'=> ['rules' => 'required'],
+            // 'lastName'=> ['rules' => 'required'],
+            // 'motherName'=> ['rules' => 'required'], 
+            // 'gender'=> ['rules' => 'required'], 
+            // 'birthDate'=> ['rules' => 'required'], 
+            // 'birthPlace'=> ['rules' => 'required'], 
+            // 'religion'=> ['rules' => 'required'], 
+            // 'category'=> ['rules' => 'required'], 
+            // 'cast'=> ['rules' => 'required'], 
+            // 'subCast'=> ['rules' => 'required'], 
+            // 'motherTongue'=> ['rules' => 'required'], 
+            // 'bloodGroup'=> ['rules' => 'required'], 
+            // 'aadharNo'=> ['rules' => 'required'], 
+            // 'medium'=> ['rules' => 'required'], 
+            // 'physicallyHandicapped'=> ['rules' => 'required'], 
+            // 'educationalGap'=> ['rules' => 'required'], 
         ];
-        if($this->validate($rules)){
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
+    
+        // Validate the incoming data
+        if ($this->validate($rules)) {
+    
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+    
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+    
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+    
+            // Connect to the tenant's database
+            $db = \Config\Database::connect($tenantConfig);
+            $model = new \App\Models\StudentModel($db);
+    
+          
+            // Insert the student data into the database
+            $model->insert($input);
+    
+            // Return success response
+            return $this->respond([
+                'status' => true,
+                'message' => 'Student Added Successfully',
+                'data' => $input
+            ], 200);
+    
+        } else {
+            // If validation fails, return errors
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = \Config\Database::connect($tenantConfig);
-        $model = new \App\Models\StudentModel($db);
-
-        // Student creation logic
-        $input = $this->request->getJSON();
-        $model->insert($input);
-
-        return $this->respond(["status" => true, 'message' => ' Student Registered Successfully'], 200);
-
-        }else{
-          $response = [
-            'status'=>false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-           ];
-          return $this->fail($response , 409);
-           
-         }
     }
-
+    
 
     public function update()
     {
         $input = $this->request->getJSON();
         
-        // Validation rules for the student
+        // Validation rules for the studentId
         $rules = [
             'studentId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
         ];
@@ -204,28 +205,26 @@ class Student extends BaseController
 
             // Prepare the data to be updated (exclude studentId if it's included)
             $updateData = [
-            'studentCode' =>$input->studentCode,
-            'generalRegisterNo' =>$input->generalRegisterNo,
-            'firstName' => $input->firstName,
-            'middleName' => $input->middleName,
-            'lastName' => $input->lastName,
-            'motherName' => $input->motherName,
-            'gender' => $input->gender,
-            'birthDate' => $input->birthDate,
-            'birthPlace' => $input->birthPlace,
-            'nationality' => $input->nationality,
-            'religion' => $input->religion,
-            'category' => $input->category,
-            'caste' => $input->caste,
-            'subCaste' => $input->subCaste,
-            'motherTongue' => $input->motherTongue,
-            'bloodGroup' => $input->bloodGroup,
-            'aadharNo' => $input->aadharNo,
-            'medium' => $input->medium,
-            'physicallyHandicapped' => $input->physicallyHandicapped,
-            'educationalGap' => $input->educationalGap,
-
-
+                'studentCode' => $input->studentCode,
+                'generalRegisterNo' => $input->generalRegisterNo,
+                'firstName' => $input->firstName,
+                'middleName' => $input->middleName,
+                'lastName' => $input->lastName,
+                'motherName' => $input->motherName,
+                'gender' => $input->gender,
+                'birthDate' => $input->birthDate,
+                'birthPlace' => $input->birthPlace,
+                'nationality' => $input->nationality,
+                'religion' => $input->religion,
+                'category' => $input->category,
+                'cast' => $input->cast,
+                'subCast' => $input->subCast,
+                'motherTongue' => $input->motherTongue,
+                'bloodGroup' => $input->bloodGroup,
+                'aadharNo' => $input->aadharNo,
+                'medium' => $input->medium,
+                'physicallyHandicapped' => $input->physicallyHandicapped,
+                'educationalGap' => $input->educationalGap
             ];
 
             // Update the student with new data
@@ -278,22 +277,21 @@ class Student extends BaseController
 
             // Retrieve the student by studentId
             $studentId = $input->studentId;
-            $student = $model->find($studentId); // Assuming find method retrieves the Student
+            $student = $model->find($studentId); // Assuming find method retrieves the student
 
             if (!$student) {
                 return $this->fail(['status' => false, 'message' => 'Student not found'], 404);
             }
 
-            // Proceed to delete the student
             $updateData = [
                 'isDeleted' => 1,
             ];
-            $deleted = $model->update($memberId, $updateData);
+            $deleted = $model->update($studentId, $updateData);
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Student Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete student'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete Student'], 500);
             }
         } else {
             // Validation failed
@@ -306,6 +304,7 @@ class Student extends BaseController
         }
     }
 
+    
 
     public function uploadPageProfile()
     {
@@ -350,4 +349,109 @@ class Student extends BaseController
             'data' => $data,
         ]);
     }
+
+
+    public function getStudentById($studentId)
+{
+    // Retrieve tenantConfig from the headers
+    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    if (!$tenantConfigHeader) {
+        throw new \Exception('Tenant configuration not found.');
+    }
+
+    // Decode the tenantConfig JSON
+    $tenantConfig = json_decode($tenantConfigHeader, true);
+
+    if (!$tenantConfig) {
+        throw new \Exception('Invalid tenant configuration.');
+    }
+
+    // Connect to the tenant's database
+    $db = Database::connect($tenantConfig);
+
+    // Load the StudentModel with the tenant database connection
+    $studentModel = new StudentModel($db);
+
+    // Fetch student by ID
+    $student = $studentModel->find($studentId); // find method returns a single record by its ID
+
+    // Check if student was found
+    if (!$student) {
+        throw new \Exception('Student not found.');
+    }
+
+    // Respond with the student data
+    return $this->respond(["status" => true, "message" => "Student fetched successfully", "data" => $student], 200);
+}
+
+
+public function uploadStudentImage()
+{
+    // Retrieve the student ID from POST data
+    $studentId = $this->request->getPost('studentId');
+
+    // Retrieve the uploaded image
+    $file = $this->request->getFile('studentImage');
+
+    // Validate if the file is valid
+    if (!$file->isValid()) {
+        return $this->fail($file->getErrorString(), 400);
+    }
+
+    // Validate the file type (only allow image types)
+    $mimeType = $file->getMimeType();
+    if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
+        return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.', 400);
+    }
+
+    // Validate file size (limit to 2MB)
+    if ($file->getSize() > 2048 * 1024) {
+        return $this->fail('File size exceeds 2MB', 400);
+    }
+
+    // Generate a random name for the uploaded file
+    $newName = $file->getRandomName();
+    $filePath = '/uploads/' . $newName;
+
+    // Move the file to the designated directory
+    if (!$file->move(WRITEPATH . '../public/uploads', $newName)) {
+        return $this->fail('Failed to move the file to the server directory.', 500);
+    }
+
+    // Prepare the data to be saved
+    $data = [
+        'studentImage' => $newName,
+    ];
+
+    // Connect to the tenant's database
+    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    if (!$tenantConfigHeader) {
+        throw new \Exception('Tenant configuration not found.');
+    }
+
+    // Decode the tenantConfig JSON
+    $tenantConfig = json_decode($tenantConfigHeader, true);
+
+    if (!$tenantConfig) {
+        throw new \Exception('Invalid tenant configuration.');
+    }
+
+    // Connect to the tenant's database
+    $db = Database::connect($tenantConfig);
+    $studentModel = new StudentModel($db);
+
+    // Update the student with the new image URL
+    $update = $studentModel->update($studentId, $data);
+
+    if ($update) {
+        return $this->respond([
+            'status' => 201,
+            'message' => 'Student image uploaded successfully',
+            'data' => $data,
+        ]);
+    } else {
+        return $this->fail('Failed to update student with the image.', 500);
+    }
+}
+
 }

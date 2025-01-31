@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ItemModel extends Model
+class ItemCategory extends Model
 {
-    protected $table            = 'item_mst';
-    protected $primaryKey       = 'itemId';
+    protected $table            = 'item_category';
+    protected $primaryKey       = 'itemCategoryId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemId', 'itemName', 'itemCategoryId', 'brandName', 'unit', 'price', 'costPrice', 'gstPercentage', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['itemCategoryId', 'itemCategoryName', 'description', 'isActive', 'isDeleted', 'modifiedDate', 'modifiedBy', 'createdDate', 'createdBy'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -23,9 +23,9 @@ class ItemModel extends Model
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'createdDate';
-    protected $updatedField  = 'modifiedDate';
-    protected $deletedField  = 'deletedDate';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];
@@ -43,13 +43,4 @@ class ItemModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function __construct($db = null)
-    {
-        parent::__construct();
-
-        if ($db) {
-            $this->db = $db; // Assign the tenant's database connection
-        }
-    }
 }

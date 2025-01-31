@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\ItemModel;
+use App\Models\ItemCategory;
 use Config\Database;
 
 class Item extends BaseController
@@ -111,7 +112,7 @@ class Item extends BaseController
             // 'itemId'=> ['rules' => 'required'],
             'itemName'=> ['rules' => 'required'], 
             'brandName'=> ['rules' => 'required'], 
-            'categoryName'=> ['rules' => 'required'],
+            'itemCategoryId'=> ['rules' => 'required'],
             'costPrice'=> ['rules' => 'required'],
             'price'=> ['rules' => 'required'],
             'discount'=> ['rules' => 'required'], 
@@ -218,7 +219,7 @@ class Item extends BaseController
             $updateData = [
                 'itemName' => $input->itemName,
                 'brandName' => $input->brandName,
-                'categoryName' => $input->categoryName,
+                'itemCategoryId' => $input->itemCategoryId,
                 'costPrice' => $input->costPrice,
                 'price' => $input->price,
                 'discount' => $input->discount,
@@ -306,48 +307,77 @@ class Item extends BaseController
         }
     }
 
-
-    public function uploadPageProfile()
+    public function getAllItemCategory()
     {
-        // Retrieve form fields
-        $itemId = $this->request->getPost('itemId'); // Example field
+        $input = $this->request->getJSON();
 
-        // Retrieve the file
-        $file = $this->request->getFile('photoUrl');
-
-        
-        // Validate file
-        if (!$file->isValid()) {
-            return $this->fail($file->getErrorString());
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
         }
 
-        $mimeType = $file->getMimeType();
-        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
         }
 
-        // Validate file type and size
-        if ($file->getSize() > 2048 * 1024) {
-            return $this->fail('Invalid file type or size exceeds 2MB');
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $model = new ItemCategory($db);
+        $itemCategories = $model->findAll();
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
+    }
+
+    public function createCategory()
+    {
+        $input = $this->request->getJSON();
+
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
         }
 
-        // Generate a random file name and move the file
-        $newName = $file->getRandomName();
-        $filePath = '/uploads/' . $newName;
-        $file->move(WRITEPATH . '../public/uploads', $newName);
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
 
-        // Save file and additional data in the database
-        $data = [
-            'photoUrl' => $newName,
-        ];
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
 
-        $model = new ItemModel();
-        $model->update($itemId,$data);
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        $model = new ItemCategory($db);
+        $model->insert($input);
+        return $this->respond(["status" => true, "message" => "Category Created Successfully"], 200);
+    }
 
-        return $this->respond([
-            'status' => 201,
-            'message' => 'File and data uploaded successfully',
-            'data' => $data,
-        ]);
+    public function getAllCategoryWeb()
+    {
+        $input = $this->request->getJSON();
+
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $model = new ItemCategory($db);
+        $itemCategories = $model->findAll();
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
     }
 }

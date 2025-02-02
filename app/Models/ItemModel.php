@@ -12,7 +12,7 @@ class ItemModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemId', 'itemName', 'itemCategoryId', 'brandName', 'unit', 'price', 'costPrice', 'gstPercentage', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['itemId', 'itemName', 'coverImage', 'itemCategoryId', 'brandName', 'unit', 'unitSize','mrp', 'gstPercentage', 'discountType', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

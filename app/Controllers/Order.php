@@ -98,194 +98,56 @@ class Order extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $OrderModel], 200);
     }
 
+    public function create()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'customerName' => ['rules' => 'required'],
+                    'contactNumber' => ['rules' => 'required'],
+                    'deliveryDate' => ['rules' => 'required'],
+                    'shipToStreetAddress' => ['rules' => 'required'],
+                    'shipToPhone' => ['rules' => 'required'],
+                    'shipToCity' => ['rules' => 'required'],
+                    'pincode' => ['rules' => 'required'], // Validate the array field
+                    'sku' => ['rules' => 'required'],
+                    'productName' => ['rules' => 'required'],
+                    'email' => ['rules' => 'required'],
 
 
-    
-
-    // public function create()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //         'companyName' => ['rules' => 'required'],
-    //         'address' => ['rules' => 'required'],
-    //         'phone' => ['rules' => 'required'],
-    //         'fax' => ['rules' => 'required'],
-    //         'website' => ['rules' => 'required'],
-    //         'city' => ['rules' => 'required'],
-    //     ];
-    
-    //     if ($this->validate($rules)) {
-    //         // Ensure all input is properly converted to strings/arrays as needed
-    //         $inputData = [
-    //             'companyName' => (string) $input->companyName,
-    //             'address' => (string) $input->address,
-    //             'phone' => (string) $input->phone,
-    //             'fax' => (string) $input->fax,
-    //             'website' => (string) $input->website,
-    //             'city' => (string) $input->city,
-    //             // Convert any complex object data to a suitable format (strings, arrays, etc.)
-    //             // Add additional fields here similarly
-    //         ];
-    
-    //         // Retrieve tenantConfig from the headers
-    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    //         if (!$tenantConfigHeader) {
-    //             throw new \Exception('Tenant configuration not found.');
-    //         }
-    
-    //         // Decode the tenantConfig JSON
-    //         $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-    //         if (!$tenantConfig) {
-    //             throw new \Exception('Invalid tenant configuration.');
-    //         }
-    
-    //         // Connect to the tenant's database
-    //         $db = Database::connect($tenantConfig);
-    //         $model = new PurchaseModel($db);
-    
-    //         // Insert the data into the database
-    //         if ($model->insert($inputData)) {
-    //             return $this->respond(['status' => true, 'message' => 'Purchase Added Successfully'], 200);
-    //         } else {
-    //             return $this->fail(['status' => false, 'message' => 'Failed to insert purchase data'], 500);
-    //         }
-    //     } else {
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
-    
-
-//     public function create()
-// {
-//     $input = $this->request->getJSON();
-
-//     $rules = [
-//         'customerName' => ['rules' => 'required'],
-//         'contactNumber' => ['rules' => 'required'],
-//         'deliveryDate' => ['rules' => 'required'],
-//         'shipToStreetAddress' => ['rules' => 'required'],
-//         'shipToPhone' => ['rules' => 'required'],
-//         'shipToCity' => ['rules' => 'required'],
-//         'pincode' => ['rules' => 'required'], // Validate the array field
-//         'sku' => ['rules' => 'required'],
-//         'productName' => ['rules' => 'required'],
-//         'email' => ['rules' => 'required'],
-       
-
-
-
-//     ];
-
-//     if ($this->validate($rules)) {
-//         // Ensure all input is properly converted to strings/arrays as needed
-//         $inputData = [
-//             'customerName' => (string) $input->companyName,
-//             'contactNumber' => (string) $input->contactNumber,
-//             'deliveryDate' => (string) $input->deliveryDate,
-//             'shipToStreetAddress' => (string) $input->shipToStreetAddress,
-//             'shipToPhone' => (string) $input->shipToPhone,
-//             'shipToCity' => (string) $input->shipToCity,
-//             'pincode' => (string) $input->pincode,
-//             'sku' => (string) $input->sku,
-//             'productName' => (string) $input->productName,
-//             'email' => (string) $input->email,
-
-             
-//         ];
-
-//         // Retrieve tenantConfig from the headers
-//         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-//         if (!$tenantConfigHeader) {
-//             throw new \Exception('Tenant configuration not found.');
-//         }
-
-//         // Decode the tenantConfig JSON
-//         $tenantConfig = json_decode($tenantConfigHeader, true);
-
-//         if (!$tenantConfig) {
-//             throw new \Exception('Invalid tenant configuration.');
-//         }
-
-//         // Connect to the tenant's database
-//         $db = Database::connect($tenantConfig);
-//         $model = new OrderModel($db);
-
-//         // Insert the data into the database
-//         if ($model->insert($inputData)) {
-//             return $this->respond(['status' => true, 'message' => 'Order Added Successfully'], 200);
-//         } else {
-//             return $this->fail(['status' => false, 'message' => 'Failed to insert Order data'], 500);
-//         }
-//     } else {
-//         $response = [
-//             'status' => false,
-//             'errors' => $this->validator->getErrors(),
-//             'message' => 'Invalid Inputs'
-//         ];
-//         return $this->fail($response, 409);
-//     }
-// }
-
-public function create()
-{
-    $input = $this->request->getJSON();
-    $rules = [
-        'customerName' => ['rules' => 'required'],
-                'contactNumber' => ['rules' => 'required'],
-                'deliveryDate' => ['rules' => 'required'],
-                'shipToStreetAddress' => ['rules' => 'required'],
-                'shipToPhone' => ['rules' => 'required'],
-                'shipToCity' => ['rules' => 'required'],
-                'pincode' => ['rules' => 'required'], // Validate the array field
-                'sku' => ['rules' => 'required'],
-                'productName' => ['rules' => 'required'],
-                'email' => ['rules' => 'required'],
-
-
-    ];
-
-    if($this->validate($rules)){
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        $model = new OrderModel($db);
-    
-        $model->insert($input);
-         
-        return $this->respond(['status'=>true,'message' => 'order Added Successfully'], 200);
-    }else{
-        $response = [
-            'status'=>false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
         ];
-        return $this->fail($response , 409);
-         
-    }
+
+        if($this->validate($rules)){
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new OrderModel($db);
         
-}
-
-
-
-    
+            $model->insert($input);
+            
+            return $this->respond(['status'=>true,'message' => 'order Added Successfully'], 200);
+        }else{
+            $response = [
+                'status'=>false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response , 409);
+            
+        }
+            
+    }
 
     public function update()
     {
@@ -421,48 +283,32 @@ public function create()
         }
     }
 
-
-    public function uploadPageProfile()
+    public function getLastOrder()
     {
-        // Retrieve form fields
-        $orderId = $this->request->getPost('orderId'); // Example field
-
-        // Retrieve the file
-        $file = $this->request->getFile('photoUrl');
-
-        
-        // Validate file
-        if (!$file->isValid()) {
-            return $this->fail($file->getErrorString());
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
         }
 
-        $mimeType = $file->getMimeType();
-        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
         }
 
-        // Validate file type and size
-        if ($file->getSize() > 2048 * 1024) {
-            return $this->fail('Invalid file type or size exceeds 2MB');
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        $model = new OrderModel($db);
+
+        // Retrieve the last order
+        $lastOrder = $model->orderBy('createdDate', 'DESC')->first();
+
+        if (!$lastOrder) {
+            return $this->respond(['status' => false, 'message' => 'No orders found', 'data' => null], 200);
         }
 
-        // Generate a random file name and move the file
-        $newName = $file->getRandomName();
-        $filePath = '/uploads/' . $newName;
-        $file->move(WRITEPATH . '../public/uploads', $newName);
-
-        // Save file and additional data in the database
-        $data = [
-            'photoUrl' => $newName,
-        ];
-
-        $model = new OrderModel();
-        $model->update($orderId,$data);
-
-        return $this->respond([
-            'status' => 201,
-            'message' => 'File and data uploaded successfully',
-            'data' => $data,
-        ]);
+        return $this->respond(['status' => true, 'message' => 'Last Order Fetched Successfully', 'data' => $lastOrder], 200);
     }
 }

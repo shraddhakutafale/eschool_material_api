@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\ItemModel;
 use App\Models\ItemCategory;
+use App\Models\Unit;
 use Config\Database;
 
 class Item extends BaseController
@@ -31,6 +32,34 @@ class Item extends BaseController
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $itemModel = new ItemModel($db);
+        $response = [
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $itemModel->findAll(),
+        ];
+        return $this->respond($response, 200);
+    }
+
+    public function getAllUnit()
+    {
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON 
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+
+        // Load UserModel with the tenant database connection
+        $itemModel = new Unit($db);
         $response = [
             "status" => true,
             "message" => "All Data Fetched",
@@ -109,18 +138,8 @@ class Item extends BaseController
     {
         $input = $this->request->getJSON();
         $rules = [
-            // 'itemId'=> ['rules' => 'required'],
             'itemName'=> ['rules' => 'required'], 
-            'brandName'=> ['rules' => 'required'], 
-            'itemCategoryId'=> ['rules' => 'required'],
-            'costPrice'=> ['rules' => 'required'],
-            'price'=> ['rules' => 'required'],
-            'discount'=> ['rules' => 'required'], 
-            'gstPercentage'=> ['rules' => 'required'], 
-            'barcode'=> ['rules' => 'required'], 
-            'hsnCode'=> ['rules' => 'required'], 
-            'minStockLevel'=> ['rules' => 'required'], 
-            'description'=> ['rules' => 'required'],             
+            'mrp'=> ['rules' => 'required'],        
         ];
   
         if($this->validate($rules)){
@@ -220,8 +239,10 @@ class Item extends BaseController
                 'itemName' => $input->itemName,
                 'brandName' => $input->brandName,
                 'itemCategoryId' => $input->itemCategoryId,
-                'costPrice' => $input->costPrice,
-                'price' => $input->price,
+                'unit' => $input->unit,
+                'unitSize' => $input->unitSize,
+                'mrp' => $input->mrp,
+                'discountType' => $input->discountType,
                 'discount' => $input->discount,
                 'gstPercentage' => $input->gstPercentage,
                 'barcode' => $input->barcode,

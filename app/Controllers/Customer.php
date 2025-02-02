@@ -103,17 +103,7 @@ class Customer extends BaseController
         $input = $this->request->getJSON();
         $rules = [
             'name' => ['rules' => 'required'],
-            'mobileNo' => ['rules' => 'required'],
-            'alternateMobileNo' => ['rules' => 'required'],
-            'emailId' => ['rules' => 'required'],
-            'websiteUrl' => ['rules' => 'required'],
-            'landlineNo' => ['rules' => 'required'],
-            'businessAddress' => ['rules' => 'required'],
-            'permanantAddress' =>['rules' => 'required'], 
-            'businessPincode' =>['rules' => 'required'], 
-            'permanantPincode' =>['rules' => 'required'],
-
-    
+            'mobileNo' => ['rules' => 'required']
         ];
   
         if($this->validate($rules)){
@@ -187,22 +177,12 @@ class Customer extends BaseController
 
             // Prepare the data to be updated (exclude customerId if it's included)
             $updateData = [
-            'name' =>$input->name,
-            'mobileNo' => $input->mobileNo,
-            'alternateMobileNo' => $input->alternateMobileNo,
-            'emailId' => $input->emailId,
-            'websiteUrl' => $input->websiteUrl,
-            'landlineNo' => $input->landlineNo,
-            'businessAddress' => $input->businessAddress,
-            'permanantAddress' => $input->permanantAddress,
-            'businessPincode' => $input->businessPincode,
-            'permanantPincode' => $input->permanantPincode,
-
-
-
-
-
-
+                'name' =>$input->name,
+                'mobileNo' => $input->mobileNo,
+                'alternateMobileNo' => $input->alternateMobileNo,
+                'emailId' => $input->emailId,
+                'dateOfBirth' => $input->dateOfBirth,
+                'gender' => $input->gender
             ];
 
             // Update the customer with new data

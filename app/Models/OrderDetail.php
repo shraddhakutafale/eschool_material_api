@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class OrderModel extends Model
+class OrderDetail extends Model
 {
-    protected $table            = 'order_mst';
-    protected $primaryKey       = 'orderId';
+    protected $table            = 'order_details';
+    protected $primaryKey       = 'orderDetailId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['orderId', 'orderNo', 'orderCode', 'orderDate', 'amount', 'discount', 'totalTax', 'finalAmount', 'customerId', 'shippingAddressId', 'deliveryDate', 'orderTrackingNo', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['orderDetailId', 'orderId', 'orderNo', 'itemId', 'quantity', 'rate', 'subtotal', 'discount', 'taxAmount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -23,9 +23,9 @@ class OrderModel extends Model
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'createdDate';
-    protected $updatedField  = 'modifiedDate';
-    protected $deletedField  = 'deletedDate';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];
@@ -43,13 +43,4 @@ class OrderModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function __construct($db = null)
-    {
-        parent::__construct();
-
-        if ($db) {
-            $this->db = $db; // Assign the tenant's database connection
-        }
-    }
 }

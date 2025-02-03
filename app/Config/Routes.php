@@ -72,6 +72,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('member/update', 'Member::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('member/getallwebsite', 'Member::getMembersWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
     $routes->post('member/delete', 'Member::delete',['filter' => ['authFilter','tenantFilter']]); 
+    $routes->post('member/createweb', 'Member::createWeb',['filter' => 'tenantFilter']);
 
      
     //Routes for student

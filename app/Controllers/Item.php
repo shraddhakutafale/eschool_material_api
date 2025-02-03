@@ -380,28 +380,57 @@ class Item extends BaseController
 
     public function getAllItemByCategoryWeb()
     {
-        $categoryId = $this->request->getSegment(1);
-
+        // Retrieve categoryId from URI segment
+        $categoryId = $this->request->getUri()->getSegment(1);
+        
+        if (!$categoryId) {
+            return $this->respond(["status" => false, "message" => "Category ID not provided."], 400);
+        }
+    
         // Retrieve tenantConfig from the headers
         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
         if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }    
-
+            return $this->respond(["status" => false, "message" => "Tenant configuration not found."], 400);
+        }
+    
         // Decode the tenantConfig JSON
         $tenantConfig = json_decode($tenantConfigHeader, true);
-
         if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
+            return $this->respond(["status" => false, "message" => "Invalid tenant configuration."], 400);
         }
-
+    
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
-        $model = new Item($db);
-        $items = $model->findAllByCategoryId($categoryId);
+        try {
+            $db = Database::connect($tenantConfig);
+        } catch (\Exception $e) {
+            return $this->respond(["status" => false, "message" => "Failed to connect to the database: " . $e->getMessage()], 500);
+        }
+    
+        // Load ItemCategory model with the tenant database connection
+        $category = new ItemCategory($db);
+        $categories = $category->findAll(); // This loads all categories
+    
+        // Load ItemModel with the tenant database connection
+        $model = new ItemModel($db);
+    
+        // Fetch items by category ID
+        try {
+            // Use the where method directly
+            $items = $model->where('itemCategoryId', $categoryId)->findAll();
+        } catch (\Exception $e) {
+            return $this->respond(["status" => false, "message" => "Failed to fetch items: " . $e->getMessage()], 500);
+        }
+    
+        // Return the response
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
     }
+    
+    
+    // public function findAllByCategoryId($categoryId)
+    // {
+    //     return $this->where('itemCategoryId', $categoryId)->findAll();
+    // }
+   
 
     public function getAllItemByTagWeb()
     {

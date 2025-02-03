@@ -200,7 +200,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
       // Routes for website
       $routes->get('item/getallcategoryweb', 'Item::getAllCategoryWeb',['filter' => 'tenantFilter']);
-      $routes->get('item/getallitembycategoryweb/(:segment)', 'Item::getAllItemByCategoryWeb/$1',['filter' => 'tenantFilter']);
+      $routes->get('item/getallitembycategoryweb/(:num)', 'Item::getAllItemByCategoryWeb/$1',['filter' => 'tenantFilter']);
       $routes->get('item/getallitembytag/(:segment)', 'Item::getAllItemByTagWeb/$1',['filter' => 'tenantFilter']);
       $routes->get('item/getfouritembycategoryweb', 'Item::getFourItemByCategoryWeb',['filter' => 'tenantFilter']);
       $routes->get('item/getfouritembytag/(:segment)', 'Item::getFourItemByTagWeb/$1',['filter' => 'tenantFilter']);

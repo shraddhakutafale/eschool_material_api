@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\CourseModel;
+use App\Models\FeeModel;
 use Config\Database;
 
 class Course extends BaseController
@@ -300,154 +301,145 @@ class Course extends BaseController
         }
     }
 
-    
-
-    public function uploadPageProfile()
+    public function getCourseById($courseId)
     {
-        // Retrieve form fields
-        $courseId = $this->request->getPost('courseId'); // Example field
-
-        // Retrieve the file
-        $file = $this->request->getFile('photoUrl');
-
-        
-        // Validate file
-        if (!$file->isValid()) {
-            return $this->fail($file->getErrorString());
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
         }
 
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+
+        // Load the CourseModel with the tenant database connection
+        $courseModel = new CourseModel($db);
+
+        // Fetch course by ID
+        $course = $courseModel->find($courseId); // find method returns a single record by its ID
+
+        // Check if course was found
+        if (!$course) {
+            throw new \Exception('Course not found.');
+        }
+
+        // Respond with the course data
+        return $this->respond(["status" => true, "message" => "Course fetched successfully", "data" => $course], 200);
+    }
+
+
+    public function uploadCourseImage()
+    {
+        // Retrieve the course ID from POST data
+        $courseId = $this->request->getPost('courseId');
+
+        // Retrieve the uploaded image
+        $file = $this->request->getFile('courseImage');
+
+        // Validate if the file is valid
+        if (!$file->isValid()) {
+            return $this->fail($file->getErrorString(), 400);
+        }
+
+        // Validate the file type (only allow image types)
         $mimeType = $file->getMimeType();
         if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.', 400);
         }
 
-        // Validate file type and size
+        // Validate file size (limit to 2MB)
         if ($file->getSize() > 2048 * 1024) {
-            return $this->fail('Invalid file type or size exceeds 2MB');
+            return $this->fail('File size exceeds 2MB', 400);
         }
 
-        // Generate a random file name and move the file
+        // Generate a random name for the uploaded file
         $newName = $file->getRandomName();
         $filePath = '/uploads/' . $newName;
-        $file->move(WRITEPATH . '../public/uploads', $newName);
 
-        // Save file and additional data in the database
+        // Move the file to the designated directory
+        if (!$file->move(WRITEPATH . '../public/uploads', $newName)) {
+            return $this->fail('Failed to move the file to the server directory.', 500);
+        }
+
+        // Prepare the data to be saved
         $data = [
-            'photoUrl' => $newName,
+            'courseImage' => $newName,
         ];
 
-        $model = new CourseModel();
-        $model->update($courseId,$data);
+        // Connect to the tenant's database
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
 
-        return $this->respond([
-            'status' => 201,
-            'message' => 'File and data uploaded successfully',
-            'data' => $data,
-        ]);
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        $courseModel = new CourseModel($db);
+
+        // Update the course with the new image URL
+        $update = $courseModel->update($courseId, $data);
+
+        if ($update) {
+            return $this->respond([
+                'status' => 201,
+                'message' => 'Course image uploaded successfully',
+                'data' => $data,
+            ]);
+        } else {
+            return $this->fail('Failed to update course with the image.', 500);
+        }
     }
 
+    public function createFee(){
+        $input = $this->request->getJSON();
 
-    public function getCourseById($courseId)
-{
-    // Retrieve tenantConfig from the headers
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
+        // Validation rules for other fields
+        $rules = [
+            'perticularName' => ['rules' => 'required'],
+            'amount' => ['rules' => 'required'],
+        ];
+
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $feeModel = new FeeModel($db);
+
+            // Save the fee
+            $feeModel->insert($input);
+
+            return $this->respond([
+                'status' => 201,
+                'message' => 'Fee created successfully',
+                'data' => $data,
+            ]);
+        }
     }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
-    // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
-
-    // Load the CourseModel with the tenant database connection
-    $courseModel = new CourseModel($db);
-
-    // Fetch course by ID
-    $course = $courseModel->find($courseId); // find method returns a single record by its ID
-
-    // Check if course was found
-    if (!$course) {
-        throw new \Exception('Course not found.');
-    }
-
-    // Respond with the course data
-    return $this->respond(["status" => true, "message" => "Course fetched successfully", "data" => $course], 200);
-}
-
-
-public function uploadCourseImage()
-{
-    // Retrieve the course ID from POST data
-    $courseId = $this->request->getPost('courseId');
-
-    // Retrieve the uploaded image
-    $file = $this->request->getFile('courseImage');
-
-    // Validate if the file is valid
-    if (!$file->isValid()) {
-        return $this->fail($file->getErrorString(), 400);
-    }
-
-    // Validate the file type (only allow image types)
-    $mimeType = $file->getMimeType();
-    if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-        return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.', 400);
-    }
-
-    // Validate file size (limit to 2MB)
-    if ($file->getSize() > 2048 * 1024) {
-        return $this->fail('File size exceeds 2MB', 400);
-    }
-
-    // Generate a random name for the uploaded file
-    $newName = $file->getRandomName();
-    $filePath = '/uploads/' . $newName;
-
-    // Move the file to the designated directory
-    if (!$file->move(WRITEPATH . '../public/uploads', $newName)) {
-        return $this->fail('Failed to move the file to the server directory.', 500);
-    }
-
-    // Prepare the data to be saved
-    $data = [
-        'courseImage' => $newName,
-    ];
-
-    // Connect to the tenant's database
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
-    // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
-    $courseModel = new CourseModel($db);
-
-    // Update the course with the new image URL
-    $update = $courseModel->update($courseId, $data);
-
-    if ($update) {
-        return $this->respond([
-            'status' => 201,
-            'message' => 'Course image uploaded successfully',
-            'data' => $data,
-        ]);
-    } else {
-        return $this->fail('Failed to update course with the image.', 500);
-    }
-}
 
 }

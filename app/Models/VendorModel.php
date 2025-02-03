@@ -12,7 +12,7 @@ class VendorModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['vendorId', 'vendorName', 'branchName', 'country', 'vendorAddress', 'state', 'gst', 'bankName', 'bankAccountNumber', 'bankIfscCode', 'bankBranch', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['vendorId', 'name', 'gender', 'mobileNo', 'alternateMobileNo', 'dateOfBirth', 'emailId', 'modifiedBy', 'modifiedDate', 'createdBy', 'createdDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

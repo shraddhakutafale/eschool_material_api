@@ -28,9 +28,9 @@ class Vendor extends BaseController
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
-        $vendorModel = new VendorModel($db);
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $vendorModel->findAll()], 200);
+        // Load VendorModel with the tenant database connection
+        $VendorModel = new VendorModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $VendorModel->findAll()], 200);
     }
 
     public function getVendorsPaging()
@@ -56,15 +56,15 @@ class Vendor extends BaseController
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
-        $vendorModel = new VendorModel($db);
-        $vendors = $vendorModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $vendorModel->pager;
+        // Load VendorModel with the tenant database connection
+        $VendorModel = new VendorModel($db);
+        $vendor = $VendorModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+        $pager = $VendorModel->pager;
 
         $response = [
             "status" => true,
             "message" => "All Data Fetched",
-            "data" => $vendors,
+            "data" => $vendor,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
@@ -75,50 +75,14 @@ class Vendor extends BaseController
         return $this->respond($response, 200);
     }
 
-    public function getVendorsWebsite()
-    {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
-        $vendorModel = new VendorModel($db);
-        $vendors = $vendorModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $vendors], 200);
-    }
-
     public function create()
     {
         $input = $this->request->getJSON();
         $rules = [
-
-            'vendorName' => ['rules' => 'required'],
-            'branchName' => ['rules' => 'required'],
-            'country' => ['rules' => 'required'],
-            'vendorAddress' => ['rules' => 'required'],
-            'state' => ['rules' => 'required'],
-            'gst' => ['rules' => 'required'],
-            'bankName' => ['rules' => 'required'],
-            'bankAccountNumber' => ['rules' => 'required'],
-            'bankIfscCode' => ['rules' => 'required'],
-            'bankBranch' => ['rules' => 'required'],
-            
-
-
-            
+            'name' => ['rules' => 'required'],
+            'mobileNo' => ['rules' => 'required']
         ];
-  
+
         if($this->validate($rules)){
             // Retrieve tenantConfig from the headers
             $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
@@ -139,7 +103,7 @@ class Vendor extends BaseController
         
             $model->insert($input);
              
-            return $this->respond(['status'=>true,'message' => 'vendor Added Successfully'], 200);
+            return $this->respond(['status'=>true,'message' => 'Vendor Added Successfully'], 200);
         }else{
             $response = [
                 'status'=>false,
@@ -147,22 +111,16 @@ class Vendor extends BaseController
                 'message' => 'Invalid Inputs'
             ];
             return $this->fail($response , 409);
-             
         }
-            
     }
 
-
-    
-
-   
     public function update()
     {
         $input = $this->request->getJSON();
         
-        // Validation rules for the course
+        // Validation rules for the vendor
         $rules = [
-            'vendorId' => ['rules' => 'required|numeric'], // Ensure courseId is provided and is numeric
+            'vendorId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
         ];
 
         // Validate the input
@@ -184,36 +142,29 @@ class Vendor extends BaseController
             $db = Database::connect($tenantConfig);
             $model = new VendorModel($db);
 
-            // Retrieve the course by courseId
+            // Retrieve the vendor by vendorId
             $vendorId = $input->vendorId;
-            $vendor = $model->find($vendorId); // Assuming find method retrieves the course
+            $vendor = $model->find($vendorId); // Assuming find method retrieves the vendor
 
             if (!$vendor) {
-                return $this->fail(['status' => false, 'message' => 'vendor not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Vendor not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude courseId if it's included)
+            // Prepare the data to be updated (exclude vendorId if it's included)
             $updateData = [
-
-                'vendorId' => $input->	vendorId,
-                'vendorName' => $input->	vendorName,
-                'branchName' => $input->branchName,
-
-                'country' => $input->country,
-                'vendorAddress' => $input->vendorAddress,
-                'state' => $input->state,
-                'gst' => $input->gst,
-                'bankName' => $input->bankName,
-                'bankAccountNumber' => $input->bankAccountNumber,
-                'bankIfscCode' => $input->bankIfscCode,
-                'bankBranch' => $input->bankBranch,
+                'name' =>$input->name,
+                'mobileNo' => $input->mobileNo,
+                'alternateMobileNo' => $input->alternateMobileNo,
+                'emailId' => $input->emailId,
+                'dateOfBirth' => $input->dateOfBirth,
+                'gender' => $input->gender
             ];
 
-            // Update the course with new data
+            // Update the vendor with new data
             $updated = $model->update($vendorId, $updateData);
 
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => ' vendor Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Vendor Updated Successfully'], 200);
             } else {
                 return $this->fail(['status' => false, 'message' => 'Failed to update vendor'], 500);
             }
@@ -228,13 +179,13 @@ class Vendor extends BaseController
         }
     }
 
-
-        public function delete()
+    public function delete()
     {
         $input = $this->request->getJSON();
         
+        // Validation rules for the vendor
         $rules = [
-            'vendorId' => ['rules' => 'required'],
+            'vendorId' => ['rules' => 'required'], // Ensure vendorId is provided and is numeric
         ];
 
         // Validate the input
@@ -256,19 +207,23 @@ class Vendor extends BaseController
             $db = Database::connect($tenantConfig);
             $model = new VendorModel($db);
 
-            // Retrieve the course by courseId
+            // Retrieve the vendor by vendorId
             $vendorId = $input->vendorId;
-            $vendor = $model->find($vendorId); // Assuming find method retrieves the course
+            $vendor = $model->find($vendorId); // Assuming find method retrieves the vendor
 
             if (!$vendor) {
-                return $this->fail(['status' => false, 'message' => 'vendor not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Vendor not found'], 404);
             }
 
-            // Proceed to delete the course
-            $deleted = $model->delete($vendorId);
+            // Proceed to delete the vendor
+            // Soft delete by marking 'isDeleted' as 1
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($vendorId, $updateData);
 
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'vendor Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Vendor Deleted Successfully'], 200);
             } else {
                 return $this->fail(['status' => false, 'message' => 'Failed to delete vendor'], 500);
             }
@@ -283,8 +238,6 @@ class Vendor extends BaseController
         }
     }
 
-    
-
     public function uploadPageProfile()
     {
         // Retrieve form fields
@@ -293,7 +246,6 @@ class Vendor extends BaseController
         // Retrieve the file
         $file = $this->request->getFile('photoUrl');
 
-        
         // Validate file
         if (!$file->isValid()) {
             return $this->fail($file->getErrorString());
@@ -320,7 +272,7 @@ class Vendor extends BaseController
         ];
 
         $model = new VendorModel();
-        $model->update($vendorId,$data);
+        $model->update($vendorId, $data);
 
         return $this->respond([
             'status' => 201,
@@ -328,39 +280,4 @@ class Vendor extends BaseController
             'data' => $data,
         ]);
     }
-
-
-    public function getVendorById($vendorId)
-{
-    // Retrieve tenantConfig from the headers
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
-    // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
-
-    // Load the CourseModel with the tenant database connection
-    $vendorModel = new VendorModel($db);
-
-    // Fetch course by ID
-    $vendor = $vendorModel->find($vendorId); // find method returns a single record by its ID
-
-    // Check if course was found
-    if (!$vendor) {
-        throw new \Exception('vendor not found.');
-    }
-
-    // Respond with the course data
-    return $this->respond(["status" => true, "message" => "vendor fetched successfully", "data" => $vendor], 200);
-}
-
 }

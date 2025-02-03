@@ -110,30 +110,6 @@ class Item extends BaseController
         return $this->respond($response, 200);
     }
 
-    public function getItemsWebsite()
-    {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
-        $ItemModel = new ItemModel($db);
-        $items = $ItemModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
-    }
-
-  
     public function create()
     {
         $input = $this->request->getJSON();
@@ -401,4 +377,112 @@ class Item extends BaseController
         $itemCategories = $model->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
     }
+
+    public function getAllItemByCategoryWeb()
+    {
+        $categoryId = $this->request->getSegment(1);
+
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }    
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $model = new Item($db);
+        $items = $model->findAllByCategoryId($categoryId);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
+    }
+
+    public function getAllItemByTagWeb()
+    {
+        $tag = $this->request->getSegment(1);
+
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $model = new Item($db);
+        $items = $model->findAllByTag($tag);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
+    }
+
+    public function getFourItemByCategoryWeb()
+    {
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }    
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $category = new ItemCategory($db);
+        $finalCategories = array();
+        $categories = $category->findAll();
+        $model = new ItemModel($db);
+        foreach($categories as $category){
+            $finalCategory = array();
+            $finalCategory['categoryId'] = $category['itemCategoryId'];
+            $finalCategory['categoryName'] = $category['itemCategoryName'];
+            $finalCategory['items'] = $model->where('itemCategoryId', $category['itemCategoryId'])->limit(4)->findAll();
+            array_push($finalCategories, $finalCategory);
+        }
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $finalCategories], 200);
+    }
+
+    public function getFourItemByTagWeb()
+    {
+        $tag = $this->request->getSegment(1);
+
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $model = new Item($db);
+        $items = $model->findAllByTag($tag);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
+    }
+
 }

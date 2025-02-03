@@ -119,7 +119,9 @@ class Member extends BaseController
             'district'=> ['rules' => 'required'], 
             'taluka'=> ['rules' => 'required'], 
             'pincode'=> ['rules' => 'required'], 
-            'fees'=> ['rules' => 'required'],         
+            'fees'=> ['rules' => 'required'],
+            'transactionId'=> ['rules' => 'required'],
+            'file'=> ['rules' => 'required']   
         ];
   
         if($this->validate($rules)){
@@ -205,6 +207,9 @@ class Member extends BaseController
                 'taluka' => $input->taluka,
                 'pincode' => $input->pincode,
                 'fees' => $input->fees,
+                'transactionId' => $input->transactionId,
+                'file' => $input->file
+
             ];
 
             // Update the course with new data
@@ -285,47 +290,57 @@ class Member extends BaseController
     }
 
 
-    public function uploadPageProfile()
-    {
-        // Retrieve form fields
-        $memberId = $this->request->getPost('memberId'); // Example field
+ // website api
+ public function createWeb()
+ {
+     $input = $this->request->getJSON();
+     $rules = [
+         'type'=> ['rules' => 'required'], 
+         'name'=> ['rules' => 'required'], 
+         'dob'=> ['rules' => 'required'],
+         'bloodGroup'=> ['rules' => 'required'],
+         'email'=> ['rules' => 'required'],
+         'mobileNo'=> ['rules' => 'required'], 
+         'address'=> ['rules' => 'required'], 
+         'state'=> ['rules' => 'required'], 
+         'district'=> ['rules' => 'required'], 
+         'taluka'=> ['rules' => 'required'], 
+         'pincode'=> ['rules' => 'required'], 
+         'fees'=> ['rules' => 'required'],
+         'transactionId'=> ['rules' => 'required'],
+         'file'=> ['rules' => 'required']   
+     ];
 
-        // Retrieve the file
-        $file = $this->request->getFile('photoUrl');
+     if($this->validate($rules)){
+         // Retrieve tenantConfig from the headers
+         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+         if (!$tenantConfigHeader) {
+             throw new \Exception('Tenant configuration not found.');
+         }
 
-        
-        // Validate file
-        if (!$file->isValid()) {
-            return $this->fail($file->getErrorString());
-        }
+         // Decode the tenantConfig JSON
+         $tenantConfig = json_decode($tenantConfigHeader, true);
 
-        $mimeType = $file->getMimeType();
-        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
-        }
+         if (!$tenantConfig) {
+             throw new \Exception('Invalid tenant configuration.');
+         }
 
-        // Validate file type and size
-        if ($file->getSize() > 2048 * 1024) {
-            return $this->fail('Invalid file type or size exceeds 2MB');
-        }
-
-        // Generate a random file name and move the file
-        $newName = $file->getRandomName();
-        $filePath = '/uploads/' . $newName;
-        $file->move(WRITEPATH . '../public/uploads', $newName);
-
-        // Save file and additional data in the database
-        $data = [
-            'photoUrl' => $newName,
-        ];
-
-        $model = new MemberModel();
-        $model->update($memberId,$data);
-
-        return $this->respond([
-            'status' => 201,
-            'message' => 'File and data uploaded successfully',
-            'data' => $data,
-        ]);
-    }
+         // Connect to the tenant's database
+         $db = Database::connect($tenantConfig);
+         $model = new MemberModel($db);
+     
+         $model->insert($input);
+          
+         return $this->respond(['status'=>true,'message' => 'Member Added Successfully'], 200);
+     }else{
+         $response = [
+             'status'=>false,
+             'errors' => $this->validator->getErrors(),
+             'message' => 'Invalid Inputs'
+         ];
+         return $this->fail($response , 409);
+          
+     }
+         
+ }
 }

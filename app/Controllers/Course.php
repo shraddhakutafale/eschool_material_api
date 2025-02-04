@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\CourseModel;
 use App\Models\FeeModel;
+use App\Models\ShiftModel;
+use App\Models\SubjectModel;
 use Config\Database;
 
 class Course extends BaseController
@@ -442,4 +444,447 @@ class Course extends BaseController
         }
     }
 
+// Shift Methods
+    public function getAllShift()
+    {
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $shiftModel = new ShiftModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $shiftModel->findAll()], 200);
+    }
+
+    public function createShift()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for other fields
+        $rules = [
+            'shiftName' => ['rules' => 'required'],
+            'startTime1' => ['rules' => 'required'],
+            'startTime2' => ['rules' => 'required'],
+       
+        ];
+    
+        // Validate the incoming data
+        if ($this->validate($rules)) {
+    
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+    
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+    
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+    
+            // Connect to the tenant's database
+            $db = \Config\Database::connect($tenantConfig);
+            $model = new \App\Models\ShiftModel($db);
+    
+            // Handle image upload
+            $image = $this->request->getFile('coverImage');
+            $imageName = null;
+    
+            if ($image && $image->isValid() && !$image->hasMoved()) {
+                // Define upload path
+                $uploadPath = WRITEPATH . 'uploads/shift_images/';
+    
+                // Ensure the directory exists
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0777, true);
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $imageName = $image->getRandomName();
+                $image->move($uploadPath, $imageName);
+    
+                // Get the URL of the uploaded image
+                $imageUrl = base_url() . '/uploads/shift_images/' . $imageName;
+                $input->coverImage = $imageUrl;  // Save the image URL
+            }
+    
+            // Insert the shift data into the database
+            $model->insert((array) $input);
+    
+            // Return success response
+            return $this->respond([
+                'status' => true,
+                'message' => 'Shift Added Successfully',
+                'data' => $input
+            ], 200);
+    
+        } else {
+            // If validation fails, return errors
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+    
+
+    public function updateShift()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the shift
+        $rules = [
+            'shiftId' => ['rules' => 'required|numeric'], // Ensure shiftId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new ShiftModel($db);
+
+            // Retrieve the shift by shiftId
+            $shiftId = $input->shiftId;
+            $shift = $model->find($shiftId); // Assuming find method retrieves the shift
+
+            if (!$shift) {
+                return $this->fail(['status' => false, 'message' => 'Shift not found'], 404);
+            }
+
+            // Prepare the data to be updated (exclude shiftId if it's included)
+            $updateData = [
+                'shiftName' => $input->shiftName,
+                'startTime1' => $input->startTime1,
+                'startTime2' => $input->startTime2,
+                'endTime1' => $input->endTime1,
+                'endTime2' => $input->endTime2,
+                'emailTime' => $input->emailTime
+              
+            ];
+
+            // Update the shift with new data
+            $updated = $model->update($shiftId, $updateData);
+
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Shift Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update Shift'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+
+    public function deleteShift()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the shift
+        $rules = [
+            'shiftId' => ['rules' => 'required'], // Ensure shiftId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new ShiftModel($db);
+
+            // Retrieve the shift by shiftId
+            $shiftId = $input->shiftId;
+            $shift = $model->find($shiftId); // Assuming find method retrieves the shift
+
+            if (!$shift) {
+                return $this->fail(['status' => false, 'message' => 'Shift not found'], 404);
+            }
+
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($shiftId, $updateData);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Shift Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete shift'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+    // Methods END SHIFT 
+ 
+
+    // Subject METHOD START
+
+    public function getAllSubject()
+    {
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $subjectModel = new SubjectModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $subjectModel->findAll()], 200);
+    }
+
+    public function createSubject()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for other fields
+        $rules = [
+           'subjectName' => ['rules' => 'required'],
+       
+        ];
+    
+        // Validate the incoming data
+        if ($this->validate($rules)) {
+    
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+    
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+    
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+    
+            // Connect to the tenant's database
+            $db = \Config\Database::connect($tenantConfig);
+            $model = new \App\Models\SubjectModel($db);
+    
+            // Handle image upload
+            $image = $this->request->getFile('coverImage');
+            $imageName = null;
+    
+            if ($image && $image->isValid() && !$image->hasMoved()) {
+                // Define upload path
+                $uploadPath = WRITEPATH . 'uploads/subject_images/';
+    
+                // Ensure the directory exists
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0777, true);
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $imageName = $image->getRandomName();
+                $image->move($uploadPath, $imageName);
+    
+                // Get the URL of the uploaded image
+                $imageUrl = base_url() . '/uploads/subject_images/' . $imageName;
+                $input->coverImage = $imageUrl;  // Save the image URL
+            }
+    
+            // Insert the subject data into the database
+            $model->insert((array) $input);
+    
+            // Return success response
+            return $this->respond([
+                'status' => true,
+                'message' => 'Subject Added Successfully',
+                'data' => $input
+            ], 200);
+    
+        } else {
+            // If validation fails, return errors
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+    
+
+    public function updateSubject()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the subject
+        $rules = [
+            'subjectId' => ['rules' => 'required|numeric'], // Ensure subjectId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new SubjectModel($db);
+
+            // Retrieve the subject by subjectId
+            $subjectId = $input->subjectId;
+            $subject = $model->find($subjectId); // Assuming find method retrieves the Subject
+
+            if (!$subject) {
+                return $this->fail(['status' => false, 'message' => 'Subject not found'], 404);
+            }
+
+            // Prepare the data to be updated (exclude subjectId if it's included)
+            $updateData = [
+                'subjectName' => $input->subjectName,
+                'subjectDesc' => $input->subjectDesc,
+              
+            ];
+
+            // Update the subject with new data
+            $updated = $model->update($subjectId, $updateData);
+
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Subject Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update Subject'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+
+    public function deleteSubject()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the subject
+        $rules = [
+            'subjectId' => ['rules' => 'required'], // Ensure subjectId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new SubjectModel($db);
+
+            // Retrieve the subject by subjectId
+            $subjectId = $input->subjectId;
+            $subject = $model->find($subjectId); // Assuming find method retrieves the Subject
+
+            if (!$subject) {
+                return $this->fail(['status' => false, 'message' => 'Subject not found'], 404);
+            }
+
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($subjectId, $updateData);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Subject Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete subject'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
 }

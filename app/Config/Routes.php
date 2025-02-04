@@ -28,13 +28,13 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('user/getrolespaging', 'User::getRolesPaging',['filter' => 'authFilter']);
 
     // Routes for Business
-    $routes->get('business/getall', 'Business::index',['filter' => 'authFilter']);
-    $routes->post('business/getallpaging', 'Business::getBusinessesPaging',['filter' => 'authFilter']);
+    $routes->get('business/getall', 'Business::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('business/getallpaging', 'Business::getBusinesssPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->get('business/view/(:segment)', 'Business::show/$1',['filter' => 'authFilter']);
-    $routes->post('business/create', 'Business::create',['filter' => 'authFilter']);
-    $routes->post('business/update', 'Business::update',['filter' => 'authFilter']);
-    $routes->delete('business/delete/(:num)', 'Business::delete/$1', ['filter' => 'authFilter']); // Delete route
-    $routes->post('business/uploadprofile', 'Business::uploadPageProfile',['filter' => 'authFilter']);
+    $routes->post('business/create', 'Business::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('business/update', 'Business::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('business/getallwebsite', 'Business::getBusinesssWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
+    $routes->post('business/delete', 'Business::delete',['filter' => ['authFilter','tenantFilter']]); 
 
     // Routes for courses
     $routes->get('course/getall', 'Course::index',['filter' => ['authFilter', 'tenantFilter']]);
@@ -45,6 +45,16 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('course/delete', 'Course::delete',['filter' => ['authFilter','tenantFilter']]); // Get all courses for website
     $routes->get('course/getallwebsite', 'Course::getCoursesWebsite',['filter' => ['tenantFilter']]);
 
+    $routes->get('course/getallshift', 'Course::getAllShift',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('course/createshift', 'Course::createShift',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('course/updateshift', 'Course::updateShift',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('course/deleteshift', 'Course::deleteShift',['filter' => ['authFilter','tenantFilter']]);
+
+    $routes->get('course/getallsubject', 'Course::getAllSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('course/createsubject', 'Course::createSubject',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('course/updatesubject', 'Course::updateSubject',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('course/deletesubject', 'Course::deleteSubject',['filter' => ['authFilter','tenantFilter']]);
+    
     //Routes for event
     $routes->get('event/getall', 'Event::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('event/getallpaging', 'Event::getEventsPaging',['filter' => ['authFilter', 'tenantFilter']]);

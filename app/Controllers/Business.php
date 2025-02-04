@@ -47,12 +47,6 @@ class Business extends BaseController
 
             'primaryContactNo' => ['rules' => 'required'],
 
-
-
-
-
-
-
         ];
   
         if($this->validate($rules)){
@@ -71,50 +65,6 @@ class Business extends BaseController
              
         }
             
-    }
-
-    public function uploadPageProfile()
-    {
-        // Retrieve form fields
-        $pageId = $this->request->getPost('pageId'); // Example field
-
-        // Retrieve the file
-        $file = $this->request->getFile('photoUrl');
-
-        
-        // Validate file
-        if (!$file->isValid()) {
-            return $this->fail($file->getErrorString());
-        }
-
-        $mimeType = $file->getMimeType();
-        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
-        }
-
-        // Validate file type and size
-        if ($file->getSize() > 2048 * 1024) {
-            return $this->fail('Invalid file type or size exceeds 2MB');
-        }
-
-        // Generate a random file name and move the file
-        $newName = $file->getRandomName();
-        $filePath = '/uploads/' . $newName;
-        $file->move(WRITEPATH . '../public/uploads', $newName);
-
-        // Save file and additional data in the database
-        $data = [
-            'photoUrl' => $newName,
-        ];
-
-        $model = new BusinessModel();
-        $model->update($pageId,$data);
-
-        return $this->respond([
-            'status' => 201,
-            'message' => 'File and data uploaded successfully',
-            'data' => $data,
-        ]);
     }
 
     public function getBusinessesPaging()
@@ -151,6 +101,7 @@ class Business extends BaseController
 
         return $this->respond($response, 200);
     }
+
     public function update($id = null)
     {
         // Ensure the business ID is provided
@@ -178,9 +129,9 @@ class Business extends BaseController
             return $this->failValidationErrors($this->validator->getErrors());
         }
     
-        // Check if logo or cover files are uploaded
-        $logoFile = $this->request->getFile('businessLogo');
-        $coverFile = $this->request->getFile('businessCover');
+        // // Check if logo or cover files are uploaded
+        // $logoFile = $this->request->getFile('businessLogo');
+        // $coverFile = $this->request->getFile('businessCover');
     
         $data = [
             'businessName' => $input->businessName,
@@ -193,19 +144,19 @@ class Business extends BaseController
             'tags' => $input->tags,
         ];
     
-        // Handle logo upload if provided
-        if ($logoFile && $logoFile->isValid() && !$logoFile->hasMoved()) {
-            $newLogoName = $logoFile->getRandomName();
-            $logoFile->move(WRITEPATH . '../public/uploads', $newLogoName);
-            $data['businessLogo'] = $newLogoName;
-        }
+        // // Handle logo upload if provided
+        // if ($logoFile && $logoFile->isValid() && !$logoFile->hasMoved()) {
+        //     $newLogoName = $logoFile->getRandomName();
+        //     $logoFile->move(WRITEPATH . '../public/uploads', $newLogoName);
+        //     $data['businessLogo'] = $newLogoName;
+        // }
     
-        // Handle cover upload if provided
-        if ($coverFile && $coverFile->isValid() && !$coverFile->hasMoved()) {
-            $newCoverName = $coverFile->getRandomName();
-            $coverFile->move(WRITEPATH . '../public/uploads', $newCoverName);
-            $data['businessCover'] = $newCoverName;
-        }
+        // // Handle cover upload if provided
+        // if ($coverFile && $coverFile->isValid() && !$coverFile->hasMoved()) {
+        //     $newCoverName = $coverFile->getRandomName();
+        //     $coverFile->move(WRITEPATH . '../public/uploads', $newCoverName);
+        //     $data['businessCover'] = $newCoverName;
+        // }
     
         $businessModel = new BusinessModel();
         $result = $businessModel->update($id, $data);

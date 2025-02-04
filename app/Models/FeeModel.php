@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class FeeModel extends Model
 {
-    protected $table            = 'fees';
-    protected $primaryKey       = 'id';
+    protected $table            = 'fee_mst';
+    protected $primaryKey       = 'feeId ';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['feeId', 'perticularName', 'amount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modeifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

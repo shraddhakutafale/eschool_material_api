@@ -30,31 +30,15 @@ class Business extends BaseController
         $input = $this->request->getJSON();
         $rules = [
             'businessName' => ['rules' => 'required'],
-            'businessDesc' => ['rules' => 'required'],
-
-
-            'address' => ['rules' => 'required'],
-
-            'businessCategoryId' => ['rules' => 'required'],
-
-            'secondaryContactNo' => ['rules' => 'required'],
-            'tags' => ['rules' => 'required'],
-
-            'email' => ['rules' => 'required'],
-
-            'createdDate' => ['rules' => 'required'],
-
-
-            'primaryContactNo' => ['rules' => 'required'],
 
         ];
   
         if($this->validate($rules)){
             $model = new BusinessModel();
-        
+
             $model->insert($input);
              
-            return $this->respond(['status'=>true,'message' => 'Page Added Successfully'], 200);
+            return $this->respond(['status'=>true,'message' => 'Business Added Successfully'], 200);
         }else{
             $response = [
                 'status'=>false,
@@ -102,71 +86,112 @@ class Business extends BaseController
         return $this->respond($response, 200);
     }
 
-    public function update($id = null)
+    public function update()
     {
-        // Ensure the business ID is provided
-        if (!$id) {
-            return $this->failNotFound('Business ID is required');
-        }
-    
-        // Retrieve JSON data from the request
         $input = $this->request->getJSON();
-    
-        // Define validation rules
+        
+        // Validation rules for the course
         $rules = [
-            'businessName' => ['rules' => 'required'],
-            'businessDesc' => ['rules' => 'required'],
-            'address' => ['rules' => 'required'],
-            'businessCategoryId' => ['rules' => 'required'],
-            'primaryContactNo' => ['rules' => 'required'],
-            'secondaryContactNo' => ['rules' => 'required'],
-            'email' => ['rules' => 'required|valid_email'],
-            'tags' => ['rules' => 'required']
+            'businessId' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
         ];
-    
-        // Validate input data
-        if (!$this->validate($rules)) {
-            return $this->failValidationErrors($this->validator->getErrors());
-        }
-    
-        // // Check if logo or cover files are uploaded
-        // $logoFile = $this->request->getFile('businessLogo');
-        // $coverFile = $this->request->getFile('businessCover');
-    
-        $data = [
-            'businessName' => $input->businessName,
-            'businessDesc' => $input->businessDesc,
-            'address' => $input->address,
-            'businessCategoryId' => $input->businessCategoryId,
-            'primaryContactNo' => $input->primaryContactNo,
-            'secondaryContactNo' => $input->secondaryContactNo,
-            'email' => $input->email,
-            'tags' => $input->tags,
-        ];
-    
-        // // Handle logo upload if provided
-        // if ($logoFile && $logoFile->isValid() && !$logoFile->hasMoved()) {
-        //     $newLogoName = $logoFile->getRandomName();
-        //     $logoFile->move(WRITEPATH . '../public/uploads', $newLogoName);
-        //     $data['businessLogo'] = $newLogoName;
-        // }
-    
-        // // Handle cover upload if provided
-        // if ($coverFile && $coverFile->isValid() && !$coverFile->hasMoved()) {
-        //     $newCoverName = $coverFile->getRandomName();
-        //     $coverFile->move(WRITEPATH . '../public/uploads', $newCoverName);
-        //     $data['businessCover'] = $newCoverName;
-        // }
-    
-        $businessModel = new BusinessModel();
-        $result = $businessModel->update($id, $data);
-    
-        if ($result) {
-            return $this->respond(['status' => true, 'message' => 'Business updated successfully', 'data' => $data], 200);
+
+        // Validate the input
+        if ($this->validate($rules)) {
+           
+            // Connect to the tenant's database
+            $model = new BusinessModel();
+
+            // Retrieve the course by eventId
+            $businessId = $input->businessId;
+            $business = $model->find($businessId); // Assuming find method retrieves the course
+
+            if (!$business) {
+                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
+            }
+
+            // Prepare the data to be updated (exclude eventId if it's included)
+            $updateData = [
+                'businessName' => $input->businessName,
+                'businessDesc' => $input->businessDesc,
+                'timings' => $input->timings,
+                'aboutUs' => $input->aboutUs,
+                'address' => $input->address,
+                'tags' => $input->tags,
+                'businessCategoryId' => $input->businessCategoryId,
+                'photoBase64Url' => $input->photoBase64Url,
+                'logoUrl' => $input->logoUrl,
+                'themeColor' => $input->themeColor,
+                'primaryContactNo' => $input->primaryContactNo,
+                'secondaryContactNo' => $input->secondaryContactNo,
+                'pageUrl' => $input->pageUrl,
+                'userId' => $input->userId,
+
+            ];
+
+            // Update the course with new data
+            $updated = $model->update($businessId, $updateData);
+
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Business Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update Business'], 500);
+            }
         } else {
-            return $this->failServerError('Failed to update business');
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
     }
-    
+
+    public function delete()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the course
+        $rules = [
+            'businessId' => ['rules' => 'required'], 
+
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+
+          
+
+            // Connect to the tenant's database
+            $model = new BusinessModel();
+
+            // Retrieve the business by eventId
+            $businessId = $input->businessId;
+            $business = $model->find($businessId); 
+
+            if (!$business) {
+                return $this->fail(['status' => false, 'message' => 'Business not found'], 404);
+            }
+
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($businessId, $updateData);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Business Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete Business'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
     
 }

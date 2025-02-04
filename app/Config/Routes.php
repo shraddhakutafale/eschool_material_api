@@ -29,11 +29,11 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
     // Routes for Business
     $routes->get('business/getall', 'Business::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('business/getallpaging', 'Business::getBusinesssPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('business/getallpaging', 'Business::getBusinessesPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->get('business/view/(:segment)', 'Business::show/$1',['filter' => 'authFilter']);
     $routes->post('business/create', 'Business::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('business/update', 'Business::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('business/getallwebsite', 'Business::getBusinesssWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
+    $routes->get('business/getallwebsite', 'Business::getBusinessesWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
     $routes->post('business/delete', 'Business::delete',['filter' => ['authFilter','tenantFilter']]); 
 
     // Routes for courses
@@ -54,6 +54,11 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('course/createsubject', 'Course::createSubject',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('course/updatesubject', 'Course::updateSubject',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('course/deletesubject', 'Course::deleteSubject',['filter' => ['authFilter','tenantFilter']]);
+
+    $routes->get('course/getallfee', 'Course::getAllFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('course/createfee', 'Course::createFee',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('course/updatefee', 'Course::updateFee',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('course/deletefee', 'Course::deleteFee',['filter' => ['authFilter','tenantFilter']]);
     
     //Routes for event
     $routes->get('event/getall', 'Event::index',['filter' => ['authFilter', 'tenantFilter']]);

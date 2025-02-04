@@ -406,15 +406,114 @@ class Course extends BaseController
         }
     }
 
-    public function createFee(){
-        $input = $this->request->getJSON();
+    // FEE METHOD
 
+    public function getAllFee()
+    {
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $feeModel = new FeeModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $feeModel->findAll()], 200);
+    }
+
+    public function createFee()
+    {
+        $input = $this->request->getJSON();
+        
         // Validation rules for other fields
         $rules = [
             'perticularName' => ['rules' => 'required'],
-            'amount' => ['rules' => 'required'],
+       
+        ];
+    
+        // Validate the incoming data
+        if ($this->validate($rules)) {
+    
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+    
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+    
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+    
+            // Connect to the tenant's database
+            $db = \Config\Database::connect($tenantConfig);
+            $model = new \App\Models\FeeModel($db);
+    
+            // Handle image upload
+            $image = $this->request->getFile('coverImage');
+            $imageName = null;
+    
+            if ($image && $image->isValid() && !$image->hasMoved()) {
+                // Define upload path
+                $uploadPath = WRITEPATH . 'uploads/fee_images/';
+    
+                // Ensure the directory exists
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0777, true);
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $imageName = $image->getRandomName();
+                $image->move($uploadPath, $imageName);
+    
+                // Get the URL of the uploaded image
+                $imageUrl = base_url() . '/uploads/fee_images/' . $imageName;
+                $input->coverImage = $imageUrl;  // Save the image URL
+            }
+    
+            // Insert the fee data into the database
+            $model->insert((array) $input);
+    
+            // Return success response
+            return $this->respond([
+                'status' => true,
+                'message' => 'Fee Added Successfully',
+                'data' => $input
+            ], 200);
+    
+        } else {
+            // If validation fails, return errors
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+   
+
+    public function updateFee()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the FEE
+        $rules = [
+            'feeId' => ['rules' => 'required|numeric'], // Ensure shiftId is provided and is numeric
         ];
 
+        // Validate the input
         if ($this->validate($rules)) {
             // Retrieve tenantConfig from the headers
             $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
@@ -431,18 +530,103 @@ class Course extends BaseController
 
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
-            $feeModel = new FeeModel($db);
+            $model = new FeeModel($db);
 
-            // Save the fee
-            $feeModel->insert($input);
+            // Retrieve the fee by feeId
+            $feeId = $input->feeId;
+            $fee = $model->find($feeId); // Assuming find method retrieves the fee
 
-            return $this->respond([
-                'status' => 201,
-                'message' => 'Fee created successfully',
-                'data' => $data,
-            ]);
+            if (!$fee) {
+                return $this->fail(['status' => false, 'message' => 'Fee not found'], 404);
+            }
+
+            // Prepare the data to be updated (exclude feeId if it's included)
+            $updateData = [
+                'perticularName' => $input->perticularName,
+                'amount' => $input->amount,
+              
+            ];
+
+            // Update the fee with new data
+            $updated = $model->update($feeId, $updateData);
+
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Fee Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update Fee'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
     }
+
+
+    public function deleteFee()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the shift
+        $rules = [
+            'feeId' => ['rules' => 'required'], // Ensure shiftId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new FeeModel($db);
+
+            // Retrieve the fee by feeId
+            $feeId = $input->feeId;
+            $fee = $model->find($feeId); // Assuming find method retrieves the Fee
+
+            if (!$fee) {
+                return $this->fail(['status' => false, 'message' => 'Fee not found'], 404);
+            }
+
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($feeId, $updateData);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Fee Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete fee'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+  // END FEE METHODS
+
+
 
 // Shift Methods
     public function getAllShift()

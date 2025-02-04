@@ -205,16 +205,15 @@ class Customer extends BaseController
     }
 
 
-
     public function delete()
     {
         $input = $this->request->getJSON();
-        
-        // Validation rules for the customer
+    
+        // Validation rules for the staff
         $rules = [
-            'customerId' => ['rules' => 'required'], // Ensure customerId is provided and is numeric
+            'staffId' => ['rules' => 'required'], // Ensure staffId is provided and is numeric
         ];
-
+    
         // Validate the input
         if ($this->validate($rules)) {
             // Retrieve tenantConfig from the headers
@@ -222,38 +221,36 @@ class Customer extends BaseController
             if (!$tenantConfigHeader) {
                 throw new \Exception('Tenant configuration not found.');
             }
-
+    
             // Decode the tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-
+    
             if (!$tenantConfig) {
                 throw new \Exception('Invalid tenant configuration.');
             }
-
+    
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
-            $model = new CustomerModel($db);
-
-            // Retrieve the customer by customerId
-            $customerId = $input->customerId;
-            $customer = $model->find($customerId); // Assuming find method retrieves the customer
-
-            if (!$customer) {
-                return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
+            $model = new StaffModel($db);
+    
+            // Retrieve the staff by staffId
+            $staffId = $input->staffId;
+            $staff = $model->find($staffId); // Assuming find method retrieves the staff
+    
+            if (!$staff) {
+                return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
             }
-
-            // Proceed to delete the customer
-            // Proceed to delete the course
+    
+            // Proceed to delete the staff (mark as deleted)
             $updateData = [
-         'isDeleted' => 1,
-];
-$deleted = $model->update($customerId, $updateData);
-
-
+                'isDeleted' => 1, // Mark the staff as deleted
+            ];
+            $deleted = $model->update($staffId, $updateData);
+    
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Customer Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Staff Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete customer'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete staff'], 500);
             }
         } else {
             // Validation failed
@@ -265,8 +262,7 @@ $deleted = $model->update($customerId, $updateData);
             return $this->fail($response, 409);
         }
     }
-
-
+    
     public function uploadPageProfile()
     {
         // Retrieve form fields

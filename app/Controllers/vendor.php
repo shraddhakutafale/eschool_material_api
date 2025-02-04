@@ -178,16 +178,15 @@ class Vendor extends BaseController
             return $this->fail($response, 409);
         }
     }
-
     public function delete()
     {
         $input = $this->request->getJSON();
         
         // Validation rules for the vendor
         $rules = [
-            'vendorId' => ['rules' => 'required'], // Ensure vendorId is provided and is numeric
+            'vendorId' => ['rules' => 'required'], // Ensure vendorId is provided
         ];
-
+    
         // Validate the input
         if ($this->validate($rules)) {
             // Retrieve tenantConfig from the headers
@@ -195,33 +194,32 @@ class Vendor extends BaseController
             if (!$tenantConfigHeader) {
                 throw new \Exception('Tenant configuration not found.');
             }
-
+    
             // Decode the tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-
             if (!$tenantConfig) {
                 throw new \Exception('Invalid tenant configuration.');
             }
-
+    
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
             $model = new VendorModel($db);
-
+    
             // Retrieve the vendor by vendorId
             $vendorId = $input->vendorId;
-            $vendor = $model->find($vendorId); // Assuming find method retrieves the vendor
-
+            $vendor = $model->find($vendorId); // Assuming the find method retrieves the vendor
+    
             if (!$vendor) {
                 return $this->fail(['status' => false, 'message' => 'Vendor not found'], 404);
             }
-
+    
             // Proceed to delete the vendor
             // Soft delete by marking 'isDeleted' as 1
             $updateData = [
                 'isDeleted' => 1,
             ];
             $deleted = $model->update($vendorId, $updateData);
-
+    
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Vendor Deleted Successfully'], 200);
             } else {
@@ -237,7 +235,7 @@ class Vendor extends BaseController
             return $this->fail($response, 409);
         }
     }
-
+    
     public function uploadPageProfile()
     {
         // Retrieve form fields

@@ -172,6 +172,17 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
         $routes->post('blog/delete', 'Blog::delete',['filter' => ['authFilter','tenantFilter']]);
       
 
+                   
+  //Routes for staff
+  $routes->get('staff/getall', 'Staff::index',['filter' => ['authFilter', 'tenantFilter']]);
+  $routes->post('staff/getallpaging', 'Staff::getStaffsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+  $routes->get('staff/view/(:segment)', 'Staff::show/$1',['filter' => 'authFilter']);
+  $routes->post('staff/create', 'Staff::create',['filter' => ['authFilter','tenantFilter']]);
+  $routes->post('staff/update', 'Staff::update',['filter' => ['authFilter','tenantFilter']]);
+  $routes->get('staff/getallwebsite', 'Staff::getStaffsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+  $routes->post('staff/delete', 'Staff::delete',['filter' => ['authFilter','tenantFilter']]);
+
+
          //Routes for vendor
          $routes->get('vendor/getall', 'Vendor::index',['filter' => ['authFilter', 'tenantFilter']]);
          $routes->post('vendor/getallpaging', 'Vendor::getVendorsPaging',['filter' => ['authFilter', 'tenantFilter']]);

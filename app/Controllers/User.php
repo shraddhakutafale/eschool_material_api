@@ -62,6 +62,60 @@ class User extends BaseController
         return $this->respond($user, 200);
     }
 
+    public function menu()
+    {
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $tenant = $this->request->getHeader('Tenant');
+        $token = null;
+  
+        // extract the token from the header
+        if(!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
+        }
+        
+        if(!empty($tenant)) {
+            
+        }
+        
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $userModel = new UserModel();
+        $rolePermissionModel = new RolePermissionModel();
+        $rightModel = new RightModel();
+        $roleModel = new RoleModel();
+
+        $input = $this->request->getJSON();
+        
+        $user = $userModel->where('email', $decoded->email)->first();
+
+        $role = $roleModel->where('roleId', $user['roleId'])->first();
+        $user['role'] = $role;
+
+        $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->findAll();
+        $menu = [];
+        foreach($rolePermissions as $key => $rolePermission){
+            $right = $rightModel->where('rightId', $rolePermission['rightId'])->where('parentRightId',0)->first();
+            $menu[$key]['route'] = $right->rightName;
+            $menu[$key]['name'] = $right->rightName;
+            $menu[$key]['icon'] = $right->iconUrl;
+        
+            $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
+            foreach($subMenus as $key => $subMenu){
+                $subMenu['route'] = $subMenu->rightName;
+                $subMenu['name'] = $subMenu->rightName;
+                $subMenu['icon'] = $subMenu->iconUrl;
+                array_push($menu[$key]['children'], $subMenu);
+            }
+        }
+        if(is_null($user)) {
+            return $this->respond(['status' => false, 'message' => 'User not found.'], 404);
+        }
+         
+        return $this->respond(['menu' => $menu], 200);
+    }
+
     // public function login()
     // {
     //     $userModel = new UserModel();
@@ -184,6 +238,7 @@ class User extends BaseController
         $rules = [
             'name' => ['rules' => 'required|min_length[4]|max_length[255]'],
             'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[user_mst.email]'],
+            'mobile' => ['rules' => 'required|min_length[10]|max_length[10]|is_unique[user_mst.mobileNo]'],
             'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
             'confirmPassword'  => [ 'label' => 'confirm password', 'rules' => 'matches[password]']
         ];
@@ -192,7 +247,7 @@ class User extends BaseController
             $model = new UserModel();
             $data = [
                 'name'     => $input->name,
-                'mobileNo' => $input->mobileNo,
+                'mobileNo' => $input->mobile,
                 'email'    => $input->email,
                 'password' => password_hash($input->password, PASSWORD_DEFAULT)
             ];

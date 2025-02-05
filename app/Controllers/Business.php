@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BusinessModel;
 use App\Models\BusinessCategoryModel;
+use App\Models\UserBusiness;
 
 class Business extends BaseController
 {
@@ -30,23 +31,28 @@ class Business extends BaseController
         $input = $this->request->getJSON();
         $rules = [
             'businessName' => ['rules' => 'required'],
-
+            'userId' => ['rules' => 'required'],
         ];
   
         if($this->validate($rules)){
             $model = new BusinessModel();
+            $userBusiness = new UserBusiness();
 
-            $model->insert($input);
+            if($model->insert($input)){
+                $userBusiness->insert(['userId' => $input->userId, 'businessId' => $model->getInsertID()]);
+                return $this->respond(["status" => true, 'message' => 'Business Created Successfully'], 200);
+            }else{
+                return $this->respond(["status" => false, 'message' => 'Business Not Created'], 200);
+            }
              
-            return $this->respond(['status'=>true,'message' => 'Business Added Successfully'], 200);
+            
         }else{
             $response = [
                 'status'=>false,
                 'errors' => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
             ];
-            return $this->fail($response , 409);
-             
+            return $this->response($response , 409);
         }
             
     }
@@ -192,6 +198,20 @@ class Business extends BaseController
             ];
             return $this->fail($response, 409);
         }
+    }
+
+    public function getAllBusinessByUser($userId){
+
+        $model = new UserBusiness();
+        $businessModel = new BusinessModel();
+        $userBusinesses = $model->where('userId', $userId)->findAll();
+        $businesses = array();
+        foreach ($userBusinesses as $key => $userBusiness) {
+            $business = $businessModel->find($userBusiness['businessId']);
+            array_push($businesses, $business);
+        }
+        return $this->respond(['status' => true, 'message' => 'All Business Fetched', 'data' => $businesses], 200);
+
     }
     
 }

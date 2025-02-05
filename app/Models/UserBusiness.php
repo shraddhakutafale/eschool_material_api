@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class RightModel extends Model
+class UserBusiness extends Model
 {
-    protected $table            = 'right_mst';
-    protected $primaryKey       = 'rightId';
+    protected $table            = 'user_business';
+    protected $primaryKey       = 'userBusinessId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['rightId', 'rightName', 'rightLabel', 'iconUrl', 'route', 'color', 'value', 'parentRightId', 'priority', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['userBusinessId', 'userId', 'businessId', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modeifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -23,9 +23,9 @@ class RightModel extends Model
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'createdDate';
-    protected $updatedField  = 'modifiedDate';
-    protected $deletedField  = 'deletedDate';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];

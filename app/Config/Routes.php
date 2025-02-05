@@ -22,6 +22,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->delete('user/delete/(:segment)', 'User::delete/$1',['filter' => 'authFilter']); // Delete an item
     $routes->post('user/login', 'User::login');
     $routes->get('user/profile', 'User::profile',['filter' => 'authFilter']);
+    $routes->get('user/menu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('user/register', 'User::register');
 
     // Routes for roles
@@ -30,7 +31,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     // Routes for Business
     $routes->get('business/getall', 'Business::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('business/getallpaging', 'Business::getBusinessesPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('business/view/(:segment)', 'Business::show/$1',['filter' => 'authFilter']);
+    $routes->get('business/getallbyuser/(:segment)', 'Business::getAllBusinessByUser/$1',['filter' => 'authFilter']);
     $routes->post('business/create', 'Business::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('business/update', 'Business::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('business/getallwebsite', 'Business::getBusinessesWebsite',['filter' => ['tenantFilter']]); // Get all customer for website

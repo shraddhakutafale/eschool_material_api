@@ -121,6 +121,7 @@ class Member extends BaseController
             'pincode'=> ['rules' => 'required'], 
             'fees'=> ['rules' => 'required'],
             'transactionId'=> ['rules' => 'required'],
+            'aadharCard'=> ['rules' => 'required'],
             'file'=> ['rules' => 'required']   
         ];
   
@@ -208,6 +209,7 @@ class Member extends BaseController
                 'pincode' => $input->pincode,
                 'fees' => $input->fees,
                 'transactionId' => $input->transactionId,
+                'aadharCard' => $input->aadharCard,
                 'file' => $input->file
 
             ];
@@ -308,6 +310,7 @@ class Member extends BaseController
          'pincode'=> ['rules' => 'required'], 
          'fees'=> ['rules' => 'required'],
          'transactionId'=> ['rules' => 'required'],
+         'aadharCard'=> ['rules' => 'required'],
          'file'=> ['rules' => 'required']   
      ];
 

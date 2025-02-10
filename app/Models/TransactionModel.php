@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class MemberTransaction extends Model
 {
-    protected $table            = 'member_transaction';
+    protected $table            = 'transaction_mst';
     protected $primaryKey       = 'transactionId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -23,8 +23,8 @@ class MemberTransaction extends Model
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+    protected $createdField  = 'createdDate';
+    protected $updatedField  = 'modifiedDate';
     protected $deletedField  = 'deleted_at';
 
     // Validation

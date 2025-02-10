@@ -17,11 +17,12 @@ class EmailService
             'SMTPHost'  => $smtpConfig['smtpHost'],
             'SMTPUser'  => $smtpConfig['smtpUser'],
             'SMTPPass'  => $smtpConfig['smtpPass'],
-            'SMTPPort'  => $smtpConfig['smtpPort'],
+            'SMTPPort'  => (int)$smtpConfig['smtpPort'],
             'SMTPCrypto' => 'tls', // tls or ssl
             'mailType'  => 'html',
             'charset'   => 'utf-8',
             'wordWrap'  => true,
+            'newline' => '\r\n'
         ];
 
         $email->initialize($config);

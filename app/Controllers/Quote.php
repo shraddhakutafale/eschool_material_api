@@ -3,13 +3,15 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\API\ResponseTrait;
 use App\Models\SmtpConfig;
 use App\Libraries\EmailService;
 use Config\Database;
 
 class Quote extends BaseController
 {
+    use ResponseTrait;
+    
     public function index()
     {
         //

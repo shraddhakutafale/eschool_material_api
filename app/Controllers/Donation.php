@@ -12,15 +12,56 @@ class Donation extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
+  public function index()
     {
-        //
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        // Load UserModel with the tenant database connection
+        $donationModel = new DonationModel($db);
+        $response = [
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $donationModel->findAll(),
+        ];
+        return $this->respond($response, 200);
     }
 
     public function createWeb()
     {
         $input = $this->request->getJSON();
         $rules = [
+            'name'=> ['rules' => 'required'], 
+            'aadharCard'=> ['rules' => 'required'],
+            'panNo'=> ['rules' => 'required'],
+            'email'=> ['rules' => 'required'],
+            'mobileNo'=> ['rules' => 'required'], 
+            'address'=> ['rules' => 'required'], 
+            'state'=> ['rules' => 'required'], 
+            'district'=> ['rules' => 'required'], 
+            'taluka'=> ['rules' => 'required'], 
+            'pincode'=> ['rules' => 'required'], 
+            'receiptNo'=> ['rules' => 'required'],
+            'donationDate'=> ['rules' => 'required'],
+            'financialNo'=> ['rules' => 'required'],
+            'amount'=> ['rules' => 'required'],
+            'amountInWords'=> ['rules' => 'required'],
+            'transactionNo' => ['rules' => 'required'],
+            'transactionDate' => ['rules' => 'required'],
+            'paymentMode' => ['rules' => 'required'],
+            'status' => ['rules' => 'required']
             
         ];
 
@@ -42,10 +83,9 @@ class Donation extends BaseController
             $db = Database::connect($tenantConfig);
 
             $donation = [
-                'type' => $input->type,
                 'name' => $input->name,
-                'dob' => $input->dob,
-                'bloodGroup' => $input->bloodGroup,
+                'aadharCard' => $input->aadharCard,
+                'panNo' => $input->panNo,
                 'email' => $input->email,
                 'mobileNo' => $input->mobileNo,
                 'address' => $input->address,
@@ -53,8 +93,12 @@ class Donation extends BaseController
                 'district' => $input->district,
                 'taluka' => $input->taluka,
                 'pincode' => $input->pincode,
-                'fees' => $input->fees,
-                'aadharCard' => $input->aadharCard
+                'receiptNo' => $input->receiptNo,
+                'donationDate' => $input->donationDate,
+                'financialNo' => $input->financialNo,
+                'amount' => $input->amount,
+                'amountInWords' => $input->amountInWords,
+
             ];
 
             $model = new DonationModel($db);
@@ -73,7 +117,7 @@ class Donation extends BaseController
             $modelTransaction = new TransactionModel($db);
             $modelTransaction->insert($transaction);
             
-            return $this->respond(['status'=>true,'message' => 'Member Added Successfully'], 200);
+            return $this->respond(['status'=>true,'message' => 'Donation Added Successfully'], 200);
         }else{
             $response = [
                 'status'=>false,

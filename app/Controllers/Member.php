@@ -292,58 +292,132 @@ class Member extends BaseController
     }
 
 
- // website api
- public function createWeb()
- {
-     $input = $this->request->getJSON();
-     $rules = [
-         'type'=> ['rules' => 'required'], 
-         'name'=> ['rules' => 'required'], 
-         'dob'=> ['rules' => 'required'],
-         'bloodGroup'=> ['rules' => 'required'],
-         'email'=> ['rules' => 'required'],
-         'mobileNo'=> ['rules' => 'required'], 
-         'address'=> ['rules' => 'required'], 
-         'state'=> ['rules' => 'required'], 
-         'district'=> ['rules' => 'required'], 
-         'taluka'=> ['rules' => 'required'], 
-         'pincode'=> ['rules' => 'required'], 
-         'fees'=> ['rules' => 'required'],
-         'transactionId'=> ['rules' => 'required'],
-         'aadharCard'=> ['rules' => 'required'],
-         'file'=> ['rules' => 'required']   
-     ];
+    // website api
+    public function createWeb()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'type'=> ['rules' => 'required'], 
+            'name'=> ['rules' => 'required'], 
+            'dob'=> ['rules' => 'required'],
+            'bloodGroup'=> ['rules' => 'required'],
+            'email'=> ['rules' => 'required'],
+            'mobileNo'=> ['rules' => 'required'], 
+            'address'=> ['rules' => 'required'], 
+            'state'=> ['rules' => 'required'], 
+            'district'=> ['rules' => 'required'], 
+            'taluka'=> ['rules' => 'required'], 
+            'pincode'=> ['rules' => 'required'], 
+            'fees'=> ['rules' => 'required'],
+            'aadharCard'=> ['rules' => 'required'],
+            'transactionNo' => ['rules' => 'required'],
+            'transactionDate' => ['rules' => 'required'],
+            'amount' => ['rules' => 'required'],
+            'paymentMode' => ['rules' => 'required'],
+            'status' => ['rules' => 'required']
+        ];
 
-     if($this->validate($rules)){
-         // Retrieve tenantConfig from the headers
-         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-         if (!$tenantConfigHeader) {
-             throw new \Exception('Tenant configuration not found.');
-         }
+        if($this->validate($rules)){
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
 
-         // Decode the tenantConfig JSON
-         $tenantConfig = json_decode($tenantConfigHeader, true);
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
 
-         if (!$tenantConfig) {
-             throw new \Exception('Invalid tenant configuration.');
-         }
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
 
-         // Connect to the tenant's database
-         $db = Database::connect($tenantConfig);
-         $model = new MemberModel($db);
-     
-         $model->insert($input);
-          
-         return $this->respond(['status'=>true,'message' => 'Member Added Successfully'], 200);
-     }else{
-         $response = [
-             'status'=>false,
-             'errors' => $this->validator->getErrors(),
-             'message' => 'Invalid Inputs'
-         ];
-         return $this->fail($response , 409);
-          
-     }
-         
- }
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+
+            $member = [
+                'type' => $input->type,
+                'name' => $input->name,
+                'dob' => $input->dob,
+                'bloodGroup' => $input->bloodGroup,
+                'email' => $input->email,
+                'mobileNo' => $input->mobileNo,
+                'address' => $input->address,
+                'state' => $input->state,
+                'district' => $input->district,
+                'taluka' => $input->taluka,
+                'pincode' => $input->pincode,
+                'fees' => $input->fees,
+                'aadharCard' => $input->aadharCard
+            ];
+
+            $model = new MemberModel($db);
+        
+            $memberId = $model->insert($member);
+            $transaction = [
+                'memberId' => $memberId,
+                'transactionNo' => $input->transactionNo,
+                'transactionDate' => $input->transactionDate,
+                'amount' => $input->fees,
+                'paymentMode' => $input->paymentMode,
+                'status' => $input->status
+            ];
+            $modelTransaction = new MemberTransactionModel($db);
+            $modelTransaction->insert($transaction);
+            
+            return $this->respond(['status'=>true,'message' => 'Member Added Successfully'], 200);
+        }else{
+            $response = [
+                'status'=>false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response , 409);
+            
+        }
+            
+    }
+
+    public function addTransaction()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'memberId' => ['rules' => 'required'], 
+            'transactionNo' => ['rules' => 'required'],
+            'transactionDate' => ['rules' => 'required'],
+            'amount' => ['rules' => 'required'],
+            'paymentMode' => ['rules' => 'required'],
+            'status' => ['rules' => 'required']
+        ];
+
+        if($this->validate($rules)){
+            // Retrieve tenantConfig from the headers
+            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            if (!$tenantConfigHeader) {
+                throw new \Exception('Tenant configuration not found.');
+            }
+
+            // Decode the tenantConfig JSON
+            $tenantConfig = json_decode($tenantConfigHeader, true);
+
+            if (!$tenantConfig) {
+                throw new \Exception('Invalid tenant configuration.');
+            }
+
+            // Connect to the tenant's database
+            $db = Database::connect($tenantConfig);
+            $model = new MemberTransactionModel($db);
+        
+            $model->insert($input);
+            
+            return $this->respond(['status'=>true,'message' => 'Transaction Added Successfully'], 200);
+        }else{            
+            $response = [
+                'status'=>false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response , 409);
+        }
+            
+    }
 }

@@ -11,8 +11,25 @@ class CorsFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         log_message('error', 'CORS Filter');
+
+        // Allowed origins
+        $allowedOrigins = [
+            'https://admin.exiaa.com',
+            'http://localhost:4200',
+            'https://shritej.in'
+        ];
+
+        // Get the origin of the request
+        $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+
+        log_message('error', 'Origin: ' . $origin);
+
+        // Check if the origin is in the allowed list
+        if (in_array($origin, $allowedOrigins)) {
+            header("Access-Control-Allow-Origin: $origin");
+        }
         // Set CORS headers
-        header('Access-Control-Allow-Origin: http://localhost:4200'); // Update with your frontend URL
+        //header('Access-Control-Allow-Origin: https://admin.exiaa.com'); // Update with your frontend URL
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Tenant');
         header('Access-Control-Allow-Credentials: true'); // Optional if credentials are needed

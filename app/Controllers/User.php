@@ -97,16 +97,35 @@ class User extends BaseController
         $menu = [];
         foreach($rolePermissions as $key => $rolePermission){
             $right = $rightModel->where('rightId', $rolePermission['rightId'])->where('parentRightId',0)->first();
-            $menu[$key]['route'] = $right->rightName;
-            $menu[$key]['name'] = $right->rightName;
-            $menu[$key]['icon'] = $right->iconUrl;
+            
+            if ($right) {
+                // Store the parent menu details
+                $menuItem = [
+                    'route' => $right['route'],
+                    'name' => $right['route'],
+                    'icon' => $right['iconUrl'],
+                    'type' => 'sub', // Default to 'sub' in case it has children
+                    'children' => [] // Initialize children array
+                ];
         
-            $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
-            foreach($subMenus as $key => $subMenu){
-                $subMenu['route'] = $subMenu->rightName;
-                $subMenu['name'] = $subMenu->rightName;
-                $subMenu['icon'] = $subMenu->iconUrl;
-                array_push($menu[$key]['children'], $subMenu);
+                // Fetch the submenus (children) where parentRightId matches this rightId
+                $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
+        
+                if (empty($subMenus)) {
+                    $menuItem['type'] = 'link'; // If no children, it's a simple link
+                } else {
+                    foreach ($subMenus as $subMenu) {
+                        $menuItem['children'][] = [
+                            'route' => $subMenu['route'],
+                            'name' => $subMenu['route'],
+                            'icon' => $subMenu['iconUrl'],
+                            'type' => 'link'
+                        ];
+                    }
+                }
+        
+                // Store in the menu array
+                $menu[] = $menuItem;
             }
         }
         if(is_null($user)) {

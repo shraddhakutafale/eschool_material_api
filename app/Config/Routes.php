@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->options('(:any)', function () {
-    header('Access-Control-Allow-Origin: http://localhost:4200');
+    header('Access-Control-Allow-Origin: https://admin.exiaa.com');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
     header('Access-Control-Allow-Credentials: true');
@@ -22,7 +22,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->delete('user/delete/(:segment)', 'User::delete/$1',['filter' => 'authFilter']); // Delete an item
     $routes->post('user/login', 'User::login');
     $routes->get('user/profile', 'User::profile',['filter' => 'authFilter']);
-    $routes->get('user/menu', 'User::menu',['filter' => 'authFilter']);
+    $routes->get('user/usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('user/register', 'User::register');
 
     // Routes for roles

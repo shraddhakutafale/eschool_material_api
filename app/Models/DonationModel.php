@@ -12,7 +12,7 @@ class DonationModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['donationId', 'name', 'aadharCard', 'panNo', 'email', 'mobileNo', 'address', 'state', 'district', 'taluka', 'pincode', 'receiptNo', 'donationDate', 'financialNo', 'amount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['donationId', 'name', 'aadharCard', 'panNo', 'email', 'mobileNo', 'address', 'state', 'district', 'taluka', 'pincode', 'receiptNo', 'donationDate', 'financialYear', 'amount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

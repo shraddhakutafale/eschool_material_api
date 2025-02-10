@@ -89,6 +89,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('member/getallwebsite', 'Member::getMembersWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
     $routes->post('member/delete', 'Member::delete',['filter' => ['authFilter','tenantFilter']]); 
     $routes->post('member/createweb', 'Member::createWeb',['filter' => 'tenantFilter']);
+    $routes->post('donate/createweb', 'Donation::createWeb',['filter' => 'tenantFilter']);
 
      
     //Routes for student
@@ -231,5 +232,11 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
       $routes->get('item/getallitembytag/(:segment)', 'Item::getAllItemByTagWeb/$1',['filter' => 'tenantFilter']);
       $routes->get('item/getfouritembycategoryweb', 'Item::getFourItemByCategoryWeb',['filter' => 'tenantFilter']);
       $routes->get('item/getfouritembytag/(:segment)', 'Item::getFourItemByTagWeb/$1',['filter' => 'tenantFilter']);
+
+      // Routes for Quote
+      $routes->post('quote/sendemail', 'Quote::sendQuoteEmail',['filter' => 'tenantFilter']);
+
+      //
+
 
 });

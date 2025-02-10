@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MemberTransaction extends Model
+class TransactionModel extends Model
 {
     protected $table            = 'transaction_mst';
     protected $primaryKey       = 'transactionId';

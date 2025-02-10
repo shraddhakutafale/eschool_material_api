@@ -51,7 +51,6 @@ class Donation extends BaseController
             'address'=> ['rules' => 'required'], 
             'financialYear'=> ['rules' => 'required'],
             'amount'=> ['rules' => 'required'],
-            'amountInWords'=> ['rules' => 'required'],
             'transactionNo' => ['rules' => 'required'],
             'transactionDate' => ['rules' => 'required'],
             'paymentMode' => ['rules' => 'required'],
@@ -85,20 +84,19 @@ class Donation extends BaseController
                 'address' => $input->address,
                 'financialYear' => $input->financialYear,
                 'amount' => $input->amount,
-                'amountInWords' => $input->amountInWords,
 
             ];
 
             $model = new DonationModel($db);
         
-            $memberId = $model->insert($member);
+            $donationId = $model->insert($donation);
             $transaction = [
-                'memberId' => $memberId,
+                'donationId' => $donationId,
                 'transactionFor' => 'donation',
                 'transactionNo' => $input->transactionNo,
                 'transactionDate' => $input->transactionDate,
                 'razorpayNo' => $input->razorpayNo,
-                'amount' => $input->fees,
+                'amount' => $input->amount,
                 'paymentMode' => $input->paymentMode,
                 'status' => $input->status
             ];

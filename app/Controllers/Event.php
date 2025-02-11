@@ -58,7 +58,7 @@ class Event extends BaseController
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $EventModel = new EventModel($db);
-        $courses = $EventModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+        $events = $EventModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
         $pager = $EventModel->pager;
 
         $response = [
@@ -94,55 +94,61 @@ class Event extends BaseController
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $EventModel = new EventModel($db);
-        $courses = $EventModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $courses], 200);
+        $events = $EventModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $events], 200);
     }
 
     public function create()
     {
         $input = $this->request->getJSON();
+        
+        // Validation Rules
         $rules = [
-            'eventName' => ['rules' => 'required'],
-            'eventDesc' => ['rules' => 'required'],
-
-            'venue' => ['rules' => 'required'],
-            'startDate' => ['rules' => 'required'],
-            'endDate' => ['rules' => 'required'],
-
+            'eventName'  => ['rules' => 'required'],
+            'eventDesc'  => ['rules' => 'required'],
+            'venue'      => ['rules' => 'required'],
+            'startDate'  => ['rules' => 'required|valid_date'],
+            'endDate'    => ['rules' => 'required|valid_date']
         ];
-  
-        if($this->validate($rules)){
-            // Retrieve tenantConfig from the headers
+    
+        if ($this->validate($rules)) {
+            // Retrieve tenantConfig from headers
             $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    
             if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
+                return $this->fail(['status' => false, 'message' => 'Tenant configuration not found'], 400);
             }
-
-            // Decode the tenantConfig JSON
+    
+            // Decode tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-
+    
             if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
+                return $this->fail(['status' => false, 'message' => 'Invalid tenant configuration'], 400);
             }
-
+    
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
             $model = new EventModel($db);
-        
-            $model->insert($input);
-             
-            return $this->respond(['status'=>true,'message' => 'Event Added Successfully'], 200);
-        }else{
-            $response = [
-                'status'=>false,
+    
+            // Insert event data
+            $model->insert([
+                'eventName'  => $input->eventName,
+                'eventDesc'  => $input->eventDesc,
+                'venue'       => $input->venue,
+                'startDate'  => $input->startDate,
+                'endDate'    => $input->endDate
+            ]);
+    
+            return $this->respond(['status' => true, 'message' => 'Event Added Successfully'], 200);
+        } else {
+            return $this->fail([
+                'status' => false,
                 'errors' => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response , 409);
-             
+            ], 409);
         }
-            
     }
+    
 
     public function update()
     {

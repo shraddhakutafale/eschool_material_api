@@ -44,18 +44,18 @@ class Donation extends BaseController
         $input = $this->request->getJSON();
         $rules = [
             'name'=> ['rules' => 'required'], 
-            'aadharCard'=> ['rules' => 'required'],
-            'panNo'=> ['rules' => 'required'],
-            'email'=> ['rules' => 'required'],
+            // 'aadharCard'=> ['rules' => 'required'],
+            // 'panNo'=> ['rules' => 'required'],
+            // 'email'=> ['rules' => 'required'],
             'mobileNo'=> ['rules' => 'required'], 
-            'address'=> ['rules' => 'required'], 
+            // 'address'=> ['rules' => 'required'], 
             'financialYear'=> ['rules' => 'required'],
             'amount'=> ['rules' => 'required'],
             'transactionNo' => ['rules' => 'required'],
             'transactionDate' => ['rules' => 'required'],
             'paymentMode' => ['rules' => 'required'],
             'status' => ['rules' => 'required']
-            
+ 
         ];
 
         if($this->validate($rules)){
@@ -77,11 +77,11 @@ class Donation extends BaseController
 
             $donation = [
                 'name' => $input->name,
-                'aadharCard' => $input->aadharCard,
-                'panNo' => $input->panNo,
-                'email' => $input->email,
+                // 'aadharCard' => $input->aadharCard,
+                // 'panNo' => $input->panNo,
+                // 'email' => $input->email,
                 'mobileNo' => $input->mobileNo,
-                'address' => $input->address,
+                // 'address' => $input->address,
                 'financialYear' => $input->financialYear,
                 'amount' => $input->amount,
 
@@ -98,7 +98,8 @@ class Donation extends BaseController
                 'razorpayNo' => $input->razorpayNo,
                 'amount' => $input->amount,
                 'paymentMode' => $input->paymentMode,
-                'status' => $input->status
+                'status' => $input->status,
+
             ];
             $modelTransaction = new TransactionModel($db);
             $modelTransaction->insert($transaction);
@@ -115,4 +116,97 @@ class Donation extends BaseController
         }
             
     }
+
+//     public function createWeb()
+// {
+//     $input = $this->request->getJSON();
+//     $rules = [
+//         'name'=> ['rules' => 'required'], 
+//         'aadharCard'=> ['rules' => 'required'],
+//         'panNo'=> ['rules' => 'required'],
+//         'email'=> ['rules' => 'required'],
+//         'mobileNo'=> ['rules' => 'required'], 
+//         'address'=> ['rules' => 'required'], 
+//         'financialYear'=> ['rules' => 'required'],
+//         'amount'=> ['rules' => 'required'],
+//         'transactionNo' => ['rules' => 'required'],
+//         'transactionDate' => ['rules' => 'required'],
+//         'paymentMode' => ['rules' => 'required'],
+//         'status' => ['rules' => 'required'],
+        
+//     ];
+
+//     if ($this->validate($rules)) {
+//         // Retrieve tenantConfig from the headers
+//         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+//         if (!$tenantConfigHeader) {
+//             throw new \Exception('Tenant configuration not found.');
+//         }
+
+//         // Decode the tenantConfig JSON
+//         $tenantConfig = json_decode($tenantConfigHeader, true);
+
+//         if (!$tenantConfig) {
+//             throw new \Exception('Invalid tenant configuration.');
+//         }
+
+//         // Connect to the tenant's database
+//         $db = Database::connect($tenantConfig);
+
+//         // Retrieve the last used receipt number
+//         $model = new DonationModel($db);
+//         $lastReceipt = $model->select('receiptNo')->orderBy('receiptNo', 'DESC')->first();
+
+//         // Extract numeric part and increment
+//         $lastReceiptNo = $lastReceipt ? $lastReceipt['receiptNo'] : 'SP0000';
+//         $lastNumber = (int) substr($lastReceiptNo, 2);  // Extract number part
+//         $nextNumber = $lastNumber + 1;  // Increment by 1
+
+//         // Format the next receipt number with leading zeros
+//         $nextReceiptNo = 'SPG' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+//         // Prepare donation data
+//         $donation = [
+//             'name' => $input->name,
+//             'aadharCard' => $input->aadharCard,
+//             'panNo' => $input->panNo,
+//             'email' => $input->email,
+//             'mobileNo' => $input->mobileNo,
+//             'address' => $input->address,
+//             'financialYear' => $input->financialYear,
+//             'amount' => $input->amount,
+//         ];
+
+//         // Insert donation record
+//         $donationId = $model->insert($donation);
+
+//         // Prepare transaction data
+//         $transaction = [
+//             'donationId' => $donationId,
+//             'transactionFor' => 'donation',
+//             'transactionNo' => $input->transactionNo,
+//             'transactionDate' => $input->transactionDate,
+//             'razorpayNo' => $input->razorpayNo,
+//             'amount' => $input->amount,
+//             'paymentMode' => $input->paymentMode,
+//             'status' => $input->status,
+//             'receiptNo' => $nextReceiptNo  // Add the new receipt number
+            
+//         ];
+
+//         // Insert transaction record
+//         $modelTransaction = new TransactionModel($db);
+//         $modelTransaction->insert($transaction);
+
+//         return $this->respond(['status' => true, 'message' => 'Donation Added Successfully'], 200);
+//     } else {
+//         $response = [
+//             'status' => false,
+//             'errors' => $this->validator->getErrors(),
+//             'message' => 'Invalid Inputs'
+//         ];
+//         return $this->fail($response, 409);
+//     }
+// }
+
 }

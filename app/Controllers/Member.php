@@ -337,7 +337,8 @@ class Member extends BaseController
                 'taluka' => $input->taluka,
                 'pincode' => $input->pincode,
                 'fees' => $input->fees,
-                'aadharCard' => $input->aadharCard
+                'aadharCard' => $input->aadharCard,
+                'receiptNo' => $input->receiptNo,
             ];
 
             $model = new MemberModel($db);

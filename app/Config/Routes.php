@@ -5,8 +5,19 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->options('(:any)', function () {
-    header('Access-Control-Allow-Origin: https://admin.exiaa.com');
+$allowed_origins = [
+  'http://localhost:4200',
+  'https://shritej.in',
+  'https://www.shritej.in',
+  'http://shritej.in',
+  'stritej.in',
+  'https://admin.exiaa.com'
+];
+$routes->options('(:any)', function () use ($allowed_origins){
+  if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
+    header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+  }
+    
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
     header('Access-Control-Allow-Credentials: true');

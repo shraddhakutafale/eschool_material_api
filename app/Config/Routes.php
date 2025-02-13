@@ -10,7 +10,6 @@ $allowed_origins = [
   'https://shritej.in',
   'https://www.shritej.in',
   'http://shritej.in',
-  'stritej.in',
   'https://admin.exiaa.com'
 ];
 $routes->options('(:any)', function () use ($allowed_origins){

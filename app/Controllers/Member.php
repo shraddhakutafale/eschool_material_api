@@ -419,13 +419,21 @@ class Member extends BaseController
     
             // Insert the member into the database
             $model = new MemberModel($db);
-            $memberId = $model->insert($member);
+            $lastMember = $model->select('receiptNo')->orderBy('memberId', 'DESC')->first();
+            if($lastMember){
+                preg_match('/\d+$/', $lastMember['receiptNo'], $matches);
+                $lastNumber = (int) $matches[0]; // The numeric part of the receiptNo
+                $nextNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
+            }else{
+                $nextNumber = '00001';
+            }
     
             // Generate a new receipt number based on the memberId
-            $newReceiptNo = 'SPG/S/' . str_pad($memberId, 5, '0', STR_PAD_LEFT);
+            $newReceiptNo = 'SPG/S/' . $nextNumber;
     
-            // Update the member record with the generated receiptNo
-            $model->update($memberId, ['receiptNo' => $newReceiptNo]);
+            $member['receiptNo'] = $newReceiptNo;
+    
+            $memberId = $model->insert($member);
     
             // Prepare the transaction data with the new receipt number
             $transaction = [

@@ -12,7 +12,7 @@ class MemberModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['memberId', 'type', 'name', 'dob', 'bloodGroup', 'email', 'mobileNo', 'address', 'state', 'district', 'taluka', 'pincode', 'fees', 'transactionId', 'aadharCard','receiptNo', 'file', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['memberId', 'type', 'name', 'aadharCard', 'dob', 'bloodGroup', 'email', 'mobileNo', 'address', 'state', 'district', 'taluka', 'pincode', 'fees', 'receiptNo', 'file', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

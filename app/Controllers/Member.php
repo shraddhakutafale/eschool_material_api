@@ -399,23 +399,6 @@ class Member extends BaseController
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
     
-            // Prepare the member data
-            $member = [
-                'type' => $input->type,
-                'name' => $input->name,
-                'dob' => $input->dob,
-                'bloodGroup' => $input->bloodGroup,
-                'email' => $input->email,
-                'mobileNo' => $input->mobileNo,
-                'address' => $input->address,
-                'state' => $input->state,
-                'district' => $input->district,
-                'taluka' => $input->taluka,
-                'pincode' => $input->pincode,
-                'fees' => $input->fees,
-                'aadharCard' => $input->aadharCard,
-                'receiptNo' => '',  // This will be updated later
-            ];
     
             // Insert the member into the database
             $model = new MemberModel($db);
@@ -431,7 +414,23 @@ class Member extends BaseController
             // Generate a new receipt number based on the memberId
             $newReceiptNo = 'SPG/S/' . $nextNumber;
     
-            $member['receiptNo'] = $newReceiptNo;
+            // Prepare the member data
+            $member = [
+                'type' => $input->type,
+                'name' => $input->name,
+                'dob' => $input->dob,
+                'bloodGroup' => $input->bloodGroup,
+                'email' => $input->email,
+                'mobileNo' => $input->mobileNo,
+                'address' => $input->address,
+                'state' => $input->state,
+                'district' => $input->district,
+                'taluka' => $input->taluka,
+                'pincode' => $input->pincode,
+                'fees' => $input->fees,
+                'aadharCard' => $input->aadharCard,
+                'receiptNo' => $newReceiptNo,  // This will be updated later
+            ];
     
             $memberId = $model->insert($member);
     

@@ -42,7 +42,7 @@ class Donation extends BaseController
     public function createWeb()
     {
         $input = $this->request->getJSON();
-       // log_message('Donation Object', json_encode($input));
+        log_message('Donation Object', json_encode($input));
         $rules = [
             'name'=> ['rules' => 'required'], 
             'mobileNo'=> ['rules' => 'required'], 
@@ -116,12 +116,12 @@ class Donation extends BaseController
             // Insert the transaction record into the database
             $transactionModel = new TransactionModel($db);
             $transactionModel->insert($transaction);
-         //   log_message('Donation Success',$receiptNo);
+            log_message('Donation Success',$receiptNo);
             // Respond with success message
             return $this->respond(['status' => true, 'message' => 'Donation Added Successfully' ,'data' => $receiptNo], 200);
         } else {
             // Validation failed, return errors
-         //   log_message('Donation Error',$this->validator->getErrors());
+            log_message('Donation Error',$this->validator->getErrors());
             $response = [
                 'status' => false,
                 'errors' => $this->validator->getErrors(),

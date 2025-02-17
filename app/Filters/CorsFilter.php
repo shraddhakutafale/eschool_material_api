@@ -16,7 +16,9 @@ class CorsFilter implements FilterInterface
         $allowedOrigins = [
             'https://admin.exiaa.com',
             'http://localhost:4200',
-            'https://shritej.in'
+            'https://shritej.in',
+            'https://www.shritej.in',
+            'http://shritej.in'
         ];
 
         // Get the origin of the request

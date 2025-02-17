@@ -373,6 +373,7 @@ class Member extends BaseController
     public function createWeb()
     {
         $input = $this->request->getJSON();
+       // log_message('Member Object', json_encode($input));
         $rules = [
             'name' => ['rules' => 'required'],
             'mobileNo' => ['rules' => 'required'],
@@ -450,10 +451,11 @@ class Member extends BaseController
             // Insert the transaction with the new receipt number
             $modelTransaction = new TransactionModel($db);
             $modelTransaction->insert($transaction);
-    
+          //  log_message('Member Success',$newReceiptNo);
             // Return a success response
             return $this->respond(['status' => true, 'message' => 'Member Added Successfully','data'=>$newReceiptNo], 200);
         } else {
+        //    log_message('Member Failure',$this->validator->getErrors());
             // Return validation errors
             $response = [
                 'status' => false,

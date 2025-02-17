@@ -95,58 +95,105 @@ class Member extends BaseController
     }
 
   
+   
     public function create()
     {
         $input = $this->request->getJSON();
+        log_message('info', json_encode($input));
         $rules = [
             'type'=> ['rules' => 'required'], 
             'name'=> ['rules' => 'required'], 
-            'dob'=> ['rules' => 'required'],
-            'bloodGroup'=> ['rules' => 'required'],
-            'email'=> ['rules' => 'required'],
-            'mobileNo'=> ['rules' => 'required'], 
-            'address'=> ['rules' => 'required'], 
-            'state'=> ['rules' => 'required'], 
-            'district'=> ['rules' => 'required'], 
-            'taluka'=> ['rules' => 'required'], 
-            'pincode'=> ['rules' => 'required'], 
+            'mobileNo'=> ['rules' => 'required'],
             'fees'=> ['rules' => 'required'],
-            'transactionId'=> ['rules' => 'required'],
-            'aadharCard'=> ['rules' => 'required'],
-            'file'=> ['rules' => 'required']   
+            'transactionNo' => ['rules' => 'required'],
+            'transactionDate' => ['rules' => 'required'],
+            'paymentMode' => ['rules' => 'required'],
+            'razorpayNo' => ['rules' => 'required']
         ];
-  
-        if($this->validate($rules)){
+    
+        if ($this->validate($rules)) {
             // Retrieve tenantConfig from the headers
             $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
             if (!$tenantConfigHeader) {
                 throw new \Exception('Tenant configuration not found.');
             }
-
+    
             // Decode the tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-
+    
             if (!$tenantConfig) {
                 throw new \Exception('Invalid tenant configuration.');
             }
-
+    
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
+    
+    
+            // Insert the member into the database
             $model = new MemberModel($db);
-        
-            $model->insert($input);
-             
-            return $this->respond(['status'=>true,'message' => 'Member Added Successfully'], 200);
-        }else{
+            $lastMember = $model->select('receiptNo')->orderBy('memberId', 'DESC')->first();
+            if($lastMember){
+                preg_match('/\d+$/', $lastMember['receiptNo'], $matches);
+                $lastNumber = (int) $matches[0]; // The numeric part of the receiptNo
+                $nextNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
+            }else{
+                $nextNumber = '00001';
+            }
+    
+            // Generate a new receipt number based on the memberId
+            $newReceiptNo = 'SPG/S/' . $nextNumber;
+    
+            // Prepare the member data
+            $member = [
+                'type' => $input->type,
+                'name' => $input->name,
+                'dob' => $input->dob,
+                'bloodGroup' => $input->bloodGroup,
+                'email' => $input->email,
+                'mobileNo' => $input->mobileNo,
+                'address' => $input->address,
+                'state' => $input->state,
+                'district' => $input->district,
+                'taluka' => $input->taluka,
+                'pincode' => $input->pincode,
+                'fees' => $input->fees,
+                'receiptNo' => $newReceiptNo,  // This will be updated later
+            ];
+    
+            $memberId = $model->insert($member);
+    
+            // Prepare the transaction data with the new receipt number
+            $transaction = [
+                'memberId' => $memberId,
+                'transactionFor' => 'member',
+                'transactionNo' => $input->transactionNo,
+                'transactionDate' => $input->transactionDate,
+                'razorpayNo' => $input->razorpayNo,
+                'amount' => $input->fees,
+                'paymentMode' => $input->paymentMode,
+                'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
+            ];
+    
+            // Insert the transaction with the new receipt number
+            $modelTransaction = new TransactionModel($db);
+            $modelTransaction->insert($transaction);
+            // log_message('Member Success',$newReceiptNo);
+            log_message('info', 'Member successfully added with Receipt No: ' . $newReceiptNo);
+
+            // Return a success response
+            return $this->respond(['status' => true, 'message' => 'Member Added Successfully','data'=>$newReceiptNo], 200);
+        } else {
+            // log_message('Member Failure',$this->validator->getErrors());
+            log_message('error', json_encode($this->validator->getErrors()));
+
+            // Return validation errors
             $response = [
-                'status'=>false,
+                'status' => false,
                 'errors' => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
             ];
-            return $this->fail($response , 409);
-             
+            return $this->fail($response, 409);
         }
-            
     }
 
     public function update()
@@ -201,7 +248,9 @@ class Member extends BaseController
                 'fees' => $input->fees,
                 'transactionId' => $input->transactionId,
                 'aadharCard' => $input->aadharCard,
-                'file' => $input->file
+                'file' => $input->file,
+                
+
 
             ];
 
@@ -283,92 +332,6 @@ class Member extends BaseController
     }
 
 
-    // website api
-    // public function createWeb()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //         // 'type'=> ['rules' => 'required'], 
-    //         'name'=> ['rules' => 'required'], 
-    //         // 'dob'=> ['rules' => 'required'],
-    //         // 'bloodGroup'=> ['rules' => 'required'],
-    //         // 'email'=> ['rules' => 'required'],
-    //         'mobileNo'=> ['rules' => 'required'], 
-    //         // 'address'=> ['rules' => 'required'], 
-    //         // 'state'=> ['rules' => 'required'], 
-    //         // 'district'=> ['rules' => 'required'], 
-    //         // 'taluka'=> ['rules' => 'required'], 
-    //         // 'pincode'=> ['rules' => 'required'], 
-    //         // 'fees'=> ['rules' => 'required'],
-    //         // 'aadharCard'=> ['rules' => 'required'],
-    //         'transactionNo' => ['rules' => 'required'],
-    //         'transactionDate' => ['rules' => 'required'],
-    //         'paymentMode' => ['rules' => 'required'],
-    //         'status' => ['rules' => 'required']
-    //     ];
-
-    //     if($this->validate($rules)){
-    //         // Retrieve tenantConfig from the headers
-    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    //         if (!$tenantConfigHeader) {
-    //             throw new \Exception('Tenant configuration not found.');
-    //         }
-
-    //         // Decode the tenantConfig JSON
-    //         $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    //         if (!$tenantConfig) {
-    //             throw new \Exception('Invalid tenant configuration.');
-    //         }
-
-    //         // Connect to the tenant's database
-    //         $db = Database::connect($tenantConfig);
-
-    //         $member = [
-    //             'type' => $input->type,
-    //             'name' => $input->name,
-    //             'dob' => $input->dob,
-    //             'bloodGroup' => $input->bloodGroup,
-    //             'email' => $input->email,
-    //             'mobileNo' => $input->mobileNo,
-    //             'address' => $input->address,
-    //             'state' => $input->state,
-    //             'district' => $input->district,
-    //             'taluka' => $input->taluka,
-    //             'pincode' => $input->pincode,
-    //             'fees' => $input->fees,
-    //             'aadharCard' => $input->aadharCard,
-    //             'receiptNo' => $input->receiptNo,
-    //         ];
-
-    //         $model = new MemberModel($db);
-        
-    //         $memberId = $model->insert($member);
-    //         $transaction = [
-    //             'memberId' => $memberId,
-    //             'transactionFor' => 'member',
-    //             'transactionNo' => $input->transactionNo,
-    //             'transactionDate' => $input->transactionDate,
-    //             'razorpayNo' => $input->razorpayNo,
-    //             'amount' => $input->fees,
-    //             'paymentMode' => $input->paymentMode,
-    //             'status' => $input->status
-    //         ];
-    //         $modelTransaction = new TransactionModel($db);
-    //         $modelTransaction->insert($transaction);
-            
-    //         return $this->respond(['status'=>true,'message' => 'Member Added Successfully'], 200);
-    //     }else{
-    //         $response = [
-    //             'status'=>false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response , 409);
-            
-    //     }
-            
-    // }
 
     public function createWeb()
     {
@@ -472,5 +435,6 @@ class Member extends BaseController
             return $this->fail($response, 409);
         }
     }
+
 
 }

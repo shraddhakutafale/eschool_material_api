@@ -42,7 +42,7 @@ class Donation extends BaseController
     public function createWeb()
     {
         $input = $this->request->getJSON();
-        log_message('Donation Object', json_encode($input));
+        log_message('info', json_encode($input));
         $rules = [
             'name'=> ['rules' => 'required'], 
             'mobileNo'=> ['rules' => 'required'], 
@@ -87,7 +87,7 @@ class Donation extends BaseController
             }
     
             // Format the receiptNo (e.g., SPG00001, SPG00002, ...)
-            $receiptNo = 'SPG' . $nextNumber;
+            $newReceiptNo = 'SPG' . $nextNumber;
     
             // Prepare donation data
             $donation = [
@@ -95,7 +95,7 @@ class Donation extends BaseController
                 'mobileNo' => $input->mobileNo,
                 'financialYear' => $input->financialYear,
                 'amount' => $input->amount,
-                'receiptNo' => $receiptNo, // Use the newly generated receipt number
+                'receiptNo' => $newReceiptNo, // Use the newly generated receipt number
             ];
     
             // Insert the donation record into the database
@@ -111,17 +111,21 @@ class Donation extends BaseController
                 'amount' => $input->amount,
                 'paymentMode' => $input->paymentMode,
                 'status' => $input->status,
+                'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
+
             ];
     
             // Insert the transaction record into the database
             $transactionModel = new TransactionModel($db);
             $transactionModel->insert($transaction);
-            log_message('Donation Success',$receiptNo);
+            // log_message('Donation Success',$receiptNo);
+            log_message('info', 'Donation successfully added with Receipt No: ' . $newReceiptNo);
+
             // Respond with success message
-            return $this->respond(['status' => true, 'message' => 'Donation Added Successfully' ,'data' => $receiptNo], 200);
+            return $this->respond(['status' => true, 'message' => 'Donation Added Successfully' ,'data' => $newReceiptNo], 200);
         } else {
             // Validation failed, return errors
-            log_message('Donation Error',$this->validator->getErrors());
+            log_message('error', json_encode($this->validator->getErrors()));
             $response = [
                 'status' => false,
                 'errors' => $this->validator->getErrors(),

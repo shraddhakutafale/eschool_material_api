@@ -258,7 +258,7 @@ class Member extends BaseController
             $member = $model->find($memberId); // Assuming find method retrieves the course
 
             if (!$member) {
-                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Member not found'], 404);
             }
 
             $updateData = [
@@ -373,14 +373,17 @@ class Member extends BaseController
     public function createWeb()
     {
         $input = $this->request->getJSON();
-        log_message('Member Object', json_encode($input));
+        log_message('info', json_encode($input));
         $rules = [
-            'name' => ['rules' => 'required'],
-            'mobileNo' => ['rules' => 'required'],
+            'type'=> ['rules' => 'required'], 
+            'name'=> ['rules' => 'required'], 
+            'mobileNo'=> ['rules' => 'required'],
+            'fees'=> ['rules' => 'required'],
             'transactionNo' => ['rules' => 'required'],
             'transactionDate' => ['rules' => 'required'],
             'paymentMode' => ['rules' => 'required'],
-            'status' => ['rules' => 'required']
+            'status' => ['rules' => 'required'],
+            'razorpayNo' => ['rules' => 'required']
         ];
     
         if ($this->validate($rules)) {
@@ -451,11 +454,15 @@ class Member extends BaseController
             // Insert the transaction with the new receipt number
             $modelTransaction = new TransactionModel($db);
             $modelTransaction->insert($transaction);
-            log_message('Member Success',$newReceiptNo);
+            // log_message('Member Success',$newReceiptNo);
+            log_message('info', 'Member successfully added with Receipt No: ' . $newReceiptNo);
+
             // Return a success response
             return $this->respond(['status' => true, 'message' => 'Member Added Successfully','data'=>$newReceiptNo], 200);
         } else {
-            log_message('Member Failure',$this->validator->getErrors());
+            // log_message('Member Failure',$this->validator->getErrors());
+            log_message('error', json_encode($this->validator->getErrors()));
+
             // Return validation errors
             $response = [
                 'status' => false,

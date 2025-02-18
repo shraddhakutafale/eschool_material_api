@@ -61,6 +61,7 @@ class User extends BaseController
          
         return $this->respond($user, 200);
     }
+    
 
     public function menu()
     {
@@ -284,6 +285,44 @@ class User extends BaseController
         }
             
     }
+
+
+    public function create()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'name' => ['rules' => 'required|min_length[4]|max_length[255]'],
+            'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[user_mst.email]'],
+            'mobileNo' => ['rules' => 'required|min_length[10]|max_length[10]|is_unique[user_mst.mobileNo]'],
+            'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
+        ];
+  
+        if($this->validate($rules)){
+            $model = new UserModel();
+            $data = [
+                'name'     => $input->name,
+                'mobileNo' => $input->mobileNo,
+                'email'    => $input->email,
+                'password' => password_hash($input->password, PASSWORD_DEFAULT)
+            ];
+            $model->insert($data);
+             
+            return $this->respond(["status" => true, 'message' => 'Created Successfully'], 200);
+        }else{
+            $response = [
+                'status'=>false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response , 409);
+             
+        }
+            
+    }
+
+
+   
+
 
     public function getRolesPaging(){
         $input = $this->request->getJSON();

@@ -321,8 +321,44 @@ class User extends BaseController
     }
 
 
+    
+
+    public function getAllRole()
+    {
+        $roles = new RoleModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $roles->findAll()], 200);
+    }
    
 
+    public function createRole()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'roleName' => ['rules' => 'required'],
+            'note'     => ['rules' => 'required']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new RoleModel();
+            $data = [
+                'roleName' => $input->roleName,
+                'note'     => $input->note
+            ];
+            $model->insert($data);
+    
+            return $this->respond(["status" => true, 'message' => 'Role Created Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+    
+
+    
 
     public function getRolesPaging(){
         $input = $this->request->getJSON();

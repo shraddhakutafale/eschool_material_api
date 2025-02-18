@@ -35,6 +35,11 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('user/usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('user/register', 'User::register');
 
+    $routes->get('user/getallrole', 'User::index',['filter' => 'authFilter']); // Get all items
+    $routes->post('user/createrole', 'User::createRole',['filter' => 'authFilter']); // Create a new item
+    $routes->post('user/updaterole', 'User::updateRole/$1',['filter' => 'authFilter']); // Update an item
+
+
     // Routes for roles
     $routes->post('user/getrolespaging', 'User::getRolesPaging',['filter' => 'authFilter']);
 

@@ -8,6 +8,7 @@ use App\Models\ItemModel;
 use App\Models\ItemCategory;
 use App\Models\Unit;
 use Config\Database;
+use App\Libraries\TenantService;
 
 class Item extends BaseController
 {
@@ -513,5 +514,24 @@ class Item extends BaseController
         $items = $model->findAllByTag($tag);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
     }
+
+    public function show()
+    {
+        $input = $this->request->getJSON();
+        $itemId = $input->itemId;
+        log_message('error', 'Item Id: ' . $itemId);
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemModel($db);
+        $item = $model->find($itemId);
+        $category = new ItemCategory($db);
+        $item['category'] = $category->find($item['itemCategoryId']);
+        if (!$item) {
+            return $this->respond(["status" => false, "message" => "Item not found"], 404);
+        }
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $item], 200);
+    }
+
 
 }

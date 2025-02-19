@@ -127,7 +127,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
      //Routes for item
      $routes->get('item/getall', 'Item::index',['filter' => ['authFilter', 'tenantFilter']]);
      $routes->post('item/getallpaging', 'Item::getItemsPaging',['filter' => ['authFilter', 'tenantFilter']]);
-     $routes->get('item/view/(:segment)', 'Item::show/$1',['filter' => 'authFilter']);
+     $routes->get('item/view/(:segment)', 'Item::show/$1',['filter' => ['authFilter','tenantFilter']]);
      $routes->post('item/create', 'Item::create',['filter' => ['authFilter','tenantFilter']]);
      $routes->post('item/update', 'Item::update',['filter' => ['authFilter','tenantFilter']]);
      $routes->get('item/getallwebsite', 'Item::getItemsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
@@ -255,6 +255,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
       $routes->get('item/getallitembytag/(:segment)', 'Item::getAllItemByTagWeb/$1',['filter' => 'tenantFilter']);
       $routes->get('item/getfouritembycategoryweb', 'Item::getFourItemByCategoryWeb',['filter' => 'tenantFilter']);
       $routes->get('item/getfouritembytag/(:segment)', 'Item::getFourItemByTagWeb/$1',['filter' => 'tenantFilter']);
+      $routes->post('item/viewweb', 'Item::show',['filter' => ['tenantFilter']]);
 
       // Routes for Quote
       $routes->post('quote/sendemail', 'Quote::sendQuoteEmail',['filter' => 'tenantFilter']);

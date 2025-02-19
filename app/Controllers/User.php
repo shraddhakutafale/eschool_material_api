@@ -529,6 +529,125 @@ class User extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+
+
+
+    public function getAllRight()
+    {
+        $rights = new RightModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $right->findAll()], 200);
+    }
+
+    public function createRight()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'rightName'  => ['rules' => 'required'],
+            'rightLabel' => ['rules' => 'required'],
+            'iconUrl'    => ['rules' => 'required'],
+            'route'      => ['rules' => 'required']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new RightModel();  // Assuming you have a RightModel
+            $data = [
+                'rightName'  => $input->rightName,
+                'rightLabel' => $input->rightLabel,
+                'iconUrl'    => $input->iconUrl,
+                'route'      => $input->route
+            ];
+            $model->insert($data);
+    
+            return $this->respond(["status" => true, 'message' => 'Right Created Successfully'], 200);
+        } else {
+            $response = [
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+    
+
+    public function deleteRight()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the roleId
+        $rules = [
+            'rightId' => ['rules' => 'required|numeric']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new RightModel();
+    
+            // Check if the role exists
+            $right = $model->find($input->rightId);
+            if (!$right) {
+                return $this->fail(['status' => false, 'message' => 'Right not found'], 404);
+            }
+    
+            // Soft delete by setting isDeleted to 1
+            $updateData = ['isDeleted' => 1];
+            $model->update($input->rightId, $updateData);
+    
+            return $this->respond(["status" => true, 'message' => 'Right Deleted Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+    
+
+    
+    public function updateRight()
+    {
+        $input = $this->request->getJSON();
+    
+        // Validation rules for updating role
+        $rules = [
+            'rightName'  => ['rules' => 'required'],
+            'rightLabel' => ['rules' => 'required'],
+            'iconUrl'    => ['rules' => 'required'],
+            'route'      => ['rules' => 'required']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new RightModel();
+    
+            // Check if the role exists
+            $right = $model->find($input->rightId);
+            if (!$right) {
+                return $this->fail(['status' => false, 'message' => 'Right not found'], 404);
+            }
+    
+            // Data to update
+            $updateData = [
+                'rightName'  => $input->rightName,
+                'rightLabel' => $input->rightLabel,
+                'iconUrl'    => $input->iconUrl,
+                'route'      => $input->route
+            ];
+    
+            // Update the role
+            $model->update($input->rightId, $updateData);
+    
+            return $this->respond(["status" => true, 'message' => 'Right Updated Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
     
     public function getRolesPaging(){
         $input = $this->request->getJSON();
@@ -558,5 +677,35 @@ class User extends BaseController
         return $this->respond($response, 200);
     }
 
+
+    public function getRightsPaging()
+    {
+        $input = $this->request->getJSON();
+        $rightModel = new RightModel(); // Assuming you have a RightModel
+    
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        // Define the number of items per page
+        $perPage = isset($input->perPage) ? $input->perPage : 50;
+    
+        // Fetch paginated data without ordering by createdDate
+        $rights = $rightModel->paginate($perPage, 'default', $page);
+        $pager = $rightModel->pager;
+    
+        $response = [
+            "status" => true,
+            "message" => "All Rights Fetched",
+            "data" => $rights,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+    
+        return $this->respond($response, 200);
+    }
+    
     
 }

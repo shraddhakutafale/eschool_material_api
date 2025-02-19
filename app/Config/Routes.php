@@ -42,8 +42,18 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
 
 
+
+    $routes->get('user/getallright', 'User::index',['filter' => 'authFilter']); // Get all items
+    $routes->post('user/createright', 'User::createRight',['filter' => 'authFilter']); // Create a new item
+    $routes->post('user/updateright', 'User::updateRight/$1',['filter' => 'authFilter']); // Update an item
+    $routes->post('user/deleteright', 'User::deleteRight',['filter' => 'authFilter']); // Delete an item
+
+
+
     // Routes for roles
     $routes->post('user/getrolespaging', 'User::getRolesPaging',['filter' => 'authFilter']);
+    $routes->post('user/getrightspaging', 'User::getRightsPaging',['filter' => 'authFilter']);
+
 
     // Routes for Business
     $routes->get('business/getall', 'Business::index',['filter' => ['authFilter', 'tenantFilter']]);

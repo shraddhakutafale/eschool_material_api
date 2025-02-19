@@ -109,10 +109,11 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
     //Routes for Donation
     $routes->get('donation/getall', 'Donation::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('donation/getalldonation', 'Donation::getAllDonation',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('donation/createdonation', 'Donation::createDonation',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('donation/updatedonation', 'Donation::updateDonation',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('donation/deletedonation', 'Donation::deleteDonation',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('donation/getallpaging', 'Donation::getDonationsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('donation/create', 'Donation::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('donation/getallwebsite', 'Donation::getDonationsWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
+    $routes->post('donation/update', 'Donation::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('donation/delete', 'Donation::delete',['filter' => ['authFilter','tenantFilter']]);
 
      
     //Routes for student

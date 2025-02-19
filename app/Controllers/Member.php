@@ -149,6 +149,7 @@ class Member extends BaseController
                 'name' => $input->name,
                 'dob' => $input->dob,
                 'bloodGroup' => $input->bloodGroup,
+                'aadharCard' => $input->aadharCard,
                 'email' => $input->email,
                 'mobileNo' => $input->mobileNo,
                 'address' => $input->address,
@@ -238,6 +239,7 @@ class Member extends BaseController
                 'name' => $input->name,
                 'dob' => $input->dob,
                 'bloodGroup' => $input->bloodGroup,
+                'aadharCard' => $input->aadharCard,
                 'email' => $input->email,
                 'mobileNo' => $input->mobileNo,
                 'address' => $input->address,
@@ -246,12 +248,8 @@ class Member extends BaseController
                 'taluka' => $input->taluka,
                 'pincode' => $input->pincode,
                 'fees' => $input->fees,
-                'transactionId' => $input->transactionId,
-                'aadharCard' => $input->aadharCard,
                 'file' => $input->file,
                 
-
-
             ];
 
             // Update the course with new data

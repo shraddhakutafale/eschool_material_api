@@ -320,6 +320,103 @@ class User extends BaseController
             
     }
 
+    public function update()
+    {
+        $input = $this->request->getJSON();
+    
+        // Validation rules for updating user
+        $rules = [
+            'userId'   => ['rules' => 'required|numeric'],
+            'name'     => ['rules' => 'required|min_length[4]|max_length[255]'],
+            'email'    => ['rules' => 'required|min_length[4]|max_length[255]|valid_email'],
+            'mobileNo' => ['rules' => 'required|min_length[10]|max_length[10]']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new UserModel();
+    
+            // Check if the user exists
+            $user = $model->find($input->userId);
+            if (!$user) {
+                return $this->fail(['status' => false, 'message' => 'User not found'], 404);
+            }
+    
+            // Data to update
+            $updateData = [
+                'name'     => $input->name,
+                'email'    => $input->email,
+                'mobileNo' => $input->mobileNo
+            ];
+    
+            // Check if the user is updating their email or mobile number
+            if ($user['email'] !== $input->email) {
+                $rules['email']['rules'] .= '|is_unique[user_mst.email]';
+            }
+            if ($user['mobileNo'] !== $input->mobileNo) {
+                $rules['mobileNo']['rules'] .= '|is_unique[user_mst.mobileNo]';
+            }
+    
+            // Validate unique email and mobile number separately
+            if (!$this->validate($rules)) {
+                return $this->fail([
+                    'status'  => false,
+                    'errors'  => $this->validator->getErrors(),
+                    'message' => 'Invalid Inputs'
+                ], 409);
+            }
+    
+            // Update the user
+            $model->update($input->userId, $updateData);
+    
+            return $this->respond(["status" => true, 'message' => 'User Updated Successfully'], 200);
+        } else {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+    }
+    
+    public function delete()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for userId
+        $rules = [
+            'userId' => ['rules' => 'required|numeric']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new UserModel();
+    
+            // Check if the user exists
+            $user = $model->find($input->userId);
+            if (!$user) {
+                return $this->fail(['status' => false, 'message' => 'User not found'], 404);
+            }
+    
+            // Soft delete by updating isDeleted flag
+            $updateData = [
+                'isDeleted' => 1
+            ];
+            $deleted = $model->update($input->userId, $updateData);
+    
+            if ($deleted) {
+                return $this->respond(["status" => true, 'message' => 'User Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete user'], 500);
+            }
+        } else {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+    }
+    
+
 
     
 
@@ -358,8 +455,81 @@ class User extends BaseController
     }
     
 
+    public function deleteRole()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the roleId
+        $rules = [
+            'roleId' => ['rules' => 'required|numeric']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new RoleModel();
+    
+            // Check if the role exists
+            $role = $model->find($input->roleId);
+            if (!$role) {
+                return $this->fail(['status' => false, 'message' => 'Role not found'], 404);
+            }
+    
+            // Soft delete by setting isDeleted to 1
+            $updateData = ['isDeleted' => 1];
+            $model->update($input->roleId, $updateData);
+    
+            return $this->respond(["status" => true, 'message' => 'Role Deleted Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
     
 
+    
+    public function updateRole()
+    {
+        $input = $this->request->getJSON();
+    
+        // Validation rules for updating role
+        $rules = [
+            'roleId'   => ['rules' => 'required|numeric'],
+            'roleName' => ['rules' => 'required'],
+            'note'     => ['rules' => 'required']
+        ];
+    
+        if ($this->validate($rules)) {
+            $model = new RoleModel();
+    
+            // Check if the role exists
+            $role = $model->find($input->roleId);
+            if (!$role) {
+                return $this->fail(['status' => false, 'message' => 'Role not found'], 404);
+            }
+    
+            // Data to update
+            $updateData = [
+                'roleName' => $input->roleName,
+                'note'     => $input->note
+            ];
+    
+            // Update the role
+            $model->update($input->roleId, $updateData);
+    
+            return $this->respond(["status" => true, 'message' => 'Role Updated Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+    
     public function getRolesPaging(){
         $input = $this->request->getJSON();
         $roleModel = new RoleModel();

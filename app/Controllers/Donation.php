@@ -117,7 +117,6 @@ class Donation extends BaseController
             'transactionNo' => ['rules' => 'required'],
             'transactionDate' => ['rules' => 'required'],
             'paymentMode' => ['rules' => 'required'],
-            'status' => ['rules' => 'required']
         ];
     
         if ($this->validate($rules)) {
@@ -158,7 +157,11 @@ class Donation extends BaseController
             // Prepare donation data
             $donation = [
                 'name' => $input->name,
+                'aadharCard' => $input->aadharCard,
+                'email' => $input->email,
+                'panNo' => $input->panNo,
                 'mobileNo' => $input->mobileNo,
+                'address' => $input->address,
                 'financialYear' => $input->financialYear,
                 'amount' => $input->amount,
                 'receiptNo' => $newReceiptNo, // Use the newly generated receipt number
@@ -176,7 +179,6 @@ class Donation extends BaseController
                 'razorpayNo' => $input->razorpayNo, // Optional field
                 'amount' => $input->amount,
                 'paymentMode' => $input->paymentMode,
-                'status' => $input->status,
                 'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
 
             ];

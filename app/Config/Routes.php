@@ -29,7 +29,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('user/view/(:segment)', 'User::show/$1',['filter' => 'authFilter']); // Get specific item
     $routes->post('user/create', 'User::create',['filter' => 'authFilter']); // Create a new item
     $routes->post('user/update', 'User::update/$1',['filter' => 'authFilter']); // Update an item
-    $routes->delete('user/delete/(:segment)', 'User::delete/$1',['filter' => 'authFilter']); // Delete an item
+    $routes->post('user/delete', 'User::delete',['filter' => 'authFilter']); // Delete an item
     $routes->post('user/login', 'User::login');
     $routes->get('user/profile', 'User::profile',['filter' => 'authFilter']);
     $routes->get('user/usermenu', 'User::menu',['filter' => 'authFilter']);
@@ -38,6 +38,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('user/getallrole', 'User::index',['filter' => 'authFilter']); // Get all items
     $routes->post('user/createrole', 'User::createRole',['filter' => 'authFilter']); // Create a new item
     $routes->post('user/updaterole', 'User::updateRole/$1',['filter' => 'authFilter']); // Update an item
+    $routes->post('user/deleterole', 'User::deleteRole',['filter' => 'authFilter']); // Delete an item
+
 
 
     // Routes for roles

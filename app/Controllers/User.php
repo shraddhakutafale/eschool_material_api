@@ -648,6 +648,136 @@ class User extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+
+    public function getAllTenant()
+    {
+        $tenants = new TenantModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $tenant->findAll()], 200);
+    }
+   
+
+    public function createTenant()
+{
+    $input = $this->request->getJSON();
+    $rules = [
+        'tenantName'   => ['rules' => 'required'],
+        'databaseName' => ['rules' => 'required'],
+        'username'     => ['rules' => 'required'],
+        'password'     => ['rules' => 'required'],
+        'hostUrl'      => ['rules' => 'required'],
+        'businessId'   => ['rules' => 'required']
+    ];
+
+    if ($this->validate($rules)) {
+        $model = new TenantModel();  // Assuming you have a TenantModel
+        $data = [
+            'tenantName'   => $input->tenantName,
+            'databaseName' => $input->databaseName,
+            'username'     => $input->username,
+            'password'     => password_hash($input->password, PASSWORD_BCRYPT), // Encrypting password for security
+            'hostUrl'      => $input->hostUrl,
+            'businessId'   => $input->businessId
+        ];
+        $model->insert($data);
+
+        return $this->respond(["status" => true, 'message' => 'Tenant Created Successfully'], 200);
+    } else {
+        $response = [
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
+    }
+}
+
+public function deleteTenant()
+{
+    $input = $this->request->getJSON();
+
+    // Validation rules for tenantId
+    $rules = [
+        'tenantId' => ['rules' => 'required|numeric']
+    ];
+
+    if ($this->validate($rules)) {
+        $model = new TenantModel(); // Assuming you have a TenantModel
+
+        // Check if the tenant exists
+        $tenant = $model->find($input->tenantId);
+        if (!$tenant) {
+            return $this->fail(['status' => false, 'message' => 'Tenant not found'], 404);
+        }
+
+        // Soft delete by setting isDeleted to 1
+        $updateData = ['isDeleted' => 1];
+        $model->update($input->tenantId, $updateData);
+
+        return $this->respond(["status" => true, 'message' => 'Tenant Deleted Successfully'], 200);
+    } else {
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
+    }
+}
+
+
+
+public function updateTenant()
+{
+    $input = $this->request->getJSON();
+
+    // Validation rules for updating tenant
+    $rules = [
+        'tenantId'     => ['rules' => 'required|numeric'],
+        'tenantName'   => ['rules' => 'required'],
+        'databaseName' => ['rules' => 'required'],
+        'username'     => ['rules' => 'required'],
+        'password'     => ['rules' => 'required'],
+        'hostUrl'      => ['rules' => 'required'],
+        'businessId'   => ['rules' => 'required|numeric']
+    ];
+
+    if ($this->validate($rules)) {
+        $model = new TenantModel(); // Assuming you have a TenantModel
+
+        // Check if the tenant exists
+        $tenant = $model->find($input->tenantId);
+        if (!$tenant) {
+            return $this->fail(['status' => false, 'message' => 'Tenant not found'], 404);
+        }
+
+        // Data to update
+        $updateData = [
+            'tenantName'   => $input->tenantName,
+            'databaseName' => $input->databaseName,
+            'username'     => $input->username,
+            'password'     => $input->password,
+            'hostUrl'      => $input->hostUrl,
+            'businessId'   => $input->businessId
+        ];
+
+        // Update the tenant
+        $model->update($input->tenantId, $updateData);
+
+        return $this->respond(["status" => true, "message" => "Tenant Updated Successfully"], 200);
+    } else {
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
+    }
+}
+
+
+
+
     
     public function getRolesPaging(){
         $input = $this->request->getJSON();
@@ -706,6 +836,35 @@ class User extends BaseController
     
         return $this->respond($response, 200);
     }
+
+    public function getTenantsPaging() {
+        $input = $this->request->getJSON();
+        $tenantModel = new TenantModel();
     
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        // Define the number of items per page
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+    
+        // Fetch paginated tenant data ordered by latest createdDate
+        $tenants = $tenantModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+        $pager = $tenantModel->pager;
+    
+        $response = [
+            "status" => true,
+            "message" => "All Tenant Data Fetched",
+            "data" => $tenants,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+    
+        return $this->respond($response, 200);
+    }
+    
+
     
 }

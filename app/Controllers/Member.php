@@ -104,6 +104,8 @@ class Member extends BaseController
             'type'=> ['rules' => 'required'], 
             'name'=> ['rules' => 'required'], 
             'mobileNo'=> ['rules' => 'required'],
+            'aadharCard'=> ['rules' => 'required'],
+            'address'=> ['rules' => 'required'],
             'fees'=> ['rules' => 'required'],
             'transactionNo' => ['rules' => 'required'],
             'transactionDate' => ['rules' => 'required'],

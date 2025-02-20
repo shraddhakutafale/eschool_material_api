@@ -117,6 +117,7 @@ class Donation extends BaseController
             'transactionNo' => ['rules' => 'required'],
             'transactionDate' => ['rules' => 'required'],
             'paymentMode' => ['rules' => 'required'],
+            'razorpayNo' => ['rules' => 'required']
         ];
     
         if ($this->validate($rules)) {

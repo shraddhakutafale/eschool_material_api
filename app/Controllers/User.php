@@ -8,6 +8,10 @@ use App\Models\UserModel;
 use App\Models\RolePermissionModel;
 use App\Models\RightModel;
 use App\Models\RoleModel;
+use App\Models\BusinessModel;
+use App\Models\BusinessCategoryModel;
+
+
 use App\Models\TenantModel;
 
 use \Firebase\JWT\JWT;
@@ -779,6 +783,159 @@ public function updateTenant()
 }
 
 
+
+
+
+public function getAllBusiness()
+{
+    $businesses = new BusinessModel;
+    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $businesses->findAll()], 200);
+}
+
+
+
+public function createBusiness()
+{
+    $input = $this->request->getJSON();
+    $rules = [
+        'businessName' => ['rules' => 'required'],
+        'businessDesc' => ['rules' => 'required']
+    ];
+
+    if ($this->validate($rules)) {
+        $model = new BusinessModel(); // Assuming you have a BusinessModel
+        $data = [
+            'businessName' => $input->businessName,
+            'businessDesc' => $input->businessDesc
+         
+        ];
+        
+        $model->insert($data);
+
+        return $this->respond(["status" => true, 'message' => 'Business Created Successfully'], 200);
+    } else {
+        $response = [
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
+    }
+}
+
+public function updateBusiness()
+{
+    $input = $this->request->getJSON();
+
+    // Validation rules for updating business
+    $rules = [
+        'businessId'   => ['rules' => 'required|numeric'],
+        'businessName' => ['rules' => 'required|min_length[3]'],
+        'businessDesc' => ['rules' => 'required|min_length[5]']
+    ];
+
+    if ($this->validate($rules)) {
+        $model = new BusinessModel(); // Assuming you have a BusinessModel
+
+        // Check if the business exists
+        $business = $model->find($input->businessId);
+        if (!$business) {
+            return $this->fail(['status' => false, 'message' => 'Business not found'], 404);
+        }
+
+        // Data to update
+        $updateData = [
+            'businessName' => $input->businessName,
+            'businessDesc' => $input->businessDesc
+        ];
+
+        // Update the business
+        $model->update($input->businessId, $updateData);
+
+        return $this->respond(["status" => true, 'message' => 'Business Updated Successfully'], 200);
+    } else {
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
+    }
+}
+
+
+
+public function deleteBusiness()
+{
+    $input = $this->request->getJSON();
+    
+    // Validation rules for businessId
+    $rules = [
+        'businessId' => ['rules' => 'required|numeric']
+    ];
+
+    if ($this->validate($rules)) {
+        $model = new BusinessModel(); // Assuming you have a BusinessModel
+
+        // Check if the business exists
+        $business = $model->find($input->businessId);
+        if (!$business) {
+            return $this->fail(['status' => false, 'message' => 'Business not found'], 404);
+        }
+
+        // Soft delete by setting isDeleted to 1
+        $updateData = ['isDeleted' => 1];
+        $model->update($input->businessId, $updateData);
+
+        return $this->respond(["status" => true, 'message' => 'Business Deleted Successfully'], 200);
+    } else {
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
+    }
+}
+
+
+public function getBusinessesPaging()
+{
+    $input = $this->request->getJSON();
+    $businessModel = new BusinessModel(); // Assuming you have a BusinessModel
+
+    // Get the page number from the input, default to 1 if not provided
+    $page = isset($input->page) ? $input->page : 1;
+    // Define the number of items per page
+    $perPage = isset($input->perPage) ? $input->perPage : 50;
+
+    // Fetch paginated business data
+    $businesses = $businessModel->paginate($perPage, 'default', $page);
+    $pager = $businessModel->pager;
+
+    $response = [
+        "status" => true,
+        "message" => "All Businesses Fetched",
+        "data" => $businesses,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ];
+
+    return $this->respond($response, 200);
+}
+
+
+
+
+public function getAllBusinessCategory()
+{
+    $categories = new BusinessCategoryModel;
+    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $categories->findAll()], 200);
+}
 
     
 }

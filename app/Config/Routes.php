@@ -53,11 +53,22 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('user/updatetenant', 'User::updateTenant/$1',['filter' => 'authFilter']); // Update an item
     $routes->post('user/deletetenant', 'User::deleteTenant',['filter' => 'authFilter']); // Delete an item
 
+    $routes->get('user/getallbusiness', 'User::getAllBusiness',['filter' => 'authFilter']); // Get all items
+    $routes->post('user/createbusiness', 'User::createBusiness',['filter' => 'authFilter']); // Create a new item
+    $routes->post('user/updatebusiness', 'User::updateBusiness/$1',['filter' => 'authFilter']); // Update an item
+    $routes->post('user/deletebusiness', 'User::deleteBusiness',['filter' => 'authFilter']); // Delete an item
+
+    $routes->get('user/getallbusinesscategory', 'User::getAllBusinesscategory',['filter' => 'authFilter']); // Get all businesscategory
+
+
+
 
     // Routes for roles
     $routes->post('user/getrolespaging', 'User::getRolesPaging',['filter' => 'authFilter']);
     $routes->post('user/getrightspaging', 'User::getRightsPaging',['filter' => 'authFilter']);
     $routes->post('user/gettenantspaging', 'User::getTenantsPaging',['filter' => 'authFilter']);
+    $routes->post('user/getbusinessespaging', 'User::getBusinessesPaging',['filter' => 'authFilter']);
+
 
 
 

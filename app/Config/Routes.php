@@ -35,7 +35,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('user/usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('user/register', 'User::register');
 
-    $routes->get('user/getallrole', 'User::index',['filter' => 'authFilter']); // Get all items
+    $routes->get('user/getallrole', 'User::getAllRole',['filter' => 'authFilter']); // Get all items
     $routes->post('user/createrole', 'User::createRole',['filter' => 'authFilter']); // Create a new item
     $routes->post('user/updaterole', 'User::updateRole/$1',['filter' => 'authFilter']); // Update an item
     $routes->post('user/deleterole', 'User::deleteRole',['filter' => 'authFilter']); // Delete an item
@@ -43,12 +43,12 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
 
 
-    $routes->get('user/getallright', 'User::index',['filter' => 'authFilter']); // Get all items
+    $routes->get('user/getallright', 'User::getAllRight',['filter' => 'authFilter']); // Get all items
     $routes->post('user/createright', 'User::createRight',['filter' => 'authFilter']); // Create a new item
     $routes->post('user/updateright', 'User::updateRight/$1',['filter' => 'authFilter']); // Update an item
     $routes->post('user/deleteright', 'User::deleteRight',['filter' => 'authFilter']); // Delete an item
 
-    $routes->get('user/getalltenant', 'User::index',['filter' => 'authFilter']); // Get all items
+    $routes->get('user/getalltenant', 'User::getAllTenant',['filter' => 'authFilter']); // Get all items
     $routes->post('user/createtenant', 'User::createTenant',['filter' => 'authFilter']); // Create a new item
     $routes->post('user/updatetenant', 'User::updateTenant/$1',['filter' => 'authFilter']); // Update an item
     $routes->post('user/deletetenant', 'User::deleteTenant',['filter' => 'authFilter']); // Delete an item

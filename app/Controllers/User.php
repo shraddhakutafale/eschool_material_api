@@ -8,6 +8,8 @@ use App\Models\UserModel;
 use App\Models\RolePermissionModel;
 use App\Models\RightModel;
 use App\Models\RoleModel;
+use App\Models\TenantModel;
+
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
  
@@ -418,7 +420,7 @@ class User extends BaseController
     
 
 
-    
+    // get all role api
 
     public function getAllRole()
     {
@@ -532,11 +534,12 @@ class User extends BaseController
 
 
 
+    // get all right api 
 
     public function getAllRight()
     {
         $rights = new RightModel;
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $right->findAll()], 200);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $rights->findAll()], 200);
     }
 
     public function createRight()
@@ -649,13 +652,13 @@ class User extends BaseController
         }
     }
 
-
+    // get all tenant api
+    
     public function getAllTenant()
     {
         $tenants = new TenantModel;
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $tenant->findAll()], 200);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $tenants->findAll()], 200);
     }
-   
 
     public function createTenant()
 {
@@ -776,95 +779,6 @@ public function updateTenant()
 }
 
 
-
-
-    
-    public function getRolesPaging(){
-        $input = $this->request->getJSON();
-        $roleModel = new RoleModel();
-
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-
-        // Fetch paginated data ordered by the latest added first
-        $roles = $roleModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $roleModel->pager;
-
-        $response = [
-            "status" => true,
-            "message" => "All Data Fetched",
-            "data" => $roles,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-    
-        return $this->respond($response, 200);
-    }
-
-
-    public function getRightsPaging()
-    {
-        $input = $this->request->getJSON();
-        $rightModel = new RightModel(); // Assuming you have a RightModel
-    
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
-        $perPage = isset($input->perPage) ? $input->perPage : 50;
-    
-        // Fetch paginated data without ordering by createdDate
-        $rights = $rightModel->paginate($perPage, 'default', $page);
-        $pager = $rightModel->pager;
-    
-        $response = [
-            "status" => true,
-            "message" => "All Rights Fetched",
-            "data" => $rights,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-    
-        return $this->respond($response, 200);
-    }
-
-    public function getTenantsPaging() {
-        $input = $this->request->getJSON();
-        $tenantModel = new TenantModel();
-    
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-    
-        // Fetch paginated tenant data ordered by latest createdDate
-        $tenants = $tenantModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $tenantModel->pager;
-    
-        $response = [
-            "status" => true,
-            "message" => "All Tenant Data Fetched",
-            "data" => $tenants,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-    
-        return $this->respond($response, 200);
-    }
-    
 
     
 }

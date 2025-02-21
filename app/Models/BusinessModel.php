@@ -13,7 +13,7 @@ class BusinessModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
 
-    protected $allowedFields    = ['businessId', 'businessName', 'businessDesc', 'timings', 'aboutUs', 'address', 'tags', 'businessCategoryId', 'photoUrl', 'photoBase64Url', 'logoUrl', 'themeColor', 'primaryContactNo', 'secondaryContactNo', 'pageUrl', 'userId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['businessId', 'businessName', 'businessDesc', 'tenantName', 'timings', 'aboutUs', 'address', 'tags', 'businessCategoryId', 'photoUrl', 'photoBase64Url', 'logoUrl', 'themeColor', 'primaryContactNo', 'secondaryContactNo', 'pageUrl', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

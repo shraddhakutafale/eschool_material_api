@@ -59,6 +59,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('user/deletebusiness', 'User::deleteBusiness',['filter' => 'authFilter']); // Delete an item
 
     $routes->get('user/getallbusinesscategory', 'User::getAllBusinesscategory',['filter' => 'authFilter']); // Get all businesscategory
+    $routes->get('user/getalltenantname', 'User::getAllTenantname',['filter' => 'authFilter']);
 
 
 

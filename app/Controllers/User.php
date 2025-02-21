@@ -799,14 +799,20 @@ public function createBusiness()
     $input = $this->request->getJSON();
     $rules = [
         'businessName' => ['rules' => 'required'],
-        'businessDesc' => ['rules' => 'required']
+        'tenantName' => ['rules' => 'required'],
+
+        'businessDesc' => ['rules' => 'required'],
+        'businessCategoryId' => ['rules' => 'required']
     ];
 
     if ($this->validate($rules)) {
         $model = new BusinessModel(); // Assuming you have a BusinessModel
         $data = [
             'businessName' => $input->businessName,
-            'businessDesc' => $input->businessDesc
+            'tenantName' => $input->tenantName,
+
+            'businessDesc' => $input->businessDesc,
+            'businessCategoryId' => $input->businessCategoryId
          
         ];
         
@@ -935,6 +941,14 @@ public function getAllBusinessCategory()
 {
     $categories = new BusinessCategoryModel;
     return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $categories->findAll()], 200);
+}
+
+
+
+public function getAllTenantName()
+{
+    $tenants = new TenantModel;
+    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $tenants->findAll()], 200);
 }
 
     

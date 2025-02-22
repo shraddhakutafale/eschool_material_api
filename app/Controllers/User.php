@@ -951,5 +951,32 @@ public function getAllTenantName()
     return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $tenants->findAll()], 200);
 }
 
-    
+public function getAllPermissionByCategory()
+{
+    $input = $this->request->getJSON();
+    $categoryId = $input->categoryId;
+    $model = new RolePermissionModel;
+    $rightsModel = new RightModel;
+    $permissions = $model->where('categoryId', $categoryId)->findAll();
+
+    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $permissions], 200);
+}
+
+public function updatePermissions()
+{
+    $input = $this->request->getJSON();
+    $model = new RolePermissionModel;
+    foreach ($input as $permission) {
+        if(isset($permission->permissionId)){
+            $model->update($permission->permissionId, $permission);
+            continue;
+        }else{
+            $model->insert($permission);
+            continue;
+        }
+    }
+    return $this->respond(["status" => true, "message" => "Permissions Updated Successfully", "data" => []], 200);
+
+}
+
 }

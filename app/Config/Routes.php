@@ -25,41 +25,45 @@ $routes->options('(:any)', function () use ($allowed_origins){
 });
 $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
-    $routes->get('user/getall', 'User::index',['filter' => 'authFilter']); // Get all items
-    $routes->get('user/view/(:segment)', 'User::show/$1',['filter' => 'authFilter']); // Get specific item
-    $routes->post('user/create', 'User::create',['filter' => 'authFilter']); // Create a new item
-    $routes->post('user/update', 'User::update/$1',['filter' => 'authFilter']); // Update an item
-    $routes->post('user/delete', 'User::delete',['filter' => 'authFilter']); // Delete an item
+    $routes->get('user/getall', 'User::index',['filter' => 'authFilter']); 
+    $routes->get('user/view/(:segment)', 'User::show/$1',['filter' => 'authFilter']); 
+    $routes->post('user/create', 'User::create',['filter' => 'authFilter']); 
+    $routes->post('user/update', 'User::update/$1',['filter' => 'authFilter']); 
+    $routes->post('user/delete', 'User::delete',['filter' => 'authFilter']); 
     $routes->post('user/login', 'User::login');
     $routes->get('user/profile', 'User::profile',['filter' => 'authFilter']);
     $routes->get('user/usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('user/register', 'User::register');
 
-    $routes->get('user/getallrole', 'User::getAllRole',['filter' => 'authFilter']); // Get all items
-    $routes->post('user/createrole', 'User::createRole',['filter' => 'authFilter']); // Create a new item
-    $routes->post('user/updaterole', 'User::updateRole/$1',['filter' => 'authFilter']); // Update an item
-    $routes->post('user/deleterole', 'User::deleteRole',['filter' => 'authFilter']); // Delete an item
-    $routes->post('user/getallpermissionbycategory', 'User::getAllPermissionByCategory',['filter' => 'authFilter']); // Get all items
-    $routes->post('user/updatepermissions', 'User::updatePermissions',['filter' => 'authFilter']); // Get all items
+    $routes->get('user/getallrole', 'User::getAllRole',['filter' => 'authFilter']); 
+    $routes->post('user/createrole', 'User::createRole',['filter' => 'authFilter']); 
+    $routes->post('user/updaterole', 'User::updateRole/$1',['filter' => 'authFilter']);
+    $routes->post('user/deleterole', 'User::deleteRole',['filter' => 'authFilter']);
 
 
-    $routes->get('user/getallright', 'User::getAllRight',['filter' => 'authFilter']); // Get all items
-    $routes->post('user/createright', 'User::createRight',['filter' => 'authFilter']); // Create a new item
-    $routes->post('user/updateright', 'User::updateRight/$1',['filter' => 'authFilter']); // Update an item
-    $routes->post('user/deleteright', 'User::deleteRight',['filter' => 'authFilter']); // Delete an item
 
-    $routes->get('user/getalltenant', 'User::getAllTenant',['filter' => 'authFilter']); // Get all items
-    $routes->post('user/createtenant', 'User::createTenant',['filter' => 'authFilter']); // Create a new item
-    $routes->post('user/updatetenant', 'User::updateTenant/$1',['filter' => 'authFilter']); // Update an item
-    $routes->post('user/deletetenant', 'User::deleteTenant',['filter' => 'authFilter']); // Delete an item
 
-    $routes->get('user/getallbusiness', 'User::getAllBusiness',['filter' => 'authFilter']); // Get all items
-    $routes->post('user/createbusiness', 'User::createBusiness',['filter' => 'authFilter']); // Create a new item
-    $routes->post('user/updatebusiness', 'User::updateBusiness/$1',['filter' => 'authFilter']); // Update an item
-    $routes->post('user/deletebusiness', 'User::deleteBusiness',['filter' => 'authFilter']); // Delete an item
+    $routes->get('user/getallright', 'User::getAllRight',['filter' => 'authFilter']); 
+    $routes->post('user/createright', 'User::createRight',['filter' => 'authFilter']);
+    $routes->post('user/updateright', 'User::updateRight/$1',['filter' => 'authFilter']); 
+    $routes->post('user/deleteright', 'User::deleteRight',['filter' => 'authFilter']); 
+
+    $routes->get('user/getalltenant', 'User::getAllTenant',['filter' => 'authFilter']); 
+    $routes->post('user/createtenant', 'User::createTenant',['filter' => 'authFilter']);
+    $routes->post('user/updatetenant', 'User::updateTenant/$1',['filter' => 'authFilter']); 
+    $routes->post('user/deletetenant', 'User::deleteTenant',['filter' => 'authFilter']); 
+
+    $routes->get('user/getallbusiness', 'User::getAllBusiness',['filter' => 'authFilter']);
+    $routes->post('user/createbusiness', 'User::createBusiness',['filter' => 'authFilter']); 
+    $routes->post('user/updatebusiness', 'User::updateBusiness/$1',['filter' => 'authFilter']); 
+    $routes->post('user/deletebusiness', 'User::deleteBusiness',['filter' => 'authFilter']); 
+
+ 
 
     $routes->get('user/getallbusinesscategory', 'User::getAllBusinesscategory',['filter' => 'authFilter']); // Get all businesscategory
     $routes->get('user/getalltenantname', 'User::getAllTenantname',['filter' => 'authFilter']);
+
+
 
 
     // Routes for roles
@@ -68,6 +72,29 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('user/gettenantspaging', 'User::getTenantsPaging',['filter' => 'authFilter']);
     $routes->post('user/getbusinessespaging', 'User::getBusinessesPaging',['filter' => 'authFilter']);
 
+
+
+    // routes for settings
+    $routes->get('setting/getallfirebase', 'Setting::index',['filter' => 'authFilter']); 
+    $routes->get('setting/view/(:segment)', 'Setting::show/$1',['filter' => 'authFilter']); 
+    $routes->post('setting/createfirebase', 'Setting::createFirebase',['filter' => 'authFilter']); 
+    $routes->post('setting/updatefirebase', 'Setting::updateFirebase/$1',['filter' => 'authFilter']);
+    $routes->post('setting/deletefirebase', 'Setting::deleteFirebase',['filter' => 'authFilter']);
+
+
+    
+
+    $routes->get('setting/getallsms', 'Setting::getAllSms',['filter' => 'authFilter']);
+    $routes->post('setting/createsms', 'Setting::createSms',['filter' => 'authFilter']); 
+    $routes->post('setting/updatesms', 'Setting::updateSms/$1',['filter' => 'authFilter']); 
+    $routes->post('setting/deletesms', 'Setting::deleteSms',['filter' => 'authFilter']); 
+
+
+    
+    $routes->get('setting/getallsmtp', 'Setting::getAllSmtp',['filter' => 'authFilter']);
+    $routes->post('setting/createsmtp', 'Setting::createSmtp',['filter' => 'authFilter']); 
+    $routes->post('setting/updatesmtp', 'Setting::updateSmtp/$1',['filter' => 'authFilter']); 
+    $routes->post('setting/deletesmtp', 'Setting::deleteSmtp',['filter' => 'authFilter']); 
 
 
 

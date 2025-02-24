@@ -250,7 +250,7 @@ class Member extends BaseController
                 'taluka' => $input->taluka,
                 'pincode' => $input->pincode,
                 'fees' => $input->fees,
-                'file' => $input->file,
+         
                 
             ];
 

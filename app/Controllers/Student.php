@@ -224,7 +224,8 @@ class Student extends BaseController
                 'aadharNo' => $input->aadharNo,
                 'medium' => $input->medium,
                 'physicallyHandicapped' => $input->physicallyHandicapped,
-                'educationalGap' => $input->educationalGap
+                'educationalGap' => $input->educationalGap,
+                'registeredDate' => $input->registeredDate
             ];
 
             // Update the student with new data

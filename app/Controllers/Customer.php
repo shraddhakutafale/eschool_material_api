@@ -209,9 +209,9 @@ class Customer extends BaseController
     {
         $input = $this->request->getJSON();
     
-        // Validation rules for the staff
+        // Validation rules for the Customer
         $rules = [
-            'staffId' => ['rules' => 'required'], // Ensure staffId is provided and is numeric
+            'customerId' => ['rules' => 'required'], // Ensure customerId is provided and is numeric
         ];
     
         // Validate the input
@@ -231,26 +231,26 @@ class Customer extends BaseController
     
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
-            $model = new StaffModel($db);
+            $model = new CustomerModel($db);
     
-            // Retrieve the staff by staffId
-            $staffId = $input->staffId;
-            $staff = $model->find($staffId); // Assuming find method retrieves the staff
+            // Retrieve the customer by customerId
+            $customerId = $input->customerId;
+            $customer = $model->find($customerId); // Assuming find method retrieves the Customer
     
-            if (!$staff) {
-                return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
+            if (!$customer) {
+                return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
             }
     
-            // Proceed to delete the staff (mark as deleted)
+            // Proceed to delete the customer (mark as deleted)
             $updateData = [
-                'isDeleted' => 1, // Mark the staff as deleted
+                'isDeleted' => 1, // Mark the customer as deleted
             ];
-            $deleted = $model->update($staffId, $updateData);
+            $deleted = $model->update($customerId, $updateData);
     
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Staff Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Customer Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete staff'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete Customer'], 500);
             }
         } else {
             // Validation failed

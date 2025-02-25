@@ -229,6 +229,15 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
       $routes->get('quotation/getallwebsite', 'Quotation::getQuotationsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
       $routes->post('quotation/delete', 'Quotation::delete',['filter' => ['authFilter','tenantFilter']]); 
 
+
+       //Routes for Purchase Order (PO)
+       $routes->get('po/getall', 'Po::index',['filter' => ['authFilter', 'tenantFilter']]);
+       $routes->post('po/getallpaging', 'Po::getPosPaging',['filter' => ['authFilter', 'tenantFilter']]);
+       $routes->get('po/view/(:segment)', 'Po::show/$1',['filter' => 'authFilter']);
+       $routes->post('po/create', 'Po::create',['filter' => ['authFilter','tenantFilter']]);
+       $routes->post('po/update', 'Po::update',['filter' => ['authFilter','tenantFilter']]);
+       $routes->get('po/getallwebsite', 'Po::getPosWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+       $routes->post('po/delete', 'Po::delete',['filter' => ['authFilter','tenantFilter']]); 
       
          //Routes for sale
          $routes->get('sale/getall', 'Sale::index',['filter' => ['authFilter', 'tenantFilter']]);

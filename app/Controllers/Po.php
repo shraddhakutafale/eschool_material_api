@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
-use App\Models\QuotationModel;
+use App\Models\PoModel;
 use Config\Database;
 
-class Quotation extends BaseController
+class Po extends BaseController
 {
     use ResponseTrait;
 
@@ -29,8 +29,8 @@ class Quotation extends BaseController
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
-        $quotationModel = new QuotationModel($db);
-        return $this->respond(['quotation' => $quotationModel->findAll()], 200);
+        $PoModel = new PoModel($db);
+        return $this->respond(['quotation' => $PoModel->findAll()], 200);
     }
 
     public function getQuotationsPaging()
@@ -57,9 +57,9 @@ class Quotation extends BaseController
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
-        $QuotationModel = new QuotationModel($db);
-        $quotations = $QuotationModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $QuotationModel->pager;
+        $PoModel = new PoModel($db);
+        $quotations = $PoModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+        $pager = $PoModel->pager;
 
         $response = [
             "status" => true,
@@ -103,25 +103,29 @@ class Quotation extends BaseController
     {
         $input = $this->request->getJSON();
         $rules = [
-            'quoteNo'=> ['rules' => 'required'], 
-            'quoteDate'=> ['rules' => 'required'], 
-            'validDate'=> ['rules' => 'required'], 
-            'businessNameFrom'=> ['rules' => 'required'],
-            'phoneFrom'=> ['rules' => 'required'],
-            'addressFrom'=> ['rules' => 'required'], 
-            'emailFrom'=> ['rules' => 'required'],
+            'poCode'=> ['rules' => 'required'], 
+            'poDate'=> ['rules' => 'required'],
+            'vendor'=> ['rules' => 'required'],
+            'taxInvoiceNumber'=> ['rules' => 'required'],
+            // 'quoteNo'=> ['rules' => 'required'], 
+            // 'quoteDate'=> ['rules' => 'required'], 
+            // 'validDate'=> ['rules' => 'required'], 
+            // 'businessNameFrom'=> ['rules' => 'required'],
+            // 'phoneFrom'=> ['rules' => 'required'],
+            // 'addressFrom'=> ['rules' => 'required'], 
+            // 'emailFrom'=> ['rules' => 'required'],
 
-            'PanFrom'=> ['rules' => 'required'], 
-            'businessNameFor'=> ['rules' => 'required'], 
-            'phoneFor'=> ['rules' => 'required'], 
-            'addressFor'=> ['rules' => 'required'],
-            'emailFor'=> ['rules' => 'required'],
-            'PanCardFor'=> ['rules' => 'required'], 
-            // 'quotationForEmail'=> ['rules' => 'required'],
-
-            // 'quotationForPan'=> ['rules' => 'required'],
+            // 'PanFrom'=> ['rules' => 'required'], 
+            // 'businessNameFor'=> ['rules' => 'required'], 
+            // 'phoneFor'=> ['rules' => 'required'], 
+            // 'addressFor'=> ['rules' => 'required'],
+            // 'emailFor'=> ['rules' => 'required'],
             // 'PanCardFor'=> ['rules' => 'required'], 
-            // 'quotationForEmail'=> ['rules' => 'required'],
+            // // 'quotationForEmail'=> ['rules' => 'required'],
+
+            // // 'quotationForPan'=> ['rules' => 'required'],
+            // // 'PanCardFor'=> ['rules' => 'required'], 
+            // // 'quotationForEmail'=> ['rules' => 'required'],
         ];
   
         if($this->validate($rules)){
@@ -140,7 +144,7 @@ class Quotation extends BaseController
 
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
-            $model = new QuotationModel($db);
+            $model = new PoModel($db);
         
             $model->insert($input);
              

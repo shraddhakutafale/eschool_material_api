@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class QuotationModel extends Model
+class PoModel extends Model
 {
-    protected $table            = 'quote_mst';
-    protected $primaryKey       = 'quoteId';
+    protected $table            = 'po_mst';
+    protected $primaryKey       = 'poId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [ 'quoteId', 'quoteNo', 'quoteDate', 'validDate', 'quoteTitle', 'quoteSubTitle', 'quoteFrom', 'quoteTo', 'taxType', 'amountWithoutTax', 'discount', 'totalAmount', 'taxAmount', 'extraAmount', 'signatureUrl', 'note', 'modifiedBy', 'modifiedDate', 'createdBy', 'createdDate', 'isActive', 'isDeleted', 'businessNameFrom', 'phoneFrom', 'addressFrom', 'emailFrom', 'PanFrom', 'businessNameFor', 'phoneFor', 'addressFor', 'emailFor', 'PanCardFor'];
+    protected $allowedFields    = [ 'poId', 'poDate', 'poCode', 'poAmount', 'vendorId', 'taxInvoiceNumber', 'invoiceUrl', 'isActive', 'isDeleted', 'remarks', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

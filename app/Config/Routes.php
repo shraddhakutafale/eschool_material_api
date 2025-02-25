@@ -98,6 +98,15 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
 
 
+       // Routes for Slide
+       $routes->get('slide/getall', 'Slide::index',['filter' => ['authFilter', 'tenantFilter']]);
+       $routes->post('slide/getallpaging', 'Slide::getSlidesPaging',['filter' => ['authFilter', 'tenantFilter']]);
+       $routes->get('slide/view/(:segment)', 'Slide::show/$1',['filter' => 'authFilter']);
+       $routes->post('slide/create', 'Slide::create',['filter' => ['authFilter','tenantFilter']]);
+       $routes->post('slide/update', 'Slide::update',['filter' => ['authFilter','tenantFilter']]);
+       $routes->get('slide/getallwebsite', 'Slide::getSlidesWebsite',['filter' => ['tenantFilter']]);
+       $routes->post('slide/delete', 'Slide::delete',['filter' => ['authFilter','tenantFilter']]); 
+
     // Routes for Business
     $routes->get('business/getall', 'Business::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('business/getallpaging', 'Business::getBusinessesPaging',['filter' => ['authFilter', 'tenantFilter']]);

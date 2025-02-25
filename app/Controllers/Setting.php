@@ -22,135 +22,131 @@ class Setting extends BaseController
     }
     
     
-    // public function create()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //         'name' => ['rules' => 'required|min_length[4]|max_length[255]'],
-    //         'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[user_mst.email]'],
-    //         'mobileNo' => ['rules' => 'required|min_length[10]|max_length[10]|is_unique[user_mst.mobileNo]'],
-    //         'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
-    //     ];
-  
-    //     if($this->validate($rules)){
-    //         $model = new UserModel();
-    //         $data = [
-    //             'name'     => $input->name,
-    //             'mobileNo' => $input->mobileNo,
-    //             'email'    => $input->email,
-    //             'password' => password_hash($input->password, PASSWORD_DEFAULT)
-    //         ];
-    //         $model->insert($data);
-             
-    //         return $this->respond(["status" => true, 'message' => 'Created Successfully'], 200);
-    //     }else{
-    //         $response = [
-    //             'status'=>false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response , 409);
-             
-    //     }
-            
-    // }
+    public function createFirebase()
+{
+    $input = $this->request->getJSON();
+    $rules = [
+        'firebaseName'       => ['rules' => 'required'],
+        'apiKey'             => ['rules' => 'required'],
+        'authDomain'         => ['rules' => 'required'],
+        'projectId'          => ['rules' => 'required'],
+        'storageBucket'      => ['rules' => 'required'],
+        'messagingSenderId'  => ['rules' => 'required'],
+        'appId'              => ['rules' => 'required'],
+        'businessId'         => ['rules' => 'required'],
+    ];
 
-    // public function update()
-    // {
-    //     $input = $this->request->getJSON();
-    
-    //     // Validation rules for updating user
-    //     $rules = [
-    //         'userId'   => ['rules' => 'required|numeric'],
-    //         'name'     => ['rules' => 'required|min_length[4]|max_length[255]'],
-    //         'email'    => ['rules' => 'required|min_length[4]|max_length[255]|valid_email'],
-    //         'mobileNo' => ['rules' => 'required|min_length[10]|max_length[10]']
-    //     ];
-    
-    //     if ($this->validate($rules)) {
-    //         $model = new UserModel();
-    
-    //         // Check if the user exists
-    //         $user = $model->find($input->userId);
-    //         if (!$user) {
-    //             return $this->fail(['status' => false, 'message' => 'User not found'], 404);
-    //         }
-    
-    //         // Data to update
-    //         $updateData = [
-    //             'name'     => $input->name,
-    //             'email'    => $input->email,
-    //             'mobileNo' => $input->mobileNo
-    //         ];
-    
-    //         // Check if the user is updating their email or mobile number
-    //         if ($user['email'] !== $input->email) {
-    //             $rules['email']['rules'] .= '|is_unique[user_mst.email]';
-    //         }
-    //         if ($user['mobileNo'] !== $input->mobileNo) {
-    //             $rules['mobileNo']['rules'] .= '|is_unique[user_mst.mobileNo]';
-    //         }
-    
-    //         // Validate unique email and mobile number separately
-    //         if (!$this->validate($rules)) {
-    //             return $this->fail([
-    //                 'status'  => false,
-    //                 'errors'  => $this->validator->getErrors(),
-    //                 'message' => 'Invalid Inputs'
-    //             ], 409);
-    //         }
-    
-    //         // Update the user
-    //         $model->update($input->userId, $updateData);
-    
-    //         return $this->respond(["status" => true, 'message' => 'User Updated Successfully'], 200);
-    //     } else {
-    //         return $this->fail([
-    //             'status'  => false,
-    //             'errors'  => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ], 409);
-    //     }
-    // }
-    
-    // public function delete()
-    // {
-    //     $input = $this->request->getJSON();
+    if ($this->validate($rules)) {
+        $model = new FirebaseModel();
+        $data = [
+            'firebaseName'      => $input->firebaseName,
+            'apiKey'            => $input->apiKey,
+            'authDomain'        => $input->authDomain,
+            'projectId'         => $input->projectId,
+            'storageBucket'     => $input->storageBucket,
+            'messagingSenderId' => $input->messagingSenderId,
+            'appId'             => $input->appId,
+            'businessId'        => $input->businessId
+        ];
+        $model->insert($data);
+
+        return $this->respond(["status" => true, 'message' => 'Created Successfully'], 200);
+    } else {
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
+    }
+}
+
+
+public function updateFirebase()
+{
+    $input = $this->request->getJSON();
+
+    // Validation rules for updating user and Firebase details
+    $rules = [
+        'firebaseId'            => ['rules' => 'required|numeric'],
+        'firebaseName'      => ['rules' => 'required'],
+        'apiKey'            => ['rules' => 'required'],
+        'authDomain'        => ['rules' => 'required'],
+        'projectId'         => ['rules' => 'required'],
+        'storageBucket'     => ['rules' => 'required'],
+        'messagingSenderId' => ['rules' => 'required'],
+        'appId'             => ['rules' => 'required'],
+        'businessId'        => ['rules' => 'required']
+    ];
+
+    if ($this->validate($rules)) {
+        $model = new FirebaseModel();
+
+        // Check if the user exists
+        $firebase = $model->find($input->firebaseId);
+        if (!$firebase) {
+            return $this->fail(['status' => false, 'message' => 'User not found'], 404);
+        }
+
+        // Data to update
+        $updateData = [
+            'firebaseName'      => $input->firebaseName,
+            'apiKey'            => $input->apiKey,
+            'authDomain'        => $input->authDomain,
+            'projectId'         => $input->projectId,
+            'storageBucket'     => $input->storageBucket,
+            'messagingSenderId' => $input->messagingSenderId,
+            'appId'             => $input->appId,
+            'businessId'        => $input->businessId
+        ];
+
+        // Update Firebase details
+        $model->update($input->firebaseId, $updateData);
+
+        return $this->respond(["status" => true, 'message' => 'Firebase details updated successfully'], 200);
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+}
+
+      public function deleteFirebase()
+    {
+        $input = $this->request->getJSON();
         
-    //     // Validation rules for userId
-    //     $rules = [
-    //         'userId' => ['rules' => 'required|numeric']
-    //     ];
+        // Validation rules for the roleId
+        $rules = [
+            'firebaseId' => ['rules' => 'required|numeric']
+        ];
     
-    //     if ($this->validate($rules)) {
-    //         $model = new UserModel();
+        if ($this->validate($rules)) {
+            $model = new FirebaseModel();
     
-    //         // Check if the user exists
-    //         $user = $model->find($input->userId);
-    //         if (!$user) {
-    //             return $this->fail(['status' => false, 'message' => 'User not found'], 404);
-    //         }
+            // Check if the role exists
+            $firebase = $model->find($input->firebaseId);
+            if (!$firebase) {
+                return $this->fail(['status' => false, 'message' => 'Firebase not found'], 404);
+            }
     
-    //         // Soft delete by updating isDeleted flag
-    //         $updateData = [
-    //             'isDeleted' => 1
-    //         ];
-    //         $deleted = $model->update($input->userId, $updateData);
+            // Soft delete by setting isDeleted to 1
+            $updateData = ['isDeleted' => 1];
+            $model->update($input->firebaseId, $updateData);
     
-    //         if ($deleted) {
-    //             return $this->respond(["status" => true, 'message' => 'User Deleted Successfully'], 200);
-    //         } else {
-    //             return $this->fail(['status' => false, 'message' => 'Failed to delete user'], 500);
-    //         }
-    //     } else {
-    //         return $this->fail([
-    //             'status'  => false,
-    //             'errors'  => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ], 409);
-    //     }
-    // }
+            return $this->respond(["status" => true, 'message' => 'Firebase Deleted Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
     
+
 
 
     // get all role api
@@ -162,108 +158,130 @@ class Setting extends BaseController
     }
    
 
-    // public function createRole()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //         'roleName' => ['rules' => 'required'],
-    //         'note'     => ['rules' => 'required']
-    //     ];
+    public function createSms()
+    {
+        $input = $this->request->getJSON();
     
-    //     if ($this->validate($rules)) {
-    //         $model = new RoleModel();
-    //         $data = [
-    //             'roleName' => $input->roleName,
-    //             'note'     => $input->note
-    //         ];
-    //         $model->insert($data);
+        // Validation rules for SMS configuration fields
+        $rules = [
+            'templateId'    => ['rules' => 'required'],
+            'smsGatewayUrl' => ['rules' => 'required'],
+            'authkey'       => ['rules' => 'required'],
+            'apiElement'    => ['rules' => 'required'],
+            'updUserId'     => ['rules' => 'required'],
+            'updDatetime'   => ['rules' => 'required']
+        ];
     
-    //         return $this->respond(["status" => true, 'message' => 'Role Created Successfully'], 200);
-    //     } else {
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
+        if ($this->validate($rules)) {
+            $model = new SmsModel(); // Ensure you have this model for SMS configurations
+    
+            $data = [
+                'templateId'    => $input->templateId,
+                'smsGatewayUrl' => $input->smsGatewayUrl,
+                'authkey'       => $input->authkey,
+                'apiElement'    => $input->apiElement,
+                'updUserId'     => $input->updUserId,
+                'updDatetime'   => $input->updDatetime
+            ];
+    
+            $model->insert($data);
+    
+            return $this->respond([
+                "status"  => true,
+                "message" => "SMS Configuration Created Successfully"
+            ], 200);
+        } else {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+    }
     
 
-    // public function deleteRole()
-    // {
-    //     $input = $this->request->getJSON();
+    public function deleteSms()
+    {
+        $input = $this->request->getJSON();
         
-    //     // Validation rules for the roleId
-    //     $rules = [
-    //         'roleId' => ['rules' => 'required|numeric']
-    //     ];
+        $rules = [
+            'smsConfigId' => ['rules' => 'required|numeric']
+        ];
     
-    //     if ($this->validate($rules)) {
-    //         $model = new RoleModel();
+        if ($this->validate($rules)) {
+            $model = new SmsModel();
     
-    //         // Check if the role exists
-    //         $role = $model->find($input->roleId);
-    //         if (!$role) {
-    //             return $this->fail(['status' => false, 'message' => 'Role not found'], 404);
-    //         }
+            // Check if the role exists
+            $sms= $model->find($input->smsConfigId);
+            if (!$sms) {
+                return $this->fail(['status' => false, 'message' => 'Sms not found'], 404);
+            }
     
-    //         // Soft delete by setting isDeleted to 1
-    //         $updateData = ['isDeleted' => 1];
-    //         $model->update($input->roleId, $updateData);
+            // Soft delete by setting isDeleted to 1
+            $updateData = ['isDeleted' => 1];
+            $model->update($input->smsConfigId, $updateData);
     
-    //         return $this->respond(["status" => true, 'message' => 'Role Deleted Successfully'], 200);
-    //     } else {
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
+            return $this->respond(["status" => true, 'message' => 'Sms Deleted Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
     
-
+    public function updateSms()
+    {
+        $input = $this->request->getJSON();
     
-    // public function updateRole()
-    // {
-    //     $input = $this->request->getJSON();
+        // Validation rules for updating SMS configuration
+        $rules = [
+            'smsConfigId'   => ['rules' => 'required'],
+            'templateId'    => ['rules' => 'required'],
+            'smsGatewayUrl' => ['rules' => 'required'],
+            'authkey'       => ['rules' => 'required'],
+            'apiElement'    => ['rules' => 'required'],
+            'updUserId'     => ['rules' => 'required'],
+            'updDatetime'   => ['rules' => 'required']
+        ];
     
-    //     // Validation rules for updating role
-    //     $rules = [
-    //         'roleId'   => ['rules' => 'required|numeric'],
-    //         'roleName' => ['rules' => 'required'],
-    //         'note'     => ['rules' => 'required']
-    //     ];
+        if ($this->validate($rules)) {
+            $model = new SmsModel(); 
     
-    //     if ($this->validate($rules)) {
-    //         $model = new RoleModel();
+            // Check if the SMS config exists
+            $smsConfig = $model->find($input->smsConfigId);
+            if (!$smsConfig) {
+                return $this->fail(['status' => false, 'message' => 'SMS  not found'], 404);
+            }
     
-    //         // Check if the role exists
-    //         $role = $model->find($input->roleId);
-    //         if (!$role) {
-    //             return $this->fail(['status' => false, 'message' => 'Role not found'], 404);
-    //         }
+            // Data to update
+            $updateData = [
+                'templateId'    => $input->templateId,
+                'smsGatewayUrl' => $input->smsGatewayUrl,
+                'authkey'       => $input->authkey,
+                'apiElement'    => $input->apiElement,
+                'updUserId'     => $input->updUserId,
+                'updDatetime'   => $input->updDatetime
+            ];
     
-    //         // Data to update
-    //         $updateData = [
-    //             'roleName' => $input->roleName,
-    //             'note'     => $input->note
-    //         ];
+            // Update the SMS configuration
+            $model->update($input->smsConfigId, $updateData);
     
-    //         // Update the role
-    //         $model->update($input->roleId, $updateData);
+            return $this->respond([
+                "status"  => true,
+                "message" => "SMS  Updated Successfully"
+            ], 200);
+        } else {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+    }
     
-    //         return $this->respond(["status" => true, 'message' => 'Role Updated Successfully'], 200);
-    //     } else {
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
 
 
 
@@ -275,114 +293,138 @@ class Setting extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $smtp->findAll()], 200);
     }
 
-    // public function createRight()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //         'rightName'  => ['rules' => 'required'],
-    //         'rightLabel' => ['rules' => 'required'],
-    //         'iconUrl'    => ['rules' => 'required'],
-    //         'route'      => ['rules' => 'required']
-    //     ];
+
+    public function createSmtp()
+    {
+        $input = $this->request->getJSON();
     
-    //     if ($this->validate($rules)) {
-    //         $model = new RightModel();  // Assuming you have a RightModel
-    //         $data = [
-    //             'rightName'  => $input->rightName,
-    //             'rightLabel' => $input->rightLabel,
-    //             'iconUrl'    => $input->iconUrl,
-    //             'route'      => $input->route
-    //         ];
-    //         $model->insert($data);
+        // Validation rules for SMTP configuration
+        $rules = [
+            'protocol'  => ['rules' => 'required'],
+            'smtpHost'  => ['rules' => 'required'],
+            'smtpPort'  => ['rules' => 'required'],
+            'fromMail'  => ['rules' => 'required'],
+            'smtpUser'  => ['rules' => 'required'],
+            'smtpPass'  => ['rules' => 'required'],
+            'updUserId' => ['rules' => 'required']
+        ];
     
-    //         return $this->respond(["status" => true, 'message' => 'Right Created Successfully'], 200);
-    //     } else {
-    //         $response = [
-    //             'status'  => false,
-    //             'errors'  => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
+        if ($this->validate($rules)) {
+            $model = new SmtpModel(); // Ensure this model exists for SMTP configurations
+    
+            // Data to insert
+            $data = [
+                'protocol'  => $input->protocol,
+                'smtpHost'  => $input->smtpHost,
+                'smtpPort'  => $input->smtpPort,
+                'fromMail'  => $input->fromMail,
+                'smtpUser'  => $input->smtpUser,
+                'smtpPass'  => $input->smtpPass,
+                'updUserId' => $input->updUserId
+            ];
+    
+            // Insert the SMTP configuration
+            $model->insert($data);
+    
+            return $this->respond([
+                "status"  => true,
+                "message" => "SMTP Configuration Created Successfully"
+            ], 200);
+        } else {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+    }
     
 
-    // public function deleteRight()
-    // {
-    //     $input = $this->request->getJSON();
+    public function deleteSmtp()
+    {
+        $input = $this->request->getJSON();
         
-    //     // Validation rules for the roleId
-    //     $rules = [
-    //         'rightId' => ['rules' => 'required|numeric']
-    //     ];
+        // Validation rules for the roleId
+        $rules = [
+            'smtpId' => ['rules' => 'required|numeric']
+        ];
     
-    //     if ($this->validate($rules)) {
-    //         $model = new RightModel();
+        if ($this->validate($rules)) {
+            $model = new SmtpModel();
     
-    //         // Check if the role exists
-    //         $right = $model->find($input->rightId);
-    //         if (!$right) {
-    //             return $this->fail(['status' => false, 'message' => 'Right not found'], 404);
-    //         }
+            // Check if the role exists
+            $smtp = $model->find($input->smtpId);
+            if (!$smtp) {
+                return $this->fail(['status' => false, 'message' => 'Smtp not found'], 404);
+            }
     
-    //         // Soft delete by setting isDeleted to 1
-    //         $updateData = ['isDeleted' => 1];
-    //         $model->update($input->rightId, $updateData);
+            // Soft delete by setting isDeleted to 1
+            $updateData = ['isDeleted' => 1];
+            $model->update($input->smtpId, $updateData);
     
-    //         return $this->respond(["status" => true, 'message' => 'Right Deleted Successfully'], 200);
-    //     } else {
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
+            return $this->respond(["status" => true, 'message' => 'Smtp Deleted Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
     
 
     
-    // public function updateRight()
-    // {
-    //     $input = $this->request->getJSON();
+    public function updateSmtp()
+    {
+        $input = $this->request->getJSON();
     
-    //     // Validation rules for updating role
-    //     $rules = [
-    //         'rightName'  => ['rules' => 'required'],
-    //         'rightLabel' => ['rules' => 'required'],
-    //         'iconUrl'    => ['rules' => 'required'],
-    //         'route'      => ['rules' => 'required']
-    //     ];
+        // Validation rules for updating SMTP configuration
+        $rules = [
+            'smtpId'    => ['rules' => 'required'],
+            'protocol'  => ['rules' => 'required'],
+            'smtpHost'  => ['rules' => 'required'],
+            'smtpPort'  => ['rules' => 'required'],
+            'fromMail'  => ['rules' => 'required'],
+            'smtpUser'  => ['rules' => 'required'],
+            'smtpPass'  => ['rules' => 'required'],
+            'updUserId' => ['rules' => 'required']
+        ];
     
-    //     if ($this->validate($rules)) {
-    //         $model = new RightModel();
+        if ($this->validate($rules)) {
+            $model = new SmtpModel(); // Ensure this model exists for SMTP configurations
     
-    //         // Check if the role exists
-    //         $right = $model->find($input->rightId);
-    //         if (!$right) {
-    //             return $this->fail(['status' => false, 'message' => 'Right not found'], 404);
-    //         }
+            // Check if the SMTP configuration exists
+            $smtp = $model->find($input->smtpId);
+            if (!$smtp) {
+                return $this->fail(['status' => false, 'message' => 'SMTP Configuration not found'], 404);
+            }
     
-    //         // Data to update
-    //         $updateData = [
-    //             'rightName'  => $input->rightName,
-    //             'rightLabel' => $input->rightLabel,
-    //             'iconUrl'    => $input->iconUrl,
-    //             'route'      => $input->route
-    //         ];
+            // Data to update
+            $updateData = [
+                'protocol'  => $input->protocol,
+                'smtpHost'  => $input->smtpHost,
+                'smtpPort'  => $input->smtpPort,
+                'fromMail'  => $input->fromMail,
+                'smtpUser'  => $input->smtpUser,
+                'smtpPass'  => $input->smtpPass,
+                'updUserId' => $input->updUserId
+            ];
     
-    //         // Update the role
-    //         $model->update($input->rightId, $updateData);
+            // Update the SMTP configuration
+            $model->update($input->smtpId, $updateData);
     
-    //         return $this->respond(["status" => true, 'message' => 'Right Updated Successfully'], 200);
-    //     } else {
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
-
+            return $this->respond([
+                "status"  => true,
+                "message" => "SMTP Configuration Updated Successfully"
+            ], 200);
+        } else {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+    }
+    
   }

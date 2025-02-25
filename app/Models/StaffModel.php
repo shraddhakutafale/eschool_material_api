@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class StaffModel extends Model
 {
     protected $table            = 'staff_mst';
-    protected $primaryKey       = 'staff_id';
+    protected $primaryKey       = 'staffId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['staff_id', 'empName', 'empCategory', 'empCode', 'aadharNumber', 'panNumber', 'uanNumber', 'ipNumber', 'fatherName', 'empSal', 'empDoj', 'empDol', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['staffId', 'empName', 'empCategory', 'empCode', 'aadharNumber', 'panNumber', 'uanNumber', 'ipNumber', 'coverImage', 'fatherName', 'empSal', 'empDoj', 'empDol', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

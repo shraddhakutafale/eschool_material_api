@@ -40,7 +40,7 @@ class Staff extends BaseController
 
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
+        // Define the number of staffs per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
 
         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
@@ -80,56 +80,67 @@ class Staff extends BaseController
 
     public function create()
     {
-        $input = $this->request->getJSON();
+        // Retrieve the input data from the request
+        $input = $this->request->getPost();
+        
+        // Define validation rules for required fields
         $rules = [
             'empName' => ['rules' => 'required'],
             'empCode' => ['rules' => 'required'],
             'empSal' => ['rules' => 'required|numeric']
         ];
-
+    
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
+            // Retrieve tenantConfig from the headers (for multi-tenancy support)
             $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
             if (!$tenantConfigHeader) {
                 throw new \Exception('Tenant configuration not found.');
             }
-
+    
             // Decode the tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-
+    
             if (!$tenantConfig) {
                 throw new \Exception('Invalid tenant configuration.');
             }
-
-            // Connect to the tenant's database
+    
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
+    
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/staffImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+    
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/staffImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/staffImages/', '', $coverImageUrl);
+    
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $coverImageUrl; 
+            }
+    
+           
+    
+            // Insert the product data into the database
             $db = Database::connect($tenantConfig);
             $model = new StaffModel($db);
-
-            // Prepare the data to be inserted
-            $data = [
-                'empName' => $input->empName,
-                'empCategory' => $input->empCategory,
-                'empCode' => $input->empCode,
-                'aadharNumber' => $input->aadharNumber,
-                'panNumber' => $input->panNumber,
-                'uanNumber' => $input->uanNumber,
-                'ipNumber' => $input->ipNumber,
-                'fatherName' => $input->fatherName,
-                'empSal' => $input->empSal,
-                'empDoj' => $input->empDoj,
-                'empDol' => $input->empDol
-                
-            ];
-
-            // Insert the data into the database
-            $model->insert($data);
-
+            $model->insert($input);
+    
             return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
         } else {
+            // If validation fails, return the error messages
             $response = [
                 'status' => false,
                 'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
+                'message' => 'Invalid Inputs',
             ];
             return $this->fail($response, 409);
         }
@@ -141,7 +152,7 @@ class Staff extends BaseController
 
         // Validation rules for the staff
         $rules = [
-            'staff_id' => ['rules' => 'required|numeric'], // Ensure staff_id is provided and is numeric
+            'staffId' => ['rules' => 'required|numeric'], // Ensure staffId is provided and is numeric
         ];
 
         // Validate the input
@@ -163,15 +174,15 @@ class Staff extends BaseController
             $db = Database::connect($tenantConfig);
             $model = new StaffModel($db);
 
-            // Retrieve the staff by staff_id
-            $staff_id = $input->staff_id;
-            $staff = $model->find($staff_id);
+            // Retrieve the staff by staffId
+            $staffId = $input->staffId;
+            $staff = $model->find($staffId);
 
             if (!$staff) {
                 return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude staff_id if it's included)
+            // Prepare the data to be updated (exclude staffId if it's included)
             $updateData = [
                 'empName' => $input->empName,
                 'empCategory' => $input->empCategory,
@@ -188,7 +199,7 @@ class Staff extends BaseController
             ];
 
             // Update the staff with new data
-            $updated = $model->update($staff_id, $updateData);
+            $updated = $model->update($staffId, $updateData);
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Staff Updated Successfully'], 200);
@@ -212,7 +223,7 @@ class Staff extends BaseController
         
         // Validation rules for the staff
         $rules = [
-            'staff_id' => ['rules' => 'required'], // Ensure staff_id is provided and is numeric
+            'staffId' => ['rules' => 'required'], // Ensure staffId is provided and is numeric
         ];
     
         // Validate the input
@@ -234,9 +245,9 @@ class Staff extends BaseController
             $db = Database::connect($tenantConfig);
             $model = new StaffModel($db);
     
-            // Retrieve the staff by staff_id
-            $staff_id = $input->staff_id;
-            $staff = $model->find($staff_id); // Assuming find method retrieves the staff
+            // Retrieve the staff by staffId
+            $staffId = $input->staffId;
+            $staff = $model->find($staffId); // Assuming find method retrieves the staff
     
             if (!$staff) {
                 return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
@@ -247,7 +258,7 @@ class Staff extends BaseController
             $updateData = [
                 'isDeleted' => 1,
             ];
-            $deleted = $model->update($staff_id, $updateData);
+            $deleted = $model->update($staffId, $updateData);
     
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Staff Deleted Successfully'], 200);

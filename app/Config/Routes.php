@@ -32,16 +32,13 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('user/delete', 'User::delete',['filter' => 'authFilter']); 
     $routes->post('user/login', 'User::login');
     $routes->get('user/profile', 'User::profile',['filter' => 'authFilter']);
-    $routes->get('user/usermenu', 'User::menu',['filter' => 'authFilter']);
+    $routes->post('user/usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('user/register', 'User::register');
 
     $routes->get('user/getallrole', 'User::getAllRole',['filter' => 'authFilter']); 
     $routes->post('user/createrole', 'User::createRole',['filter' => 'authFilter']); 
     $routes->post('user/updaterole', 'User::updateRole/$1',['filter' => 'authFilter']);
     $routes->post('user/deleterole', 'User::deleteRole',['filter' => 'authFilter']);
-
-
-
 
     $routes->get('user/getallright', 'User::getAllRight',['filter' => 'authFilter']); 
     $routes->post('user/createright', 'User::createRight',['filter' => 'authFilter']);
@@ -53,12 +50,11 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('user/updatetenant', 'User::updateTenant/$1',['filter' => 'authFilter']); 
     $routes->post('user/deletetenant', 'User::deleteTenant',['filter' => 'authFilter']); 
 
-    $routes->get('user/getallbusiness', 'User::getAllBusiness',['filter' => 'authFilter']);
-    $routes->post('user/createbusiness', 'User::createBusiness',['filter' => 'authFilter']); 
-    $routes->post('user/updatebusiness', 'User::updateBusiness/$1',['filter' => 'authFilter']); 
-    $routes->post('user/deletebusiness', 'User::deleteBusiness',['filter' => 'authFilter']); 
-
- 
+    $routes->get('user/getallbusiness', 'User::getAllBusiness',['filter' => 'authFilter']); // Get all items
+    $routes->post('user/createbusiness', 'User::createBusiness',['filter' => 'authFilter']); // Create a new item
+    $routes->post('user/updatebusiness', 'User::updateBusiness/$1',['filter' => 'authFilter']); // Update an item
+    $routes->post('user/deletebusiness', 'User::deleteBusiness',['filter' => 'authFilter']); // Delete an item
+    $routes->post('user/assignbusiness', 'User::assignBusiness',['filter' => 'authFilter']); // Get all businesscategory
 
     $routes->get('user/getallbusinesscategory', 'User::getAllBusinesscategory',['filter' => 'authFilter']); // Get all businesscategory
     $routes->get('user/getalltenantname', 'User::getAllTenantname',['filter' => 'authFilter']);

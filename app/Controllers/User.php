@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
+use App\Models\UserBusiness;
 use App\Models\RolePermissionModel;
 use App\Models\RightModel;
 use App\Models\RoleModel;
@@ -71,6 +72,7 @@ class User extends BaseController
 
     public function menu()
     {
+        $input= $this->request->getJSON();
         $key = "Exiaa@11";
         $header = $this->request->getHeader("Authorization");
         $tenant = $this->request->getHeader('Tenant');
@@ -99,14 +101,11 @@ class User extends BaseController
 
         $role = $roleModel->where('roleId', $user['roleId'])->first();
         $user['role'] = $role;
-
-        $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->findAll();
         $menu = [];
-        foreach($rolePermissions as $key => $rolePermission){
-            $right = $rightModel->where('rightId', $rolePermission['rightId'])->where('parentRightId',0)->first();
-            
-            if ($right) {
-                // Store the parent menu details
+
+        if($user['roleId'] == 1) {
+            $rights = $rightModel->where('isDeleted',0)->where('isActive',1)->where('parentRightId',0)->findAll();
+            foreach($rights as $key => $right){
                 $menuItem = [
                     'route' => $right['route'],
                     'name' => $right['route'],
@@ -114,10 +113,7 @@ class User extends BaseController
                     'type' => 'sub', // Default to 'sub' in case it has children
                     'children' => [] // Initialize children array
                 ];
-        
-                // Fetch the submenus (children) where parentRightId matches this rightId
                 $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
-        
                 if (empty($subMenus)) {
                     $menuItem['type'] = 'link'; // If no children, it's a simple link
                 } else {
@@ -130,10 +126,48 @@ class User extends BaseController
                         ];
                     }
                 }
-        
-                // Store in the menu array
                 $menu[] = $menuItem;
             }
+        }else{
+            if(isset($input->businessCategoryId)){
+                $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->where('categoryId', $input->businessCategoryId)->findAll();
+                foreach($rolePermissions as $key => $rolePermission){
+                    $right = $rightModel->where('rightId', $rolePermission['rightId'])->where('isDeleted',0)->where('isActive',1)->where('parentRightId',0)->first();
+                    
+                    if ($right) {
+                        // Store the parent menu details
+                        $menuItem = [
+                            'route' => $right['route'],
+                            'name' => $right['route'],
+                            'icon' => $right['iconUrl'],
+                            'type' => 'sub', // Default to 'sub' in case it has children
+                            'children' => [] // Initialize children array
+                        ];
+                
+                        // Fetch the submenus (children) where parentRightId matches this rightId
+                        $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
+                
+                        if (empty($subMenus)) {
+                            $menuItem['type'] = 'link'; // If no children, it's a simple link
+                        } else {
+                            foreach ($subMenus as $subMenu) {
+                                $menuItem['children'][] = [
+                                    'route' => $subMenu['route'],
+                                    'name' => $subMenu['route'],
+                                    'icon' => $subMenu['iconUrl'],
+                                    'type' => 'link'
+                                ];
+                            }
+                        }
+                
+                        // Store in the menu array
+                        $menu[] = $menuItem;
+                    }
+                }
+            }else{
+                $menu[] = [];
+            }
+            
         }
         if(is_null($user)) {
             return $this->respond(['status' => false, 'message' => 'User not found.'], 404);
@@ -275,7 +309,8 @@ class User extends BaseController
                 'name'     => $input->name,
                 'mobileNo' => $input->mobile,
                 'email'    => $input->email,
-                'password' => password_hash($input->password, PASSWORD_DEFAULT)
+                'password' => password_hash($input->password, PASSWORD_DEFAULT),
+                'roleId'   => 2
             ];
             $model->insert($data);
              
@@ -852,7 +887,9 @@ public function updateBusiness()
         // Data to update
         $updateData = [
             'businessName' => $input->businessName,
-            'businessDesc' => $input->businessDesc
+            'businessDesc' => $input->businessDesc,
+            'businessCategoryId' => $input->businessCategoryId,
+            'tenantName' => $input->tenantName
         ];
 
         // Update the business
@@ -976,6 +1013,15 @@ public function updatePermissions()
         }
     }
     return $this->respond(["status" => true, "message" => "Permissions Updated Successfully", "data" => []], 200);
+
+}
+
+public function assignBusiness()
+{
+    $input = $this->request->getJSON();
+    $model = new UserBusiness;
+    $model->insertBatch($input);
+    return $this->respond(["status" => true, "message" => "Business Assigned Successfully", "data" => []], 200);
 
 }
 

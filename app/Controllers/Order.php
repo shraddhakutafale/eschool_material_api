@@ -102,16 +102,28 @@ class Order extends BaseController
     {
         $input = $this->request->getJSON();
         $rules = [
-            'customerName' => ['rules' => 'required'],
-                    'contactNumber' => ['rules' => 'required'],
-                    'deliveryDate' => ['rules' => 'required'],
-                    'shipToStreetAddress' => ['rules' => 'required'],
-                    'shipToPhone' => ['rules' => 'required'],
-                    'shipToCity' => ['rules' => 'required'],
-                    'pincode' => ['rules' => 'required'], // Validate the array field
-                    'sku' => ['rules' => 'required'],
-                    'productName' => ['rules' => 'required'],
-                    'email' => ['rules' => 'required'],
+             // 'customerName' => ['rules' => 'required'],
+            // 'contactNumber' => ['rules' => 'required'],
+            // 'deliveryDate' => ['rules' => 'required'],
+            // 'shipToStreetAddress' => ['rules' => 'required'],
+            // 'shipToPhone' => ['rules' => 'required'],
+            // 'shipToCity' => ['rules' => 'required'],
+            // 'pincode' => ['rules' => 'required'], // Validate the array field
+            // 'sku' => ['rules' => 'required'],
+            // 'productName' => ['rules' => 'required'],
+            // 'email' => ['rules' => 'required'],                   
+            'orderCode' => ['rules' => 'required'],
+            'orderDate' => ['rules' => 'required'],
+            'businessNameFrom' => ['rules' => 'required'],
+            'phoneFrom' => ['rules' => 'required'],
+            'addressFrom' => ['rules' => 'required'],
+            'emailFrom'=> ['rules' => 'required'],
+            'PanFrom'=> ['rules' => 'required'],
+            'businessNameFor'=> ['rules' => 'required'],
+            'phoneFor' => ['rules' => 'required'],
+            'addressFor' => ['rules' => 'required'],
+            'emailFor'=> ['rules' => 'required'],
+            'PanCardFor'=> ['rules' => 'required'],                 
 
 
         ];

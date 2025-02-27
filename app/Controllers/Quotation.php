@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\QuotationModel;
+use App\Models\QuotationDetailModel;
 use Config\Database;
 
 class Quotation extends BaseController
@@ -99,63 +100,153 @@ class Quotation extends BaseController
     }
 
   
-    public function create()
-    {
-        $input = $this->request->getJSON();
-        $rules = [
-            'quoteNo'=> ['rules' => 'required'], 
-            'quoteDate'=> ['rules' => 'required'], 
-            'validDate'=> ['rules' => 'required'], 
-            'businessNameFrom'=> ['rules' => 'required'],
-            'phoneFrom'=> ['rules' => 'required'],
-            'addressFrom'=> ['rules' => 'required'], 
-            'emailFrom'=> ['rules' => 'required'],
+    // public function create()
+    // {
+    //     $input = $this->request->getJSON();
+    //     $rules = [
+    //         'quoteNo'=> ['rules' => 'required'], 
+    //         'quoteDate'=> ['rules' => 'required'], 
+    //         'validDate'=> ['rules' => 'required'], 
+    //         'businessNameFrom'=> ['rules' => 'required'],
+    //         'phoneFrom'=> ['rules' => 'required'],
+    //         'addressFrom'=> ['rules' => 'required'], 
+    //         'emailFrom'=> ['rules' => 'required'],
 
-            'PanFrom'=> ['rules' => 'required'], 
-            'businessNameFor'=> ['rules' => 'required'], 
-            'phoneFor'=> ['rules' => 'required'], 
-            'addressFor'=> ['rules' => 'required'],
-            'emailFor'=> ['rules' => 'required'],
-            'PanCardFor'=> ['rules' => 'required'], 
-            // 'quotationForEmail'=> ['rules' => 'required'],
-
-            // 'quotationForPan'=> ['rules' => 'required'],
-            // 'PanCardFor'=> ['rules' => 'required'], 
-            // 'quotationForEmail'=> ['rules' => 'required'],
-        ];
+    //         'PanFrom'=> ['rules' => 'required'], 
+    //         'businessNameFor'=> ['rules' => 'required'], 
+    //         'phoneFor'=> ['rules' => 'required'], 
+    //         'addressFor'=> ['rules' => 'required'],
+    //         'emailFor'=> ['rules' => 'required'],
+    //         'PanCardFor'=> ['rules' => 'required'], 
+           
+    //     ];
   
-        if($this->validate($rules)){
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
+    //     if($this->validate($rules)){
+    //         // Retrieve tenantConfig from the headers
+    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    //         if (!$tenantConfigHeader) {
+    //             throw new \Exception('Tenant configuration not found.');
+    //         }
 
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
+    //         // Decode the tenantConfig JSON
+    //         $tenantConfig = json_decode($tenantConfigHeader, true);
 
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
+    //         if (!$tenantConfig) {
+    //             throw new \Exception('Invalid tenant configuration.');
+    //         }
 
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new QuotationModel($db);
+    //         // Connect to the tenant's database
+    //         $db = Database::connect($tenantConfig);
+    //         $model = new QuotationModel($db);
         
-            $model->insert($input);
+    //         $model->insert($input);
              
-            return $this->respond(['status'=>true,'message' => 'Item Added Successfully'], 200);
-        }else{
-            $response = [
-                'status'=>false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response , 409);
+    //         return $this->respond(['status'=>true,'message' => 'Item Added Successfully'], 200);
+    //     }else{
+    //         $response = [
+    //             'status'=>false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response , 409);
              
-        }
+    //     }
             
+    // }
+
+
+    public function create()
+{
+    $input = $this->request->getJSON();
+
+    // Validation rules for quotation
+    $rules = [
+        'quoteNo'=> ['rules' => 'required'], 
+        'quoteDate'=> ['rules' => 'required'], 
+        'validDate'=> ['rules' => 'required'], 
+        'businessNameFrom'=> ['rules' => 'required'],
+        'phoneFrom'=> ['rules' => 'required'],
+        'addressFrom'=> ['rules' => 'required'], 
+        'emailFrom'=> ['rules' => 'required'],
+        'PanFrom'=> ['rules' => 'required'], 
+        'businessNameFor'=> ['rules' => 'required'], 
+        'phoneFor'=> ['rules' => 'required'], 
+        'addressFor'=> ['rules' => 'required'],
+        'emailFor'=> ['rules' => 'required'],
+        'PanCardFor'=> ['rules' => 'required'], 
+    ];
+
+    // Validate form data
+    if ($this->validate($rules)) {
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        $model = new QuotationModel($db);
+        
+        // Insert the quotation into the 'quotation' table
+        $quotationData = [
+            'quoteNo' => $input->quoteNo,
+            'quoteDate' => $input->quoteDate,
+            'validDate' => $input->validDate,
+            'businessNameFrom' => $input->businessNameFrom,
+            'phoneFrom' => $input->phoneFrom,
+            'addressFrom' => $input->addressFrom,
+            'emailFrom' => $input->emailFrom,
+            'PanFrom' => $input->PanFrom,
+            'businessNameFor' => $input->businessNameFor,
+            'phoneFor' => $input->phoneFor,
+            'addressFor' => $input->addressFor,
+            'emailFor' => $input->emailFor,
+            'PanCardFor' => $input->PanCardFor
+        ];
+        
+        // Insert the quotation and retrieve the generated quoteId
+        $quoteId = $model->insert($quotationData);
+        
+        if ($quoteId) {
+            // Now insert the items into the item_details table using the quoteId
+
+            $itemDetailsModel = new QuotationDetailModel($db); // Assuming you have this model for the item details
+
+            // Iterate through each item in the input and insert into item_details
+            foreach ($input->items as $item) {
+                $itemData = [
+                    'quoteId' => $quoteId,  // Foreign key linking to the quotation
+                    'itemName' => $item->itemName,
+                    'quantity' => $item->quantity,
+                    'rate' => $item->rate,
+                    'amount' => $item->amount
+                ];
+                // Insert the item into the item_details table
+                $itemDetailsModel->insert($itemData);
+            }
+
+            return $this->respond(['status' => true, 'message' => 'Quotation and items added successfully'], 200);
+        } else {
+            return $this->respond(['status' => false, 'message' => 'Failed to create the quotation'], 500);
+        }
+    } else {
+        // Return validation errors
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
     }
+}
 
 
 

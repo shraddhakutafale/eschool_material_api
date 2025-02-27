@@ -91,19 +91,7 @@ class Staff extends BaseController
         ];
     
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers (for multi-tenancy support)
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-    
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-    
+           
             // Handle image upload for the cover image
             $coverImage = $this->request->getFile('coverImage');
             $coverImageName = null;
@@ -129,8 +117,9 @@ class Staff extends BaseController
     
            
     
-            // Insert the product data into the database
-            $db = Database::connect($tenantConfig);
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new StaffModel($db);
             $model->insert($input);
     
@@ -157,21 +146,9 @@ class Staff extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+            $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new StaffModel($db);
 
             // Retrieve the staff by staffId
@@ -228,21 +205,9 @@ class Staff extends BaseController
     
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-    
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-    
+            $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new StaffModel($db);
     
             // Retrieve the staff by staffId

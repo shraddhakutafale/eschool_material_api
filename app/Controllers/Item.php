@@ -39,9 +39,7 @@ class Item extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-
+    
         // Load UserModel with the tenant database connection
         $itemModel = new Unit($db);
         $response = [
@@ -65,9 +63,6 @@ class Item extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $ItemModel = new ItemModel($db);
         $items = $ItemModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
@@ -208,8 +203,7 @@ class Item extends BaseController
             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+           
             $model = new ItemModel($db);
 
             // Retrieve the course by eventId
@@ -273,8 +267,6 @@ class Item extends BaseController
             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
             $model = new ItemModel($db);
 
             // Retrieve the course by eventId
@@ -314,9 +306,6 @@ class Item extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $model = new ItemCategory($db);
         $itemCategories = $model->findAll();
@@ -331,9 +320,6 @@ class Item extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
         $model = new ItemCategory($db);
         $model->insert($input);
         return $this->respond(["status" => true, "message" => "Category Created Successfully"], 200);
@@ -347,9 +333,6 @@ class Item extends BaseController
          $tenantService = new TenantService();
          // Connect to the tenant's database
          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $model = new ItemCategory($db);
         $itemCategories = $model->findAll();
@@ -369,13 +352,6 @@ class Item extends BaseController
          $tenantService = new TenantService();
          // Connect to the tenant's database
          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    
-        // Connect to the tenant's database
-        try {
-            $db = Database::connect($tenantConfig);
-        } catch (\Exception $e) {
-            return $this->respond(["status" => false, "message" => "Failed to connect to the database: " . $e->getMessage()], 500);
-        }
     
         // Load ItemCategory model with the tenant database connection
         $category = new ItemCategory($db);
@@ -412,8 +388,6 @@ class Item extends BaseController
          // Connect to the tenant's database
          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $model = new Item($db);
         $items = $model->findAllByTag($tag);

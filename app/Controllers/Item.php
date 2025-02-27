@@ -18,12 +18,11 @@ class Item extends BaseController
 
     public function index()
     {
-    // Insert the product data into the database
-    $tenantService = new TenantService();
-    // Connect to the tenant's database
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Insert the product data into the database
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+       
         // Load UserModel with the tenant database connection
         $itemModel = new ItemModel($db);
         $response = [

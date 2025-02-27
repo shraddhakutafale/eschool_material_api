@@ -58,6 +58,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
     $routes->get('user/getallbusinesscategory', 'User::getAllBusinesscategory',['filter' => 'authFilter']); // Get all businesscategory
     $routes->get('user/getalltenantname', 'User::getAllTenantname',['filter' => 'authFilter']);
+    $routes->post('user/getallpermissionbycategory', 'User::getAllPermissionByCategory',['filter' => 'authFilter']);
+    $routes->post('user/updatepermissions', 'User::updatePermissions',['filter' => 'authFilter']);
 
 
 

@@ -54,14 +54,6 @@ class User extends BaseController
         $role = $roleModel->where('roleId', $user['roleId'])->first();
         $user['role'] = $role;
 
-        $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->findAll();
-        $rolePermissionsArray = [];
-        foreach($rolePermissions as $key => $rolePermission){
-            $rolePermissionsArray[$key] = $rolePermission;
-            $right = $rightModel->where('rightId', $rolePermission['rightId'])->first();
-            $rolePermissionsArray[$key]['right'] = $right;
-        }
-        $user['rolePermissions'] = $rolePermissionsArray;
         if(is_null($user)) {
             return $this->respond(['status' => false, 'message' => 'User not found.'], 404);
         }
@@ -72,7 +64,6 @@ class User extends BaseController
 
     public function menu()
     {
-        $input= $this->request->getJSON();
         $key = "Exiaa@11";
         $header = $this->request->getHeader("Authorization");
         $tenant = $this->request->getHeader('Tenant');
@@ -83,10 +74,6 @@ class User extends BaseController
             if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
                 $token = $matches[1];
             }
-        }
-        
-        if(!empty($tenant)) {
-            
         }
         
         $decoded = JWT::decode($token, new Key($key, 'HS256'));
@@ -129,8 +116,9 @@ class User extends BaseController
                 $menu[] = $menuItem;
             }
         }else{
-            if(isset($input->businessCategoryId)){
-                $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->where('categoryId', $input->businessCategoryId)->findAll();
+
+            if(isset($decoded->businessCategoryId) && !empty($decoded->businessCategoryId)){
+                $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->where('categoryId', $decoded->businessCategoryId)->findAll();
                 foreach($rolePermissions as $key => $rolePermission){
                     $right = $rightModel->where('rightId', $rolePermission['rightId'])->where('isDeleted',0)->where('isActive',1)->where('parentRightId',0)->first();
                     
@@ -176,69 +164,14 @@ class User extends BaseController
         return $this->respond(['menu' => $menu], 200);
     }
 
-    // public function login()
-    // {
-    //     $userModel = new UserModel();
-    //     $rolePermissionModel = new RolePermissionModel();
-    //     $rightModel = new RightModel();
-    //     $roleModel = new RoleModel();
-
-    //     $input = $this->request->getJSON();
-        
-    //     $user = $userModel->where('email', $input->email)->first();
-
-    //     $role = $roleModel->where('roleId', $user['roleId'])->first();
-    //     $user['role'] = $role;
-
-    //     $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->findAll();
-    //     $rolePermissionsArray = [];
-    //     foreach($rolePermissions as $key => $rolePermission){
-    //         $rolePermissionsArray[$key] = $rolePermission;
-    //         $right = $rightModel->where('rightId', $rolePermission['rightId'])->first();
-    //         $rolePermissionsArray[$key]['right'] = $right;
-    //     }
-    //     $user['rolePermissions'] = $rolePermissionsArray;
-    //     if(is_null($user)) {
-    //         return $this->respond(['status' => false, 'message' => 'User not found.'], 401);
-    //     }
-  
-    //     $pwd_verify = password_verify($input->password, $user['password']);
-        
-    //     if(!$pwd_verify) {
-    //         return $this->respond(['status' => false, 'message' => 'Invalid username or password.'], 401);
-    //     }
- 
-    //     $key = "Exiaa@11";
-    //     $iat = time(); // current timestamp value
-    //     $exp = $iat + 3600;
- 
-    //     $payload = array(
-    //         "iss" => "Issuer of the JWT",
-    //         "aud" => "Audience that the JWT",
-    //         "sub" => "Subject of the JWT",
-    //         "iat" => $iat, //Time the JWT issued at
-    //         "exp" => $exp, // Expiration time of token
-    //         "email" => $user['email'],
-    //     );
-         
-    //     $token = JWT::encode($payload, $key, 'HS256');
- 
-    //     $response = [
-    //         'status' => true,
-    //         'message' => 'Login Succesful',
-    //         'token' => $token,
-    //         'user' => $user
-    //     ];
-         
-    //     return $this->respond($response, 200);
-    // }
-
     public function login()
     {
         $userModel = new UserModel();
         $rolePermissionModel = new RolePermissionModel();
         $rightModel = new RightModel();
         $roleModel = new RoleModel();
+        $userBusiness = new UserBusiness();
+        $business = new BusinessModel();
 
         $input = $this->request->getJSON();
         
@@ -247,17 +180,7 @@ class User extends BaseController
             return $this->respond(['status' => false, 'message' => 'Email not found.'], 401);
         }
         $role = $roleModel->where('roleId', $user['roleId'])->first();
-        $user['role'] = $role;
-
-        $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->findAll();
-        $rolePermissionsArray = [];
-        foreach($rolePermissions as $key => $rolePermission){
-            $rolePermissionsArray[$key] = $rolePermission;
-            $right = $rightModel->where('rightId', $rolePermission['rightId'])->first();
-            $rolePermissionsArray[$key]['right'] = $right;
-        }
-        $user['rolePermissions'] = $rolePermissionsArray;
-        
+        $user['role'] = $role;    
   
         $pwd_verify = password_verify($input->password, $user['password']);
         
@@ -268,15 +191,50 @@ class User extends BaseController
         $key = "Exiaa@11";
         $iat = time(); // current timestamp value
         $exp = $iat + 3600;
- 
-        $payload = array(
-            "iss" => "Issuer of the JWT",
-            "aud" => "Audience that the JWT",
-            "sub" => "Subject of the JWT",
-            "iat" => $iat, //Time the JWT issued at
-            "exp" => $exp, // Expiration time of token
-            "email" => $user['email'],
-        );
+
+        if($role['roleId'] == 1){
+            $payload = array(
+                "iss" => "Issuer of the JWT",
+                "aud" => "Audience that the JWT",
+                "sub" => "Subject of the JWT",
+                "iat" => $iat, //Time the JWT issued at
+                "exp" => $exp, // Expiration time of token
+                "email" => $user['email'],
+                "roleId" => $user['roleId']
+            );
+        }else{
+
+            $userBusiness = $userBusiness->where('userId', $user['userId'])->findAll();
+
+            if(empty($userBusiness)){
+                return $this->respond(['status' => false, 'message' => 'User not assigned to any business, contact admin', 'data' => []], 401);
+            }
+
+            $user['business'] = $business->where('businessId', $userBusiness[0]['businessId'])->first();
+
+            if($user['business']['isActive'] == 0 || $user['business']['isDeleted'] == 1){
+                return $this->respond(['status' => false, 'message' => 'User is not active or deleted, contact admin', 'data' => []], 401);
+            }
+
+            if($user['business']['tenantName'] == null || $user['business']['tenantName'] == ''){
+                return $this->respond(['status' => false, 'message' => 'Tenant not assigned to any business, contact admin', 'data' => []], 401);
+            }
+
+            
+    
+            $payload = array(
+                "iss" => "Issuer of the JWT",
+                "aud" => "Audience that the JWT",
+                "sub" => "Subject of the JWT",
+                "iat" => $iat, //Time the JWT issued at
+                "exp" => $exp, // Expiration time of token
+                "email" => $user['email'],
+                "roleId" => $user['roleId'],
+                "businessId" => $user['business']['businessId'],
+                "tenantName" => $user['business']['tenantName'],
+                "businessCategoryId" => $user['business']['businessCategoryId'],
+            );
+        }
          
         $token = JWT::encode($payload, $key, 'HS256');
         $refreshToken = bin2hex(random_bytes(32)); // Generate random token

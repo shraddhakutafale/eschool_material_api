@@ -32,7 +32,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('user/delete', 'User::delete',['filter' => 'authFilter']); 
     $routes->post('user/login', 'User::login');
     $routes->get('user/profile', 'User::profile',['filter' => 'authFilter']);
-    $routes->post('user/usermenu', 'User::menu',['filter' => 'authFilter']);
+    $routes->get('user/usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('user/register', 'User::register');
 
     $routes->get('user/getallrole', 'User::getAllRole',['filter' => 'authFilter']); 

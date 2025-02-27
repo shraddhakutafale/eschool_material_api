@@ -6,6 +6,8 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\TenantModel;
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 use Exception;
 use Throwable;
 
@@ -13,7 +15,22 @@ class TenantFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $tenant = $request->getHeaderLine('Tenant'); // Get tenant name from the request header
+        $token = null;
+        $tenant = null;
+        $key = "Exiaa@11";
+        $header = $request->getHeader("Authorization");
+        if(!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
+        }
+        
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        if(isset($decoded->tenantName)) {
+            $tenant = $decoded->tenantName;
+        }else {
+            $tenant = $request->getHeaderLine('Tenant'); // Get tenant name from the request header
+        }
         if (empty($tenant)) {
             return service('response')
                 ->setStatusCode(400)

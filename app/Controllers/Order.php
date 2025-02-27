@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\OrderModel;
+use App\Models\OrderDetailModel;
 use Config\Database;
 
 class Order extends BaseController
@@ -98,68 +99,160 @@ class Order extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $OrderModel], 200);
     }
 
+    // public function create()
+    // {
+    //     $input = $this->request->getJSON();
+    //     $rules = [
+    //          // 'customerName' => ['rules' => 'required'],
+    //         // 'contactNumber' => ['rules' => 'required'],
+    //         // 'deliveryDate' => ['rules' => 'required'],
+    //         // 'shipToStreetAddress' => ['rules' => 'required'],
+    //         // 'shipToPhone' => ['rules' => 'required'],
+    //         // 'shipToCity' => ['rules' => 'required'],
+    //         // 'pincode' => ['rules' => 'required'], // Validate the array field
+    //         // 'sku' => ['rules' => 'required'],
+    //         // 'productName' => ['rules' => 'required'],
+    //         // 'email' => ['rules' => 'required'],                   
+    //         'orderCode' => ['rules' => 'required'],
+    //         'orderDate' => ['rules' => 'required'],
+    //         'businessNameFrom' => ['rules' => 'required'],
+    //         'phoneFrom' => ['rules' => 'required'],
+    //         'addressFrom' => ['rules' => 'required'],
+    //         'emailFrom'=> ['rules' => 'required'],
+    //         'PanFrom'=> ['rules' => 'required'],
+    //         'businessNameFor'=> ['rules' => 'required'],
+    //         'phoneFor' => ['rules' => 'required'],
+    //         'addressFor' => ['rules' => 'required'],
+    //         'emailFor'=> ['rules' => 'required'],
+    //         'PanCardFor'=> ['rules' => 'required'],                 
+
+
+    //     ];
+
+    //     if($this->validate($rules)){
+    //         // Retrieve tenantConfig from the headers
+    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    //         if (!$tenantConfigHeader) {
+    //             throw new \Exception('Tenant configuration not found.');
+    //         }
+
+    //         // Decode the tenantConfig JSON
+    //         $tenantConfig = json_decode($tenantConfigHeader, true);
+
+    //         if (!$tenantConfig) {
+    //             throw new \Exception('Invalid tenant configuration.');
+    //         }
+
+    //         // Connect to the tenant's database
+    //         $db = Database::connect($tenantConfig);
+    //         $model = new OrderModel($db);
+        
+    //         $model->insert($input);
+            
+    //         return $this->respond(['status'=>true,'message' => 'order Added Successfully'], 200);
+    //     }else{
+    //         $response = [
+    //             'status'=>false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response , 409);
+            
+    //     }
+            
+    // }
+
     public function create()
-    {
-        $input = $this->request->getJSON();
-        $rules = [
-             // 'customerName' => ['rules' => 'required'],
-            // 'contactNumber' => ['rules' => 'required'],
-            // 'deliveryDate' => ['rules' => 'required'],
-            // 'shipToStreetAddress' => ['rules' => 'required'],
-            // 'shipToPhone' => ['rules' => 'required'],
-            // 'shipToCity' => ['rules' => 'required'],
-            // 'pincode' => ['rules' => 'required'], // Validate the array field
-            // 'sku' => ['rules' => 'required'],
-            // 'productName' => ['rules' => 'required'],
-            // 'email' => ['rules' => 'required'],                   
-            'orderCode' => ['rules' => 'required'],
-            'orderDate' => ['rules' => 'required'],
-            'businessNameFrom' => ['rules' => 'required'],
-            'phoneFrom' => ['rules' => 'required'],
-            'addressFrom' => ['rules' => 'required'],
-            'emailFrom'=> ['rules' => 'required'],
-            'PanFrom'=> ['rules' => 'required'],
-            'businessNameFor'=> ['rules' => 'required'],
-            'phoneFor' => ['rules' => 'required'],
-            'addressFor' => ['rules' => 'required'],
-            'emailFor'=> ['rules' => 'required'],
-            'PanCardFor'=> ['rules' => 'required'],                 
+{
+    $input = $this->request->getJSON();
 
+    // Validation rules for order
+    $rules = [
+        'orderCode' => ['rules' => 'required'],
+        'orderDate' => ['rules' => 'required'],
+        'businessNameFrom' => ['rules' => 'required'],
+        'phoneFrom' => ['rules' => 'required'],
+        'addressFrom' => ['rules' => 'required'],
+        'emailFrom' => ['rules' => 'required'],
+        'PanFrom' => ['rules' => 'required'],
+        'businessNameFor' => ['rules' => 'required'],
+        'phoneFor' => ['rules' => 'required'],
+        'addressFor' => ['rules' => 'required'],
+        'emailFor' => ['rules' => 'required'],
+        'PanCardFor' => ['rules' => 'required'],
+    ];
 
+    // Validate form data
+    if ($this->validate($rules)) {
+        // Retrieve tenantConfig from the headers
+        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+        if (!$tenantConfigHeader) {
+            throw new \Exception('Tenant configuration not found.');
+        }
+
+        // Decode the tenantConfig JSON
+        $tenantConfig = json_decode($tenantConfigHeader, true);
+
+        if (!$tenantConfig) {
+            throw new \Exception('Invalid tenant configuration.');
+        }
+
+        // Connect to the tenant's database
+        $db = Database::connect($tenantConfig);
+        $model = new OrderModel($db);
+
+        // Insert the order into the 'order' table
+        $orderData = [
+            'orderCode' => $input->orderCode,
+            'orderDate' => $input->orderDate,
+            'businessNameFrom' => $input->businessNameFrom,
+            'phoneFrom' => $input->phoneFrom,
+            'addressFrom' => $input->addressFrom,
+            'emailFrom' => $input->emailFrom,
+            'PanFrom' => $input->PanFrom,
+            'businessNameFor' => $input->businessNameFor,
+            'phoneFor' => $input->phoneFor,
+            'addressFor' => $input->addressFor,
+            'emailFor' => $input->emailFor,
+            'PanCardFor' => $input->PanCardFor,
         ];
 
-        if($this->validate($rules)){
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
+        // Insert the order and retrieve the generated orderId
+        $orderDetailId= $model->insert($orderData);
+
+        if ($orderDetailId) {
+            // Now insert the items into the order_details table using the orderId
+            $orderDetailsModel = new OrderDetailModel($db); // Assuming you have this model for order details
+
+            // Iterate through each item in the input and insert into order_details
+            foreach ($input->items as $item) {
+                $orderDetailsData = [
+                    'orderDetailId' => $orderDetailId,  // Foreign key linking to the order
+                    'item' => $item->item,
+                    'rate' => $item->rate,
+                    'quantity' => $item->quantity,
+                    'amount' => $item->amount,
+                ];
+
+                // Insert the item into the order_details table
+                $orderDetailsModel->insert($orderDetailsData);
             }
 
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new OrderModel($db);
-        
-            $model->insert($input);
-            
-            return $this->respond(['status'=>true,'message' => 'order Added Successfully'], 200);
-        }else{
-            $response = [
-                'status'=>false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response , 409);
-            
+            return $this->respond(['status' => true, 'message' => 'Order and items added successfully'], 200);
+        } else {
+            return $this->respond(['status' => false, 'message' => 'Failed to create the order'], 500);
         }
-            
+    } else {
+        // Return validation errors
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
     }
+}
+
 
     public function update()
     {

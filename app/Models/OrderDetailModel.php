@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class OrderDetail extends Model
+class OrderDetailModel extends Model
 {
     protected $table            = 'order_details';
     protected $primaryKey       = 'orderDetailId';
@@ -12,7 +12,7 @@ class OrderDetail extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['orderDetailId', 'orderId', 'orderNo', 'itemId', 'quantity', 'rate', 'subtotal', 'discount', 'taxAmount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['orderDetailId', 'orderId', 'orderNo', 'itemId','item','quoteId' ,'quantity', 'rate','amount', 'subtotal', 'discount', 'taxAmount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

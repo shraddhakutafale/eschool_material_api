@@ -9,6 +9,7 @@ use App\Models\FeeModel;
 use App\Models\ShiftModel;
 use App\Models\SubjectModel;
 use Config\Database;
+use App\Libraries\TenantService;
 
 class Course extends BaseController
 {
@@ -80,21 +81,10 @@ class Course extends BaseController
 
     public function getCoursesWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+         // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $courseModel = new CourseModel($db);
         $courses = $courseModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();

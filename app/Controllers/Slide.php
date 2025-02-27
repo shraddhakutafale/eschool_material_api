@@ -40,6 +40,8 @@ public function create()
         'title' => ['rules' => 'required|string'],
         'content' => ['rules' => 'required|string'],
         'buttonUrl' => ['rules' => 'required|valid_url'],
+        'buttonText' => ['rules' => 'required']
+
     ];
 
     if ($this->validate($rules)) {

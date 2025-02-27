@@ -9,6 +9,8 @@ use App\Models\ItemCategory;
 use App\Models\Unit;
 use Config\Database;
 use App\Libraries\TenantService;
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
 class Item extends BaseController
 {
@@ -111,318 +113,110 @@ class Item extends BaseController
         return $this->respond($response, 200);
     }
 
-    // public function create()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //         'itemName'=> ['rules' => 'required'], 
-    //         'mrp'=> ['rules' => 'required'],        
-    //     ];
-  
-    //     if($this->validate($rules)){
-    //         // Retrieve tenantConfig from the headers
-    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    //         if (!$tenantConfigHeader) {
-    //             throw new \Exception('Tenant configuration not found.');
-    //         }
-
-    //         // Decode the tenantConfig JSON
-    //         $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    //         if (!$tenantConfig) {
-    //             throw new \Exception('Invalid tenant configuration.');
-    //         }
-
-    //         // Handle image upload
-    //         $image = $this->request->getFile('coverImage');
-    //         $imageName = null;
-    
-    //         if ($image && $image->isValid() && !$image->hasMoved()) {
-    //             // Define upload path
-    //             $uploadPath = WRITEPATH . 'uploads/course_images/';
-    
-    //             // Ensure the directory exists
-    //             if (!is_dir($uploadPath)) {
-    //                 mkdir($uploadPath, 0777, true);
-    //             }
-    
-    //             // Move the file to the desired directory with a unique name
-    //             $imageName = $image->getRandomName();
-    //             $image->move($uploadPath, $imageName);
-    
-    //             // Get the URL of the uploaded image
-    //             $imageUrl = base_url() . '/uploads/itemImages/' . $imageName;
-    //             $input->coverImage = $imageUrl;  // Save the image URL
-    //         }
-
-    //         // Connect to the tenant's database
-    //         $db = Database::connect($tenantConfig);
-    //         $model = new ItemModel($db);
+    public function create()
+    {
+        // Retrieve the input data from the request
+        $input = $this->request->getPost();
         
-    //         $model->insert($input);
-             
-    //         return $this->respond(['status'=>true,'message' => 'Item Added Successfully'], 200);
-    //     }else{
-    //         $response = [
-    //             'status'=>false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response , 409);
-             
-    //     }
+        // Define validation rules for required fields
+        $rules = [
+            'itemName' => ['rules' => 'required'],
+            'description' => ['rules' => 'required'],
+            'itemCategoryId' => ['rules' => 'required'],
+            'mrp' => ['rules' => 'required'],
+        ];
+
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
             
-    // }
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
 
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/coverImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
 
-    
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
 
-//     public function create()
-// {
-//     $input = $this->request->getPost();
-//     $rules = [
-//         'itemName' => ['rules' => 'required'],
-//         'description' => ['rules' => 'required'],
-//         'itemCategoryId' => ['rules' => 'required'],
-//         // 'barcode' => ['rules' => 'required'],
-//         // 'sku' => ['rules' => 'required'],
-//         'discount' => ['rules' => 'required'],
-//         'discountType' => ['rules' => 'required'],
-//         'mrp' => ['rules' => 'required'],
-//     ];
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/coverImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/coverImages/', '', $coverImageUrl);
 
-//     if ($this->validate($rules)) {
-//         // Retrieve tenantConfig from the headers
-//         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-//         if (!$tenantConfigHeader) {
-//             throw new \Exception('Tenant configuration not found.');
-//         }
-
-//         // Decode the tenantConfig JSON
-//         $tenantConfig = json_decode($tenantConfigHeader, true);
-
-//         if (!$tenantConfig) {
-//             throw new \Exception('Invalid tenant configuration.');
-//         }
-
-        
-//         // Handle image upload for the cover image
-//         $coverImage = $this->request->getFile('coverImage');
-//         $coverImageName = null;
-
-//         if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
-//             // Define the upload path for the cover image
-//             $coverImagePath = FCPATH . 'uploads/coverImages/';
-//             if (!is_dir($coverImagePath)) {
-//                 mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
-//             }
-
-//             // Move the file to the desired directory with a unique name
-//             $coverImageName = $coverImage->getRandomName();
-//             $coverImage->move($coverImagePath, $coverImageName);
-
-//             // Get the URL of the uploaded cover image
-//             $coverImageUrl = 'uploads/coverImages/' . $coverImageName;
-
-//             // Remove 'uploads/coverImages/' from the URL
-//             $coverImageUrl = str_replace('uploads/coverImages/', '', $coverImageUrl);
-
-//             $input['coverImage'] = $coverImageUrl; // Save the cover image URL in input data
-//         }
-//         $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
-//         $imageUrls = []; // Initialize the array for image URLs
-
-//         if ($productImages && count($productImages) > 0) {
-//             foreach ($productImages as $image) {
-//                 // Validate the image: Ensure it's valid, hasn't moved, and exists
-//                 if ($image && $image->isValid() && !$image->hasMoved()) {
-//                     // Define the upload path for product images
-//                     $productImagePath = FCPATH . 'uploads/itemImages/';
-
-//                     // Check if the directory exists; if not, create it
-//                     if (!is_dir($productImagePath)) {
-//                         mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
-//                     }
-
-//                     // Generate a unique name for the image to avoid overwriting
-//                     $imageName = $image->getRandomName();
-
-//                     // Move the uploaded image to the target directory
-//                     $image->move($productImagePath, $imageName);
-
-//                     // Get the URL for the uploaded image
-//                     $imageUrl = 'uploads/itemImages/' . $imageName;
-
-//                     // Add the URL of the uploaded image to the array
-//                     $imageUrls[] = $imageUrl;
-//                 }
-//             }
-
-//             // If there are multiple images, join the URLs with commas
-//             if (!empty($imageUrls)) {
-//                 $input['productImages'] = implode(',', $imageUrls); // Join with commas
-//             }
-//         }
-
-//         // Insert product data into the database
-//         $db = Database::connect($tenantConfig);
-//         $model = new ItemModel($db);
-//         $model->insert($input);
-
-//         return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
-//     } else {
-//         $response = [
-//             'status' => false,
-//             'errors' => $this->validator->getErrors(),
-//             'message' => 'Invalid Inputs',
-//         ];
-//         return $this->fail($response, 409);
-//     }
-// }
-
-public function create()
-{
-    // Retrieve the input data from the request
-    $input = $this->request->getPost();
-    
-    // Define validation rules for required fields
-    $rules = [
-        'itemName' => ['rules' => 'required'],
-        'description' => ['rules' => 'required'],
-        'itemCategoryId' => ['rules' => 'required'],
-        'discount' => ['rules' => 'required'],
-        'discountType' => ['rules' => 'required'],
-        'mrp' => ['rules' => 'required'],
-    ];
-
-    if ($this->validate($rules)) {
-        // Retrieve tenantConfig from the headers (for multi-tenancy support)
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Handle image upload for the cover image
-        $coverImage = $this->request->getFile('coverImage');
-        $coverImageName = null;
-
-        if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
-            // Define the upload path for the cover image
-            $coverImagePath = FCPATH . 'uploads/coverImages/';
-            if (!is_dir($coverImagePath)) {
-                mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $coverImageUrl; 
             }
 
-            // Move the file to the desired directory with a unique name
-            $coverImageName = $coverImage->getRandomName();
-            $coverImage->move($coverImagePath, $coverImageName);
+            
+            $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
+            $imageUrls = []; // Initialize the array for image URLs
 
-            // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-            $coverImageUrl = 'uploads/coverImages/' . $coverImageName;
-            $coverImageUrl = str_replace('uploads/coverImages/', '', $coverImageUrl);
+            if ($productImages && count($productImages) > 0) {
+                foreach ($productImages as $image) {
+                    // Validate the image: Ensure it's valid, hasn't moved, and exists
+                    if ($image && $image->isValid() && !$image->hasMoved()) {
+                        // Define the upload path for product images
+                        $productImagePath = FCPATH . 'uploads/itemImages/';
 
-            // Add the cover image URL to the input data
-            $input['coverImage'] = $coverImageUrl; 
-        }
+                        // Check if the directory exists; if not, create it
+                        if (!is_dir($productImagePath)) {
+                            mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
+                        }
 
-        // Handle multiple product images upload
-        // $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
-        // $imageUrls = []; // Initialize the array for image URLs
+                        // Generate a unique name for the image to avoid overwriting
+                        $imageName = $image->getRandomName();
 
-        // if ($productImages && count($productImages) > 0) {
-        //     foreach ($productImages as $image) {
-        //         // Validate the image: Ensure it's valid, hasn't moved, and exists
-        //         if ($image && $image->isValid() && !$image->hasMoved()) {
-        //             // Define the upload path for product images
-        //             $productImagePath = FCPATH . 'uploads/itemImages/';
+                        // Move the uploaded image to the target directory
+                        $image->move($productImagePath, $imageName);
 
-        //             // Check if the directory exists; if not, create it
-        //             if (!is_dir($productImagePath)) {
-        //                 mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
-        //             }
+                        // Get the URL for the uploaded image and add it to the array
+                        $imageUrl = 'uploads/itemImages/' . $imageName;
+                        $imageUrl = str_replace('uploads/itemImages/', '', $imageUrl);
 
-        //             // Generate a unique name for the image to avoid overwriting
-        //             $imageName = $image->getRandomName();
-
-        //             // Move the uploaded image to the target directory
-        //             $image->move($productImagePath, $imageName);
-
-        //             // Get the URL for the uploaded image and add it to the array
-        //             $imageUrl = 'uploads/itemImages/' . $imageName;
-        //             $imageUrls[] = $imageUrl;
-        //         }
-        //     }
-
-        //     // If there are multiple images, join the URLs with commas and save in the input data
-        //     if (!empty($imageUrls)) {
-        //         $input['productImages'] = implode(',', $imageUrls); // Join image URLs with commas
-        //     }
-        // }
-        // Handle multiple product images upload
-        $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
-        $imageUrls = []; // Initialize the array for image URLs
-
-        if ($productImages && count($productImages) > 0) {
-            foreach ($productImages as $image) {
-                // Validate the image: Ensure it's valid, hasn't moved, and exists
-                if ($image && $image->isValid() && !$image->hasMoved()) {
-                    // Define the upload path for product images
-                    $productImagePath = FCPATH . 'uploads/itemImages/';
-
-                    // Check if the directory exists; if not, create it
-                    if (!is_dir($productImagePath)) {
-                        mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
+                        $imageUrls[] = $imageUrl; // Add the image URL to the array
                     }
+                }
 
-                    // Generate a unique name for the image to avoid overwriting
-                    $imageName = $image->getRandomName();
-
-                    // Move the uploaded image to the target directory
-                    $image->move($productImagePath, $imageName);
-
-                    // Get the URL for the uploaded image and add it to the array
-                    $imageUrl = 'uploads/itemImages/' . $imageName;
-                    $imageUrl = str_replace('uploads/itemImages/', '', $imageUrl);
-
-                    $imageUrls[] = $imageUrl; // Add the image URL to the array
+                // If there are multiple images, join the URLs with commas and save in the input data
+                if (!empty($imageUrls)) {
+                    $input['productImages'] = implode(',', $imageUrls); // Join image URLs with commas
                 }
             }
 
-            // If there are multiple images, join the URLs with commas and save in the input data
-            if (!empty($imageUrls)) {
-                $input['productImages'] = implode(',', $imageUrls); // Join image URLs with commas
-            }
+
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemModel($db);
+            $model->insert($input);
+
+            return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
+        } else {
+            // If validation fails, return the error messages
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs',
+            ];
+            return $this->fail($response, 409);
         }
-
-
-        // Insert the product data into the database
-        $db = Database::connect($tenantConfig);
-        $model = new ItemModel($db);
-        $model->insert($input);
-
-        return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
-    } else {
-        // If validation fails, return the error messages
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs',
-        ];
-        return $this->fail($response, 409);
     }
-}
-
-
-
-
-
 
 
     public function update()
@@ -710,21 +504,9 @@ public function create()
 
     public function getFourItemByCategoryWeb()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }    
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $category = new ItemCategory($db);
         $finalCategories = array();
@@ -744,21 +526,9 @@ public function create()
     {
         $tag = $this->request->getSegment(1);
 
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $model = new Item($db);
         $items = $model->findAllByTag($tag);

@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\GalleryModel;
+use App\Libraries\TenantService;
+
 use Config\Database;
 
 class Gallery extends BaseController
@@ -12,23 +14,11 @@ class Gallery extends BaseController
     use ResponseTrait;
 
     public function index()
-    {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+    {// Insert the product data into the database
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+         // Load UserModel with the tenant database connection
         $galleryModel = new GalleryModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $galleryModel->findAll()], 200);
     }
@@ -41,21 +31,11 @@ class Gallery extends BaseController
         $page = isset($input->page) ? $input->page : 1;
         // Define the number of items per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
-
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        // Insert the product data into the database
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+
         // Load UserModel with the tenant database connection
         $galleryModel = new GalleryModel($db);
         $gallerys = $galleryModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
@@ -77,21 +57,10 @@ class Gallery extends BaseController
 
     public function getGallerysWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+           // Insert the product data into the database
+           $tenantService = new TenantService();
+           // Connect to the tenant's database
+           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
         // Load UserModel with the tenant database connection
         $galleryModel = new GalleryModel($db);
         $gallerys = $galleryModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
@@ -155,21 +124,10 @@ class Gallery extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+               // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new GalleryModel($db);
 
             // Retrieve the course by courseId
@@ -220,21 +178,10 @@ class Gallery extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+                // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new GalleryModel($db);
 
             // Retrieve the course by courseId
@@ -313,21 +260,10 @@ class Gallery extends BaseController
 
     public function getGalleryById($galleryId)
 {
-    // Retrieve tenantConfig from the headers
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
-    // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
 
     // Load the CourseModel with the tenant database connection
     $galleryModel = new GalleryModel($db);

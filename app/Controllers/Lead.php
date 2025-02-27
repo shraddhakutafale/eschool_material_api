@@ -8,6 +8,8 @@ use Config\Database;
 use App\Models\LeadModel;
 use App\Models\LeadSourceModel;
 use App\Models\LeadInterestedModel;
+use App\Libraries\TenantService;
+
 
 class Lead extends BaseController
 {
@@ -16,19 +18,10 @@ class Lead extends BaseController
     // Get all leads
     public function index()
     {
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+           // Insert the product data into the database
+           $tenantService = new TenantService();
+           // Connect to the tenant's database
+           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
         $leadModel = new LeadModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $leadModel->findAll()], 200);
     }
@@ -47,20 +40,10 @@ class Lead extends BaseController
         ];
 
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+                // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new LeadModel($db);
 
             // Insert the lead data into the database
@@ -91,20 +74,10 @@ class Lead extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+                // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new LeadModel($db);  // Use LeadModel for lead-related operations
 
             // Retrieve the lead by leadId
@@ -156,21 +129,10 @@ class Lead extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new LeadModel($db);
+                // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new LeadModel($db);
 
             // Retrieve the lead by leadId
             $leadId = $input->leadId;
@@ -201,21 +163,11 @@ class Lead extends BaseController
 
     // Get all lead sources
     public function getAllLeadSource()
-    {
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+    {     // Insert the product data into the database
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        $leadSourceModel = new LeadSourceModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+         $leadSourceModel = new LeadSourceModel($db);
         return $this->respond(["status" => true, "message" => "All Lead Sources Fetched", "data" => $leadSourceModel->findAll()], 200);
     }
 

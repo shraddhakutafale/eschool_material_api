@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\QuotationModel;
 use App\Models\QuotationDetailModel;
+use App\Libraries\TenantService;
+
 use Config\Database;
 
 class Quotation extends BaseController
@@ -14,21 +16,11 @@ class Quotation extends BaseController
 
     public function index()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+       
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+        
         // Load UserModel with the tenant database connection
         $quotationModel = new QuotationModel($db);
         return $this->respond(['quotation' => $quotationModel->findAll()], 200);
@@ -78,21 +70,10 @@ class Quotation extends BaseController
 
     public function getQuotationsWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+       
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $QuotationsModel = new QuotationsModel($db);
         $quotations = $QuotationsModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
@@ -178,21 +159,10 @@ class Quotation extends BaseController
 
     // Validate form data
     if ($this->validate($rules)) {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+       
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new QuotationModel($db);
         
         // Insert the quotation into the 'quotation' table
@@ -261,21 +231,10 @@ class Quotation extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new QuotationsModel($db);
 
             // Retrieve the Quote by eventId
@@ -333,21 +292,10 @@ class Quotation extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+            
+         $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new QuotationsModel($db);
 
             // Retrieve the Quote by eventId

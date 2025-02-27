@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\SaleModel;
 use Config\Database;
+use App\Libraries\TenantService;
+
 
 class Sale extends BaseController
 {
@@ -13,21 +15,9 @@ class Sale extends BaseController
 
     public function index()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
         // Load UserModel with the tenant database connection
         $saleModel = new SaleModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $saleModel->findAll()], 200);
@@ -42,20 +32,9 @@ class Sale extends BaseController
         // Define the number of items per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
 
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
         // Load UserModel with the tenant database connection
         $saleModel = new SaleModel($db);
         $sales = $saleModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
@@ -77,21 +56,9 @@ class Sale extends BaseController
 
     public function getSalesWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
         // Load UserModel with the tenant database connection
         $saleModel = new SaleModel($db);
         $sales = $saleModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
@@ -113,21 +80,9 @@ class Sale extends BaseController
         ];
   
         if($this->validate($rules)){
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+            $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new SaleModel($db);
         
             $model->insert($input);
@@ -160,21 +115,9 @@ class Sale extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+            $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new SaleModel($db);
 
             // Retrieve the course by courseId
@@ -225,22 +168,9 @@ class Sale extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+            $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new SaleModel($db);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));             $model = new SaleModel($db);
 
             // Retrieve the course by courseId
             $saleId = $input->saleId;
@@ -318,21 +248,9 @@ class Sale extends BaseController
 
     public function getSaleById($saleId)
 {
-    // Retrieve tenantConfig from the headers
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
+    $tenantService = new TenantService();
     // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
 
     // Load the CourseModel with the tenant database connection
     $saleModel = new SaleModel($db);

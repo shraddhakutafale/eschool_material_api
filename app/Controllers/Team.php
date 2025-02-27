@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\TeamModel;
+use App\Libraries\TenantService;
+
 use Config\Database;
 
 class Team extends BaseController
@@ -13,21 +15,10 @@ class Team extends BaseController
 
     public function index()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+         
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $teamModel = new TeamModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $teamModel->findAll()], 200);
@@ -77,21 +68,10 @@ class Team extends BaseController
 
     public function getTeamsWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+         
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $teamModel = new TeamModel($db);
         $teams = $teamModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
@@ -113,21 +93,10 @@ class Team extends BaseController
         ];
   
         if($this->validate($rules)){
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+             
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new TeamModel($db);
         
             $model->insert($input);
@@ -160,21 +129,10 @@ class Team extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+             
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new TeamModel($db);
 
             // Retrieve the course by courseId
@@ -225,21 +183,10 @@ class Team extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+             
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new TeamModel($db);
 
             // Retrieve the course by courseId
@@ -318,21 +265,10 @@ class Team extends BaseController
 
     public function getTeamById($teamId)
 {
-    // Retrieve tenantConfig from the headers
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
+    
+    $tenantService = new TenantService();
     // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
     // Load the CourseModel with the tenant database connection
     $teamModel = new TeamModel($db);

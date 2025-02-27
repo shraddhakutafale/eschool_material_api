@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\SmtpConfig;
 use App\Libraries\EmailService;
+use App\Libraries\TenantService;
+
 use Config\Database;
 
 class Quote extends BaseController
@@ -22,21 +24,9 @@ class Quote extends BaseController
         $input = $this->request->getJSON();
         $emailService = new EmailService();
 
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
 
         // Load UserModel with the tenant database connection
         $quoteModel = new SmtpConfig($db);

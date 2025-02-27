@@ -15,22 +15,11 @@ class Donation extends BaseController
 
   public function index()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        // Insert the product data into the database
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+         // Load UserModel with the tenant database connection
         $donationModel = new DonationModel($db);
         $response = [
             "status" => true,
@@ -50,20 +39,11 @@ class Donation extends BaseController
         // Define the number of Donations per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
 
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+       // Insert the product data into the database
+       $tenantService = new TenantService();
+       // Connect to the tenant's database
+       $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+       
         // Load UserModel with the tenant database connection
         $DonationModel = new DonationModel($db);
         $donations = $DonationModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
@@ -85,21 +65,11 @@ class Donation extends BaseController
 
     public function getDonationsWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+      // Insert the product data into the database
+      $tenantService = new TenantService();
+      // Connect to the tenant's database
+      $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+      
         // Load UserModel with the tenant database connection
         $DonationModel = new DonationModel($db);
         $donations = $DonationModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
@@ -121,21 +91,11 @@ class Donation extends BaseController
         ];
     
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-    
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-    
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+           // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        
     
             // Retrieve the last donation's receipt number
             $model = new DonationModel($db);
@@ -216,21 +176,11 @@ class Donation extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+          // Insert the product data into the database
+            $tenantService = new TenantService();
+             // Connect to the tenant's database
+          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        
             $model = new DonationModel($db);
 
             // Retrieve the course by eventId
@@ -285,22 +235,11 @@ class Donation extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new DonationModel($db);
+          // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+         $model = new DonationModel($db);
 
             // Retrieve the course by eventId
             $donationId = $input->donationId;
@@ -348,22 +287,11 @@ class Donation extends BaseController
         ];
     
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-    
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-    
+          // Insert the product data into the database
+         $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-    
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        
             // Retrieve the last donation's receipt number
             $model = new DonationModel($db);
             $lastDonation = $model->select('receiptNo')->orderBy('donationId', 'DESC')->first();

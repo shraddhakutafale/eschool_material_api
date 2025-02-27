@@ -38,24 +38,14 @@ class Member extends BaseController
         // Define the number of members per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
 
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
-        $MemberModel = new MemberModel($db);
-        $members = $MemberModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $MemberModel->pager;
+           // Insert the product data into the database
+           $tenantService = new TenantService();
+           // Connect to the tenant's database
+           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            // Load UserModel with the tenant database connection
+            $MemberModel = new MemberModel($db);
+            $members = $MemberModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+            $pager = $MemberModel->pager;
 
         $response = [
             "status" => true,
@@ -73,21 +63,11 @@ class Member extends BaseController
 
     public function getMembersWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
 
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $MemberModel = new MemberModel($db);
         $members = $MemberModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
@@ -114,21 +94,10 @@ class Member extends BaseController
         ];
     
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-    
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-    
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
     
     
             // Insert the member into the database
@@ -210,22 +179,13 @@ class Member extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
 
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+         // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new MemberModel($db);
+
 
             // Retrieve the course by eventId
             $memberId = $input->memberId;
@@ -285,21 +245,11 @@ class Member extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
 
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+            // Insert the product data into the database
+             $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new MemberModel($db);
 
             // Retrieve the course by eventId
@@ -350,21 +300,10 @@ class Member extends BaseController
         ];
     
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-    
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-    
+            // Insert the product data into the database
+            $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
     
     
             // Insert the member into the database

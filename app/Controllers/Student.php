@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\StudentModel;
+use App\Libraries\TenantService;
+
 use Config\Database;
 
 class Student extends BaseController
@@ -13,21 +15,10 @@ class Student extends BaseController
 
     public function index()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+         
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $studentModel = new StudentModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $studentModel->findAll()], 200);
@@ -42,20 +33,10 @@ class Student extends BaseController
         // Define the number of items per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
 
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+         
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $studentModel = new StudentModel($db);
         $students = $studentModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
@@ -77,21 +58,10 @@ class Student extends BaseController
 
     public function getStudentsWebsite()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+         
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load UserModel with the tenant database connection
         $studentModel = new StudentModel($db);
         $students = $studentModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
@@ -127,21 +97,10 @@ class Student extends BaseController
         // Validate the incoming data
         if ($this->validate($rules)) {
     
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-    
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-    
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-    
-            // Connect to the tenant's database
-            $db = \Config\Database::connect($tenantConfig);
+              
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new \App\Models\StudentModel($db);
     
           
@@ -178,22 +137,10 @@ class Student extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new StudentModel($db);
+             
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new StudentModel($db);
 
             // Retrieve the student by studentId
             $studentId = $input->studentId;
@@ -259,22 +206,10 @@ class Student extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new StudentModel($db);
+             
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new StudentModel($db);
 
             // Retrieve the student by studentId
             $studentId = $input->studentId;
@@ -354,21 +289,10 @@ class Student extends BaseController
 
     public function getStudentById($studentId)
 {
-    // Retrieve tenantConfig from the headers
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
+     
+    $tenantService = new TenantService();
     // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
     // Load the StudentModel with the tenant database connection
     $studentModel = new StudentModel($db);
@@ -424,21 +348,10 @@ public function uploadStudentImage()
         'studentImage' => $newName,
     ];
 
+     
+    $tenantService = new TenantService();
     // Connect to the tenant's database
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
-    // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $studentModel = new StudentModel($db);
 
     // Update the student with the new image URL

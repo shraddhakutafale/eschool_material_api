@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PoModel extends Model
+class PoDetailModel extends Model
 {
-    protected $table            = 'po_mst';
-    protected $primaryKey       = 'poId';
+    protected $table            = 'po_details';
+    protected $primaryKey       = 'poDetailId ';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [ 'poId', 'poDate', 'poCode', 'poAmount', 'vendorId', 'taxInvoiceNumber', 'invoiceUrl','businessNameFrom', 'phoneFrom', 'addressFrom', 'emailFrom', 'PanFrom', 'businessNameFor', 'phoneFor', 'addressFor', 'emailFor', 'PanCardFor', 'isActive', 'isDeleted', 'remarks', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = [ 'poDetailId', 'poId', 'itemId','item', 'quantity', 'rate', 'amount', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

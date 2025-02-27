@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\PoModel;
+use App\Models\PoDetailModel;
 use Config\Database;
 
 class Po extends BaseController
@@ -99,69 +100,159 @@ class Po extends BaseController
     }
 
   
+    // public function create()
+    // {
+    //     $input = $this->request->getJSON();
+    //     $rules = [
+    //         'poNo'=> ['rules' => 'required'], 
+    //         'poDate'=> ['rules' => 'required'],
+    //         'vendor'=> ['rules' => 'required'],
+    //         'taxInvoiceNumber'=> ['rules' => 'required'],
+    //         'businessNameFrom'=> ['rules' => 'required'],
+    //         'phoneFrom'=> ['rules' => 'required'],
+    //         'addressFrom'=> ['rules' => 'required'], 
+    //         'emailFrom'=> ['rules' => 'required'],
+    //         'PanFrom'=> ['rules' => 'required'], 
+    //         'businessNameFor'=> ['rules' => 'required'], 
+    //         'phoneFor'=> ['rules' => 'required'], 
+    //         'addressFor'=> ['rules' => 'required'],
+    //         'emailFor'=> ['rules' => 'required'],
+    //         'PanCardFor'=> ['rules' => 'required'], 
+    //         // // 'quotationForEmail'=> ['rules' => 'required'],
+
+    //         // // 'quotationForPan'=> ['rules' => 'required'],
+    //         // // 'PanCardFor'=> ['rules' => 'required'], 
+    //         // // 'quotationForEmail'=> ['rules' => 'required'],
+    //     ];
+  
+    //     if($this->validate($rules)){
+    //         // Retrieve tenantConfig from the headers
+    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    //         if (!$tenantConfigHeader) {
+    //             throw new \Exception('Tenant configuration not found.');
+    //         }
+
+    //         // Decode the tenantConfig JSON
+    //         $tenantConfig = json_decode($tenantConfigHeader, true);
+
+    //         if (!$tenantConfig) {
+    //             throw new \Exception('Invalid tenant configuration.');
+    //         }
+
+    //         // Connect to the tenant's database
+    //         $db = Database::connect($tenantConfig);
+    //         $model = new PoModel($db);
+        
+    //         $model->insert($input);
+             
+    //         return $this->respond(['status'=>true,'message' => 'Item Added Successfully'], 200);
+    //     }else{
+    //         $response = [
+    //             'status'=>false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response , 409);
+             
+    //     }
+            
+    // }
+
     public function create()
     {
         $input = $this->request->getJSON();
+    
+        // Validation rules for PO
         $rules = [
-            'poCode'=> ['rules' => 'required'], 
-            'poDate'=> ['rules' => 'required'],
-            'vendor'=> ['rules' => 'required'],
-            'taxInvoiceNumber'=> ['rules' => 'required'],
-            // 'quoteNo'=> ['rules' => 'required'], 
-            // 'quoteDate'=> ['rules' => 'required'], 
-            // 'validDate'=> ['rules' => 'required'], 
-            // 'businessNameFrom'=> ['rules' => 'required'],
-            // 'phoneFrom'=> ['rules' => 'required'],
-            // 'addressFrom'=> ['rules' => 'required'], 
-            // 'emailFrom'=> ['rules' => 'required'],
-
-            // 'PanFrom'=> ['rules' => 'required'], 
-            // 'businessNameFor'=> ['rules' => 'required'], 
-            // 'phoneFor'=> ['rules' => 'required'], 
-            // 'addressFor'=> ['rules' => 'required'],
-            // 'emailFor'=> ['rules' => 'required'],
-            // 'PanCardFor'=> ['rules' => 'required'], 
-            // // 'quotationForEmail'=> ['rules' => 'required'],
-
-            // // 'quotationForPan'=> ['rules' => 'required'],
-            // // 'PanCardFor'=> ['rules' => 'required'], 
-            // // 'quotationForEmail'=> ['rules' => 'required'],
+            'poNo' => ['rules' => 'required'],
+            'poDate' => ['rules' => 'required'],
+            'vendor' => ['rules' => 'required'],
+            'taxInvoiceNumber' => ['rules' => 'required'],
+            'businessNameFrom' => ['rules' => 'required'],
+            'phoneFrom' => ['rules' => 'required'],
+            'addressFrom' => ['rules' => 'required'],
+            'emailFrom' => ['rules' => 'required'],
+            'PanFrom' => ['rules' => 'required'],
+            'businessNameFor' => ['rules' => 'required'],
+            'phoneFor' => ['rules' => 'required'],
+            'addressFor' => ['rules' => 'required'],
+            'emailFor' => ['rules' => 'required'],
+            'PanCardFor' => ['rules' => 'required'],
         ];
-  
-        if($this->validate($rules)){
+    
+        // Validate form data
+        if ($this->validate($rules)) {
             // Retrieve tenantConfig from the headers
             $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
             if (!$tenantConfigHeader) {
                 throw new \Exception('Tenant configuration not found.');
             }
-
+    
             // Decode the tenantConfig JSON
             $tenantConfig = json_decode($tenantConfigHeader, true);
-
+    
             if (!$tenantConfig) {
                 throw new \Exception('Invalid tenant configuration.');
             }
-
+    
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
             $model = new PoModel($db);
-        
-            $model->insert($input);
-             
-            return $this->respond(['status'=>true,'message' => 'Item Added Successfully'], 200);
-        }else{
+    
+            // Insert the PO into the 'po' table
+            $poData = [
+                'poNo' => $input->poNo,
+                'poDate' => $input->poDate,
+                'vendor' => $input->vendor,
+                'taxInvoiceNumber' => $input->taxInvoiceNumber,
+                'businessNameFrom' => $input->businessNameFrom,
+                'phoneFrom' => $input->phoneFrom,
+                'addressFrom' => $input->addressFrom,
+                'emailFrom' => $input->emailFrom,
+                'PanFrom' => $input->PanFrom,
+                'businessNameFor' => $input->businessNameFor,
+                'phoneFor' => $input->phoneFor,
+                'addressFor' => $input->addressFor,
+                'emailFor' => $input->emailFor,
+                'PanCardFor' => $input->PanCardFor,
+            ];
+    
+            // Insert the PO and retrieve the generated poId
+            $poId = $model->insert($poData);
+    
+            if ($poId) {
+                // Now insert the items into the po_details table using the poId
+                $poDetailsModel = new PoDetailModel($db); // Assuming you have this model for PO details
+    
+                // Iterate through each item in the input and insert into po_details
+                foreach ($input->items as $item) {
+                    $poDetailsData = [
+                        'poId' => $poId,  // Foreign key linking to the PO
+                        'itemName' => $item->itemName,
+                        'quantity' => $item->quantity,
+                        'rate' => $item->rate,
+                        'amount' => $item->amount,
+                    ];
+    
+                    // Insert the item into the po_details table
+                    $poDetailsModel->insert($poDetailsData);
+                }
+    
+                return $this->respond(['status' => true, 'message' => 'PO and items added successfully'], 200);
+            } else {
+                return $this->respond(['status' => false, 'message' => 'Failed to create the PO'], 500);
+            }
+        } else {
+            // Return validation errors
             $response = [
-                'status'=>false,
+                'status' => false,
                 'errors' => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
             ];
-            return $this->fail($response , 409);
-             
+            return $this->fail($response, 409);
         }
-            
     }
-
-
+    
 
     public function update()
     {

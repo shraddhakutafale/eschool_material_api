@@ -218,16 +218,16 @@ class Order extends BaseController
         ];
 
         // Insert the order and retrieve the generated orderId
-        $orderDetailId= $model->insert($orderData);
+        $orderId= $model->insert($orderData);
 
-        if ($orderDetailId) {
+        if ($orderId) {
             // Now insert the items into the order_details table using the orderId
             $orderDetailsModel = new OrderDetailModel($db); // Assuming you have this model for order details
 
             // Iterate through each item in the input and insert into order_details
             foreach ($input->items as $item) {
                 $orderDetailsData = [
-                    'orderDetailId' => $orderDetailId,  // Foreign key linking to the order
+                    'orderId' => $orderId,  // Foreign key linking to the order
                     'item' => $item->item,
                     'rate' => $item->rate,
                     'quantity' => $item->quantity,

@@ -18,19 +18,10 @@ class Item extends BaseController
 
     public function index()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+    // Insert the product data into the database
+    $tenantService = new TenantService();
+    // Connect to the tenant's database
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
@@ -45,19 +36,10 @@ class Item extends BaseController
 
     public function getAllUnit()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON 
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
 
@@ -80,17 +62,10 @@ class Item extends BaseController
         // Define the number of items per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
 
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -145,7 +120,7 @@ class Item extends BaseController
 
             if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
                 // Define the upload path for the cover image
-                $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/coverImages/';
+                $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
                 if (!is_dir($coverImagePath)) {
                     mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
                 }
@@ -155,8 +130,8 @@ class Item extends BaseController
                 $coverImage->move($coverImagePath, $coverImageName);
 
                 // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $coverImageUrl = 'uploads/coverImages/' . $coverImageName;
-                $coverImageUrl = str_replace('uploads/coverImages/', '', $coverImageUrl);
+                $coverImageUrl = 'uploads/itemImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/itemImages/', '', $coverImageUrl);
 
                 // Add the cover image URL to the input data
                 $input['coverImage'] = $coverImageUrl; 
@@ -171,7 +146,7 @@ class Item extends BaseController
                     // Validate the image: Ensure it's valid, hasn't moved, and exists
                     if ($image && $image->isValid() && !$image->hasMoved()) {
                         // Define the upload path for product images
-                        $productImagePath = FCPATH . 'uploads/itemImages/';
+                        $productImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/itemSlideImages/';
 
                         // Check if the directory exists; if not, create it
                         if (!is_dir($productImagePath)) {
@@ -185,8 +160,8 @@ class Item extends BaseController
                         $image->move($productImagePath, $imageName);
 
                         // Get the URL for the uploaded image and add it to the array
-                        $imageUrl = 'uploads/itemImages/' . $imageName;
-                        $imageUrl = str_replace('uploads/itemImages/', '', $imageUrl);
+                        $imageUrl = 'uploads/itemSlideImages/' . $imageName;
+                        $imageUrl = str_replace('uploads/itemSlideImages/', '', $imageUrl);
 
                         $imageUrls[] = $imageUrl; // Add the image URL to the array
                     }
@@ -230,19 +205,10 @@ class Item extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
             $model = new ItemModel($db);
@@ -303,19 +269,11 @@ class Item extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
-            }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
+           
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             // Connect to the tenant's database
             $db = Database::connect($tenantConfig);
             $model = new ItemModel($db);
@@ -353,18 +311,10 @@ class Item extends BaseController
     {
         $input = $this->request->getJSON();
 
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -378,18 +328,10 @@ class Item extends BaseController
     {
         $input = $this->request->getJSON();
 
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -402,18 +344,10 @@ class Item extends BaseController
     {
         $input = $this->request->getJSON();
 
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+         // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -432,17 +366,10 @@ class Item extends BaseController
             return $this->respond(["status" => false, "message" => "Category ID not provided."], 400);
         }
     
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            return $this->respond(["status" => false, "message" => "Tenant configuration not found."], 400);
-        }
-    
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-        if (!$tenantConfig) {
-            return $this->respond(["status" => false, "message" => "Invalid tenant configuration."], 400);
-        }
+         // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     
         // Connect to the tenant's database
         try {
@@ -481,18 +408,10 @@ class Item extends BaseController
     {
         $tag = $this->request->getSegment(1);
 
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+         // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);

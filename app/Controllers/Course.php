@@ -17,18 +17,10 @@ class Course extends BaseController
 
     public function index()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+        // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -295,18 +287,10 @@ class Course extends BaseController
 
     public function getCourseById($courseId)
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+        // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -400,18 +384,10 @@ class Course extends BaseController
 
     public function getAllFee()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+        // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -621,18 +597,10 @@ class Course extends BaseController
 // Shift Methods
     public function getAllShift()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+  // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);
@@ -848,18 +816,10 @@ class Course extends BaseController
 
     public function getAllSubject()
     {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+  // Insert the product data into the database
+         $tenantService = new TenantService();
+         // Connect to the tenant's database
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Connect to the tenant's database
         $db = Database::connect($tenantConfig);

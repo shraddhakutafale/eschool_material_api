@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\StaffModel;
 use Config\Database;
+use App\Libraries\TenantService;
 
 class Staff extends BaseController
 {
@@ -40,27 +41,25 @@ class Staff extends BaseController
 
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
-        // Define the number of staffs per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'staffId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+        
 
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $tenantService = new TenantService();
+        
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load StaffModel with the tenant database connection
         $staffModel = new StaffModel($db);
 
-        $staff = $staffModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+        $staff = $staffModel->orderBy($sortField, $sortOrder)
+            ->like('empName', $search)->orLike('fatherName', $search)->paginate($perPage, 'default', $page);
+        if ($filter) {
+            $filter = json_decode(json_encode($filter), true);
+            $staff = $staffModel->where($filter)->paginate($perPage, 'default', $page);   
+        }
         $pager = $staffModel->pager;
 
         $response = [

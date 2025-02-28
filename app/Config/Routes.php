@@ -278,7 +278,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
                    
   //Routes for staff
   $routes->get('staff/getall', 'Staff::index',['filter' => ['authFilter', 'tenantFilter']]);
-  $routes->post('staff/getallpaging', 'Staff::getStaffsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+  $routes->post('staff/getallpaging', 'Staff::getStaffPaging',['filter' => ['authFilter', 'tenantFilter']]);
   $routes->get('staff/view/(:segment)', 'Staff::show/$1',['filter' => 'authFilter']);
   $routes->post('staff/create', 'Staff::create',['filter' => ['authFilter','tenantFilter']]);
   $routes->post('staff/update', 'Staff::update',['filter' => ['authFilter','tenantFilter']]);

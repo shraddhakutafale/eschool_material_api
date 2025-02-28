@@ -24,12 +24,12 @@ class TenantFilter implements FilterInterface
                 $token = $matches[1];
             }
         }
-        
-        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-        if(isset($decoded->tenantName)) {
-            $tenant = $decoded->tenantName;
+
+        if(empty($token)) {
+            $tenant = $request->getHeaderLine('Tenant');
         }else {
-            $tenant = $request->getHeaderLine('Tenant'); // Get tenant name from the request header
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            $tenant = $decoded->tenantName;
         }
         if (empty($tenant)) {
             return service('response')

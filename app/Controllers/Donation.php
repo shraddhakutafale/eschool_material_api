@@ -36,29 +36,36 @@ class Donation extends BaseController
 
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
-        // Define the number of Donations per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'donationId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+        
 
-       // Insert the product data into the database
-       $tenantService = new TenantService();
-       // Connect to the tenant's database
-       $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-       
-        // Load UserModel with the tenant database connection
-        $DonationModel = new DonationModel($db);
-        $donations = $DonationModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $DonationModel->pager;
+        $tenantService = new TenantService();
+        
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load StaffModel with the tenant database connection
+        $donationModel = new DonationModel($db);
+
+        $donation = $donationModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('mobileNo', $search)->paginate($perPage, 'default', $page);
+        if ($filter) {
+            $filter = json_decode(json_encode($filter), true);
+            $donation = $donationModel->like($filter)->paginate($perPage, 'default', $page);   
+        }
+        $pager = $donationModel->pager;
 
         $response = [
             "status" => true,
-            "message" => "All Data Fetched",
-            "data" => $donations,
+            "message" => "All Vendor Data Fetched",
+            "data" => $donation,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
-                "totalDonations" => $pager->getTotal(),
+                "totalItems" => $pager->getTotal(),
                 "perPage" => $perPage
-            ]   
+            ]
         ];
         return $this->respond($response, 200);
     }

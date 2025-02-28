@@ -46,7 +46,7 @@ class Customer extends BaseController
         $customer = $customerModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('emailId', $search)->paginate($perPage, 'default', $page);
         if ($filter) {
             $filter = json_decode(json_encode($filter), true);
-            $customer = $customerModel->where($filter)->paginate($perPage, 'default', $page);   
+            $customer = $customerModel->like($filter)->paginate($perPage, 'default', $page);   
         }
         $pager = $customerModel->pager;
 
@@ -139,6 +139,7 @@ class Customer extends BaseController
             // Prepare the data to be updated (exclude customerId if it's included)
             $updateData = [
                 'name' =>$input->name,
+                'customerCode' =>$input->customerCode,
                 'mobileNo' => $input->mobileNo,
                 'alternateMobileNo' => $input->alternateMobileNo,
                 'emailId' => $input->emailId,

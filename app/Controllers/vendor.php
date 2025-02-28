@@ -46,7 +46,7 @@ class Vendor extends BaseController
         $vendor = $vendorModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('mobileNo', $search)->paginate($perPage, 'default', $page);
         if ($filter) {
             $filter = json_decode(json_encode($filter), true);
-            $vendor = $vendorModel->where($filter)->paginate($perPage, 'default', $page);   
+            $vendor = $vendorModel->like($filter)->paginate($perPage, 'default', $page);   
         }
         $pager = $vendorModel->pager;
 
@@ -119,6 +119,7 @@ class Vendor extends BaseController
             // Prepare the data to be updated (exclude vendorId if it's included)
             $updateData = [
                 'name' =>$input->name,
+                'vendorCode' =>$input->vendorCode,
                 'mobileNo' => $input->mobileNo,
                 'alternateMobileNo' => $input->alternateMobileNo,
                 'emailId' => $input->emailId,

@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\SlideModel;
+use App\Libraries\TenantService;
+
 
 
 class Slide extends BaseController
@@ -15,19 +17,10 @@ class Slide extends BaseController
     // Get all leads
     public function index()
     {
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
+       
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
         $slideModel = new SlideModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $slideModel->findAll()], 200);
     }
@@ -45,17 +38,11 @@ public function create()
     ];
 
     if ($this->validate($rules)) {
-        // Retrieve tenantConfig from the headers
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
 
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
+        
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
 
          // Handle image upload for the cover image
          $coverImage = $this->request->getFile('coverImageUrl');
@@ -80,8 +67,7 @@ public function create()
              $input['coverImageUrl'] = $coverImageUrl; 
          }
 
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
+    
         $model = new SlideModel($db);
 
         $model->insert($input);

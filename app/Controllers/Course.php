@@ -22,8 +22,6 @@ class Course extends BaseController
          // Connect to the tenant's database
          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
         // Load UserModel with the tenant database connection
         $courseModel = new CourseModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $courseModel->findAll()], 200);

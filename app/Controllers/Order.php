@@ -32,29 +32,39 @@ class Order extends BaseController
 
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'orderId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+        
 
         $tenantService = new TenantService();
-        // Connect to the tenant's database
+        
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load OrderModel with the tenant database connection
+        $orderModel = new OrderModel($db);
 
-        // Load UserModel with the tenant database connection
-        $OrderModel = new OrderModel($db);
-        $Orders = $OrderModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $OrderModel->pager;
+        $order = $orderModel->orderBy($sortField, $sortOrder)
+            ->like('orderCode', $search)->orLike('orderDate', $search)->paginate($perPage, 'default', $page);
+        if ($filter) {
+            $filter = json_decode(json_encode($filter), true);
+            $order = $orderModel->where($filter)->paginate($perPage, 'default', $page);   
+        }
+        $pager = $orderModel->pager;
 
         $response = [
             "status" => true,
-            "message" => "All Data Fetched",
-            "data" => $Orders,
+            "message" => "All Order Data Fetched",
+            "data" => $order,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
                 "totalItems" => $pager->getTotal(),
                 "perPage" => $perPage
-            ]   
+            ]
         ];
+
         return $this->respond($response, 200);
     }
 

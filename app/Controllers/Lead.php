@@ -26,6 +26,47 @@ class Lead extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $leadModel->findAll()], 200);
     }
 
+    public function getLeadsPaging()
+    {
+        $input = $this->request->getJSON();
+
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'leadId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+        
+
+        $tenantService = new TenantService();
+        
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load LeadModel with the tenant database connection
+        $leadModel = new LeadModel($db);
+
+        $lead = $leadModel->orderBy($sortField, $sortOrder)
+            ->like('fName', $search)->orLike('lName', $search)->paginate($perPage, 'default', $page);
+        if ($filter) {
+            $filter = json_decode(json_encode($filter), true);
+            $lead = $leadModel->like($filter)->paginate($perPage, 'default', $page);   
+        }
+        $pager = $leadModel->pager;
+
+        $response = [
+            "status" => true,
+            "message" => "All Lead Data Fetched",
+            "data" => $lead,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+
+        return $this->respond($response, 200);
+    }
     // Create a new lead
     public function create()
     {

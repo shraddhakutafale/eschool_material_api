@@ -7,6 +7,9 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\StaffModel;
 use Config\Database;
 use App\Libraries\TenantService;
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
+
 
 class Staff extends BaseController
 {
@@ -58,7 +61,7 @@ class Staff extends BaseController
             ->like('empName', $search)->orLike('fatherName', $search)->paginate($perPage, 'default', $page);
         if ($filter) {
             $filter = json_decode(json_encode($filter), true);
-            $staff = $staffModel->where($filter)->paginate($perPage, 'default', $page);   
+            $staff = $staffModel->like($filter)->paginate($perPage, 'default', $page);   
         }
         $pager = $staffModel->pager;
 
@@ -90,6 +93,29 @@ class Staff extends BaseController
         ];
     
         if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
            
             // Handle image upload for the cover image
             $coverImage = $this->request->getFile('coverImage');
@@ -97,7 +123,7 @@ class Staff extends BaseController
     
             if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
                 // Define the upload path for the cover image
-                $coverImagePath = FCPATH . 'uploads/staffImages/';
+                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/staffImages/';
                 if (!is_dir($coverImagePath)) {
                     mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
                 }

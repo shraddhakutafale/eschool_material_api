@@ -24,36 +24,47 @@ class Customer extends BaseController
     }
 
     public function getCustomersPaging()
+   
     {
         $input = $this->request->getJSON();
 
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'customerId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+        
 
-        // Insert the product data into the database
         $tenantService = new TenantService();
-        // Connect to the tenant's database
+        
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load UserModel with the tenant database connection
-        $CustomerModel = new CustomerModel($db);
-        $customer = $CustomerModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $CustomerModel->pager;
+        // Load StaffModel with the tenant database connection
+        $customerModel = new CustomerModel($db);
+
+        $customer = $customerModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('emailId', $search)->paginate($perPage, 'default', $page);
+        if ($filter) {
+            $filter = json_decode(json_encode($filter), true);
+            $customer = $customerModel->where($filter)->paginate($perPage, 'default', $page);   
+        }
+        $pager = $customerModel->pager;
 
         $response = [
             "status" => true,
-            "message" => "All Data Fetched",
+            "message" => "All Customer Data Fetched",
             "data" => $customer,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
                 "totalItems" => $pager->getTotal(),
                 "perPage" => $perPage
-            ]   
+            ]
         ];
+
         return $this->respond($response, 200);
     }
+    
 
     public function getCustomersWebsite()
     {

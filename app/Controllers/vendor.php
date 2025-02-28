@@ -24,35 +24,47 @@ class Vendor extends BaseController
     }
 
     public function getVendorsPaging()
+   
     {
         $input = $this->request->getJSON();
 
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
         $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'vendorId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+        
 
         $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));      // Load VendorModel with the tenant database connection
-        $VendorModel = new VendorModel($db);
-        $vendor = $VendorModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $VendorModel->pager;
+        
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load StaffModel with the tenant database connection
+        $vendorModel = new VendorModel($db);
+
+        $vendor = $vendorModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('mobileNo', $search)->paginate($perPage, 'default', $page);
+        if ($filter) {
+            $filter = json_decode(json_encode($filter), true);
+            $vendor = $vendorModel->where($filter)->paginate($perPage, 'default', $page);   
+        }
+        $pager = $vendorModel->pager;
 
         $response = [
             "status" => true,
-            "message" => "All Data Fetched",
+            "message" => "All Vendor Data Fetched",
             "data" => $vendor,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
                 "totalItems" => $pager->getTotal(),
                 "perPage" => $perPage
-            ]   
+            ]
         ];
+
         return $this->respond($response, 200);
     }
-
+    
     public function create()
     {
         $input = $this->request->getJSON();

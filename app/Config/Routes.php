@@ -112,32 +112,6 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
      $routes->post('delete', 'Business::delete',['filter' => ['authFilter','tenantFilter']]); 
   });
   
-  $routes->group('course', function ($routes) {
-    // Routes for courses
-    $routes->get('getall', 'Course::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Course::getCoursesPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('view/(:segment)', 'Course::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Course::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Course::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('delete', 'Course::delete',['filter' => ['authFilter','tenantFilter']]); // Get all courses for website
-    $routes->get('getallwebsite', 'Course::getCoursesWebsite',['filter' => ['tenantFilter']]);
-
-    $routes->get('getallshift', 'Course::getAllShift',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('createshift', 'Course::createShift',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('updateshift', 'Course::updateShift',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('deleteshift', 'Course::deleteShift',['filter' => ['authFilter','tenantFilter']]);
-
-    $routes->get('getallsubject', 'Course::getAllSubject',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('createsubject', 'Course::createSubject',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('updatesubject', 'Course::updateSubject',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('deletesubject', 'Course::deleteSubject',['filter' => ['authFilter','tenantFilter']]);
-
-    $routes->get('getallfee', 'Course::getAllFee',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('createfee', 'Course::createFee',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('updatefee', 'Course::updateFee',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('deletefee', 'Course::deleteFee',['filter' => ['authFilter','tenantFilter']]);
-  });
-
   $routes->group('event', function ($routes) {
     //Routes for event
     $routes->get('getall', 'Event::index',['filter' => ['authFilter', 'tenantFilter']]);
@@ -172,6 +146,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('createweb', 'Member::createWeb',['filter' => 'tenantFilter']);
     
   });
+
   $routes->post('donate/createweb', 'Donation::createWeb',['filter' => 'tenantFilter']);
   $routes->group('donation', function ($routes) {
     //Routes for Donation
@@ -183,17 +158,6 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('update', 'Donation::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('delete', 'Donation::delete',['filter' => ['authFilter','tenantFilter']]);
   });
-
-  $routes->group('student', function ($routes) {
-    //Routes for student
-    $routes->get('getall', 'Student::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Student::getStudentsPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('view/(:segment)', 'Student::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Student::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Student::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Student::getStudentsWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
-    $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
-  });    
 
   $routes->group('item', function ($routes) {
     //Routes for item
@@ -207,6 +171,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]); 
     $routes->post('createcategory', 'Item::createCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallunit', 'Item::getAllUnit',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['authFilter','tenantFilter']]);
+
+
     // Routes for website
     $routes->get('getallcategoryweb', 'Item::getAllCategoryWeb',['filter' => 'tenantFilter']);
     $routes->get('getallitembycategoryweb/(:num)', 'Item::getAllItemByCategoryWeb/$1',['filter' => 'tenantFilter']);
@@ -216,29 +183,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('viewweb', 'Item::show',['filter' => ['tenantFilter']]);
 
   });
-
-  $routes->group('stock', function ($routes) {
-    //Routes for stock
-    $routes->get('getall', 'Stock::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Stock::getStocksPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('view/(:segment)', 'Stock::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Stock::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Stock::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Stock::getStocksWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
-    $routes->post('delete', 'Stock::delete',['filter' => ['authFilter','tenantFilter']]); 
-  });
-    
-  $routes->group('service', function ($routes) {
-     //Routes for service
-     $routes->get('getall', 'Service::index',['filter' => ['authFilter', 'tenantFilter']]);
-     $routes->post('getallpaging', 'Service::getServicesPaging',['filter' => ['authFilter', 'tenantFilter']]); //add s
-     $routes->get('view/(:segment)', 'Service::show/$1',['filter' => 'authFilter']);
-     $routes->post('create', 'Service::create',['filter' => ['authFilter','tenantFilter']]);
-     $routes->post('update', 'Service::update',['filter' => ['authFilter','tenantFilter']]);
-     $routes->get('getallwebsite', 'Service::getServicesWebsite',['filter' => ['tenantFilter']]); //add s 
-     $routes->post('delete', 'Service::delete',['filter' => ['authFilter','tenantFilter']]);
-  });
-
+  
   $routes->group('gallery', function ($routes) {
     //Routes for gallery
     $routes->get('getall', 'Gallery::index',['filter' => ['authFilter', 'tenantFilter']]);
@@ -272,39 +217,6 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Po::delete',['filter' => ['authFilter','tenantFilter']]);
   });  
   
-  $routes->group('sale', function ($routes) {
-    //Routes for sale
-    $routes->get('getall', 'Sale::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Sale::getSalesPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('view/(:segment)', 'Sale::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Sale::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Sale::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Sale::getSalesWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
-    $routes->post('delete', 'Sale::delete',['filter' => ['authFilter','tenantFilter']]);
-  });
-
-  $routes->group('team', function ($routes) {
-    //Routes for Team
-    $routes->get('getall', 'Team::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Team::getTeamsPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('view/(:segment)', 'Team::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Team::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Team::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Team::getTeamsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
-    $routes->post('delete', 'Team::delete',['filter' => ['authFilter','tenantFilter']]);
-  });
-
-  $routes->group('blog', function ($routes) {
-    //Routes for service
-    $routes->get('getall', 'blog::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'blog::getBlogsPaging',['filter' => ['authFilter', 'tenantFilter']]); //add s
-    $routes->get('view/(:segment)', 'Blog::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Blog::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Blog::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Blog::getBlogsWebsite',['filter' => ['tenantFilter']]); //add s 
-    $routes->post('delete', 'Blog::delete',['filter' => ['authFilter','tenantFilter']]);
-  });
-
   $routes->group('staff', function ($routes) {
     //Routes for staff
     $routes->get('getall', 'Staff::index',['filter' => ['authFilter', 'tenantFilter']]);
@@ -325,18 +237,6 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('update', 'Vendor::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallwebsite', 'Vendor::getVendorsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Vendor::delete',['filter' => ['authFilter','tenantFilter']]);
-  });
-
-  $routes->group('purchase', function ($routes) {
-    //Routes for Purchase
-    $routes->get('getall', 'Purchase::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Purchase::getPurchasesPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('view/(:segment)', 'Purchase::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Purchase::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Purchase::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Purchase::getPurchasesWebsite',['filter' => ['tenantFilter']]); // Get all purchase for website
-    $routes->post('delete', 'Purchase::delete',['filter' => ['authFilter','tenantFilter']]);
-     
   });
 
   $routes->group('lead', function ($routes) {

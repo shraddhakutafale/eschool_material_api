@@ -21,26 +21,29 @@ class LeadModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'createdDate';
+    protected $updatedField  = 'modifiedDate';
+    protected $beforeInsert = ['addCreatedBy'];
+    protected $beforeUpdate = ['addModifiedBy'];
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    protected function addCreatedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['createdBy'] = $userId;
+        }
+        return $data;
+    }
 
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
-}
+    protected function addModifiedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['modifiedBy'] = $userId;
+        }
+        return $data;
+    }}

@@ -200,7 +200,8 @@ class User extends BaseController
                 "iat" => $iat, //Time the JWT issued at
                 "exp" => $exp, // Expiration time of token
                 "email" => $user['email'],
-                "roleId" => $user['roleId']
+                "roleId" => $user['roleId'],
+                "userId" => $user['userId']
             );
         }else{
 
@@ -230,6 +231,7 @@ class User extends BaseController
                 "exp" => $exp, // Expiration time of token
                 "email" => $user['email'],
                 "roleId" => $user['roleId'],
+                "userId" => $user['userId'],
                 "businessId" => $user['business']['businessId'],
                 "tenantName" => $user['business']['tenantName'],
                 "businessCategoryId" => $user['business']['businessCategoryId'],

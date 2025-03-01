@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ItemModel extends Model
+class ItemTypeModel extends Model
 {
-    protected $table            = 'item_mst';
-    protected $primaryKey       = 'itemId';
+    protected $table            = 'item_type';
+    protected $primaryKey       = 'itemTypeId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemId', 'itemName', 'coverImage', 'productImages', 'itemTypeId', 'categoryInputFieldValues', 'itemCategoryId', 'brandName', 'unit', 'unitSize', 'mrp', 'sku','startDate','duration', 'gstPercentage', 'discountType', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'tags', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['itemTypeId', 'itemTypeName', 'description', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

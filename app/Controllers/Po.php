@@ -74,9 +74,11 @@ class Po extends BaseController
     
         // Validation rules for PO
         $rules = [
-            'businessNameFrom' => ['rules' => 'required'],
-            'addressFrom' => ['rules' => 'required'],
-           
+            // 'businessNameFrom' => ['rules' => 'required'],
+            // 'addressFrom' => ['rules' => 'required'],
+            'poCode'=> ['rules' => 'required'],
+            'poDate'=> ['rules' => 'required'],
+            'vendor'=> ['rules' => 'required'],
         ];
     
         // Validate form data
@@ -89,7 +91,7 @@ class Po extends BaseController
     
             // Insert the PO into the 'po' table
             $poData = [
-                'poNo' => $input->poNo,
+                'poCode' => $input->poCode,
                 'poDate' => $input->poDate,
                 'vendor' => $input->vendor,
                 'taxInvoiceNumber' => $input->taxInvoiceNumber,

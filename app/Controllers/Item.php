@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\ItemModel;
+use App\Models\ItemTypeModel;
 use App\Models\ItemCategory;
 use App\Models\Unit;
 use Config\Database;
@@ -91,7 +92,7 @@ class Item extends BaseController
         $rules = [
             'itemName' => ['rules' => 'required'],
             'description' => ['rules' => 'required'],
-            'itemCategoryId' => ['rules' => 'required'],
+            // 'itemCategoryId' => ['rules' => 'required'],
             'mrp' => ['rules' => 'required'],
         ];
 
@@ -306,7 +307,6 @@ class Item extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load UserModel with the tenant database connection
         $model = new ItemCategory($db);
         $itemCategories = $model->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
@@ -333,7 +333,6 @@ class Item extends BaseController
          $tenantService = new TenantService();
          // Connect to the tenant's database
          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load UserModel with the tenant database connection
         $model = new ItemCategory($db);
         $itemCategories = $model->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
@@ -371,7 +370,38 @@ class Item extends BaseController
         // Return the response
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
     }
-    
+
+
+    public function getItemByItemTypeId($itemTypeId){
+
+        $model = new ItemTypeModel();
+        $businessModel = new ItemModel();
+        $userBusinesses = $model->where('itemTypeId', $itemTypeId)->findAll();
+        $businesses = array();
+        foreach ($userBusinesses as $key => $userBusiness) {
+            $business = $businessModel->find($userBusiness['itemId']);
+            array_push($businesses, $business);
+        }
+        return $this->respond(['status' => true, 'message' => 'All Business Fetched', 'data' => $businesses], 200);
+
+    }
+
+
+    // public function getItemByItemTypeId($itemTypeId){
+
+    //     $model = new ItemTypeModel();
+    //     $itemModel = new ItemModel();
+    //     $itemType = $model->where('itemTypeId', $itemTypeId)->findAll();
+    //     $businesses = array();
+    //     foreach ($itemType as $key => $itemType) {
+    //         $business =  $itemModel->find($itemType['itemId']);
+    //         array_push($businesses, $business);
+    //     }
+    //     return $this->respond(['status' => true, 'message' => 'All Item Fetched', 'data' => $businesses], 200);
+
+    // }
+
+
     
     // public function findAllByCategoryId($categoryId)
     // {
@@ -389,7 +419,7 @@ class Item extends BaseController
          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // Load UserModel with the tenant database connection
-        $model = new Item($db);
+        $model = new ItemModel($db);
         $items = $model->findAllByTag($tag);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
     }

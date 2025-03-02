@@ -106,7 +106,7 @@ class Vendor extends BaseController
             $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new VendorModel($db);
+        $model = new VendorModel($db);
 
             // Retrieve the vendor by vendorId
             $vendorId = $input->vendorId;

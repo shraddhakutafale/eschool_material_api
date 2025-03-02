@@ -91,7 +91,7 @@ class Item extends BaseController
         // Define validation rules for required fields
         $rules = [
             'itemName' => ['rules' => 'required'],
-            'description' => ['rules' => 'required'],
+            // 'description' => ['rules' => 'required'],
             // 'itemCategoryId' => ['rules' => 'required'],
             'mrp' => ['rules' => 'required'],
         ];
@@ -371,11 +371,14 @@ class Item extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
     }
 
+   
+
+
 
     public function getItemByItemTypeId($itemTypeId){
 
-        $model = new ItemTypeModel();
-        $businessModel = new ItemModel();
+        $model = new ItemModel();
+        $businessModel = new ItemTypeModel();
         $userBusinesses = $model->where('itemTypeId', $itemTypeId)->findAll();
         $businesses = array();
         foreach ($userBusinesses as $key => $userBusiness) {
@@ -386,20 +389,6 @@ class Item extends BaseController
 
     }
 
-
-    // public function getItemByItemTypeId($itemTypeId){
-
-    //     $model = new ItemTypeModel();
-    //     $itemModel = new ItemModel();
-    //     $itemType = $model->where('itemTypeId', $itemTypeId)->findAll();
-    //     $businesses = array();
-    //     foreach ($itemType as $key => $itemType) {
-    //         $business =  $itemModel->find($itemType['itemId']);
-    //         array_push($businesses, $business);
-    //     }
-    //     return $this->respond(['status' => true, 'message' => 'All Item Fetched', 'data' => $businesses], 200);
-
-    // }
 
 
     

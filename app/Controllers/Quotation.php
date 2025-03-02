@@ -145,16 +145,7 @@ class Quotation extends BaseController
         'quoteNo'=> ['rules' => 'required'], 
         'quoteDate'=> ['rules' => 'required'], 
         'validDate'=> ['rules' => 'required'], 
-        // 'businessNameFrom'=> ['rules' => 'required'],
-        // 'phoneFrom'=> ['rules' => 'required'],
-        // 'addressFrom'=> ['rules' => 'required'], 
-        // 'emailFrom'=> ['rules' => 'required'],
-        // 'PanFrom'=> ['rules' => 'required'], 
-        // 'businessNameFor'=> ['rules' => 'required'], 
-        // 'phoneFor'=> ['rules' => 'required'], 
-        // 'addressFor'=> ['rules' => 'required'],
-        // 'emailFor'=> ['rules' => 'required'],
-        // 'PanCardFor'=> ['rules' => 'required'], 
+       
     ];
 
     // Validate form data
@@ -235,7 +226,7 @@ class Quotation extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new QuotationsModel($db);
+        $model = new QuotationsModel($db);
 
             // Retrieve the Quote by eventId
             $quoteId  = $input->quoteId ;
@@ -247,18 +238,19 @@ class Quotation extends BaseController
 
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-             'itemName'=> $input->itemName,
-            'categoryName'=> $input->categoryName,
-            'brandName'=> $input->brandName,
-            'unit'=> $input->unit,
-            'price'=> $input->price,
-            // 'costPrice'=> $input->costPrice,
-            // 'gstPercentage'=> $input->gstPercentage,
-            'discount'=> $input->discount,
-            // 'barcode'=> $input->barcode,
-            // 'hsnCode'=> $input->hsnCode,
-            // 'minStockLevel'=> $input->minStockLevel,
-            'description'=> $input->description,
+                'quoteNo' => $input->quoteNo,
+                'quoteDate' => $input->quoteDate,
+                'validDate' => $input->validDate,
+                'businessNameFrom' => $input->businessNameFrom,
+                'phoneFrom' => $input->phoneFrom,
+                'addressFrom' => $input->addressFrom,
+                'emailFrom' => $input->emailFrom,
+                'PanFrom' => $input->PanFrom,
+                'businessNameFor' => $input->businessNameFor,
+                'phoneFor' => $input->phoneFor,
+                'addressFor' => $input->addressFor,
+                'emailFor' => $input->emailFor,
+                'PanCardFor' => $input->PanCardFor
             ];
 
             // Update the Quote with new data
@@ -279,6 +271,9 @@ class Quotation extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+
+
 
 
     public function delete()

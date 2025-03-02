@@ -149,18 +149,18 @@ class Order extends BaseController
 
     // Validation rules for order
     $rules = [
-        'orderCode' => ['rules' => 'required'],
+        'orderNo' => ['rules' => 'required'],
         'orderDate' => ['rules' => 'required'],
-        'businessNameFrom' => ['rules' => 'required'],
-        'phoneFrom' => ['rules' => 'required'],
-        'addressFrom' => ['rules' => 'required'],
-        'emailFrom' => ['rules' => 'required'],
-        'PanFrom' => ['rules' => 'required'],
-        'businessNameFor' => ['rules' => 'required'],
-        'phoneFor' => ['rules' => 'required'],
-        'addressFor' => ['rules' => 'required'],
-        'emailFor' => ['rules' => 'required'],
-        'PanCardFor' => ['rules' => 'required'],
+        // 'businessNameFrom' => ['rules' => 'required'],
+        // 'phoneFrom' => ['rules' => 'required'],
+        // 'addressFrom' => ['rules' => 'required'],
+        // 'emailFrom' => ['rules' => 'required'],
+        // 'PanFrom' => ['rules' => 'required'],
+        // 'businessNameFor' => ['rules' => 'required'],
+        // 'phoneFor' => ['rules' => 'required'],
+        // 'addressFor' => ['rules' => 'required'],
+        // 'emailFor' => ['rules' => 'required'],
+        // 'PanCardFor' => ['rules' => 'required'],
     ];
 
     // Validate form data
@@ -173,18 +173,18 @@ class Order extends BaseController
 
         // Insert the order into the 'order' table
         $orderData = [
-            'orderCode' => $input->orderCode,
+            'orderNo' => $input->orderNo,
             'orderDate' => $input->orderDate,
-            'businessNameFrom' => $input->businessNameFrom,
-            'phoneFrom' => $input->phoneFrom,
-            'addressFrom' => $input->addressFrom,
-            'emailFrom' => $input->emailFrom,
-            'PanFrom' => $input->PanFrom,
-            'businessNameFor' => $input->businessNameFor,
-            'phoneFor' => $input->phoneFor,
-            'addressFor' => $input->addressFor,
-            'emailFor' => $input->emailFor,
-            'PanCardFor' => $input->PanCardFor,
+            // 'businessNameFrom' => $input->businessNameFrom,
+            // 'phoneFrom' => $input->phoneFrom,
+            // 'addressFrom' => $input->addressFrom,
+            // 'emailFrom' => $input->emailFrom,
+            // 'PanFrom' => $input->PanFrom,
+            // 'businessNameFor' => $input->businessNameFor,
+            // 'phoneFor' => $input->phoneFor,
+            // 'addressFor' => $input->addressFor,
+            // 'emailFor' => $input->emailFor,
+            // 'PanCardFor' => $input->PanCardFor,
         ];
 
         // Insert the order and retrieve the generated orderId

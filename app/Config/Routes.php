@@ -260,6 +260,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['authFilter','tenantFilter']]);
   });
 
+
   $routes->group('student' , function ($routes) {
     $routes->get('getall', 'Student::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Student::getStudentsPaging',['filter' => ['authFilter', 'tenantFilter']]);
@@ -270,4 +271,25 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
   });
   
+
+
+});
+
+$routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) {
+
+  $routes->group('staff', function ($routes) {
+    //Routes for staff
+    $routes->get('getall', 'Staff::index',['filter' => ['tenantFilter']]);
+  });
+
+  $routes->group('item', function ($routes) {
+    //Routes for vendor
+    $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['tenantFilter']]);
+  });
+
+  $routes->group('slide', function ($routes) {
+    //Routes for gallery
+    $routes->get('getall', 'Slide::index',['filter' => ['tenantFilter']]);
+  });
+
 });

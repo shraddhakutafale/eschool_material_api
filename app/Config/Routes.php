@@ -270,12 +270,14 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('getallwebsite', 'Student::getStudentsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
   });
-  
-
 
 });
 
 $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) {
+
+  $routes->group('tenantuser', function ($routes) {
+    $routes->post('login', 'TenantUser::loginWithMobileUid',['filter' => 'tenantFilter']);
+  });
 
   $routes->group('staff', function ($routes) {
     //Routes for staff

@@ -45,18 +45,39 @@ class Lead extends BaseController
         // Load leadModel with the tenant database connection
         $leadModel = new LeadModel($db);
 
-        $lead = $leadModel->orderBy($sortField, $sortOrder)
-            ->like('fName', $search)->orLike('lName', $search)->paginate($perPage, 'default', $page);
-        if ($filter) {
+        $query = $leadModel;
+
+        if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
-            $lead = $leadModel->like($filter)->paginate($perPage, 'default', $page);   
+
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['fName','lName','email', 'primaryMobileNo'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else {
+                    $query->where($key, $value); // Exact match filter
+                }
+            }
+
+            // Apply Date Range Filter
+            if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
+                $query->where('createdDate >=', $filter['fromDate'])
+                    ->where('createdDate <=', $filter['toDate']);
+            }
         }
+
+        // Apply Sorting
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+
+        // Get Paginated Results
+        $leads = $query->paginate($perPage, 'default', $page);
         $pager = $leadModel->pager;
 
         $response = [
             "status" => true,
             "message" => "All Lead Data Fetched",
-            "data" => $lead,
+            "data" => $leads,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),

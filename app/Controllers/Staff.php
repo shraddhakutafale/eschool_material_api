@@ -222,36 +222,32 @@ class Staff extends BaseController
     public function delete()
     {
         $input = $this->request->getJSON();
-        
+
         // Validation rules for the staff
         $rules = [
-            'staffId' => ['rules' => 'required'], // Ensure staffId is provided and is numeric
+            'staffId' => ['rules' => 'required'], // Ensure staffID is provided and is numeric
         ];
-    
+
         // Validate the input
         if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new StaffModel($db);
-    
-            // Retrieve the staff by staffId
+                // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new StaffModel($db);
+
+            // Retrieve the lead by leadId
             $staffId = $input->staffId;
-            $staff = $model->find($staffId); // Assuming find method retrieves the staff
-    
+            $staff = $model->find($staffId); // Assuming find method retrieves the lead
+
             if (!$staff) {
-                return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'staff not found'], 404);
             }
-    
-            // Proceed to delete the staff
-            // Soft delete by marking 'isDeleted' as 1
-            $updateData = [
-                'isDeleted' => 1,
-            ];
-            $deleted = $model->update($staffId, $updateData);
-    
+
+            // Proceed to delete the lead
+            $deleted = $model->delete($staffId);
+
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Staff Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'staff Deleted Successfully'], 200);
             } else {
                 return $this->fail(['status' => false, 'message' => 'Failed to delete staff'], 500);
             }

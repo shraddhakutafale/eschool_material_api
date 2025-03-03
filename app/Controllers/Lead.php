@@ -42,7 +42,7 @@ class Lead extends BaseController
         $tenantService = new TenantService();
         
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load LeadModel with the tenant database connection
+        // Load leadModel with the tenant database connection
         $leadModel = new LeadModel($db);
 
         $lead = $leadModel->orderBy($sortField, $sortOrder)
@@ -67,17 +67,15 @@ class Lead extends BaseController
 
         return $this->respond($response, 200);
     }
+
     // Create a new lead
     public function create()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         $rules = [
-            'fName' => ['rules' => 'required|string'],
-            'lName' => ['rules' => 'required|string'],
-            'primaryMobileNo' => ['rules' => 'required|numeric|min_length[10]|max_length[15]'],
-            'secondaryMobileNo' => ['rules' => 'permit_empty|numeric|min_length[10]|max_length[15]'],
-            'whatsAppNo' => ['rules' => 'permit_empty|numeric|min_length[10]|max_length[15]'],
-            'email' => ['rules' => 'required|valid_email'],
+            'fName' => ['rules' => 'required'],
+            'lName' => ['rules' => 'required'],
+
         ];
 
         if ($this->validate($rules)) {

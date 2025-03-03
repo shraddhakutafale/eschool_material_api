@@ -260,4 +260,14 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['authFilter','tenantFilter']]);
   });
 
+  $routes->group('student' , function ($routes) {
+    $routes->get('getall', 'Student::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Student::getStudentsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Student::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Student::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Student::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Student::getStudentsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+  
 });

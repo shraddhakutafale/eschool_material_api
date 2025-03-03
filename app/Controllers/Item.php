@@ -189,67 +189,130 @@ class Item extends BaseController
     }
 
 
-    public function update()
-    {
-        $input = $this->request->getJSON();
+    // public function update()
+    // {
+    //     $input = $this->request->getJSON();
         
-        // Validation rules for the course
-        $rules = [
-            'itemId' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
+    //     // Validation rules for the course
+    //     $rules = [
+    //         'itemId' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
+    //     ];
+
+    //     // Validate the input
+    //     if ($this->validate($rules)) {
+    //         // Insert the product data into the database
+    //         $tenantService = new TenantService();
+    //         // Connect to the tenant's database
+    //         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+           
+    //         $model = new ItemModel($db);
+
+    //         // Retrieve the course by eventId
+    //         $itemId = $input->itemId;
+    //         $item = $model->find($itemId); // Assuming find method retrieves the course
+
+    //         if (!$item) {
+    //             return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
+    //         }
+
+    //         // Prepare the data to be updated (exclude eventId if it's included)
+    //         $updateData = [
+    //             'itemName' => $input->itemName,
+    //             'brandName' => $input->brandName,
+    //             'itemCategoryId' => $input->itemCategoryId,
+    //             'unit' => $input->unit,
+    //             'unitSize' => $input->unitSize,
+    //             'mrp' => $input->mrp,
+    //             'discountType' => $input->discountType,
+    //             'discount' => $input->discount,
+    //             'gstPercentage' => $input->gstPercentage,
+    //             'barcode' => $input->barcode,
+    //             'hsnCode' => $input->hsnCode,
+    //             'minStockLevel' => $input->minStockLevel,
+    //             'description' => $input->description,
+    //         ];
+
+    //         // Update the course with new data
+    //         $updated = $model->update($itemId, $updateData);
+
+    //         if ($updated) {
+    //             return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
+    //         } else {
+    //             return $this->fail(['status' => false, 'message' => 'Failed to update course'], 500);
+    //         }
+    //     } else {
+    //         // Validation failed
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
+
+    public function update()
+{
+    $input = $this->request->getJSON();
+
+    // Validation rules for the item
+    $rules = [
+        'itemId' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
+    ];
+
+    // Validate the input
+    if ($this->validate($rules)) {
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $model = new ItemModel($db);
+
+        // Retrieve the item by itemId
+        $itemId = $input->itemId;
+        $item = $model->find($itemId); // Assuming find method retrieves the item
+
+        if (!$item) {
+            return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+        }
+
+        // Prepare the data to be updated (exclude itemId if it's included)
+        $updateData = [
+            'itemName' => $input->itemName,
+            'brandName' => $input->brandName,
+            'itemCategoryId' => $input->itemCategoryId,
+            'unit' => $input->unit,
+            'unitSize' => $input->unitSize,
+            'mrp' => $input->mrp,
+            'discountType' => $input->discountType,
+            'discount' => $input->discount,
+            'gstPercentage' => $input->gstPercentage,
+            'barcode' => $input->barcode,
+            'hsnCode' => $input->hsnCode,
+            'minStockLevel' => $input->minStockLevel,
+            'description' => $input->description,
+            'itemTypeId' => $input->itemTypeId,  // Add itemTypeId to the update data
         ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            // Insert the product data into the database
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-           
-            $model = new ItemModel($db);
+        // Update the item with new data
+        $updated = $model->update($itemId, $updateData);
 
-            // Retrieve the course by eventId
-            $itemId = $input->itemId;
-            $item = $model->find($itemId); // Assuming find method retrieves the course
-
-            if (!$item) {
-                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude eventId if it's included)
-            $updateData = [
-                'itemName' => $input->itemName,
-                'brandName' => $input->brandName,
-                'itemCategoryId' => $input->itemCategoryId,
-                'unit' => $input->unit,
-                'unitSize' => $input->unitSize,
-                'mrp' => $input->mrp,
-                'discountType' => $input->discountType,
-                'discount' => $input->discount,
-                'gstPercentage' => $input->gstPercentage,
-                'barcode' => $input->barcode,
-                'hsnCode' => $input->hsnCode,
-                'minStockLevel' => $input->minStockLevel,
-                'description' => $input->description,
-            ];
-
-            // Update the course with new data
-            $updated = $model->update($itemId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update course'], 500);
-            }
+        if ($updated) {
+            return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
         } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
         }
+    } else {
+        // Validation failed
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
     }
+}
+
 
 
     public function delete()

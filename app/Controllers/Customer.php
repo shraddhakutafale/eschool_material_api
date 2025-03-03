@@ -43,7 +43,7 @@ class Customer extends BaseController
         // Load StaffModel with the tenant database connection
         $customerModel = new CustomerModel($db);
 
-        $customer = $customerModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('emailId', $search)->paginate($perPage, 'default', $page);
+        $customer = $customerModel->orderBy($sortField, $sortOrder)->paginate($perPage, 'default', $page);
         if ($filter) {
             $filter = json_decode(json_encode($filter), true);
             $customer = $customerModel->like($filter)->paginate($perPage, 'default', $page);   
@@ -81,7 +81,7 @@ class Customer extends BaseController
 
     public function create()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         $rules = [
             'name' => ['rules' => 'required'],
             'mobileNo' => ['rules' => 'required']
@@ -166,55 +166,97 @@ class Customer extends BaseController
         }
     }
 
+    // public function delete()
+    // {
+    //     $input = $this->request->getJSON();
+
+    //     // Validation rules for the lead
+    //     $rules = [
+    //         'customerId' => ['rules' => 'required'], // Ensure leadId is provided and is numeric
+    //     ];
+
+    //     // Validate the input
+    //     if ($this->validate($rules)) {
+    //             // Insert the product data into the database
+    //     $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new CustomerModel($db);
+
+    //         // Retrieve the lead by leadId
+    //         $customerId = $input->customerId;
+    //         $customer = $model->find($customerId); // Assuming find method retrieves the lead
+
+    //         if (!$customer) {
+    //             return $this->fail(['status' => false, 'message' => 'Lead not found'], 404);
+    //         }
+
+    //         // Proceed to delete the lead
+    //         $deleted = $model->delete($customerId);
+
+    //         if ($deleted) {
+    //             return $this->respond(['status' => true, 'message' => 'Customer Deleted Successfully'], 200);
+    //         } else {
+    //             return $this->fail(['status' => false, 'message' => 'Failed to delete customer'], 500);
+    //         }
+    //     } else {
+    //         // Validation failed
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
 
     public function delete()
-    {
-        $input = $this->request->getJSON();
-    
-        // Validation rules for the Customer
-        $rules = [
-            'customerId' => ['rules' => 'required'], // Ensure customerId is provided and is numeric
-        ];
-    
-        // Validate the input
-        if ($this->validate($rules)) {
-           // Insert the product data into the database
-        $tenantService = new TenantService();
+{
+    $input = $this->request->getJSON();
+
+    // Validation rules for the customer
+    $rules = [
+        'customerId' => ['rules' => 'required'], // Ensure customerId is provided
+    ];
+
+    // Validate the input
+    if ($this->validate($rules)) {
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        
-            $model = new CustomerModel($db);
-    
-            // Retrieve the customer by customerId
-            $customerId = $input->customerId;
-            $customer = $model->find($customerId); // Assuming find method retrieves the Customer
-    
-            if (!$customer) {
-                return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
-            }
-    
-            // Proceed to delete the customer (mark as deleted)
-            $updateData = [
-                'isDeleted' => 1, // Mark the customer as deleted
-            ];
-            $deleted = $model->update($customerId, $updateData);
-    
-            if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Customer Deleted Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete Customer'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
+        $model = new CustomerModel($db);
+
+        // Retrieve the customer by customerId
+        $customerId = $input->customerId;
+        $customer = $model->where('customerId', $customerId)->where('isDeleted', 0)->first(); // Only find active customers
+
+        if (!$customer) {
+            return $this->fail(['status' => false, 'message' => 'Customer not found or already deleted'], 404);
         }
+
+        // Perform a soft delete (mark as deleted instead of removing the record)
+        $updateData = [
+            'isDeleted' => 1,
+        ];
+        $deleted = $model->update($customerId, $updateData);
+        
+
+        if ($deleted) {
+            return $this->respond(['status' => true, 'message' => 'Customer marked as deleted'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to delete customer'], 500);
+        }
+    } else {
+        // Validation failed
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ];
+        return $this->fail($response, 409);
     }
-    
+}
+
+
     public function uploadPageProfile()
     {
         // Retrieve form fields

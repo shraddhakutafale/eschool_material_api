@@ -67,7 +67,7 @@ class Vendor extends BaseController
     
     public function create()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         $rules = [
             'name' => ['rules' => 'required'],
             'mobileNo' => ['rules' => 'required']
@@ -118,6 +118,7 @@ class Vendor extends BaseController
 
             // Prepare the data to be updated (exclude vendorId if it's included)
             $updateData = [
+                'customerId'=>$input->customerId,
                 'name' =>$input->name,
                 'vendorCode' =>$input->vendorCode,
                 'mobileNo' => $input->mobileNo,
@@ -148,38 +149,35 @@ class Vendor extends BaseController
     public function delete()
     {
         $input = $this->request->getJSON();
-        
-        // Validation rules for the vendor
+
+        // Validation rules for the lead
         $rules = [
-            'vendorId' => ['rules' => 'required'], // Ensure vendorId is provided
+            'vendorId' => ['rules' => 'required'], // Ensure leadId is provided and is numeric
         ];
-    
+
         // Validate the input
         if ($this->validate($rules)) {
-            $tenantService = new TenantService();
+                // Insert the product data into the database
+        $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new VendorModel($db);
-    
-            // Retrieve the vendor by vendorId
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new VendorModel($db);
+
+            // Retrieve the lead by leadId
             $vendorId = $input->vendorId;
-            $vendor = $model->find($vendorId); // Assuming the find method retrieves the vendor
-    
+            
+            $vendor = $model->find($vendorId); // Assuming find method retrieves the lead
+
             if (!$vendor) {
                 return $this->fail(['status' => false, 'message' => 'Vendor not found'], 404);
             }
-    
-            // Proceed to delete the vendor
-            // Soft delete by marking 'isDeleted' as 1
-            $updateData = [
-                'isDeleted' => 1,
-            ];
-            $deleted = $model->update($vendorId, $updateData);
-    
+
+            // Proceed to delete the lead
+            $deleted = $model->delete($vendorId);
+
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Vendor Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete vendor'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete Vendor'], 500);
             }
         } else {
             // Validation failed
@@ -191,7 +189,7 @@ class Vendor extends BaseController
             return $this->fail($response, 409);
         }
     }
-    
+
     public function uploadPageProfile()
     {
         // Retrieve form fields

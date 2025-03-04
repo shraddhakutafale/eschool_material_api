@@ -150,7 +150,7 @@ class Vendor extends BaseController
 
     public function update()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         
         // Validation rules for the vendor
         $rules = [
@@ -167,6 +167,9 @@ class Vendor extends BaseController
             // Retrieve the vendor by vendorId
             $vendorId = $input->vendorId;
             $vendor = $model->find($vendorId); // Assuming find method retrieves the vendor
+            
+
+
 
             if (!$vendor) {
                 return $this->fail(['status' => false, 'message' => 'Vendor not found'], 404);
@@ -185,6 +188,7 @@ class Vendor extends BaseController
 
             // Update the vendor with new data
             $updated = $model->update($vendorId, $updateData);
+
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Vendor Updated Successfully'], 200);

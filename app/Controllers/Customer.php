@@ -81,38 +81,6 @@ class Customer extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $customer], 200);
     }
 
-    // public function create()
-    // {
-    //     $input = $this->request->getPost();
-    //     $rules = [
-    //         'name' => ['rules' => 'required'],
-    //         'mobileNo' => ['rules' => 'required']
-    //     ];
-  
-    //     if($this->validate($rules)){
-    //        // Insert the product data into the database
-    //     $tenantService = new TenantService();
-    //     // Connect to the tenant's database
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        
-    //         $model = new CustomerModel($db);
-        
-    //         $model->insert($input);
-             
-    //         return $this->respond(['status'=>true,'message' => 'Customer Added Successfully'], 200);
-    //     }else{
-    //         $response = [
-    //             'status'=>false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response , 409);
-             
-    //     }
-            
-    // }
-
-
     public function create()
     {
         // Retrieve the input data from the request
@@ -155,7 +123,7 @@ class Customer extends BaseController
     
             if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
                 // Define the upload path for the cover image
-                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/staffImages/';
+                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/customerImages/';
                 if (!is_dir($coverImagePath)) {
                     mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
                 }
@@ -165,14 +133,14 @@ class Customer extends BaseController
                 $coverImage->move($coverImagePath, $coverImageName);
     
                 // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $coverImageUrl = 'uploads/staffImages/' . $coverImageName;
-                $coverImageUrl = str_replace('uploads/staffImages/', '', $coverImageUrl);
+                $coverImageUrl = 'uploads/customerImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/customerImages/', '', $coverImageUrl);
     
                 // Add the cover image URL to the input data
-                // $input['coverImage'] = $coverImageUrl; 
-                $input['coverImage'] = $decoded->tenantName.$coverImageUrl; 
-
+                $input['coverImage'] = $decoded->tenantName . '/customerImages/' .$coverImageUrl; 
             }
+    
+           
     
             $tenantService = new TenantService();
             // Connect to the tenant's database
@@ -180,7 +148,7 @@ class Customer extends BaseController
             $model = new CustomerModel($db);
             $model->insert($input);
     
-            return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
+            return $this->respond(['status' => true, 'message' => 'Customer Added Successfully'], 200);
         } else {
             // If validation fails, return the error messages
             $response = [
@@ -191,6 +159,7 @@ class Customer extends BaseController
             return $this->fail($response, 409);
         }
     }
+
 
     // public function update()
     // {
@@ -250,34 +219,92 @@ class Customer extends BaseController
 
 
 
+    // public function update()
+    // {
+    //     $input = $this->request->getJSON();
+        
+    //     // Validation rules for the studentId
+    //     $rules = [
+    //         'customerId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
+    //     ];
+
+    //     // Validate the input
+    //     if ($this->validate($rules)) {
+             
+    //     $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new CustomerModel($db);
+
+    //         // Retrieve the student by studentId
+    //         $customerId = $input->customerId;
+    //         $customer = $model->find($customerId); // Assuming find method retrieves the student
+
+    //         if (!$student) {
+    //             return $this->fail(['status' => false, 'message' => 'Student not found'], 404);
+    //         }
+
+    //         // Prepare the data to be updated (exclude studentId if it's included)
+    //         $updateData = 
+    //          [
+    //          'name' =>$input->name,
+    //         'customerCode' =>$input->customerCode,
+    //         'mobileNo' => $input->mobileNo,
+    //         'alternateMobileNo' => $input->alternateMobileNo,
+    //         'emailId' => $input->emailId,
+    //          'dateOfBirth' => $input->dateOfBirth,
+    //         'gender' => $input->gender 
+    //         ];
+
+    //         // Update the student with new data
+    //         $updated = $model->update($customerId, $updateData);
+
+    //         if ($updated) {
+    //             return $this->respond(['status' => true, 'message' => 'Student Updated Successfully'], 200);
+    //         } else {
+    //             return $this->fail(['status' => false, 'message' => 'Failed to update student'], 500);
+    //         }
+    //     } else {
+    //         // Validation failed
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
+
+
     public function update()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         
-        // Validation rules for the studentId
+        // Validation rules for the vendor
         $rules = [
-            'customerId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
+            'customerId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
-             
-        $tenantService = new TenantService();
+            $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new CustomerModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new CustomerModel($db);
 
-            // Retrieve the student by studentId
+            // Retrieve the vendor by vendorId
             $customerId = $input->customerId;
-            $customer = $model->find($customerId); // Assuming find method retrieves the student
+            $customer = $model->find($customerId); // Assuming find method retrieves the vendor
+            
 
-            if (!$student) {
-                return $this->fail(['status' => false, 'message' => 'Student not found'], 404);
+
+
+            if (!$customer) {
+                return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude studentId if it's included)
-            $updateData = 
-             [
-             'name' =>$input->name,
+            // Prepare the data to be updated (exclude vendorId if it's included)
+            $updateData = [
+            'name' =>$input->name,
             'customerCode' =>$input->customerCode,
             'mobileNo' => $input->mobileNo,
             'alternateMobileNo' => $input->alternateMobileNo,
@@ -286,13 +313,14 @@ class Customer extends BaseController
             'gender' => $input->gender 
             ];
 
-            // Update the student with new data
+            // Update the vendor with new data
             $updated = $model->update($customerId, $updateData);
 
+
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Student Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Vendor Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update student'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update vendor'], 500);
             }
         } else {
             // Validation failed
@@ -304,7 +332,6 @@ class Customer extends BaseController
             return $this->fail($response, 409);
         }
     }
-
 
 
     // public function delete()

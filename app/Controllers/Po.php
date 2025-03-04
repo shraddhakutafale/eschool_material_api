@@ -74,11 +74,8 @@ class Po extends BaseController
     
         // Validation rules for PO
         $rules = [
-            // 'businessNameFrom' => ['rules' => 'required'],
-            // 'addressFrom' => ['rules' => 'required'],
             'poCode'=> ['rules' => 'required'],
             'poDate'=> ['rules' => 'required'],
-            'vendor'=> ['rules' => 'required'],
         ];
     
         // Validate form data
@@ -150,20 +147,20 @@ class Po extends BaseController
         
         // Validation rules for the Quote
         $rules = [
-            'quoteId ' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
+            'poId ' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
            
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new QuotationsModel($db);
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new PoModel($db);
 
             // Retrieve the Quote by eventId
-            $quoteId  = $input->quoteId ;
-            $item = $model->find($quoteId ); // Assuming find method retrieves the Quote
+            $poId  = $input->poId ;
+            $item = $model->find($poId); // Assuming find method retrieves the Quote
 
             if (!$item) {
                 return $this->fail(['status' => false, 'message' => 'Quote not found'], 404);
@@ -171,22 +168,24 @@ class Po extends BaseController
 
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-             'itemName'=> $input->itemName,
-            'categoryName'=> $input->categoryName,
-            'brandName'=> $input->brandName,
-            'unit'=> $input->unit,
-            'price'=> $input->price,
-            // 'costPrice'=> $input->costPrice,
-            // 'gstPercentage'=> $input->gstPercentage,
-            'discount'=> $input->discount,
-            // 'barcode'=> $input->barcode,
-            // 'hsnCode'=> $input->hsnCode,
-            // 'minStockLevel'=> $input->minStockLevel,
-            'description'=> $input->description,
+                'poCode' => $input->poCode,
+                'poDate' => $input->poDate,
+                'vendor' => $input->vendor,
+                'taxInvoiceNumber' => $input->taxInvoiceNumber,
+                'businessNameFrom' => $input->businessNameFrom,
+                'phoneFrom' => $input->phoneFrom,
+                'addressFrom' => $input->addressFrom,
+                'emailFrom' => $input->emailFrom,
+                'PanFrom' => $input->PanFrom,
+                'businessNameFor' => $input->businessNameFor,
+                'phoneFor' => $input->phoneFor,
+                'addressFor' => $input->addressFor,
+                'emailFor' => $input->emailFor,
+                'PanCardFor' => $input->PanCardFor,                
             ];
 
             // Update the Quote with new data
-            $updated = $model->update($quoteId , $updateData);
+            $updated = $model->update($poId , $updateData);
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
@@ -211,26 +210,27 @@ class Po extends BaseController
         
         // Validation rules for the Quote
         $rules = [
-            'quoteId ' => ['rules' => 'required'], // Ensure eventId is provided and is numeric
+            'poId ' => ['rules' => 'required'], // Ensure eventId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
            
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new QuotationsModel($db);
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            $model = new PoModel($db);
 
             // Retrieve the Quote by eventId
-            $quoteId  = $input->quoteId ;
-            $item = $model->find($quoteId ); // Assuming find method retrieves the Quote
+            $poId  = $input->poId ;
+            $item = $model->find($poId ); // Assuming find method retrieves the Quote
 
             if (!$item) {
                 return $this->fail(['status' => false, 'message' => 'Quote not found'], 404);
             }
 
             // Proceed to delete the Quote
-            $deleted = $model->delete($quoteId );
+            $deleted = $model->delete($poId);
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Quote Deleted Successfully'], 200);

@@ -34,6 +34,7 @@ class OrderDetailModel extends Model
     protected $cleanValidationRules = true;
 
     // Callbacks
+    // Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert   = [];
     protected $afterInsert    = [];
@@ -43,4 +44,35 @@ class OrderDetailModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function __construct($db = null)
+    {
+        parent::__construct();
+
+        if ($db) {
+            $this->db = $db; // Assign the tenant's database connection
+        }
+    }
+
+
+    protected function addCreatedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['createdBy'] = $userId;
+        }
+        return $data;
+    }
+
+    protected function addModifiedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['modifiedBy'] = $userId;
+        }
+        return $data;
+    }
+
 }

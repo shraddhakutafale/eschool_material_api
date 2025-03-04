@@ -151,16 +151,6 @@ class Order extends BaseController
     $rules = [
         'orderNo' => ['rules' => 'required'],
         'orderDate' => ['rules' => 'required'],
-        // 'businessNameFrom' => ['rules' => 'required'],
-        // 'phoneFrom' => ['rules' => 'required'],
-        // 'addressFrom' => ['rules' => 'required'],
-        // 'emailFrom' => ['rules' => 'required'],
-        // 'PanFrom' => ['rules' => 'required'],
-        // 'businessNameFor' => ['rules' => 'required'],
-        // 'phoneFor' => ['rules' => 'required'],
-        // 'addressFor' => ['rules' => 'required'],
-        // 'emailFor' => ['rules' => 'required'],
-        // 'PanCardFor' => ['rules' => 'required'],
     ];
 
     // Validate form data
@@ -175,16 +165,11 @@ class Order extends BaseController
         $orderData = [
             'orderNo' => $input->orderNo,
             'orderDate' => $input->orderDate,
-            // 'businessNameFrom' => $input->businessNameFrom,
-            // 'phoneFrom' => $input->phoneFrom,
-            // 'addressFrom' => $input->addressFrom,
-            // 'emailFrom' => $input->emailFrom,
-            // 'PanFrom' => $input->PanFrom,
-            // 'businessNameFor' => $input->businessNameFor,
-            // 'phoneFor' => $input->phoneFor,
-            // 'addressFor' => $input->addressFor,
-            // 'emailFor' => $input->emailFor,
-            // 'PanCardFor' => $input->PanCardFor,
+            'customerName' => $input->customerName,
+            'email' => $input->email,
+            'mobileNo' => $input->mobileNo,
+            'address'=> $input->address,
+           
         ];
 
         // Insert the order and retrieve the generated orderId
@@ -238,7 +223,7 @@ class Order extends BaseController
            
         $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new OrderModel($db);
 
             // Retrieve the customer by customerId
@@ -251,23 +236,12 @@ class Order extends BaseController
 
             // Prepare the data to be updated (exclude customerId if it's included)
             $updateData = [
-            'customerName' =>$input->customerName,
-            'contactNumber' => $input->contactNumber,
-            'deliveryDate' => $input->deliveryDate,
-            'shipToStreetAddress' => $input->shipToStreetAddress,
-            'shipToPhone' => $input->shipToPhone,
-            'shipToCity' => $input->shipToCity,
-            'pincode' => $input->pincode,
-            'sku' => $input->sku,
-            'productName' => $input->productName,
-            'email' => $input->email,
-            
-           
-
-
-
-
-
+                'orderNo' => $input->orderNo,
+                'orderDate' => $input->orderDate,
+                'customerName' => $input->customerName,
+                'email' => $input->email,
+                'mobileNo' => $input->mobileNo,
+                'address'=> $input->address,
 
             ];
 

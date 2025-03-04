@@ -26,47 +26,100 @@ class Quotation extends BaseController
         return $this->respond(['quotation' => $quotationModel->findAll()], 200);
     }
 
+    // public function getQuotationsPaging()
+    // {
+    //     $input = $this->request->getJSON();
+
+    //     // Get the page number from the input, default to 1 if not provided
+    //     $page = isset($input->page) ? $input->page : 1;
+    //     // Define the number of items per page
+    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
+
+    //     $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    //     if (!$tenantConfigHeader) {
+    //         throw new \Exception('Tenant configuration not found.');
+    //     }
+
+    //     // Decode the tenantConfig JSON
+    //     $tenantConfig = json_decode($tenantConfigHeader, true);
+
+    //     if (!$tenantConfig) {
+    //         throw new \Exception('Invalid tenant configuration.');
+    //     }
+
+    //     // Connect to the tenant's database
+    //     $db = Database::connect($tenantConfig);
+    //     // Load UserModel with the tenant database connection
+    //     $QuotationModel = new QuotationModel($db);
+    //     $quotations = $QuotationModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
+    //     $pager = $QuotationModel->pager;
+
+    //     $response = [
+    //         "status" => true,
+    //         "message" => "All Data Fetched",
+    //         "data" => $quotations,
+    //         "pagination" => [
+    //             "currentPage" => $pager->getCurrentPage(),
+    //             "totalPages" => $pager->getPageCount(),
+    //             "totalItems" => $pager->getTotal(),
+    //             "perPage" => $perPage
+    //         ]   
+    //     ];
+    //     return $this->respond($response, 200);
+    // }
     public function getQuotationsPaging()
-    {
-        $input = $this->request->getJSON();
+{
+    $input = $this->request->getJSON();
 
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        // Define the number of items per page
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
+    // Get the page number from the input, default to 1 if not provided
+    $page = isset($input->page) ? $input->page : 1;
+    // Define the number of items per page
+    $perPage = isset($input->perPage) ? $input->perPage : 10;
 
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        // Load UserModel with the tenant database connection
-        $QuotationModel = new QuotationModel($db);
-        $quotations = $QuotationModel->orderBy('createdDate', 'DESC')->paginate($perPage, 'default', $page);
-        $pager = $QuotationModel->pager;
-
-        $response = [
-            "status" => true,
-            "message" => "All Data Fetched",
-            "data" => $quotations,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]   
-        ];
-        return $this->respond($response, 200);
+    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+    if (!$tenantConfigHeader) {
+        throw new \Exception('Tenant configuration not found.');
     }
+
+    // Decode the tenantConfig JSON
+    $tenantConfig = json_decode($tenantConfigHeader, true);
+
+    if (!$tenantConfig) {
+        throw new \Exception('Invalid tenant configuration.');
+    }
+
+    // Connect to the tenant's database
+    $db = Database::connect($tenantConfig);
+    // Load QuotationModel with the tenant database connection
+    $QuotationModel = new QuotationModel($db);
+    $QuoteDetailModel = new QuotationDetailModel($db); // Assuming QuoteDetailModel is defined
+
+    // Join quote_mst and quote_details on quoteId
+    // Retrieve the quotations along with their details using JOIN
+    $quotations = $QuotationModel->select('quote_mst.*, quote_details.*') // Select both master and details fields
+        ->join('quote_details', 'quote_mst.quoteId = quote_details.quoteId', 'left') // Left join to include all quotations even if no details
+        ->where('quote_mst.isDeleted', 0)
+        ->orderBy('quote_mst.createdDate', 'DESC')
+        ->paginate($perPage, 'default', $page);
+
+    $pager = $QuotationModel->pager;
+
+    // Prepare response with the merged data
+    $response = [
+        "status" => true,
+        "message" => "All Data Fetched",
+        "data" => $quotations, // Merged data from both tables
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ];
+    
+    return $this->respond($response, 200);
+}
+
 
     public function getQuotationsWebsite()
     {
@@ -137,77 +190,85 @@ class Quotation extends BaseController
 
 
     public function create()
-{
-    $input = $this->request->getJSON();
-
-    // Validation rules for quotation
-    $rules = [
-        'quoteNo'=> ['rules' => 'required'], 
-        'quoteDate'=> ['rules' => 'required'], 
-        'validDate'=> ['rules' => 'required'], 
-       
-    ];
-
-    // Validate form data
-    if ($this->validate($rules)) {
-       
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new QuotationModel($db);
-        
-        // Insert the quotation into the 'quotation' table
-        $quotationData = [
-            'quoteNo' => $input->quoteNo,
-            'quoteDate' => $input->quoteDate,
-            'validDate' => $input->validDate,
-            'businessNameFrom' => $input->businessNameFrom,
-            'phoneFrom' => $input->phoneFrom,
-            'addressFrom' => $input->addressFrom,
-            'emailFrom' => $input->emailFrom,
-            'PanFrom' => $input->PanFrom,
-            'businessNameFor' => $input->businessNameFor,
-            'phoneFor' => $input->phoneFor,
-            'addressFor' => $input->addressFor,
-            'emailFor' => $input->emailFor,
-            'PanCardFor' => $input->PanCardFor
+    {
+        $input = $this->request->getJSON();
+    
+        // Validation rules for quotation
+        $rules = [
+            'quoteNo' => ['rules' => 'required'],
+            'quoteDate' => ['rules' => 'required'],
+            'validDate' => ['rules' => 'required'],
         ];
-        
-        // Insert the quotation and retrieve the generated quoteId
-        $quoteId = $model->insert($quotationData);
-        
-        if ($quoteId) {
-            // Now insert the items into the item_details table using the quoteId
-
-            $itemDetailsModel = new QuotationDetailModel($db); // Assuming you have this model for the item details
-
-            // Iterate through each item in the input and insert into item_details
-            foreach ($input->items as $item) {
-                $itemData = [
-                    'quoteId' => $quoteId,  // Foreign key linking to the quotation
-                    'itemName' => $item->itemName,
-                    'quantity' => $item->quantity,
-                    'rate' => $item->rate,
-                    'amount' => $item->amount
-                ];
-                // Insert the item into the item_details table
-                $itemDetailsModel->insert($itemData);
+    
+        // Validate form data
+        if ($this->validate($rules)) {
+           
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new QuotationModel($db);
+            
+            // Insert the quotation into the 'quotation' table
+            $quotationData = [
+                'quoteNo' => $input->quoteNo,
+                'quoteDate' => $input->quoteDate,
+                'validDate' => $input->validDate,
+                'businessNameFrom' => $input->businessNameFrom,
+                'phoneFrom' => $input->phoneFrom,
+                'addressFrom' => $input->addressFrom,
+                'emailFrom' => $input->emailFrom,
+                'PanFrom' => $input->PanFrom,
+                'businessNameFor' => $input->businessNameFor,
+                'phoneFor' => $input->phoneFor,
+                'addressFor' => $input->addressFor,
+                'emailFor' => $input->emailFor,
+                'PanCardFor' => $input->PanCardFor
+            ];
+            
+            // Insert the quotation and retrieve the generated quoteId
+            $quoteId = $model->insert($quotationData);
+            
+            if ($quoteId) {
+                // Now insert the items into the item_details table using the quoteId
+    
+                $itemDetailsModel = new QuotationDetailModel($db); // Assuming you have this model for the item details
+    
+                // Iterate through each item in the input and insert into item_details
+                foreach ($input->items as $item) {
+                    $itemData = [
+                        'quoteId' => $quoteId,  // Foreign key linking to the quotation
+                        'itemName' => $item->itemName,
+                        'quantity' => $item->quantity,
+                        'rate' => $item->rate,
+                        'amount' => $item->amount
+                    ];
+                    
+                    // Insert the item into the item_details table
+                    $quoteItemId = $itemDetailsModel->insert($itemData);  // Assuming insert() method returns the inserted item ID
+                    
+                    // Optionally, if you want to handle the quoteitemid (like logging or returning it)
+                    if ($quoteItemId) {
+                        // This step is optional, but you could handle the `quoteitemid` here if necessary
+                        // For example, adding the inserted `quoteitemid` to the response:
+                        $itemData['quoteItemId'] = $quoteItemId;
+                    }
+                }
+    
+                return $this->respond(['status' => true, 'message' => 'Quotation and items added successfully'], 200);
+            } else {
+                return $this->respond(['status' => false, 'message' => 'Failed to create the quotation'], 500);
             }
-
-            return $this->respond(['status' => true, 'message' => 'Quotation and items added successfully'], 200);
         } else {
-            return $this->respond(['status' => false, 'message' => 'Failed to create the quotation'], 500);
+            // Return validation errors
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
-    } else {
-        // Return validation errors
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
     }
-}
+    
 
 
 
@@ -226,7 +287,7 @@ class Quotation extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new QuotationsModel($db);
+        $model = new QuotationModel($db);
 
             // Retrieve the Quote by eventId
             $quoteId  = $input->quoteId ;
@@ -288,10 +349,10 @@ class Quotation extends BaseController
         // Validate the input
         if ($this->validate($rules)) {
             
-         $tenantService = new TenantService();
+             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new QuotationsModel($db);
+            $model = new QuotationModel($db);
 
             // Retrieve the Quote by eventId
             $quoteId  = $input->quoteId ;
@@ -302,7 +363,10 @@ class Quotation extends BaseController
             }
 
             // Proceed to delete the Quote
-            $deleted = $model->delete($quoteId );
+            // $deleted = $model->delete($quoteId );
+              // Proceed to soft delete the Quote (set is_deleted to 1)
+                $data = ['isDeleted' => 1];  // Soft delete by setting is_deleted flag
+                $deleted = $model->update($quoteId, $data); // Use update method instead of delete
 
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Quote Deleted Successfully'], 200);
@@ -393,4 +457,73 @@ class Quotation extends BaseController
         return $this->respond($response);
         
     }
+
+
+    // public function getDetailsByQuoteId($quoteId) {
+    //     // Get tenant-specific database configuration using the X-Tenant-Config header
+    //     $tenantService = new TenantService();
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+    //     // Pass the tenant-specific database connection to the models
+    //     $quoteModel = new QuoteModel($db);
+    //     $quoteDetailModel = new QuoteDetailModel($db);
+    
+    //     // Fetch the quote data based on the provided quoteId
+    //     $quote = $quoteModel->find($quoteId);
+    
+    //     // If no quote is found, return an error response
+    //     if (!$quote) {
+    //         return $this->respond(['status' => false, 'message' => 'Quote not found'], 404);
+    //     }
+    
+    //     // Fetch all quote details associated with the quoteId
+    //     $quoteDetails = $quoteDetailModel->where('quoteId', $quoteId)->findAll();
+    
+    //     // Return the response with the fetched data
+    //     return $this->respond([
+    //         'status' => true, 
+    //         'message' => 'Quote details fetched successfully', 
+    //         'data' => [
+    //             'quote' => $quote,
+    //             'quote_details' => $quoteDetails
+    //         ]
+    //     ], 200);
+    // }
+
+    public function getDetailsByQuoteId($quoteId) {
+        // Get tenant-specific database configuration using the X-Tenant-Config header
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        
+        // Pass the tenant-specific database connection to the models
+        $quoteModel = new QuotationModel($db);
+        $quoteDetailModel = new QuotationDetailModel($db);
+        
+        // Fetch the quote data based on the provided quoteId
+        $quote = $quoteModel->find($quoteId);
+        
+        // If no quote is found, return an error response
+        if (!$quote) {
+            return $this->respond(['status' => false, 'message' => 'Quote not found'], 404);
+        }
+        
+        // Fetch all quote details associated with the quoteId
+        $quoteDetails = $quoteDetailModel->where('quoteId', $quoteId)->findAll();
+        
+        // Merge the quote and quote details into a single array
+        $responseData = [
+            'quote' => $quote,
+            'quote_details' => $quoteDetails
+        ];
+        
+        // Return the response with the merged data
+        return $this->respond([
+            'status' => true, 
+            'message' => 'Quote details fetched successfully', 
+            'data' => $responseData
+        ], 200);
+    }
+    
+    
+    
 }

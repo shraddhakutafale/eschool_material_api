@@ -52,4 +52,27 @@ class QuotationModel extends Model
             $this->db = $db; // Assign the tenant's database connection
         }
     }
+
+
+    protected function addCreatedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['createdBy'] = $userId;
+        }
+        return $data;
+    }
+
+    protected function addModifiedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['modifiedBy'] = $userId;
+        }
+        return $data;
+    }
+
+    
 }

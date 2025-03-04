@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\StudentModel;
 use App\Libraries\TenantService;
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
 use Config\Database;
 
@@ -40,21 +42,42 @@ class Student extends BaseController
         $tenantService = new TenantService();
         
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load StudentModel with the tenant database connection
+        // Load studentModel with the tenant database connection
         $studentModel = new StudentModel($db);
 
-        $student = $studentModel->orderBy($sortField, $sortOrder)
-            ->like('studentCode', $search)->orLike('firstName', $search)->paginate($perPage, 'default', $page);
-        if ($filter) {
+        $query = $studentModel;
+
+        if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
-            $student = $studentModel->like($filter)->paginate($perPage, 'default', $page);   
+
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['studentCode','generalRegisterNo','firstName', 'lastName', 'medium', 'registeredDate'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if (in_array($key, ['createdDate'])) {
+                    $query->where($key, $value); // Exact match filter
+                }
+            }
+
+            // Apply Date Range Filter
+            if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
+                $query->where('createdDate >=', $filter['fromDate'])
+                    ->where('createdDate <=', $filter['toDate']);
+            }
         }
+
+        // Apply Sorting
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+
+        // Get Paginated Results
+        $students = $query->paginate($perPage, 'default', $page);
         $pager = $studentModel->pager;
 
         $response = [
             "status" => true,
-            "message" => "All student Data Fetched",
-            "data" => $student,
+            "message" => "All Student Data Fetched",
+            "data" => $students,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
@@ -106,6 +129,53 @@ class Student extends BaseController
     
         // Validate the incoming data
         if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+           
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
+    
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/studentImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+    
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/studentImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/studentImages/', '', $coverImageUrl);
+    
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $coverImageUrl; 
+                $input['coverImage'] = $decoded->tenantName . '/studentImages/' .$coverImageUrl;
+            }
     
               
         $tenantService = new TenantService();

@@ -138,6 +138,8 @@ class Staff extends BaseController
     
                 // Add the cover image URL to the input data
                 $input['coverImage'] = $coverImageUrl; 
+                $input['coverImage'] = $decoded->tenantName . $coverImageUrl; 
+
             }
     
            

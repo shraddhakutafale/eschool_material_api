@@ -53,7 +53,7 @@ class Lead extends BaseController
             foreach ($filter as $key => $value) {
                 if (in_array($key, ['fName','lName','email', 'primaryMobileNo'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
-                } else {
+                } else if (in_array($key, ['createdDate'])) {
                     $query->where($key, $value); // Exact match filter
                 }
             }

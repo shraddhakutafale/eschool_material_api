@@ -79,81 +79,218 @@ class Customer extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $customer], 200);
     }
 
+    // public function create()
+    // {
+    //     $input = $this->request->getPost();
+    //     $rules = [
+    //         'name' => ['rules' => 'required'],
+    //         'mobileNo' => ['rules' => 'required']
+    //     ];
+  
+    //     if($this->validate($rules)){
+    //        // Insert the product data into the database
+    //     $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        
+    //         $model = new CustomerModel($db);
+        
+    //         $model->insert($input);
+             
+    //         return $this->respond(['status'=>true,'message' => 'Customer Added Successfully'], 200);
+    //     }else{
+    //         $response = [
+    //             'status'=>false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response , 409);
+             
+    //     }
+            
+    // }
+
+
     public function create()
     {
+        // Retrieve the input data from the request
         $input = $this->request->getPost();
+        
+        // Define validation rules for required fields
         $rules = [
             'name' => ['rules' => 'required'],
             'mobileNo' => ['rules' => 'required']
         ];
-  
-        if($this->validate($rules)){
-           // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        
-            $model = new CustomerModel($db);
-        
-            $model->insert($input);
-             
-            return $this->respond(['status'=>true,'message' => 'Customer Added Successfully'], 200);
-        }else{
-            $response = [
-                'status'=>false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response , 409);
-             
-        }
+    
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
             
+            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+           
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
+    
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/staffImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+    
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/staffImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/staffImages/', '', $coverImageUrl);
+    
+                // Add the cover image URL to the input data
+                // $input['coverImage'] = $coverImageUrl; 
+                $input['coverImage'] = $decoded->tenantName.$coverImageUrl; 
+
+            }
+    
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new CustomerModel($db);
+            $model->insert($input);
+    
+            return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
+        } else {
+            // If validation fails, return the error messages
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs',
+            ];
+            return $this->fail($response, 409);
+        }
     }
+
+    // public function update()
+    // {
+    //     $input = $this->request->getJSON();
+        
+    //     // Validation rules for the customer
+    //     $rules = [
+    //         'customerId' => ['rules' => 'required|numeric'], // Ensure customerId is provided and is numeric
+    //     ];
+
+    //     // Validate the input
+    //     if ($this->validate($rules)) {
+    //        // Insert the product data into the database
+    //     $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        
+    //         $model = new CustomerModel($db);
+
+    //         // Retrieve the customer by customerId
+    //         $customerId = $input->customerId;
+    //         $customer = $model->find($customerId); // Assuming find method retrieves the customer
+
+    //         if (!$customer) {
+    //             return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
+    //         }
+
+    //         // Prepare the data to be updated (exclude customerId if it's included)
+    //         $updateData = [
+    //             'name' =>$input->name,
+    //             'customerCode' =>$input->customerCode,
+    //             'mobileNo' => $input->mobileNo,
+    //             'alternateMobileNo' => $input->alternateMobileNo,
+    //             'emailId' => $input->emailId,
+    //             'dateOfBirth' => $input->dateOfBirth,
+    //             'gender' => $input->gender
+    //         ];
+
+    //         // Update the customer with new data
+    //         $updated = $model->update($customerId, $updateData);
+
+    //         if ($updated) {
+    //             return $this->respond(['status' => true, 'message' => 'Customer Updated Successfully'], 200);
+    //         } else {
+    //             return $this->fail(['status' => false, 'message' => 'Failed to update customer'], 500);
+    //         }
+    //     } else {
+    //         // Validation failed
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
+
+
 
     public function update()
     {
         $input = $this->request->getJSON();
         
-        // Validation rules for the customer
+        // Validation rules for the studentId
         $rules = [
-            'customerId' => ['rules' => 'required|numeric'], // Ensure customerId is provided and is numeric
+            'customerId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
-           // Insert the product data into the database
+             
         $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        
-            $model = new CustomerModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new CustomerModel($db);
 
-            // Retrieve the customer by customerId
+            // Retrieve the student by studentId
             $customerId = $input->customerId;
-            $customer = $model->find($customerId); // Assuming find method retrieves the customer
+            $customer = $model->find($customerId); // Assuming find method retrieves the student
 
-            if (!$customer) {
-                return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
+            if (!$student) {
+                return $this->fail(['status' => false, 'message' => 'Student not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude customerId if it's included)
-            $updateData = [
-                'name' =>$input->name,
-                'customerCode' =>$input->customerCode,
-                'mobileNo' => $input->mobileNo,
-                'alternateMobileNo' => $input->alternateMobileNo,
-                'emailId' => $input->emailId,
-                'dateOfBirth' => $input->dateOfBirth,
-                'gender' => $input->gender
+            // Prepare the data to be updated (exclude studentId if it's included)
+            $updateData = 
+             [
+             'name' =>$input->name,
+            'customerCode' =>$input->customerCode,
+            'mobileNo' => $input->mobileNo,
+            'alternateMobileNo' => $input->alternateMobileNo,
+            'emailId' => $input->emailId,
+             'dateOfBirth' => $input->dateOfBirth,
+            'gender' => $input->gender 
             ];
 
-            // Update the customer with new data
+            // Update the student with new data
             $updated = $model->update($customerId, $updateData);
 
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Customer Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Student Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update customer'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update student'], 500);
             }
         } else {
             // Validation failed
@@ -165,6 +302,8 @@ class Customer extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+
 
     // public function delete()
     // {

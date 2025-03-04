@@ -7,7 +7,9 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\VendorModel;
 use App\Libraries\TenantService;
 
+
 use Config\Database;
+
 
 class Vendor extends BaseController
 {
@@ -65,32 +67,112 @@ class Vendor extends BaseController
         return $this->respond($response, 200);
     }
     
+    // public function create()
+    // {
+    //     $input = $this->request->getPost();
+    //     $rules = [
+    //         'name' => ['rules' => 'required'],
+    //         'mobileNo' => ['rules' => 'required']
+    //     ];
+
+    //     if($this->validate($rules)){
+    //         $tenantService = new TenantService();
+    //         // Connect to the tenant's database
+    //         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //         $model = new VendorModel($db);
+        
+    //         $model->insert($input);
+             
+    //         return $this->respond(['status'=>true,'message' => 'Vendor Added Successfully'], 200);
+    //     }else{
+    //         $response = [
+    //             'status'=>false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response , 409);
+    //     }
+    // }
+
     public function create()
     {
+        // Retrieve the input data from the request
         $input = $this->request->getPost();
+        
+        // Define validation rules for required fields
         $rules = [
             'name' => ['rules' => 'required'],
             'mobileNo' => ['rules' => 'required']
         ];
-
-        if($this->validate($rules)){
+    
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+           
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
+    
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/vendorImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+    
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/vendorImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/staffImages/', '', $coverImageUrl);
+    
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $coverImageUrl; 
+            }
+    
+           
+    
             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new VendorModel($db);
-        
             $model->insert($input);
-             
-            return $this->respond(['status'=>true,'message' => 'Vendor Added Successfully'], 200);
-        }else{
+    
+            return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
+        } else {
+            // If validation fails, return the error messages
             $response = [
-                'status'=>false,
+                'status' => false,
                 'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
+                'message' => 'Invalid Inputs',
             ];
-            return $this->fail($response , 409);
+            return $this->fail($response, 409);
         }
     }
+
 
     public function update()
     {
@@ -118,7 +200,6 @@ class Vendor extends BaseController
 
             // Prepare the data to be updated (exclude vendorId if it's included)
             $updateData = [
-                'customerId'=>$input->customerId,
                 'name' =>$input->name,
                 'vendorCode' =>$input->vendorCode,
                 'mobileNo' => $input->mobileNo,
@@ -149,27 +230,44 @@ class Vendor extends BaseController
     public function delete()
     {
         $input = $this->request->getJSON();
+        
+        // Validation rules for the vendor
 
         // Validation rules for the lead
         $rules = [
-            'vendorId' => ['rules' => 'required'], // Ensure leadId is provided and is numeric
+            'vendorId' => ['rules' => 'required'], // Ensure vendorId is provided
         ];
+    
 
         // Validate the input
         if ($this->validate($rules)) {
+            $tenantService = new TenantService();
                 // Insert the product data into the database
         $tenantService = new TenantService();
         // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new VendorModel($db);
+    
+            // Retrieve the vendor by vendorId
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new VendorModel($db);
 
             // Retrieve the lead by leadId
             $vendorId = $input->vendorId;
+            $vendor = $model->find($vendorId); // Assuming the find method retrieves the vendor
+    
             
             $vendor = $model->find($vendorId); // Assuming find method retrieves the lead
 
             if (!$vendor) {
                 return $this->fail(['status' => false, 'message' => 'Vendor not found'], 404);
             }
+    
+            // Proceed to delete the vendor
+            // Soft delete by marking 'isDeleted' as 1
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+    
 
             // Proceed to delete the lead
             $deleted = $model->delete($vendorId);
@@ -177,7 +275,7 @@ class Vendor extends BaseController
             if ($deleted) {
                 return $this->respond(['status' => true, 'message' => 'Vendor Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete Vendor'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete vendor'], 500);
             }
         } else {
             // Validation failed
@@ -189,6 +287,7 @@ class Vendor extends BaseController
             return $this->fail($response, 409);
         }
     }
+    
 
     public function uploadPageProfile()
     {

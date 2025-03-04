@@ -237,7 +237,8 @@ class Quotation extends BaseController
                 foreach ($input->items as $item) {
                     $itemData = [
                         'quoteId' => $quoteId,  // Foreign key linking to the quotation
-                        'itemName' => $item->itemName,
+                        'itemId' => $item->itemId,
+                        'item' => $item->itemName,
                         'quantity' => $item->quantity,
                         'rate' => $item->rate,
                         'amount' => $item->amount
@@ -299,7 +300,7 @@ class Quotation extends BaseController
 
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-                'quoteNo' => $input->quoteNo,
+               'quoteNo' => $input->quoteNo,
                 'quoteDate' => $input->quoteDate,
                 'validDate' => $input->validDate,
                 'businessNameFrom' => $input->businessNameFrom,

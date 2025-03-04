@@ -12,7 +12,7 @@ class QuotationDetailModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [  'quoteItemId', 'quoteId', 'item', 'quantity', 'rate', 'amount', 'isActive', 'isDeleted', 'modifiedBy', 'modifiedDate', 'createdDate', 'createdBy'];
+    protected $allowedFields    = [  'quoteItemId', 'quoteId','itemId', 'item', 'quantity', 'rate', 'amount', 'isActive', 'isDeleted', 'modifiedBy', 'modifiedDate', 'createdDate', 'createdBy'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

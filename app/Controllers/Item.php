@@ -129,7 +129,7 @@ class Item extends BaseController
                 $coverImageUrl = str_replace('uploads/itemImages/', '', $coverImageUrl);
 
                 // Add the cover image URL to the input data
-                $input['coverImage'] = $coverImageUrl; 
+                $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageUrl; 
             }
 
             

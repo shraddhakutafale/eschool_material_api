@@ -7,6 +7,8 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\CustomerModel;
 use Config\Database;
 use App\Libraries\TenantService;
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
 class Customer extends BaseController
 {

@@ -6,7 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\VendorModel;
 use App\Libraries\TenantService;
-
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
 use Config\Database;
 
@@ -67,33 +68,6 @@ class Vendor extends BaseController
         return $this->respond($response, 200);
     }
     
-    // public function create()
-    // {
-    //     $input = $this->request->getPost();
-    //     $rules = [
-    //         'name' => ['rules' => 'required'],
-    //         'mobileNo' => ['rules' => 'required']
-    //     ];
-
-    //     if($this->validate($rules)){
-    //         $tenantService = new TenantService();
-    //         // Connect to the tenant's database
-    //         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //         $model = new VendorModel($db);
-        
-    //         $model->insert($input);
-             
-    //         return $this->respond(['status'=>true,'message' => 'Vendor Added Successfully'], 200);
-    //     }else{
-    //         $response = [
-    //             'status'=>false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response , 409);
-    //     }
-    // }
-
     public function create()
     {
         // Retrieve the input data from the request
@@ -147,10 +121,10 @@ class Vendor extends BaseController
     
                 // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
                 $coverImageUrl = 'uploads/vendorImages/' . $coverImageName;
-                $coverImageUrl = str_replace('uploads/staffImages/', '', $coverImageUrl);
+                $coverImageUrl = str_replace('uploads/vendorImages/', '', $coverImageUrl);
     
                 // Add the cover image URL to the input data
-                $input['coverImage'] = $coverImageUrl; 
+                $input['profilePic'] = $decoded->tenantName . '/vendorImages/' .$coverImageUrl; 
             }
     
            

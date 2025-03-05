@@ -84,4 +84,85 @@ class TenantUser extends BaseController
          
         return $this->respond($response, 200);
     }
+
+
+    
+
+   public function saveToken()
+{
+    $input = $this->request->getJSON();
+
+    if (!isset($input->userId) || !isset($input->token)) {
+        return $this->respond(['status' => false, 'message' => 'Invalid input'], 400);
+    }
+
+    // 🔹 Verify JWT Token Before Storing
+    try {
+        $key = "Exiaa@11";
+        $decoded = JWT::decode($input->token, new Key($key, 'HS256'));
+
+        // 🔹 Connect to Tenant Database
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $tenantUserModel = new TenantUserModel($db);
+
+        // 🔹 Check if User Exists
+        $userExists = $tenantUserModel->find($input->userId);
+        if (!$userExists) {
+            return $this->respond(['status' => false, 'message' => 'User not found'], 404);
+        }
+
+        // 🔹 Hash and Save Token
+        $hashedToken = hash('sha256', $input->token);
+
+        $updateData = [
+            'token' => $hashedToken,
+            'modifiedDate' => date('Y-m-d H:i:s'),
+            'modifiedBy' => $input->userId
+        ];
+
+        if ($tenantUserModel->update($input->userId, $updateData)) {
+            return $this->respond(['status' => true, 'message' => 'Token saved successfully']);
+        } else {
+            return $this->respond(['status' => false, 'message' => 'Failed to save token'], 500);
+        }
+
+    } catch (\Exception $e) {
+        return $this->respond(['status' => false, 'message' => 'Invalid token: ' . $e->getMessage()], 400);
+    }
 }
+
+    
+    
+    
+}
+
+
+
+
+
+    // public function saveToken()
+    // {
+    //     $input = $this->request->getJSON();
+    
+    //     // Validate input
+    //     if (!isset($input->userId) || !isset($input->token)) {
+    //         return $this->respond(['status' => false, 'message' => 'Invalid input'], 400);
+    //     }
+    
+    //     // Connect to tenant database
+    //     $tenantService = new TenantService();
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     $tenantUserModel = new TenantUserModel($db);
+    
+    //     // Update token in database
+    //     $updateData = [
+    //         'token' => $input->token,
+    //         'modifiedDate' => date('Y-m-d H:i:s'),
+    //         'modifiedBy' => $input->userId
+    //     ];
+    
+    //     $tenantUserModel->update($input->userId, $updateData);
+    
+    //     return $this->respond(['status' => true, 'message' => 'Token saved successfully']);
+    // }

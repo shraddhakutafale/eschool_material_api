@@ -283,6 +283,9 @@ class Item extends BaseController
             'barcode' => $input['barcode'],  // Corrected here
             'description' => $input['description'],  // Corrected here
             'itemTypeId' => $input['itemTypeId'],  // Corrected here
+            'sku' => $input['sku'], 
+            'hsnCode' => $input['hsnCode'], 
+
         ];              
     
             // Handle cover image update

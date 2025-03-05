@@ -20,39 +20,13 @@ class PoDetailModel extends Model
     protected array $casts = [];
     protected array $castHandlers = [];
 
-    // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'createdDate';
-    protected $updatedField  = 'modifiedDate';
-    protected $deletedField  = 'deletedDate';
-
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
-
-     // Callbacks
-     protected $allowCallbacks = true;
-     protected $beforeInsert   = [];
-     protected $afterInsert    = [];
-     protected $beforeUpdate   = [];
-     protected $afterUpdate    = [];
-     protected $beforeFind     = [];
-     protected $afterFind      = [];
-     protected $beforeDelete   = [];
-     protected $afterDelete    = [];
- 
-     public function __construct($db = null)
-     {
-         parent::__construct();
- 
-         if ($db) {
-             $this->db = $db; // Assign the tenant's database connection
-         }
-     }
- 
+     // Dates
+     protected $useTimestamps = true;
+     protected $dateFormat    = 'datetime';
+     protected $createdField  = 'createdDate';
+     protected $updatedField  = 'modifiedDate';
+     protected $beforeInsert = ['addCreatedBy'];
+     protected $beforeUpdate = ['addModifiedBy'];
  
      protected function addCreatedBy(array $data)
      {
@@ -73,5 +47,5 @@ class PoDetailModel extends Model
          }
          return $data;
      }
+    }
  
-}

@@ -292,7 +292,7 @@ class Customer extends BaseController
         $model = new CustomerModel($db);
 
             // Retrieve the vendor by vendorId
-            $customerId = $input->customerId;
+            $customerId = $input['customerId'];
             $customer = $model->find($customerId); // Assuming find method retrieves the vendor
             
 
@@ -302,16 +302,18 @@ class Customer extends BaseController
                 return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude vendorId if it's included)
+            
             $updateData = [
-            'name' =>$input->name,
-            'customerCode' =>$input->customerCode,
-            'mobileNo' => $input->mobileNo,
-            'alternateMobileNo' => $input->alternateMobileNo,
-            'emailId' => $input->emailId,
-             'dateOfBirth' => $input->dateOfBirth,
-            'gender' => $input->gender 
-            ];
+                'name' => $input['name'],  // Corrected here
+                'customerCode' => $input['customerCode'],  // Corrected here
+                'mobileNo' => $input['mobileNo'],  // Corrected here
+                'alternateMobileNo' => $input['alternateMobileNo'],  // Corrected here
+                'emailId' => $input['emailId'],  // Corrected here
+                'dateOfBirth' => $input['dateOfBirth'],  // Corrected here
+                'gender' => $input['gender'],  // Corrected here
+                
+    
+            ];     
 
             // Update the vendor with new data
             $updated = $model->update($customerId, $updateData);

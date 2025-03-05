@@ -27,10 +27,9 @@ class Vendor extends BaseController
     }
 
     public function getVendorsPaging()
-   
     {
         $input = $this->request->getJSON();
-
+    
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
         $perPage = isset($input->perPage) ? $input->perPage : 10;
@@ -38,25 +37,55 @@ class Vendor extends BaseController
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
-        
-
+    
         $tenantService = new TenantService();
-        
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load StaffModel with the tenant database connection
+    
+        // Load VendorModel with the tenant database connection
         $vendorModel = new VendorModel($db);
-
-        $vendor = $vendorModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('mobileNo', $search)->paginate($perPage, 'default', $page);
-        if ($filter) {
-            $filter = json_decode(json_encode($filter), true);
-            $vendor = $vendorModel->like($filter)->paginate($perPage, 'default', $page);   
+        $query = $vendorModel;
+    
+        // Apply search filter for name and mobile number
+        if (!empty($search)) {
+            $query->groupStart()
+                  ->like('name', $search)
+                  ->orLike('mobileNo', $search)
+                  ->groupEnd();
         }
-        $pager = $vendorModel->pager;
+    
+       // Apply filtering
+        if (!empty($filter)) {
+     $filter = json_decode(json_encode($filter), true);
 
+    foreach ($filter as $key => $value) {
+        if (in_array($key, ['name', 'mobileNo', 'email'])) {
+            $query->like($key, $value);
+        } else if ($key === 'createdDate' && !empty($value)) {
+            $query->where($key, $value);
+        }
+    }
+
+    // Apply Date Range Filter using startDate and endDate
+    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+        $query->where('createdDate >=', $filter['startDate'])
+              ->where('createdDate <=', $filter['endDate']);
+    }
+}
+
+        $query->where('isDeleted',0);
+        // Apply Sorting
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+    
+        // Get Paginated Results
+        $vendors = $query->paginate($perPage, 'default', $page);
+        $pager = $vendorModel->pager;
+    
         $response = [
             "status" => true,
             "message" => "All Vendor Data Fetched",
-            "data" => $vendor,
+            "data" => $vendors,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
@@ -64,9 +93,10 @@ class Vendor extends BaseController
                 "perPage" => $perPage
             ]
         ];
-
+    
         return $this->respond($response, 200);
     }
+    
     
     public function create()
     {
@@ -165,7 +195,7 @@ class Vendor extends BaseController
         $model = new VendorModel($db);
 
             // Retrieve the vendor by vendorId
-            $vendorId = $input->vendorId;
+            $vendorId = $input['vendorId'];
             $vendor = $model->find($vendorId); // Assuming find method retrieves the vendor
             
 
@@ -177,13 +207,13 @@ class Vendor extends BaseController
 
             // Prepare the data to be updated (exclude vendorId if it's included)
             $updateData = [
-                'name' =>$input->name,
-                'vendorCode' =>$input->vendorCode,
-                'mobileNo' => $input->mobileNo,
-                'alternateMobileNo' => $input->alternateMobileNo,
-                'emailId' => $input->emailId,
-                'dateOfBirth' => $input->dateOfBirth,
-                'gender' => $input->gender
+                'name' =>$input['name'],
+                'vendorCode' =>$input['vendorCode'],
+                'mobileNo' => $input['mobileNo'],
+                'alternateMobileNo' => $input['alternateMobileNo'],  // Corrected here
+                'emailId' => $input['emailId'],  // Corrected here
+                'dateOfBirth' => $input['dateOfBirth'],  // Corrected here
+                'gender' => $input['gender'],  // Corrected here
             ];
 
             // Update the vendor with new data

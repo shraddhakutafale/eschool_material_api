@@ -182,6 +182,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('getfouritembytag/(:segment)', 'Item::getFourItemByTagWeb/$1',['filter' => 'tenantFilter']);
     $routes->post('viewweb', 'Item::show',['filter' => ['tenantFilter']]);
 
+
+
   });
   
   $routes->group('gallery', function ($routes) {
@@ -277,6 +279,8 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
 
   $routes->group('tenantuser', function ($routes) {
     $routes->post('login', 'TenantUser::loginWithMobileUid',['filter' => 'tenantFilter']);
+    $routes->post('create', 'TenantUser::create',['filter' => ['authFilter','tenantFilter']]);
+
   });
 
   $routes->group('staff', function ($routes) {

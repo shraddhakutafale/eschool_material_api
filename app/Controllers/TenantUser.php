@@ -88,81 +88,110 @@ class TenantUser extends BaseController
 
     
 
-   public function saveToken()
+//    public function saveToken()
+// {
+//     $input = $this->request->getJSON();
+
+//     if (!isset($input->userId) || !isset($input->token)) {
+//         return $this->respond(['status' => false, 'message' => 'Invalid input'], 400);
+//     }
+
+//     // 🔹 Verify JWT Token Before Storing
+//     try {
+//         $key = "Exiaa@11";
+//         $decoded = JWT::decode($input->token, new Key($key, 'HS256'));
+
+//         // 🔹 Connect to Tenant Database
+//         $tenantService = new TenantService();
+//         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//         $tenantUserModel = new TenantUserModel($db);
+
+//         // 🔹 Check if User Exists
+//         $userExists = $tenantUserModel->find($input->userId);
+//         if (!$userExists) {
+//             return $this->respond(['status' => false, 'message' => 'User not found'], 404);
+//         }
+
+//         // 🔹 Hash and Save Token
+//         $hashedToken = hash('sha256', $input->token);
+
+//         $updateData = [
+//             'token' => $hashedToken,
+//             'modifiedDate' => date('Y-m-d H:i:s'),
+//             'modifiedBy' => $input->userId
+//         ];
+
+//         if ($tenantUserModel->update($input->userId, $updateData)) {
+//             return $this->respond(['status' => true, 'message' => 'Token saved successfully']);
+//         } else {
+//             return $this->respond(['status' => false, 'message' => 'Failed to save token'], 500);
+//         }
+
+//     } catch (\Exception $e) {
+//         return $this->respond(['status' => false, 'message' => 'Invalid token: ' . $e->getMessage()], 400);
+//     }
+// }
+
+    
+public function create()
 {
-    $input = $this->request->getJSON();
+    $input = $this->request->getPost();
+    
+    $rules = [
+        'name' => ['rules' => 'required'],
+        'email' => ['rules' => 'required|valid_email'],
+        'mobileNo' => ['rules' => 'required'],
+        'country' => ['rules' => 'required'],
+        'location' => ['rules' => 'required'],
+        'userType' => ['rules' => 'required'],
+        'town' => ['rules' => 'required'],
+        'postcode' => ['rules' => 'required'],
+    ];
 
-    if (!isset($input->userId) || !isset($input->token)) {
-        return $this->respond(['status' => false, 'message' => 'Invalid input'], 400);
+    if (!$this->validate($rules)) {
+        return $this->fail(['status' => false, 'errors' => $this->validator->getErrors(), 'message' => 'Invalid Inputs'], 409);
     }
 
-    // 🔹 Verify JWT Token Before Storing
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
     try {
-        $key = "Exiaa@11";
-        $decoded = JWT::decode($input->token, new Key($key, 'HS256'));
-
-        // 🔹 Connect to Tenant Database
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $tenantUserModel = new TenantUserModel($db);
-
-        // 🔹 Check if User Exists
-        $userExists = $tenantUserModel->find($input->userId);
-        if (!$userExists) {
-            return $this->respond(['status' => false, 'message' => 'User not found'], 404);
-        }
-
-        // 🔹 Hash and Save Token
-        $hashedToken = hash('sha256', $input->token);
-
-        $updateData = [
-            'token' => $hashedToken,
-            'modifiedDate' => date('Y-m-d H:i:s'),
-            'modifiedBy' => $input->userId
-        ];
-
-        if ($tenantUserModel->update($input->userId, $updateData)) {
-            return $this->respond(['status' => true, 'message' => 'Token saved successfully']);
-        } else {
-            return $this->respond(['status' => false, 'message' => 'Failed to save token'], 500);
-        }
-
-    } catch (\Exception $e) {
-        return $this->respond(['status' => false, 'message' => 'Invalid token: ' . $e->getMessage()], 400);
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    } catch (Exception $e) {
+        return $this->fail(['status' => false, 'message' => 'Invalid Token'], 401);
     }
+
+    // Handle Image Upload
+    $photoUrl = $this->request->getFile('photoUrl');
+    if ($photoUrl && $photoUrl->isValid() && !$photoUrl->hasMoved()) {
+        $photoUrlPath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+        if (!is_dir($photoUrlPath)) mkdir($photoUrlPath, 0777, true);
+
+        $photoUrlName = $photoUrl->getRandomName();
+        $photoUrl->move($photoUrlPath, $photoUrlName);
+
+        $input['photoUrl'] = $decoded->tenantName . '/itemImages/' . $photoUrlName;
+    }
+
+    // Insert Data
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new TenantUserModel($db);
+    $model->insert($input);
+
+    return $this->respond(['status' => true, 'message' => 'User Added Successfully'], 200);
+}
+  
+    
 }
 
-    
-    
-    
-}
 
 
 
 
-
-    // public function saveToken()
-    // {
-    //     $input = $this->request->getJSON();
     
-    //     // Validate input
-    //     if (!isset($input->userId) || !isset($input->token)) {
-    //         return $this->respond(['status' => false, 'message' => 'Invalid input'], 400);
-    //     }
-    
-    //     // Connect to tenant database
-    //     $tenantService = new TenantService();
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //     $tenantUserModel = new TenantUserModel($db);
-    
-    //     // Update token in database
-    //     $updateData = [
-    //         'token' => $input->token,
-    //         'modifiedDate' => date('Y-m-d H:i:s'),
-    //         'modifiedBy' => $input->userId
-    //     ];
-    
-    //     $tenantUserModel->update($input->userId, $updateData);
-    
-    //     return $this->respond(['status' => true, 'message' => 'Token saved successfully']);
-    // }

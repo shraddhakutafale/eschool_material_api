@@ -12,7 +12,7 @@ class TenantUserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['userId', 'name', 'email', 'mobileNo', 'countryCode', 'username', 'password', 'uid', 'roleId', 'photoUrl', 'emailVerified', 'mobileVerified', 'aboutUs', 'location', 'themeColor', 'cardId', 'businessCategory', 'businessSubCategory', 'modifiedDate', 'modifiedBy', 'createdDate', 'createdBy', 'token', 'otp', 'otpRequestTime', 'tenantName', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['userId', 'name', 'email', 'mobileNo', 'Town', 'postcode', 'country', 'userType', 'countryCode', 'username', 'password', 'uid', 'roleId', 'photoUrl', 'emailVerified', 'mobileVerified', 'aboutUs', 'location', 'themeColor', 'cardId', 'businessCategory', 'businessSubCategory', 'modifiedDate', 'modifiedBy', 'createdDate', 'createdBy', 'token', 'otp', 'otpRequestTime', 'tenantName', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -61,12 +61,18 @@ class Lead extends BaseController
             }
 
             // Apply Date Range Filter
-            if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
-                $query->where('createdDate >=', $filter['fromDate'])
-                    ->where('createdDate <=', $filter['toDate']);
-            }
+            // if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
+            //     $query->where('createdDate >=', $filter['fromDate'])
+            //         ->where('createdDate <=', $filter['toDate']);
+            // }
+                 // Apply Date Range Filter using startDate and endDate fields
+                 if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                    $query->where('createdDate >=', $filter['startDate'])
+                        ->where('createdDate <=', $filter['endDate']);
+                }
         }
-
+        
+        $query->where('isDeleted',0);
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);
@@ -127,7 +133,7 @@ class Lead extends BaseController
     // Update an existing lead
     public function update()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
 
         // Validation rules for the lead
         $rules = [
@@ -143,7 +149,7 @@ class Lead extends BaseController
             $model = new LeadModel($db);  // Use LeadModel for lead-related operations
 
             // Retrieve the lead by leadId
-            $leadId = $input->leadId;
+            $leadId = $input['leadId'];  // Corrected here
             $lead = $model->find($leadId); // Assuming find method retrieves the lead
 
             if (!$lead) {
@@ -152,12 +158,14 @@ class Lead extends BaseController
 
             // Prepare the data to be updated (exclude leadId if it's included)
             $updateData = [
-                'fName' => $input->fName,
-                'lName' => $input->lName,
-                'primaryMobileNo' => $input->primaryMobileNo,
-                'secondaryMobileNo' => $input->secondaryMobileNo,
-                'whatsAppNo' => $input->whatsAppNo,
-                'email' => $input->email
+
+                'fName' => $input['fName'],  // Corrected here
+                'lName' => $input['lName'],  // Corrected here
+                'primaryMobileNo' => $input['primaryMobileNo'],  // Corrected here
+                'secondaryMobileNo' => $input['secondaryMobileNo'],  // Corrected here
+                'whatsAppNo' => $input['whatsAppNo'],  // Corrected here
+                'email' => $input['email'],  // Corrected here
+
             ];
 
             // Update the lead with new data

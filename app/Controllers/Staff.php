@@ -57,18 +57,45 @@ class Staff extends BaseController
         // Load StaffModel with the tenant database connection
         $staffModel = new StaffModel($db);
 
-        $staff = $staffModel->orderBy($sortField, $sortOrder)
-            ->like('empName', $search)->orLike('fatherName', $search)->paginate($perPage, 'default', $page);
-        if ($filter) {
+        $query = $staffModel;
+
+        if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
-            $staff = $staffModel->like($filter)->paginate($perPage, 'default', $page);   
+
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['empName','empCategory','empCode', 'empSal'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if (in_array($key, ['createdDate'])) {
+                    $query->where($key, $value); // Exact match filter
+                }
+            }
+
+            // Apply Date Range Filter
+            // if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
+            //     $query->where('createdDate >=', $filter['fromDate'])
+            //         ->where('createdDate <=', $filter['toDate']);
+            // }
+                 // Apply Date Range Filter using startDate and endDate fields
+                 if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                    $query->where('createdDate >=', $filter['startDate'])
+                        ->where('createdDate <=', $filter['endDate']);
+                }
         }
+        
+        $query->where('isDeleted',0);
+        // Apply Sorting
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+
+        // Get Paginated Results
+        $staffs = $query->paginate($perPage, 'default', $page);
         $pager = $staffModel->pager;
 
         $response = [
             "status" => true,
             "message" => "All Staff Data Fetched",
-            "data" => $staff,
+            "data" => $staffs,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
@@ -163,7 +190,7 @@ class Staff extends BaseController
 
     public function update()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
 
         // Validation rules for the staff
         $rules = [
@@ -178,7 +205,7 @@ class Staff extends BaseController
             $model = new StaffModel($db);
 
             // Retrieve the staff by staffId
-            $staffId = $input->staffId;
+            $staffId = $input['staffId'];  // Corrected here
             $staff = $model->find($staffId);
 
             if (!$staff) {
@@ -187,17 +214,17 @@ class Staff extends BaseController
 
             // Prepare the data to be updated (exclude staffId if it's included)
             $updateData = [
-                'empName' => $input->empName,
-                'empCategory' => $input->empCategory,
-                'empCode' => $input->empCode,
-                'aadharNumber' => $input->aadharNumber,
-                'panNumber' => $input->panNumber,
-                'uanNumber' => $input->uanNumber,
-                'ipNumber' => $input->ipNumber,
-                'fatherName' => $input->fatherName,
-                'empSal' => $input->empSal,
-                'empDoj' => $input->empDoj,
-                'empDol' => $input->empDol
+                'empName'=> $input['empName'],
+                'empCategory'=> $input['empCategory'],
+                'empCode'=> $input['empCode'],
+                'aadharNumber'=> $input['aadharNumber'],
+                'panNumber'=> $input['panNumber'],
+                'uanNumber'=> $input['uanNumber'],
+                'ipNumber'=> $input['ipNumber'],
+                'fatherName'=> $input['fatherName'],
+                'empSal'=> $input['empSal'],
+                'empDoj'=> $input['empDoj'],
+                'empDol'=> $input['empDol'],
                
             ];
 
@@ -236,15 +263,15 @@ class Staff extends BaseController
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new StaffModel($db);
 
-            // Retrieve the lead by leadId
+            // Retrieve the staff by staffId
             $staffId = $input->staffId;
-            $staff = $model->find($staffId); // Assuming find method retrieves the lead
+            $staff = $model->find($staffId); // Assuming find method retrieves the staff
 
             if (!$staff) {
                 return $this->fail(['status' => false, 'message' => 'staff not found'], 404);
             }
 
-            // Proceed to delete the lead
+            // Proceed to delete the staff
             $deleted = $model->delete($staffId);
 
             if ($deleted) {

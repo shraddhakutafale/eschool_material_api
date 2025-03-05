@@ -208,7 +208,7 @@ class Student extends BaseController
 
     public function update()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         
         // Validation rules for the studentId
         $rules = [
@@ -223,7 +223,7 @@ class Student extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new StudentModel($db);
 
             // Retrieve the student by studentId
-            $studentId = $input->studentId;
+            $studentId = $input['studentId'];  // Corrected here
             $student = $model->find($studentId); // Assuming find method retrieves the student
 
             if (!$student) {
@@ -232,27 +232,27 @@ class Student extends BaseController
 
             // Prepare the data to be updated (exclude studentId if it's included)
             $updateData = [
-                'studentCode' => $input->studentCode,
-                'generalRegisterNo' => $input->generalRegisterNo,
-                'firstName' => $input->firstName,
-                'middleName' => $input->middleName,
-                'lastName' => $input->lastName,
-                'motherName' => $input->motherName,
-                'gender' => $input->gender,
-                'birthDate' => $input->birthDate,
-                'birthPlace' => $input->birthPlace,
-                'nationality' => $input->nationality,
-                'religion' => $input->religion,
-                'category' => $input->category,
-                'cast' => $input->cast,
-                'subCast' => $input->subCast,
-                'motherTongue' => $input->motherTongue,
-                'bloodGroup' => $input->bloodGroup,
-                'aadharNo' => $input->aadharNo,
-                'medium' => $input->medium,
-                'physicallyHandicapped' => $input->physicallyHandicapped,
-                'educationalGap' => $input->educationalGap,
-                'registeredDate' => $input->registeredDate
+
+                'studentCode' => $input['studentCode'],  // Corrected here
+                'generalRegisterNo' => $input['generalRegisterNo'],
+                'firstName' => $input['firstName'],
+                'middleName' => $input['middleName'],
+                'lastName' => $input['lastName'],
+                'motherName' => $input['motherName'],
+                'gender' => $input['gender'],
+                'birthDate' => $input['birthDate'],
+                'birthPlace' => $input['birthPlace'],
+                'nationality' => $input['nationality'],
+                'religion' => $input['religion'],
+                'category' => $input['category'],
+                'cast' => $input['cast'],
+                'subCast' => $input['subCast'],
+                'motherTongue' => $input['motherTongue'],
+                'bloodGroup' => $input['bloodGroup'],
+                'aadharNo' => $input['aadharNo'],
+                'medium' => $input['medium'],
+                'physicallyHandicapped' => $input['physicallyHandicapped'],
+                'registeredDate' => $input['registeredDate']
             ];
 
             // Update the student with new data

@@ -220,9 +220,11 @@ class Quotation extends BaseController
                 'PanFrom' => $input->PanFrom,
                 'businessNameFor' => $input->businessNameFor,
                 'phoneFor' => $input->phoneFor,
-                'addressFor' => $input->addressFor,
                 'emailFor' => $input->emailFor,
-                'PanCardFor' => $input->PanCardFor
+                'total'=> $input->total,
+                'totalItem'=> $input->totalItems,
+                'finalAmount'=> $input->totalPrice,
+                // 'PanCardFor' => $input->PanCardFor
             ];
             
             // Insert the quotation and retrieve the generated quoteId
@@ -239,6 +241,7 @@ class Quotation extends BaseController
                         'quoteId' => $quoteId,  // Foreign key linking to the quotation
                         'itemId' => $item->itemId,
                         'item' => $item->itemName,
+                        'itemCode' => $item->itemCode,
                         'quantity' => $item->quantity,
                         'rate' => $item->rate,
                         'amount' => $item->amount

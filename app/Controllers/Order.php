@@ -169,7 +169,10 @@ class Order extends BaseController
             'email' => $input->email,
             'mobileNo' => $input->mobileNo,
             'address'=> $input->address,
-           
+            'total'=> $input->total,
+            'totalItem'=> $input->totalItems,
+            'finalAmount'=> $input->totalPrice,
+
         ];
 
         // Insert the order and retrieve the generated orderId
@@ -183,10 +186,12 @@ class Order extends BaseController
             foreach ($input->items as $item) {
                 $orderDetailsData = [
                     'orderId' => $orderId,  // Foreign key linking to the order
-                    'item' => $item->item,
-                    'rate' => $item->rate,
+                    'itemId' => $item->itemId,
+                    'item' => $item->itemName,
+                    'itemCode' => $item->itemCode,
                     'quantity' => $item->quantity,
-                    'amount' => $item->amount,
+                    'rate' => $item->rate,
+                    'amount' => $item->amount
                 ];
 
                 // Insert the item into the order_details table

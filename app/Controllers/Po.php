@@ -90,7 +90,7 @@ class Po extends BaseController
             $poData = [
                 'poCode' => $input->poCode,
                 'poDate' => $input->poDate,
-                'vendor' => $input->vendor,
+                // 'vendor' => $input->vendor,
                 'taxInvoiceNumber' => $input->taxInvoiceNumber,
                 'businessNameFrom' => $input->businessNameFrom,
                 'phoneFrom' => $input->phoneFrom,
@@ -102,6 +102,9 @@ class Po extends BaseController
                 'addressFor' => $input->addressFor,
                 'emailFor' => $input->emailFor,
                 'PanCardFor' => $input->PanCardFor,
+                'total'=> $input->total,
+                'totalItem'=> $input->totalItems,
+                'finalAmount'=> $input->totalPrice,
             ];
     
             // Insert the PO and retrieve the generated poId
@@ -114,11 +117,13 @@ class Po extends BaseController
                 // Iterate through each item in the input and insert into po_details
                 foreach ($input->items as $item) {
                     $poDetailsData = [
-                        'poId' => $poId,  // Foreign key linking to the PO
-                        'itemName' => $item->itemName,
+                        'poId' => $poId,  // Foreign key linking to the quotation
+                        'itemId' => $item->itemId,
+                        'item' => $item->itemName,
+                        'itemCode' => $item->itemCode,
                         'quantity' => $item->quantity,
                         'rate' => $item->rate,
-                        'amount' => $item->amount,
+                        'amount' => $item->amount
                     ];
     
                     // Insert the item into the po_details table

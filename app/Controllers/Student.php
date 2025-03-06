@@ -65,6 +65,8 @@ class Student extends BaseController
             }
         }
 
+        
+        $query->where('isDeleted',0);
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);
@@ -154,27 +156,27 @@ class Student extends BaseController
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
            
             // Handle image upload for the cover image
-            $coverImage = $this->request->getFile('coverImage');
-            $coverImageName = null;
+            $profilePic = $this->request->getFile('profilePic');
+            $profilePicName = null;
     
-            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
                 // Define the upload path for the cover image
-                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/studentImages/';
-                if (!is_dir($coverImagePath)) {
-                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/studentImages/';
+                if (!is_dir($profilePicPath)) {
+                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
                 }
     
                 // Move the file to the desired directory with a unique name
-                $coverImageName = $coverImage->getRandomName();
-                $coverImage->move($coverImagePath, $coverImageName);
+                $profilePicName = $profilePic->getRandomName();
+                $profilePic->move($profilePicPath, $profilePicName);
     
-                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $coverImageUrl = 'uploads/studentImages/' . $coverImageName;
-                $coverImageUrl = str_replace('uploads/studentImages/', '', $coverImageUrl);
+                // Get the URL of the uploaded cover image and remove the 'uploads/profilePics/' prefix
+                $profilePicUrl = 'uploads/studentImages/' . $profilePicName;
+                $profilePicUrl = str_replace('uploads/studentImages/', '', $profilePicUrl);
     
                 // Add the cover image URL to the input data
-                $input['coverImage'] = $coverImageUrl; 
-                $input['coverImage'] = $decoded->tenantName . '/studentImages/' .$coverImageUrl;
+                $input['profilePic'] = $profilePicUrl; 
+                $input['profilePic'] = $decoded->tenantName . '/studentImages/' .$profilePicUrl;
             }
     
               

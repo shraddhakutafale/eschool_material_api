@@ -55,9 +55,9 @@ class Vendor extends BaseController
     
        // Apply filtering
         if (!empty($filter)) {
-     $filter = json_decode(json_encode($filter), true);
+         $filter = json_decode(json_encode($filter), true);
 
-    foreach ($filter as $key => $value) {
+        foreach ($filter as $key => $value) {
         if (in_array($key, ['name', 'mobileNo', 'email'])) {
             $query->like($key, $value);
         } else if ($key === 'createdDate' && !empty($value)) {
@@ -65,12 +65,12 @@ class Vendor extends BaseController
         }
     }
 
-    // Apply Date Range Filter using startDate and endDate
-    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+        // Apply Date Range Filter using startDate and endDate
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
         $query->where('createdDate >=', $filter['startDate'])
-              ->where('createdDate <=', $filter['endDate']);
+        ->where('createdDate <=', $filter['endDate']);
     }
-}
+    }
 
         $query->where('isDeleted',0);
         // Apply Sorting
@@ -135,26 +135,26 @@ class Vendor extends BaseController
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
            
             // Handle image upload for the cover image
-            $coverImage = $this->request->getFile('coverImage');
-            $coverImageName = null;
+            $profilePic = $this->request->getFile('profilePic');
+            $profilePicName = null;
     
-            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
                 // Define the upload path for the cover image
-                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/vendorImages/';
-                if (!is_dir($coverImagePath)) {
-                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/vendorImages/';
+                if (!is_dir($profilePicPath)) {
+                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
                 }
     
                 // Move the file to the desired directory with a unique name
-                $coverImageName = $coverImage->getRandomName();
-                $coverImage->move($coverImagePath, $coverImageName);
+                $profilePicName = $profilePic->getRandomName();
+                $profilePic->move($profilePicPath, $profilePicName);
     
                 // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $coverImageUrl = 'uploads/vendorImages/' . $coverImageName;
-                $coverImageUrl = str_replace('uploads/vendorImages/', '', $coverImageUrl);
+                $profilePicUrl = 'uploads/vendorImages/' . $profilePicName;
+                $profilePicUrl = str_replace('uploads/vendorImages/', '', $profilePicUrl);
     
                 // Add the cover image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/vendorImages/' .$coverImageUrl; 
+                $input['profilePic'] = $decoded->tenantName . '/vendorImages/' .$profilePicUrl; 
             }
     
            
@@ -165,7 +165,7 @@ class Vendor extends BaseController
             $model = new VendorModel($db);
             $model->insert($input);
     
-            return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
+            return $this->respond(['status' => true, 'message' => 'Vendor Added Successfully'], 200);
         } else {
             // If validation fails, return the error messages
             $response = [

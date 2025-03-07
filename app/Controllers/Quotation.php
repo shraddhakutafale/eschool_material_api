@@ -70,126 +70,126 @@ class Quotation extends BaseController
 
 
 
-    public function getQuotationsPaging()
-{
-    $input = $this->request->getJSON();
+//     public function getQuotationsPaging()
+// {
+//     $input = $this->request->getJSON();
 
-    // Get the page number from the input, default to 1 if not provided
-    $page = isset($input->page) ? $input->page : 1;
-    // Define the number of items per page
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
+//     // Get the page number from the input, default to 1 if not provided
+//     $page = isset($input->page) ? $input->page : 1;
+//     // Define the number of items per page
+//     $perPage = isset($input->perPage) ? $input->perPage : 10;
 
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
+//     $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+//     if (!$tenantConfigHeader) {
+//         throw new \Exception('Tenant configuration not found.');
+//     }
 
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
+//     // Decode the tenantConfig JSON
+//     $tenantConfig = json_decode($tenantConfigHeader, true);
 
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
+//     if (!$tenantConfig) {
+//         throw new \Exception('Invalid tenant configuration.');
+//     }
 
-    // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
-    // Load QuotationModel with the tenant database connection
-    $QuotationModel = new QuotationModel($db);
-    $QuoteDetailModel = new QuotationDetailModel($db); // Assuming QuoteDetailModel is defined
+//     // Connect to the tenant's database
+//     $db = Database::connect($tenantConfig);
+//     // Load QuotationModel with the tenant database connection
+//     $QuotationModel = new QuotationModel($db);
+//     $QuoteDetailModel = new QuotationDetailModel($db); // Assuming QuoteDetailModel is defined
 
-    // Join quote_mst and quote_details on quoteId
-    // Retrieve the quotations along with their details using JOIN
-    $quotations = $QuotationModel->select('quote_mst.*, quote_details.*') // Select both master and details fields
-        ->join('quote_details', 'quote_mst.quoteId = quote_details.quoteId', 'left') // Left join to include all quotations even if no details
-        ->where('quote_mst.isDeleted', 0)
-        ->orderBy('quote_mst.createdDate', 'DESC')
-        ->paginate($perPage, 'default', $page);
+//     // Join quote_mst and quote_details on quoteId
+//     // Retrieve the quotations along with their details using JOIN
+//     $quotations = $QuotationModel->select('quote_mst.*, quote_details.*') // Select both master and details fields
+//         ->join('quote_details', 'quote_mst.quoteId = quote_details.quoteId', 'left') // Left join to include all quotations even if no details
+//         ->where('quote_mst.isDeleted', 0)
+//         ->orderBy('quote_mst.createdDate', 'DESC')
+//         ->paginate($perPage, 'default', $page);
 
-    $pager = $QuotationModel->pager;
+//     $pager = $QuotationModel->pager;
 
-    // Prepare response with the merged data
-    $response = [
-        "status" => true,
-        "message" => "All Data Fetched",
-        "data" => $quotations, // Merged data from both tables
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ];
+//     // Prepare response with the merged data
+//     $response = [
+//         "status" => true,
+//         "message" => "All Data Fetched",
+//         "data" => $quotations, // Merged data from both tables
+//         "pagination" => [
+//             "currentPage" => $pager->getCurrentPage(),
+//             "totalPages" => $pager->getPageCount(),
+//             "totalItems" => $pager->getTotal(),
+//             "perPage" => $perPage
+//         ]
+//     ];
     
-    return $this->respond($response, 200);
-}
+//     return $this->respond($response, 200);
+// }
 
-    // public function getQuotationsPaging()
-    // {
-    //     $input = $this->request->getJSON();
+    public function getQuotationsPaging()
+    {
+        $input = $this->request->getJSON();
 
-    //     // Get the page number from the input, default to 1 if not provided
-    //     $page = isset($input->page) ? $input->page : 1;
-    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
-    //     $sortField = isset($input->sortField) ? $input->sortField : 'quoteId';
-    //     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    //     $search = isset($input->search) ? $input->search : '';
-    //     $filter = $input->filter;
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'quoteId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
         
 
-    //     $tenantService = new TenantService();
+        $tenantService = new TenantService();
         
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //     // Load leadModel with the tenant database connection
-    //     $QuotationModel = new QuotationModel($db);
-    //     $query = $QuotationModel;
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load leadModel with the tenant database connection
+        $QuotationModel = new QuotationModel($db);
+        $query = $QuotationModel;
 
-    //     if (!empty($filter)) {
-    //         $filter = json_decode(json_encode($filter), true);
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
 
-    //         foreach ($filter as $key => $value) {
-    //             if (in_array($key, ['quoteNo','quoteDate','validDate','businessNameFor'])) {
-    //                 $query->like($key, $value); // LIKE filter for specific fields
-    //             } else if (in_array($key, ['createdDate'])) {
-    //                 $query->where($key, $value); // Exact match filter
-    //             }
-    //         }
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['quoteNo','quoteDate','validDate','businessNameFor'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if (in_array($key, ['createdDate'])) {
+                    $query->where($key, $value); // Exact match filter
+                }
+            }
 
-    //         // Apply Date Range Filter
-    //         // if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
-    //         //     $query->where('createdDate >=', $filter['fromDate'])
-    //         //         ->where('createdDate <=', $filter['toDate']);
-    //         // }
-    //             // Apply Date Range Filter using startDate and endDate fields
-    //             if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-    //                 $query->where('createdDate >=', $filter['startDate'])
-    //                     ->where('createdDate <=', $filter['endDate']);
-    //             }
-    //     }
+            // Apply Date Range Filter
+            // if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
+            //     $query->where('createdDate >=', $filter['fromDate'])
+            //         ->where('createdDate <=', $filter['toDate']);
+            // }
+                // Apply Date Range Filter using startDate and endDate fields
+                if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                    $query->where('createdDate >=', $filter['startDate'])
+                        ->where('createdDate <=', $filter['endDate']);
+                }
+        }
         
-    //     $query->where('isDeleted',0);
-    //     // Apply Sorting
-    //     if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-    //         $query->orderBy($sortField, $sortOrder);
-    //     }
+        $query->where('isDeleted',0);
+        // Apply Sorting
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
 
-    //     // Get Paginated Results
-    //     $quotes = $query->paginate($perPage, 'default', $page);
-    //     $pager = $QuotationModel->pager;
+        // Get Paginated Results
+        $quotes = $query->paginate($perPage, 'default', $page);
+        $pager = $QuotationModel->pager;
 
-    //     $response = [
-    //         "status" => true,
-    //         "message" => "All Lead Data Fetched",
-    //         "data" => $quotes,
-    //         "pagination" => [
-    //             "currentPage" => $pager->getCurrentPage(),
-    //             "totalPages" => $pager->getPageCount(),
-    //             "totalItems" => $pager->getTotal(),
-    //             "perPage" => $perPage
-    //         ]
-    //     ];
+        $response = [
+            "status" => true,
+            "message" => "All Lead Data Fetched",
+            "data" => $quotes,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
 
-    //     return $this->respond($response, 200);
-    // }
+        return $this->respond($response, 200);
+    }
 
     public function getQuotationsWebsite()
     {
@@ -318,14 +318,14 @@ class Quotation extends BaseController
                     ];
                     
                     // Insert the item into the item_details table
-                    $quoteItemId = $itemDetailsModel->insert($itemData);  // Assuming insert() method returns the inserted item ID
-                    
-                    // Optionally, if you want to handle the quoteitemid (like logging or returning it)
-                    if ($quoteItemId) {
-                        // This step is optional, but you could handle the `quoteitemid` here if necessary
-                        // For example, adding the inserted `quoteitemid` to the response:
-                        $itemData['quoteItemId'] = $quoteItemId;
-                    }
+                     $itemDetailsModel->insert($itemData);  // Assuming insert() method returns the inserted item ID
+                     
+                    // // Optionally, if you want to handle the quoteitemid (like logging or returning it)
+                    // if ($quoteItemId) {
+                    //     // This step is optional, but you could handle the `quoteitemid` here if necessary
+                    //     // For example, adding the inserted `quoteitemid` to the response:
+                    //     $itemData['quoteItemId'] = $quoteItemId;
+                    // }
                 }
     
                 return $this->respond(['status' => true, 'message' => 'Quotation and items added successfully'], 200);

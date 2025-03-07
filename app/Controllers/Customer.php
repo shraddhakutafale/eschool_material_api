@@ -39,38 +39,42 @@ class Customer extends BaseController
     
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    
         // Load CustomerModel with the tenant database connection
         $customerModel = new CustomerModel($db);
+    
         $query = $customerModel;
     
-        // Apply search filter for name and mobile number
-        if (!empty($search)) {
-            $query->groupStart()
-                  ->like('name', $search)
-                  ->orLike('mobileNo', $search)
-                  ->groupEnd();
-        }
-    
-        // Apply filtering
         if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
     
             foreach ($filter as $key => $value) {
                 if (in_array($key, ['name', 'mobileNo', 'email'])) {
-                    $query->like($key, $value);
-                } else if ($key === 'createdDate' && !empty($value)) {
-                    $query->where($key, $value);
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if ($key === 'createdDate') {
+                    $query->where($key, $value); // Exact match filter for createdDate
                 }
             }
     
-            // Apply Date Range Filter using startDate and endDate
+            // Apply Date Range Filter (startDate and endDate)
             if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
                 $query->where('createdDate >=', $filter['startDate'])
                       ->where('createdDate <=', $filter['endDate']);
             }
+    
+            // Apply Last 7 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+                $query->where('createdDate >=', $last7DaysStart);
+            }
+    
+            // Apply Last 30 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+                $query->where('createdDate >=', $last30DaysStart);
+            }
         }
     
+        // Ensure that the "deleted" status is 0 (active records)
         $query->where('isDeleted', 0);
     
         // Apply Sorting
@@ -96,6 +100,7 @@ class Customer extends BaseController
     
         return $this->respond($response, 200);
     }
+    
     
 
     public function getCustomersWebsite()

@@ -53,15 +53,27 @@ class Student extends BaseController
             foreach ($filter as $key => $value) {
                 if (in_array($key, ['studentCode','generalRegisterNo','firstName', 'lastName', 'medium', 'registeredDate'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
-                } else if (in_array($key, ['createdDate'])) {
-                    $query->where($key, $value); // Exact match filter
+                } else if ($key === 'createdDate') {
+                    $query->where($key, $value); // Exact match filter for createdDate
                 }
             }
 
-            // Apply Date Range Filter
-            if (!empty($filter['fromDate']) && !empty($filter['toDate'])) {
-                $query->where('createdDate >=', $filter['fromDate'])
-                    ->where('createdDate <=', $filter['toDate']);
+            // Apply Date Range Filter (startDate and endDate)
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                      ->where('createdDate <=', $filter['endDate']);
+            }
+    
+            // Apply Last 7 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+                $query->where('createdDate >=', $last7DaysStart);
+            }
+    
+            // Apply Last 30 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+                $query->where('createdDate >=', $last30DaysStart);
             }
         }
 
@@ -254,7 +266,8 @@ class Student extends BaseController
                 'aadharNo' => $input['aadharNo'],
                 'medium' => $input['medium'],
                 'physicallyHandicapped' => $input['physicallyHandicapped'],
-                'registeredDate' => $input['registeredDate']
+                'registeredDate' => $input['registeredDate'],
+
             ];
 
             // Update the student with new data

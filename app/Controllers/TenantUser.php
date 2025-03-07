@@ -85,6 +85,30 @@ class TenantUser extends BaseController
         return $this->respond($response, 200);
     }
 
+    public function getProfile()
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+  
+        // extract the token from the header
+        if(!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
+        }
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $tenantUserModel = new TenantUserModel($db);
+
+        $user = $tenantUserModel->where('userId', $decoded->userId)->first();
+        if(is_null($user)) {
+            return $this->respond(['status' => false, 'message' => 'User not found'], 404);
+        }
+        return $this->respond(['status' => true, 'message' => 'User found', 'data' => $user], 200);
+    }
+
 
     
 

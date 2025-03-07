@@ -25,7 +25,7 @@ class TenantFilter implements FilterInterface
             }
         }
 
-        if(empty($token)) {
+        if($request->getHeaderLine('Tenant')) {
             $tenant = $request->getHeaderLine('Tenant');
         }else {
             $decoded = JWT::decode($token, new Key($key, 'HS256'));

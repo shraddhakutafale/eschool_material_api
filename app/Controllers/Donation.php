@@ -84,7 +84,7 @@ class Donation extends BaseController
     }
     public function create()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         log_message('info', json_encode($input));
         $rules = [
             'name'=> ['rules' => 'required'], 

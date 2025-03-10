@@ -25,33 +25,38 @@ class Gallery extends BaseController
     
     }
 
-    public function getGallerysPaging() {
+    public function getGallerysPaging()
+    {
         $input = $this->request->getJSON();
+
+        // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
         $perPage = isset($input->perPage) ? $input->perPage : 10;
         $sortField = isset($input->sortField) ? $input->sortField : 'galleryId';
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
-    
+        
+
         $tenantService = new TenantService();
+        
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load StaffModel with the tenant database connection
+        // Load leadModel with the tenant database connection
         $galleryModel = new GalleryModel($db);
-    
+
         $query = $galleryModel;
-    
+
         if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
-    
+
             foreach ($filter as $key => $value) {
                 if (in_array($key, ['galleryTitle'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
-                } else if ($key === 'createdDate') {
+                }  else if ($key === 'createdDate') {
                     $query->where($key, $value); // Exact match filter for createdDate
                 }
             }
-    
+
             // Apply Date Range Filter (startDate and endDate)
             if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
                 $query->where('createdDate >=', $filter['startDate'])
@@ -70,19 +75,17 @@ class Gallery extends BaseController
                 $query->where('createdDate >=', $last30DaysStart);
             }
         }
-    
-        // Ensure that the "deleted" status is 0 (active records)
-        $query->where('isDeleted', 0);
-    
+        
+        $query->where('isDeleted',0);
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);
         }
-    
+
         // Get Paginated Results
         $gallerys = $query->paginate($perPage, 'default', $page);
         $pager = $galleryModel->pager;
-    
+
         $response = [
             "status" => true,
             "message" => "All Gallery Data Fetched",
@@ -94,61 +97,100 @@ class Gallery extends BaseController
                 "perPage" => $perPage
             ]
         ];
-    
+
         return $this->respond($response, 200);
     }
-    
+
     public function getGallerysWebsite()
     {
            // Insert the product data into the database
            $tenantService = new TenantService();
            // Connect to the tenant's database
            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-        // Load UserModel with the tenant database connection
-        $galleryModel = new GalleryModel($db);
-        $gallerys = $galleryModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $gallerys], 200);
-    }
+           // Load UserModel with the tenant database connection
+           $GalleryModel = new GalleryModel($db);
+           $gallery = $GalleryModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
+           return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $gallery], 200);
+       }
+    
 
     public function create()
     {
+        // Retrieve the input data from the request
         $input = $this->request->getPost();
+        
+        // Define validation rules for required fields
         $rules = [
             'galleryTitle' => ['rules' => 'required'],
-            'galleryDescription' => ['rules' => 'required'],
+            'galleryDescription' => ['rules' => 'required']
         ];
-  
-        if($this->validate($rules)){
-            // Retrieve tenantConfig from the headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-            if (!$tenantConfigHeader) {
-                throw new \Exception('Tenant configuration not found.');
+    
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
             }
-
-            // Decode the tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
-
-            if (!$tenantConfig) {
-                throw new \Exception('Invalid tenant configuration.');
-            }
-
-            // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
-            $model = new GalleryModel($db);
-        
-            $model->insert($input);
-             
-            return $this->respond(['status'=>true,'message' => 'Gallery Added Successfully'], 200);
-        }else{
-            $response = [
-                'status'=>false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response , 409);
-             
-        }
             
+            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+           
+            // Handle image upload for the cover image
+            $coverImage= $this->request->getFile('coverImage');
+            $coverImageName = null;
+    
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/galleryImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+    
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/galleryImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/galleryImages/', '', $coverImageUrl);
+    
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $decoded->tenantName . '/galleryImages/' .$coverImageUrl; 
+            }
+    
+           
+    
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new GalleryModel($db);
+            $model->insert($input);
+    
+            return $this->respond(['status' => true, 'message' => 'Gallery Added Successfully'], 200);
+        } else {
+            // If validation fails, return the error messages
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs',
+            ];
+            return $this->fail($response, 409);
+        }
     }
 
 
@@ -156,7 +198,7 @@ class Gallery extends BaseController
 
     public function update()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         
         // Validation rules for the course
         $rules = [
@@ -181,6 +223,7 @@ class Gallery extends BaseController
 
             // Prepare the data to be updated (exclude courseId if it's included)
             $updateData = [
+                'galleryId' => $input->galleryId,
                 'galleryTitle' => $input->galleryTitle,
                 'galleryDescription' => $input->galleryDescription,
               

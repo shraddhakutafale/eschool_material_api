@@ -346,7 +346,6 @@ class Customer extends BaseController
                 'emailId' => $input['emailId'],  // Corrected here
                 'dateOfBirth' => $input['dateOfBirth'],  // Corrected here
                 'gender' => $input['gender'],  // Corrected here
-                'createdDate'=> $input['createdDate'],
 
                 
     

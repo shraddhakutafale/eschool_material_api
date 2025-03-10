@@ -84,7 +84,7 @@ class Donation extends BaseController
     }
     public function create()
     {
-        $input = $this->request->getPost();
+        $input = $this->request->getJson();
         log_message('info', json_encode($input));
         $rules = [
             'name'=> ['rules' => 'required'], 
@@ -136,7 +136,7 @@ class Donation extends BaseController
             ];
     
             // Insert the donation record into the database
-            $donationId = $model->insert($donation);
+            $memberId = $model->insert($donation);
     
             // Prepare transaction data
             $transaction = [

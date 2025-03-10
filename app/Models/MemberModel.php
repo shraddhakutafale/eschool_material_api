@@ -12,7 +12,7 @@ class MemberModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['memberId', 'type', 'name', 'aadharCard', 'dob', 'bloodGroup', 'email', 'mobileNo', 'address', 'state', 'district', 'taluka', 'pincode', 'fees', 'receiptNo', 'file', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['memberId', 'type', 'name', 'aadharCard', 'dob', 'bloodGroup', 'email', 'mobileNo', 'address', 'state', 'district', 'taluka', 'pincode', 'fees', 'receiptNo', 'file','profileImage', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -20,27 +20,33 @@ class MemberModel extends Model
     protected array $casts = [];
     protected array $castHandlers = [];
 
-    // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
-
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+      // Dates
+      protected $useTimestamps = true;
+      protected $dateFormat    = 'datetime';
+      protected $createdField  = 'createdDate';
+      protected $updatedField  = 'modifiedDate';
+      protected $beforeInsert = ['addCreatedBy'];
+      protected $beforeUpdate = ['addModifiedBy'];
+  
+      protected function addCreatedBy(array $data)
+      {
+          helper('jwt_helper'); // Ensure the JWT helper is loaded
+          $userId = getUserIdFromToken();
+          if ($userId) {
+              $data['data']['createdBy'] = $userId;
+          }
+          return $data;
+      }
+  
+      protected function addModifiedBy(array $data)
+      {
+          helper('jwt_helper'); // Ensure the JWT helper is loaded
+          $userId = getUserIdFromToken();
+          if ($userId) {
+              $data['data']['modifiedBy'] = $userId;
+          }
+          return $data;
+      }
+  
+     
 }

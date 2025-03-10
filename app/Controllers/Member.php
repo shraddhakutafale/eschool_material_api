@@ -8,6 +8,8 @@ use App\Models\MemberModel;
 use App\Models\TransactionModel;
 use App\Libraries\TenantService;
 use Config\Database;
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
 class Member extends BaseController
 {
@@ -47,6 +49,39 @@ class Member extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load StaffModel with the tenant database connection
         $memberModel = new MemberModel($db);
+
+        $query = $memberModel;
+
+
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
+    
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['name', 'mobileNo', 'fees', 'type'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if ($key === 'createdDate') {
+                    $query->where($key, $value); // Exact match filter for createdDate
+                }
+            }
+    
+            // Apply Date Range Filter (startDate and endDate)
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                      ->where('createdDate <=', $filter['endDate']);
+            }
+    
+            // Apply Last 7 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+                $query->where('createdDate >=', $last7DaysStart);
+            }
+    
+            // Apply Last 30 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+                $query->where('createdDate >=', $last30DaysStart);
+            }
+        }
 
         $member = $memberModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('mobileNo', $search)->paginate($perPage, 'default', $page);
         if ($filter) {
@@ -88,7 +123,7 @@ class Member extends BaseController
    
     public function create()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         log_message('info', json_encode($input));
         $rules = [
             'type'=> ['rules' => 'required'], 
@@ -104,10 +139,48 @@ class Member extends BaseController
         ];
     
         if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            // Handle image upload for the cover image
+            $profileImage = $this->request->getFile('profileImage');
+            $profileImageName = null;
 
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $profileImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/profileImage/';
+                if (!is_dir($profileImagePath)) {
+                    mkdir($profileImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+
+                // Move the file to the desired directory with a unique name
+                $profileImageName = $profileImage->getRandomName();
+                $profileImage->move($profileImagePath, $profileImageName);
+
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $profileImageUrl = 'uploads/profileImage/' . $profileImageName;
+                $profileImageUrl = str_replace('uploads/profileImage/', '', $profileImageUrl);
+
+                // Add the cover image URL to the input data
+                $profileImageUrl = $decoded->tenantName . '/profileImage/' . $profileImageUrl; 
+                // Add the profile image URL to the input data
+                 $input['profileImage'] = $profileImageUrl;
+
+                
+            }
+
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
     
     
             // Insert the member into the database
@@ -126,20 +199,22 @@ class Member extends BaseController
     
             // Prepare the member data
             $member = [
-                'type' => $input->type,
-                'name' => $input->name,
-                'dob' => $input->dob,
-                'bloodGroup' => $input->bloodGroup,
-                'aadharCard' => $input->aadharCard,
-                'email' => $input->email,
-                'mobileNo' => $input->mobileNo,
-                'address' => $input->address,
-                'state' => $input->state,
-                'district' => $input->district,
-                'taluka' => $input->taluka,
-                'pincode' => $input->pincode,
-                'fees' => $input->fees,
+                'type' => $input['type'],
+                'name' => $input['name'],
+                'dob' => $input['dob'],
+                'bloodGroup' => $input['bloodGroup'],
+                'aadharCard' => $input['aadharCard'],
+                'email' => $input['email'],
+                'mobileNo' => $input['mobileNo'],
+                'address' => $input['address'],
+                'state' => $input['state'],
+                'district' => $input['district'],
+                'taluka' => $input['taluka'],
+                'pincode' => $input['pincode'],
+                'fees' => $input['fees'],
                 'receiptNo' => $newReceiptNo,  // This will be updated later
+                'profileImage' => isset($input['profileImage']) ? $input['profileImage'] : null  // Save the profile image URL to the database
+
             ];
     
             $memberId = $model->insert($member);
@@ -148,11 +223,11 @@ class Member extends BaseController
             $transaction = [
                 'memberId' => $memberId,
                 'transactionFor' => 'member',
-                'transactionNo' => $input->transactionNo,
-                'transactionDate' => $input->transactionDate,
-                'razorpayNo' => $input->razorpayNo,
-                'amount' => $input->fees,
-                'paymentMode' => $input->paymentMode,
+                'transactionNo' => $input['transactionNo'],
+                'transactionDate' => $input['transactionDate'],
+                'razorpayNo' => $input['razorpayNo'],
+                'amount' => $input['fees'],
+                'paymentMode' => $input['paymentMode'],
                 'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
             ];
     

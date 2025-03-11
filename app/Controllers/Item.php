@@ -93,6 +93,7 @@ class Item extends BaseController
 
     //     return $this->respond($response, 200);
     // }
+
     public function getItemsPaging()
 {
     $input = $this->request->getJSON();
@@ -111,55 +112,56 @@ class Item extends BaseController
     // Load StaffModel with the tenant database connection
     $itemModel = new ItemModel($db);
 
-    $query = $itemModel;
+    // Initialize query with 'isDeleted' condition
+    $query = $itemModel->where('isDeleted', 0); // Apply the deleted check at the beginning
 
-    // Apply the condition to filter out deleted items (deleted = 0)
-    $item = $itemModel->where('isDeleted', 0)
-                     ->orderBy($sortField, $sortOrder)
-                     ->like('itemName', $search)
-                     ->orLike('mrp', $search)
-                     ->paginate($perPage, 'default', $page);
-
-    
-                     if (!empty($filter)) {
-                        $filter = json_decode(json_encode($filter), true);
-                
-                        foreach ($filter as $key => $value) {
-                            if (in_array($key, ['itemName', 'mrp', 'sku'])) {
-                                $query->like($key, $value); // LIKE filter for specific fields
-                            } else if ($key === 'createdDate') {
-                                $query->where($key, $value); // Exact match filter for createdDate
-                            }
-                        }
-                
-                        // Apply Date Range Filter (startDate and endDate)
-                        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                            $query->where('createdDate >=', $filter['startDate'])
-                                  ->where('createdDate <=', $filter['endDate']);
-                        }
-                
-                        // Apply Last 7 Days Filter if requested
-                        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-                            $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-                            $query->where('createdDate >=', $last7DaysStart);
-                        }
-                
-                        // Apply Last 30 Days Filter if requested
-                        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-                            $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-                            $query->where('createdDate >=', $last30DaysStart);
-                        }
-                    }
-
-    if ($filter) {
-        $filter = json_decode(json_encode($filter), true);
-        $item = $itemModel->where('isDeleted', 0) // Ensure deleted = 0 in the filter as well
-                          ->like($filter)
-                          ->paginate($perPage, 'default', $page);   
+    // Apply search filter for itemName and mrp
+    if (!empty($search)) {
+        $query->like('itemName', $search)
+              ->orLike('mrp', $search);
     }
 
+    // Apply additional filters if provided
+    if (!empty($filter)) {
+        $filter = json_decode(json_encode($filter), true);
+        
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['itemName', 'mrp', 'sku'])) {
+                $query->like($key, $value); // LIKE filter for specific fields
+            } else if ($key === 'createdDate') {
+                $query->where($key, $value); // Exact match filter for createdDate
+            }
+        }
+
+        // Apply Date Range Filter (startDate and endDate)
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+            $query->where('createdDate >=', $filter['startDate'])
+                  ->where('createdDate <=', $filter['endDate']);
+        }
+
+        // Apply Last 7 Days Filter if requested
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+            $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+            $query->where('createdDate >=', $last7DaysStart);
+        }
+
+        // Apply Last 30 Days Filter if requested
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+            $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+            $query->where('createdDate >=', $last30DaysStart);
+        }
+    }
+
+    // Apply sorting
+    $query->orderBy($sortField, $sortOrder);
+
+    // Execute the query with pagination
+    $item = $query->paginate($perPage, 'default', $page);
+
+    // Get pagination data
     $pager = $itemModel->pager;
 
+    // Prepare the response
     $response = [
         "status" => true,
         "message" => "All item Data Fetched",
@@ -175,6 +177,7 @@ class Item extends BaseController
     return $this->respond($response, 200);
 }
 
+    
 
     public function create()
     {

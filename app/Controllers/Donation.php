@@ -48,6 +48,14 @@ class Donation extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load StaffModel with the tenant database connection
         $donationModel = new DonationModel($db);
+        $transactionModel = new TransactionModel($db);
+        $query = $donationModel
+        ->join('transaction_mst', 'transaction_mst.memberId = donation_mst.donationId', 'left')  
+        ->select('donation_mst.*, transaction_mst.transactionId, transaction_mst.transactionFor, 
+                transaction_mst.transactionNo, transaction_mst.paymentMode, transaction_mst.amount, 
+                transaction_mst.status, transaction_mst.razorpayNo, transaction_mst.transactionDate')  
+        ->where('transaction_mst.transactionFor !=', 'member'); 
+    
 
         $donation = $donationModel->orderBy($sortField, $sortOrder)->like('name', $search)->orLike('mobileNo', $search)->paginate($perPage, 'default', $page);
         if ($filter) {

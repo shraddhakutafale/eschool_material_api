@@ -49,9 +49,15 @@ class Member extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load StaffModel with the tenant database connection
         $memberModel = new MemberModel($db);
+        $transactionModel = new TransactionModel($db); // Assuming you have a TransactionModel
 
-        $query = $memberModel;
-
+        $query = $memberModel
+        ->join('transaction_mst', 'transaction_mst.memberId = member_mst.memberId', 'left')  // Join the transaction_mst table with MemberModel
+        ->select('member_mst.*, transaction_mst.transactionId, transaction_mst.transactionFor, transaction_mst.transactionNo, 
+                  transaction_mst.paymentMode, transaction_mst.amount, transaction_mst.status, transaction_mst.razorpayNo, 
+                  transaction_mst.transactionDate')
+        ->where('transaction_mst.transactionFor !=', 'donation'); 
+    
 
         if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);

@@ -241,6 +241,18 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Vendor::delete',['filter' => ['authFilter','tenantFilter']]);
   });
 
+
+  $routes->group('testimonial', function ($routes) {
+    //Routes for vendor
+    $routes->get('getall', 'Testimonial::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Testimonial::getTestimonialsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Testimonial::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Testimonial::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Testimonial::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Testimonial::getTestimonialsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Testimonial::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
   $routes->group('lead', function ($routes) {
     //Routes for lead
     $routes->get('getall', 'Lead::index',['filter' => ['authFilter', 'tenantFilter']]);

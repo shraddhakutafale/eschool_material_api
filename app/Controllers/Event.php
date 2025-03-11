@@ -6,7 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\EventModel;
 use App\Libraries\TenantService;
-
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 use Config\Database;
 
 class Event extends BaseController
@@ -112,53 +113,81 @@ class Event extends BaseController
 
     public function create()
     {
+        // Retrieve the input data from the request
         $input = $this->request->getPost();
         
-        // Validation Rules
+        // Define validation rules for required fields
         $rules = [
             'eventName'  => ['rules' => 'required'],
             'eventDesc'  => ['rules' => 'required'],
-            'venue'      => ['rules' => 'required'],
-            'startDate'  => ['rules' => 'required|valid_date'],
-            'endDate'    => ['rules' => 'required|valid_date']
+            'venue'      => ['rules' => 'required']
         ];
     
         if ($this->validate($rules)) {
-            // Retrieve tenantConfig from headers
-            $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
     
-            if (!$tenantConfigHeader) {
-                return $this->fail(['status' => false, 'message' => 'Tenant configuration not found'], 400);
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+           
+            // Handle image upload for the cover image
+            $profilePic= $this->request->getFile('profilePic');
+            $profilePicName = null;
+    
+            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+                // Define the upload path for the cover image
+                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/eventImages/';
+                if (!is_dir($profilePicPath)) {
+                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
+                }
+    
+                // Move the file to the desired directory with a unique name
+                $profilePicName = $profilePic->getRandomName();
+                $profilePic->move($profilePicPath, $profilePicName);
+    
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $profilePicUrl = 'uploads/eventImages/' . $profilePicName;
+                $profilePicUrl = str_replace('uploads/eventImages/', '', $profilePicUrl);
+    
+                // Add the cover image URL to the input data
+                $input['profilePic'] = $decoded->tenantName . '/eventImages/' .$profilePicUrl; 
             }
     
-            // Decode tenantConfig JSON
-            $tenantConfig = json_decode($tenantConfigHeader, true);
+           
     
-            if (!$tenantConfig) {
-                return $this->fail(['status' => false, 'message' => 'Invalid tenant configuration'], 400);
-            }
-    
+            $tenantService = new TenantService();
             // Connect to the tenant's database
-            $db = Database::connect($tenantConfig);
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new EventModel($db);
-    
-            // Insert event data
-            $model->insert([
-                'eventName' => $input['eventName'],  // Corrected here
-                'eventDesc' => $input['eventDesc'],
-                'venue' => $input['venue'],
-                'startDate' => $input['startDate'],
-                'endDate' => $input['endDate']
-
-            ]);
+            $model->insert($input);
     
             return $this->respond(['status' => true, 'message' => 'Event Added Successfully'], 200);
         } else {
-            return $this->fail([
+            // If validation fails, return the error messages
+            $response = [
                 'status' => false,
                 'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ], 409);
+                'message' => 'Invalid Inputs',
+            ];
+            return $this->fail($response, 409);
         }
     }
     
@@ -166,44 +195,48 @@ class Event extends BaseController
     public function update()
     {
         $input = $this->request->getPost();
-
-        // Validation rules for the event
+        
+        // Validation rules for the vendor
         $rules = [
-            'eventId' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
+            'eventId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
-                // Insert the product data into the database
-        $tenantService = new TenantService();
+            $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-            $model = new EventModel($db);  // Use EventModel for event-related operations
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new EventModel($db);
 
-            // Retrieve the event by eventId
-            $eventId = $input['eventId'];  // Corrected here
-            $event = $model->find($eventId); // Assuming find method retrieves the event
+            // Retrieve the vendor by vendorId
+            $eventId = $input['eventId'];
+            $event = $model->find($eventId); // Assuming find method retrieves the vendor
+            
+
+
 
             if (!$event) {
-                return $this->fail(['status' => false, 'message' => 'event not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Event not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude eventId if it's included)
+            
             $updateData = [
-
                 'eventName' => $input['eventName'],  // Corrected here
                 'eventDesc' => $input['eventDesc'],
                 'venue' => $input['venue'],
                 'startDate' => $input['startDate'],
                 'endDate' => $input['endDate']
 
-            ];
+                
+    
+            ];     
 
-            // Update the event with new data
+            // Update the vendor with new data
             $updated = $model->update($eventId, $updateData);
 
+
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'event Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Event Updated Successfully'], 200);
             } else {
                 return $this->fail(['status' => false, 'message' => 'Failed to update event'], 500);
             }
@@ -217,43 +250,45 @@ class Event extends BaseController
             return $this->fail($response, 409);
         }
     }
+
     
 
 
     public function delete()
     {
         $input = $this->request->getJSON();
-        
-        // Validation rules for the course
+    
+        // Validation rules for the event
         $rules = [
-            'eventId' => ['rules' => 'required'], // Ensure eventId is provided and is numeric
+            'eventId' => ['rules' => 'required'], // Ensure eventId is provided
         ];
-
+    
         // Validate the input
         if ($this->validate($rules)) {
-           // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new EventModel($db);
-
-            // Retrieve the course by eventId
+            // Connect to the tenant's database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
+            $model = new EventModel($db);
+    
+            // Retrieve the event by eventId
             $eventId = $input->eventId;
-            $event = $model->find($eventId); // Assuming find method retrieves the course
-
+            $event = $model->where('eventId', $eventId)->where('isDeleted', 0)->first(); // Only find active events
+    
             if (!$event) {
-                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'Event not found or already deleted'], 404);
             }
-
-            // Proceed to delete the course
+    
+            // Perform a soft delete (mark as deleted instead of removing the record)
             $updateData = [
                 'isDeleted' => 1,
             ];
             $deleted = $model->update($eventId, $updateData);
-
+            
+    
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Course Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'event marked as deleted'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete course'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete event'], 500);
             }
         } else {
             // Validation failed
@@ -267,101 +302,49 @@ class Event extends BaseController
     }
 
 
-//     public function uploadPageProfile()
-// {
-//     // Retrieve form fields
-//     $eventId = $this->request->getPost('eventId'); // Example field
+    public function uploadPageProfile()
+    {
+        // Retrieve form fields
+        $eventId = $this->request->getPost('eventId'); // Example field
 
-//     // Retrieve the file
-//     $file = $this->request->getFile('photoUrl');
+        // Retrieve the file
+        $file = $this->request->getFile('photoUrl');
 
-//     // Validate file
-//     if (!$file->isValid()) {
-//         return $this->fail($file->getErrorString());
-//     }
+        
+        // Validate file
+        if (!$file->isValid()) {
+            return $this->fail($file->getErrorString());
+        }
 
-//     $mimeType = $file->getMimeType();
-//     if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-//         return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
-//     }
+        $mimeType = $file->getMimeType();
+        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
+            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+        }
 
-//     // Validate file size
-//     if ($file->getSize() > 2048 * 1024) {
-//         return $this->fail('File size exceeds 2MB');
-//     }
+        // Validate file type and size
+        if ($file->getSize() > 2048 * 1024) {
+            return $this->fail('Invalid file type or size exceeds 2MB');
+        }
 
-//     // Generate a random file name and move the file
-//     $newName = $file->getRandomName();
-//     $file->move(WRITEPATH . '../public/uploads', $newName);
+        // Generate a random file name and move the file
+        $newName = $file->getRandomName();
+        $filePath = '/uploads/' . $newName;
+        $file->move(WRITEPATH . '../public/uploads', $newName);
 
-//     // Save file and additional data in the database
-//     $data = [
-//         'photoUrl' => $newName,
-//     ];
+        // Save file and additional data in the database
+        $data = [
+            'photoUrl' => $newName,
+        ];
 
-//     $model = new EventModel();
-//     $model->update($eventId, $data);
+        $model = new EventModel();
+        $model->update($eventId,$data);
 
-//     return $this->respond([
-//         'status' => 201,
-//         'message' => 'File uploaded successfully',
-//         'data' => $data,
-//     ]);
-// }
-
-
-public function uploadPageProfile()
-{
-    // Retrieve form fields
-    $eventId = $this->request->getPost('eventId'); // Event ID for which logo is being uploaded
-
-    // Retrieve the file
-    $file = $this->request->getFile('logoUrl'); // Ensure the input name matches 'logoUrl'
-
-    // Validate the file
-    if (!$file->isValid()) {
-        return $this->fail($file->getErrorString());
+        return $this->respond([
+            'status' => 201,
+            'message' => 'File and data uploaded successfully',
+            'data' => $data,
+        ]);
     }
-
-    $mimeType = $file->getMimeType();
-    if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-        return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
-    }
-
-    // Validate file size (optional)
-    if ($file->getSize() > 2048 * 1024) {
-        return $this->fail('File size exceeds 2MB');
-    }
-
-    // Generate a random file name and move the file to the uploads directory
-    $newName = $file->getRandomName();
-    $file->move(WRITEPATH . '../public/uploads', $newName);
-
-    // Build the file URL or path
-    $fileUrl = base_url('uploads/' . $newName);
-
-    // Save file path (logoUrl) and additional data in the database
-    $data = [
-        'logoUrl' => $fileUrl, // Save the file URL in the database
-    ];
-
-   // Insert the product data into the database
-   $tenantService = new TenantService();
-   // Connect to the tenant's database
-   $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $db = Database::connect($tenantConfig);
-    $model = new EventModel($db);
-
-    // Update the database record
-    $model->update($eventId, $data);
-
-    // Respond with success
-    return $this->respond([
-        'status' => 201,
-        'message' => 'Logo uploaded successfully',
-        'data' => $data,
-    ]);
-}
 
 
 }

@@ -326,6 +326,7 @@ class Member extends BaseController
                 'transactionDate' => $input['transactionDate'],
                 'razorpayNo' => $input['razorpayNo'],
                 'amount' => $input['fees'],
+                'status' => 'success',
                 'paymentMode' => $input['paymentMode'],
                 'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
             ];

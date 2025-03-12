@@ -283,12 +283,12 @@ class Donation extends BaseController
           // Insert the product data into the database
             $tenantService = new TenantService();
              // Connect to the tenant's database
-          $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         
             $model = new DonationModel($db);
 
             // Retrieve the course by eventId
-            $donationId = $input['donationId'];
+            $donationId = $input->donationId;
             $donation = $model->find($donationId); // Assuming find method retrieves the course
 
             if (!$donation) {
@@ -296,15 +296,15 @@ class Donation extends BaseController
             }
 
             // Prepare the data to be updated (exclude eventId if it's included)
-            $updateData = [
-               'name' => $input['name'],
-               'aadharCard' => $input['aadharCard'],
-               'panNo' => $input['panNo'],
-               'email' => $input['email'],
-               'mobileNo'=> $input['mobileNo'],
-               'address'=> $input['address'],
-               'financialYear'=> $input['financialYear'],
-               'amount'=> $input['amount']
+            $donation = [
+                'name' => $input->name,
+                'aadharCard' => $input->aadharCard,
+                'email' => $input->email,
+                'panNo' => $input->panNo,
+                'mobileNo' => $input->mobileNo,
+                'address' => $input->address,
+                'financialYear' => $input->financialYear,
+                'amount' => $input->amount,
 
             ];
 
@@ -321,13 +321,12 @@ class Donation extends BaseController
                    'amount' => $input->amount,
                    'status' => 'success',
                    'paymentMode' => $input->paymentMode,
-                   'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
    
                ];
        
 
             // Update the course with new data
-            $updated = $model->update($donationId, $updateData);
+            $updated = $model->update($donationId, $donation);
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Donation Updated Successfully'], 200);
@@ -360,7 +359,7 @@ class Donation extends BaseController
           // Insert the product data into the database
         $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
          $model = new DonationModel($db);
 
             // Retrieve the course by eventId

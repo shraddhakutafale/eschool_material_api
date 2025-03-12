@@ -302,7 +302,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
 
   $routes->group('item', function ($routes) {
     //Routes for vendor
-    $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Item::getItemsPaging',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('slide', function ($routes) {

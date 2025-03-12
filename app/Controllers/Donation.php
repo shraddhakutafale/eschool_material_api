@@ -232,16 +232,17 @@ class Donation extends BaseController
             ];
     
             // Insert the donation record into the database
-            $memberId = $model->insert($donation);
+            $donationId = $model->insert($donation);
     
             // Prepare transaction data
             $transaction = [
-                'donationId' => $donationId,
+                'memberId' => $donationId,
                 'transactionFor' => 'donation',
                 'transactionNo' => $input->transactionNo,
                 'transactionDate' => $input->transactionDate,
                 'razorpayNo' => $input->razorpayNo, // Optional field
                 'amount' => $input->amount,
+                'status' => 'success',
                 'paymentMode' => $input->paymentMode,
                 'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
 
@@ -287,7 +288,7 @@ class Donation extends BaseController
             $model = new DonationModel($db);
 
             // Retrieve the course by eventId
-            $donationId = $input->donationId;
+            $donationId = $input['donationId'];
             $donation = $model->find($donationId); // Assuming find method retrieves the course
 
             if (!$donation) {
@@ -296,16 +297,34 @@ class Donation extends BaseController
 
             // Prepare the data to be updated (exclude eventId if it's included)
             $updateData = [
-               'name' => $input->name,
-               'aadharCard' => $input->aadharCard,
-               'panNo' => $input->panNo,
-               'email' => $input->email,
-               'mobileNo'=> $input->mobileNo,
-               'address'=> $input->address,
-               'financialYear'=> $input->financialYear,
-               'amount'=> $input->amount
+               'name' => $input['name'],
+               'aadharCard' => $input['aadharCard'],
+               'panNo' => $input['panNo'],
+               'email' => $input['email'],
+               'mobileNo'=> $input['mobileNo'],
+               'address'=> $input['address'],
+               'financialYear'=> $input['financialYear'],
+               'amount'=> $input['amount']
 
             ];
+
+               // Insert the donation record into the database
+               $donationId = $model->insert($donation);
+    
+               // Prepare transaction data
+               $transaction = [
+                   'memberId' => $donationId,
+                   'transactionFor' => 'donation',
+                   'transactionNo' => $input->transactionNo,
+                   'transactionDate' => $input->transactionDate,
+                   'razorpayNo' => $input->razorpayNo, // Optional field
+                   'amount' => $input->amount,
+                   'status' => 'success',
+                   'paymentMode' => $input->paymentMode,
+                   'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
+   
+               ];
+       
 
             // Update the course with new data
             $updated = $model->update($donationId, $updateData);

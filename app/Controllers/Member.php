@@ -223,7 +223,7 @@ class Member extends BaseController
     public function create()
     {
         $input = $this->request->getPost();
-        log_message('info', json_encode($input));
+        // log_message('info', json_encode($input));
         $rules = [
             'type'=> ['rules' => 'required'], 
             'name'=> ['rules' => 'required'], 
@@ -355,7 +355,7 @@ class Member extends BaseController
 
     public function update()
     {
-        $input = $this->request->getJSON();
+        $input = $this->request->getPost();
         
         // Validation rules for the course
         $rules = [
@@ -364,43 +364,94 @@ class Member extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            // Handle image upload for the cover image
+            $profileImage = $this->request->getFile('profileImage');
+            $profileImageName = null;
 
-         // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $profileImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/profileImage/';
+                if (!is_dir($profileImagePath)) {
+                    mkdir($profileImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+
+                // Move the file to the desired directory with a unique name
+                $profileImageName = $profileImage->getRandomName();
+                $profileImage->move($profileImagePath, $profileImageName);
+
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $profileImageUrl = 'uploads/profileImage/' . $profileImageName;
+                $profileImageUrl = str_replace('uploads/profileImage/', '', $profileImageUrl);
+
+                // Add the cover image URL to the input data
+                $profileImageUrl = $decoded->tenantName . '/profileImage/' . $profileImageUrl; 
+                // Add the profile image URL to the input data
+                 $input['profileImage'] = $profileImageUrl;
+
+                
+            }
+
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new MemberModel($db);
 
 
             // Retrieve the course by eventId
-            $memberId = $input->memberId;
+            $memberId = $input['memberId'];
             $member = $model->find($memberId); // Assuming find method retrieves the course
 
             if (!$member) {
                 return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
             }
+              // Prepare the member data
+              $member = [
+                'type' => $input['type'],
+                'name' => $input['name'],
+                'dob' => $input['dob'],
+                'bloodGroup' => $input['bloodGroup'],
+                'aadharCard' => $input['aadharCard'],
+                'email' => $input['email'],
+                'mobileNo' => $input['mobileNo'],
+                'address' => $input['address'],
+                'state' => $input['state'],
+                'district' => $input['district'],
+                'taluka' => $input['taluka'],
+                'pincode' => $input['pincode'],
+                'fees' => $input['fees'],
+                'profileImage' => isset($input['profileImage']) ? $input['profileImage'] : null  // Save the profile image URL to the database
 
-            // Prepare the data to be updated (exclude eventId if it's included)
-            $updateData = [
-                'type' => $input->type,
-                'name' => $input->name,
-                'dob' => $input->dob,
-                'bloodGroup' => $input->bloodGroup,
-                'aadharCard' => $input->aadharCard,
-                'email' => $input->email,
-                'mobileNo' => $input->mobileNo,
-                'address' => $input->address,
-                'state' => $input->state,
-                'district' => $input->district,
-                'taluka' => $input->taluka,
-                'pincode' => $input->pincode,
-                'fees' => $input->fees,
-         
-                
+            ];
+    
+            $memberId = $model->insert($member);
+    
+            // Prepare the transaction data with the new receipt number
+            $transaction = [
+                'memberId' => $memberId,
+                'transactionFor' => 'member',
+                'transactionNo' => $input['transactionNo'],
+                'transactionDate' => $input['transactionDate'],
+                'razorpayNo' => $input['razorpayNo'],
+                'amount' => $input['fees'],
+                'status' => 'success',
+                'paymentMode' => $input['paymentMode'],
             ];
 
             // Update the course with new data
-            $updated = $model->update($memberId, $updateData);
+            $updated = $model->update($memberId, $member);
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Member Updated Successfully'], 200);

@@ -228,7 +228,6 @@ class Member extends BaseController
             'type'=> ['rules' => 'required'], 
             'name'=> ['rules' => 'required'], 
             'mobileNo'=> ['rules' => 'required'],
-            'aadharCard'=> ['rules' => 'required'],
             'address'=> ['rules' => 'required'],
             'fees'=> ['rules' => 'required'],
             'transactionNo' => ['rules' => 'required'],
@@ -436,20 +435,6 @@ class Member extends BaseController
 
             ];
     
-            $memberId = $model->insert($member);
-    
-            // Prepare the transaction data with the new receipt number
-            $transaction = [
-                'memberId' => $memberId,
-                'transactionFor' => 'member',
-                'transactionNo' => $input['transactionNo'],
-                'transactionDate' => $input['transactionDate'],
-                'razorpayNo' => $input['razorpayNo'],
-                'amount' => $input['fees'],
-                'status' => 'success',
-                'paymentMode' => $input['paymentMode'],
-            ];
-
             // Update the course with new data
             $updated = $model->update($memberId, $member);
 

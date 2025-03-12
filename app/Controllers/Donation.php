@@ -308,22 +308,6 @@ class Donation extends BaseController
 
             ];
 
-               // Insert the donation record into the database
-               $donationId = $model->insert($donation);
-    
-               // Prepare transaction data
-               $transaction = [
-                   'memberId' => $donationId,
-                   'transactionFor' => 'donation',
-                   'transactionNo' => $input->transactionNo,
-                   'transactionDate' => $input->transactionDate,
-                   'razorpayNo' => $input->razorpayNo, // Optional field
-                   'amount' => $input->amount,
-                   'status' => 'success',
-                   'paymentMode' => $input->paymentMode,
-   
-               ];
-       
 
             // Update the course with new data
             $updated = $model->update($donationId, $donation);

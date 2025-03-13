@@ -35,6 +35,8 @@ class DonationModel extends Model
            $userId = getUserIdFromToken();
            if ($userId) {
                $data['data']['createdBy'] = $userId;
+           }else{
+               $data['data']['createdBy'] = 1;
            }
            return $data;
        }
@@ -45,6 +47,8 @@ class DonationModel extends Model
            $userId = getUserIdFromToken();
            if ($userId) {
                $data['data']['modifiedBy'] = $userId;
+           }else{
+               $data['data']['modifiedBy'] = 1;
            }
            return $data;
        }

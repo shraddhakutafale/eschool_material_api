@@ -16,6 +16,8 @@ function getUserIdFromToken()
         if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
             $token = $matches[1];
         }
+    }else {
+        return null;
     }
 
     // check if token is null or empty

@@ -173,6 +173,42 @@ class Gallery extends BaseController
                 $input['coverImage'] = $decoded->tenantName . '/galleryImages/' .$coverImageUrl; 
             }
     
+
+             
+            $galleryImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
+            $imageUrls = []; // Initialize the array for image URLs
+
+            if ($galleryImages && count($galleryImages) > 0) {
+                foreach ($galleryImages as $image) {
+                    // Validate the image: Ensure it's valid, hasn't moved, and exists
+                    if ($image && $image->isValid() && !$image->hasMoved()) {
+                        // Define the upload path for product images
+                        $galleryImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/galleryImages/';
+
+                        // Check if the directory exists; if not, create it
+                        if (!is_dir($galleryImagePath)) {
+                            mkdir($galleryImagePath, 0777, true); // Create directory if it doesn't exist
+                        }
+
+                        // Generate a unique name for the image to avoid overwriting
+                        $imageName = $image->getRandomName();
+
+                        // Move the uploaded image to the target directory
+                        $image->move($galleryImagePath, $imageName);
+
+                        // Get the URL for the uploaded image and add it to the array
+                        $imageUrl = 'uploads/galleryImages/' . $imageName;
+                        $imageUrl = str_replace('uploads/galleryImages/', '', $imageUrl);
+
+                        $imageUrls[] = $imageUrl; // Add the image URL to the array
+                    }
+                }
+
+                // If there are multiple images, join the URLs with commas and save in the input data
+                if (!empty($imageUrls)) {
+                    $input['galleryImages'] = implode(',', $imageUrls); // Join image URLs with commas
+                }
+            }
            
     
             $tenantService = new TenantService();

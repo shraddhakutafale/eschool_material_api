@@ -166,7 +166,7 @@ class Testimonial extends BaseController
             $model = new TestimonialModel($db);
             $model->insert($input);
     
-            return $this->respond(['status' => true, 'message' => 'Vendor Added Successfully'], 200);
+            return $this->respond(['status' => true, 'message' => 'Testimonial Added Successfully'], 200);
         } else {
             // If validation fails, return the error messages
             $response = [
@@ -210,11 +210,11 @@ class Testimonial extends BaseController
             $updateData = [
                 'name' =>$input['name'],
                 'designation' =>$input['designation'],
-                'mobileNo' => $input['mobileNo'],
-                'alternateMobileNo' => $input['alternateMobileNo'],  // Corrected here
-                'emailId' => $input['emailId'],  // Corrected here
-                'dateOfBirth' => $input['dateOfBirth'],  // Corrected here
-                'gender' => $input['gender'],  // Corrected here
+                'rating' =>$input['rating'],
+                'message' =>$input['message'],
+
+                
+                
             ];
 
             // Update the vendor with new data

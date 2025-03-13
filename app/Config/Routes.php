@@ -230,6 +230,18 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Staff::delete',['filter' => ['authFilter','tenantFilter']]);
   });
 
+  $routes->group('portfolio', function ($routes) {
+    //Routes for portfolio
+    $routes->get('getall', 'Portfolio::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Portfolio::getPortfolioPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Portfolio::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Portfolio::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Portfolio::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Portfolio::getPortfoliosWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Portfolio::delete',['filter' => ['authFilter','tenantFilter']]);
+    
+  });
+
   $routes->group('vendor', function ($routes) {
     //Routes for vendor
     $routes->get('getall', 'Vendor::index',['filter' => ['authFilter', 'tenantFilter']]);

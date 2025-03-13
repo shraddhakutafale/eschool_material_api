@@ -429,7 +429,7 @@ class Donation extends BaseController
     
             // Prepare transaction data
             $transaction = [
-                'donationId' => $donationId,
+                'memberId' => $donationId,
                 'transactionFor' => 'donation',
                 'transactionNo' => $input->transactionNo,
                 'transactionDate' => $input->transactionDate,

@@ -51,133 +51,88 @@ class Item extends BaseController
         return $this->respond($response, 200);
     }
 
-
-    // public function getItemsPaging()
-   
-    // {
-    //     $input = $this->request->getJSON();
-
-    //     // Get the page number from the input, default to 1 if not provided
-    //     $page = isset($input->page) ? $input->page : 1;
-    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
-    //     $sortField = isset($input->sortField) ? $input->sortField : 'vendorId';
-    //     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    //     $search = isset($input->search) ? $input->search : '';
-    //     $filter = $input->filter;
-        
-
-    //     $tenantService = new TenantService();
-        
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //     // Load StaffModel with the tenant database connection
-    //     $itemModel = new ItemModel($db);
-
-    //     $item = $itemModel->where('isDeleted', 0)->orderBy($sortField, $sortOrder)->like('itemName', $search)->orLike('mrp', $search)->paginate($perPage, 'default', $page);
-    //     if ($filter) {
-    //         $filter = json_decode(json_encode($filter), true);
-    //         $item = $itemModel->like($filter)->paginate($perPage, 'default', $page);   
-    //     }
-    //     $pager = $itemModel->pager;
-
-    //     $response = [
-    //         "status" => true,
-    //         "message" => "All item Data Fetched",
-    //         "data" => $item,
-    //         "pagination" => [
-    //             "currentPage" => $pager->getCurrentPage(),
-    //             "totalPages" => $pager->getPageCount(),
-    //             "totalItems" => $pager->getTotal(),
-    //             "perPage" => $perPage
-    //         ]
-    //     ];
-
-    //     return $this->respond($response, 200);
-    // }
-
     public function getItemsPaging()
-{
-    $input = $this->request->getJSON();
+    {
+        $input = $this->request->getJSON();
 
-    // Get the page number from the input, default to 1 if not provided
-    $page = isset($input->page) ? $input->page : 1;
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'itemId';
-    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    $search = isset($input->search) ? $input->search : '';
-    $filter = $input->filter;
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'itemId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
 
-    $tenantService = new TenantService();
-    
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    // Load StaffModel with the tenant database connection
-    $itemModel = new ItemModel($db);
-
-    // Initialize query with 'isDeleted' condition
-    $query = $itemModel->where('isDeleted', 0); // Apply the deleted check at the beginning
-
-    // Apply search filter for itemName and mrp
-    if (!empty($search)) {
-        $query->like('itemName', $search)
-              ->orLike('mrp', $search);
-    }
-
-    // Apply additional filters if provided
-    if (!empty($filter)) {
-        $filter = json_decode(json_encode($filter), true);
+        $tenantService = new TenantService();
         
-        foreach ($filter as $key => $value) {
-            if (in_array($key, ['itemName', 'mrp', 'sku'])) {
-                $query->like($key, $value); // LIKE filter for specific fields
-            } else if ($key === 'createdDate') {
-                $query->where($key, $value); // Exact match filter for createdDate
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load StaffModel with the tenant database connection
+        $itemModel = new ItemModel($db);
+
+        // Initialize query with 'isDeleted' condition
+        $query = $itemModel->where('isDeleted', 0); // Apply the deleted check at the beginning
+
+        // Apply search filter for itemName and mrp
+        if (!empty($search)) {
+            $query->like('itemName', $search)
+                ->orLike('mrp', $search);
+        }
+
+        // Apply additional filters if provided
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
+            
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['itemName', 'mrp', 'sku'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if ($key === 'createdDate') {
+                    $query->where($key, $value); // Exact match filter for createdDate
+                }
+            }
+
+            // Apply Date Range Filter (startDate and endDate)
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                    ->where('createdDate <=', $filter['endDate']);
+            }
+
+            // Apply Last 7 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+                $query->where('createdDate >=', $last7DaysStart);
+            }
+
+            // Apply Last 30 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+                $query->where('createdDate >=', $last30DaysStart);
             }
         }
 
-        // Apply Date Range Filter (startDate and endDate)
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('createdDate >=', $filter['startDate'])
-                  ->where('createdDate <=', $filter['endDate']);
-        }
+        // Apply sorting
+        $query->orderBy($sortField, $sortOrder);
 
-        // Apply Last 7 Days Filter if requested
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-            $query->where('createdDate >=', $last7DaysStart);
-        }
+        // Execute the query with pagination
+        $item = $query->paginate($perPage, 'default', $page);
 
-        // Apply Last 30 Days Filter if requested
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-            $query->where('createdDate >=', $last30DaysStart);
-        }
+        // Get pagination data
+        $pager = $itemModel->pager;
+
+        // Prepare the response
+        $response = [
+            "status" => true,
+            "message" => "All item Data Fetched",
+            "data" => $item,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+
+        return $this->respond($response, 200);
     }
-
-    // Apply sorting
-    $query->orderBy($sortField, $sortOrder);
-
-    // Execute the query with pagination
-    $item = $query->paginate($perPage, 'default', $page);
-
-    // Get pagination data
-    $pager = $itemModel->pager;
-
-    // Prepare the response
-    $response = [
-        "status" => true,
-        "message" => "All item Data Fetched",
-        "data" => $item,
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ];
-
-    return $this->respond($response, 200);
-}
-
-    
 
     public function create()
     {
@@ -400,8 +355,6 @@ class Item extends BaseController
         }
     }
     
-    
-
     public function delete()
     {
         $input = $this->request->getJSON();
@@ -464,15 +417,67 @@ class Item extends BaseController
 
     public function createCategory()
     {
-        $input = $this->request->getJSON();
+        // Retrieve the input data from the request
+        $input = $this->request->getPost();
 
-        // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new ItemCategory($db);
-        $model->insert($input);
-        return $this->respond(["status" => true, "message" => "Category Created Successfully"], 200);
+        // Define validation rules for required fields
+        $rules = [
+            'itemCategoryName' => ['rules' => 'required'],
+        ];
+
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
+
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemCategoryImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/itemCategoryImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/itemCategoryImages/', '', $coverImageUrl);
+
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $decoded->tenantName . '/itemCategoryImages/' . $coverImageUrl; 
+            }
+
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemCategory($db);
+            log_message('error', print_r($input, true));
+            $itemCategory = $model->insert($input);
+            return $this->respond(["status" => true, "message" => "Item Category Added Successfully", "data" => $itemCategory], 200);
+        }else{
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+            
     }
 
     public function getAllCategoryWeb()
@@ -521,10 +526,6 @@ class Item extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
     }
 
-   
-
-
-
     public function getItemByItemTypeId($itemTypeId){
 
         $model = new ItemModel();
@@ -538,15 +539,6 @@ class Item extends BaseController
         return $this->respond(['status' => true, 'message' => 'All Business Fetched', 'data' => $businesses], 200);
 
     }
-
-
-
-    
-    // public function findAllByCategoryId($categoryId)
-    // {
-    //     return $this->where('itemCategoryId', $categoryId)->findAll();
-    // }
-   
 
     public function getAllItemByTagWeb()
     {

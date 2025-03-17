@@ -25,8 +25,8 @@ class MemberModel extends Model
       protected $dateFormat    = 'datetime';
       protected $createdField  = 'createdDate';
       protected $updatedField  = 'modifiedDate';
-      protected $beforeInsert = ['addCreatedBy'];
-      protected $beforeUpdate = ['addModifiedBy'];
+    //   protected $beforeInsert = ['addCreatedBy'];
+    //   protected $beforeUpdate = ['addModifiedBy'];
   
       protected function addCreatedBy(array $data)
       {

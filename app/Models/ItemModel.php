@@ -47,6 +47,64 @@ class ItemModel extends Model
          }
          return $data;
      }
-    
+
+    public function getFilteredItems($categories = [], $brands = [], $minPrice = null, $maxPrice = null, $page = 1, $limit = 10)
+    {
+        $builder = $this->builder();
+
+        // Filter by categories
+        if (!empty($categories)) {
+            $builder->whereIn('itemCategoryId', $categories);
+        }
+
+        // Filter by brands
+        if (!empty($brands)) {
+            $builder->whereIn('brandName', $brands);
+        }
+
+        // Filter by price range
+        if ($minPrice !== null) {
+            $builder->where('price >=', $minPrice);
+        }
+
+        if ($maxPrice !== null) {
+            $builder->where('price <=', $maxPrice);
+        }
+
+        // Pagination: offset and limit
+        $offset = ($page - 1) * $limit;
+        $builder->limit($limit, $offset);
+
+        return $builder->get()->getResult();
     }
+
+    // This method will return the total number of filtered items (for pagination)
+    public function getFilteredItemsCount($categories = [], $brands = [], $minPrice = null, $maxPrice = null)
+    {
+        $builder = $this->builder(); // Get the query builder
+        
+        // Add filters for categories, if any
+        if (!empty($categories)) {
+            $builder->whereIn('itemCategoryId', $categories);
+        }
+
+        // Add filters for brands, if any
+        if (!empty($brands)) {
+            $builder->whereIn('brandName', $brands);
+        }
+
+        // Add price range filters, if any
+        if ($minPrice !== null) {
+            $builder->where('price >=', $minPrice);
+        }
+
+        if ($maxPrice !== null) {
+            $builder->where('price <=', $maxPrice);
+        }
+
+        // Get the total number of items that match the filters
+        return $builder->countAllResults();
+    }
+    
+}
  

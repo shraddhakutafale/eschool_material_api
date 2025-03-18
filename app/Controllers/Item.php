@@ -555,7 +555,7 @@ class Item extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
     }
 
-    public function getFourItemByCategoryWeb()
+    public function getFourItemByCategory()
     {
         $tenantService = new TenantService();
         // Connect to the tenant's database
@@ -604,6 +604,50 @@ class Item extends BaseController
             return $this->respond(["status" => false, "message" => "Item not found"], 404);
         }
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $item], 200);
+    }
+
+    public function filteredItems()
+    {
+        $input = $this->request->getJSON();
+
+        // Check if required fields exist in the input, if not, set them to a default value or handle the error
+        $categories = isset($input->selectedCategoryIds) ? (is_array($input->selectedCategoryIds) ? $input->selectedCategoryIds : explode(',', $input->selectedCategoryIds)) : [];
+        $brands = isset($input->brands) ? (is_array($input->brands) ? $input->brands : explode(',', $input->brands)) : [];
+        $minPrice = isset($input->minPrice) ? $input->minPrice : null;
+        $maxPrice = isset($input->maxPrice) ? $input->maxPrice : null;
+        
+        // Pagination parameters
+        $page = isset($input->page) ? (int)$input->page : 1;  // Default to page 1 if not provided
+        $limit = isset($input->limit) ? (int)$input->limit : 10;  // Default to 10 items per page if not provided
+        
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemModel($db);
+        
+        // Get filtered items with pagination
+        $items = $model->getFilteredItems($categories, $brands, $minPrice, $maxPrice, $page, $limit);
+        
+        // Get the total count of items for pagination info
+        $totalItems = $model->getFilteredItemsCount($categories, $brands, $minPrice, $maxPrice);
+        
+        // Calculate total pages
+        $totalPages = ceil($totalItems / $limit);
+        
+        // Return paginated response
+        return $this->respond([
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $items,
+            "pagination" => [
+                "currentPage" => $page,
+                "totalPages" => $totalPages,
+                "totalItems" => $totalItems,
+                "limit" => $limit
+            ]
+        ], 200);
+        
+
     }
 
 

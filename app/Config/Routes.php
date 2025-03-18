@@ -166,23 +166,12 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('view/(:segment)', 'Item::show/$1',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('create', 'Item::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Item::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Item::getItemsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    
     $routes->post('delete', 'Item::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]); 
     $routes->post('createcategory', 'Item::createCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallunit', 'Item::getAllUnit',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['authFilter','tenantFilter']]);
-
-
-    // Routes for website
-    $routes->get('getallcategoryweb', 'Item::getAllCategoryWeb',['filter' => 'tenantFilter']);
-    $routes->get('getallitembycategoryweb/(:num)', 'Item::getAllItemByCategoryWeb/$1',['filter' => 'tenantFilter']);
-    $routes->get('getallitembytag/(:segment)', 'Item::getAllItemByTagWeb/$1',['filter' => 'tenantFilter']);
-    $routes->get('getfouritembycategoryweb', 'Item::getFourItemByCategoryWeb',['filter' => 'tenantFilter']);
-    $routes->get('getfouritembytag/(:segment)', 'Item::getFourItemByTagWeb/$1',['filter' => 'tenantFilter']);
-    $routes->post('viewweb', 'Item::show',['filter' => ['tenantFilter']]);
-
-
 
   });
   
@@ -313,8 +302,12 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   });
 
   $routes->group('item', function ($routes) {
-    //Routes for vendor
+    //Routes for item
+    $routes->get('getallcategory', 'Item::getAllItemCategory',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Item::getItemsPaging',['filter' => ['tenantFilter']]);
+    $routes->get('getfouritembycategory', 'Item::getFourItemByCategory',['filter' => ['tenantFilter']]);
+    $routes->post('view', 'Item::show',['filter' => ['tenantFilter']]);
+    $routes->post('getallfiltereditem', 'Item::filteredItems',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('slide', function ($routes) {

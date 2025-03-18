@@ -286,6 +286,18 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
   });
 
+  $routes->group('course', function ($routes) {
+    $routes->get('getfeepaging', 'Course::getFeePaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('getsubjectpaging', 'Course::getSubjectPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('getshiftpaging', 'Course::getShiftPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('createfee', 'Course::createFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('createsubject', 'Course::createSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('createshift', 'Course::createShift',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('updatefee', 'Course::updateFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('updatesubject', 'Course::updateSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('updateshift', 'Course::updateShift',['filter' => ['authFilter', 'tenantFilter']]);
+  });
+
 });
 
 $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) {

@@ -12,7 +12,7 @@ class ShiftModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['shiftId', 'shiftName', 'startTime1', 'startTime2', 'endTime1', 'endTime2', 'emailTime', 'createdDate', 'createdBy', 'modifiedDate', 'modifiedBy', 'isDeleted', 'isActive'];
+    protected $allowedFields    = ['shiftId', 'shiftName', 'startTime', 'endTime', 'emailTime', 'createdDate', 'createdBy', 'modifiedDate', 'modifiedBy', 'isDeleted', 'isActive'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

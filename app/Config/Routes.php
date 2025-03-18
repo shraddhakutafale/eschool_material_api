@@ -287,15 +287,18 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
   });
 
   $routes->group('course', function ($routes) {
-    $routes->get('getfeepaging', 'Course::getFeePaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('getsubjectpaging', 'Course::getSubjectPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('getshiftpaging', 'Course::getShiftPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('createfee', 'Course::createFee',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('createsubject', 'Course::createSubject',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('createshift', 'Course::createShift',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('updatefee', 'Course::updateFee',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('updatesubject', 'Course::updateSubject',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('updateshift', 'Course::updateShift',['filter' => ['authFilter', 'tenantFilter']]);
+
+    $routes->post('getfeepaging', 'Course::getFeePaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getsubjectpaging', 'Course::getSubjectPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getshiftpaging', 'Course::getShiftPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createfee', 'Course::createFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createsubject', 'Course::createSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createshift', 'Course::createShift',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('updatefee', 'Course::updateFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('updatesubject', 'Course::updateSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('updateshift', 'Course::updateShift',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('deletefee', 'Course::deleteFee',['filter' => ['authFilter', 'tenantFilter']]);
+
   });
 
 });

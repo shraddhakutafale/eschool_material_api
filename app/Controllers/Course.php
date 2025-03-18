@@ -21,7 +21,7 @@ class Course extends BaseController
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
         $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'customerId';
+        $sortField = isset($input->sortField) ? $input->sortField : 'feeId';
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
@@ -37,7 +37,7 @@ class Course extends BaseController
             $filter = json_decode(json_encode($filter), true);
     
             foreach ($filter as $key => $value) {
-                if (in_array($key, ['name', 'mobileNo', 'email'])) {
+                if (in_array($key, ['particularName', 'amount'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
                 } else if ($key === 'createdDate') {
                     $query->where($key, $value); // Exact match filter for createdDate
@@ -72,13 +72,13 @@ class Course extends BaseController
         }
     
         // Get Paginated Results
-        $customers = $query->paginate($perPage, 'default', $page);
-        $pager = $customerModel->pager;
+        $fees = $query->paginate($perPage, 'default', $page);
+        $pager = $feeModel->pager;
     
         $response = [
             "status" => true,
             "message" => "All Customer Data Fetched",
-            "data" => $customers,
+            "data" => $fees,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
@@ -123,13 +123,13 @@ class Course extends BaseController
     }
 
 
-    public function update()
+    public function updateFee()
     {
-        $input = $this->request->getPost();
+        $input = $this->request->getJSON();
         
         // Validation rules for the vendor
         $rules = [
-            'customerId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
+            'feeId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
         ];
 
         // Validate the input
@@ -137,41 +137,37 @@ class Course extends BaseController
             $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new CustomerModel($db);
+        $model = new FeeModel($db);
 
             // Retrieve the vendor by vendorId
-            $customerId = $input['customerId'];
-            $customer = $model->find($customerId); // Assuming find method retrieves the vendor
-            
+            // $feeId = $input ->$feeId;
+            // $fee = $model->find($feeId); 
+
+            $fee = $model->find($input->feeId);
 
 
 
-            if (!$customer) {
-                return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
+
+            if (!$fee) {
+                return $this->fail(['status' => false, 'message' => 'Fee not found'], 404);
             }
 
             
             $updateData = [
-                'name' => $input['name'],  // Corrected here
-                'customerCode' => $input['customerCode'],  // Corrected here
-                'mobileNo' => $input['mobileNo'],  // Corrected here
-                'alternateMobileNo' => $input['alternateMobileNo'],  // Corrected here
-                'emailId' => $input['emailId'],  // Corrected here
-                'dateOfBirth' => $input['dateOfBirth'],  // Corrected here
-                'gender' => $input['gender'],  // Corrected here
+                'perticularName' => $input -> perticularName,  // Corrected here
+                'amount' => $input -> amount,  // Corrected here
 
-                
-    
+        
             ];     
 
             // Update the vendor with new data
-            $updated = $model->update($customerId, $updateData);
+            $updated = $model->update($fee, $updateData);
 
 
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Vendor Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Fee Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update vendor'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update Fee'], 500);
             }
         } else {
             // Validation failed
@@ -185,13 +181,13 @@ class Course extends BaseController
     }
 
 
-    public function delete()
+    public function deleteFee()
     {
         $input = $this->request->getJSON();
 
         // Validation rules for the customer
         $rules = [
-            'customerId' => ['rules' => 'required'], // Ensure customerId is provided
+            'feeId' => ['rules' => 'required'], // Ensure customerId is provided
         ];
 
         // Validate the input
@@ -199,13 +195,13 @@ class Course extends BaseController
             // Connect to the tenant's database
             $tenantService = new TenantService();
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
-            $model = new CustomerModel($db);
+            $model = new FeeModel($db);
 
             // Retrieve the customer by customerId
-            $customerId = $input->customerId;
-            $customer = $model->where('customerId', $customerId)->where('isDeleted', 0)->first(); // Only find active customers
+            $feeId = $input->feeId;
+            $fee = $model->where('feeId', $feeId)->where('isDeleted', 0)->first(); // Only find active customers
 
-            if (!$customer) {
+            if (!$fee) {
                 return $this->fail(['status' => false, 'message' => 'Customer not found or already deleted'], 404);
             }
 
@@ -213,13 +209,13 @@ class Course extends BaseController
             $updateData = [
                 'isDeleted' => 1,
             ];
-            $deleted = $model->update($customerId, $updateData);
+            $deleted = $model->update($feeId, $updateData);
             
 
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Customer marked as deleted'], 200);
+                return $this->respond(['status' => true, 'message' => 'Fee marked as deleted'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete customer'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete fee'], 500);
             }
         } else {
             // Validation failed

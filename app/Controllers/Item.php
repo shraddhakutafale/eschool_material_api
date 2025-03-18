@@ -276,8 +276,7 @@ class Item extends BaseController
             'itemTypeId' => $input['itemTypeId'],  // Corrected here
             'sku' => $input['sku'], 
             'hsnCode' => $input['hsnCode'],
-            'createdDate'=> $input['createdDate'],
-
+            'feature' =>$input['feature']
 
         ];              
     

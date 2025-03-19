@@ -112,7 +112,7 @@ class Lead extends BaseController
     // Create a new lead
     public function create()
     {
-        $input = $this->request->getPost();
+        $input = $this->request->getJSON();
         $rules = [
             'fName' => ['rules' => 'required'],
             'lName' => ['rules' => 'required'],
@@ -120,10 +120,10 @@ class Lead extends BaseController
         ];
 
         if ($this->validate($rules)) {
-                // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new LeadModel($db);
 
             // Insert the lead data into the database
@@ -145,7 +145,7 @@ class Lead extends BaseController
     // Update an existing lead
     public function update()
     {
-        $input = $this->request->getPost();
+        $input = $this->request->getJSON();
 
         // Validation rules for the lead
         $rules = [
@@ -154,14 +154,14 @@ class Lead extends BaseController
 
         // Validate the input
         if ($this->validate($rules)) {
-                // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new LeadModel($db);  // Use LeadModel for lead-related operations
 
             // Retrieve the lead by leadId
-            $leadId = $input['leadId'];  // Corrected here
+            $leadId = $input->leadId;  // Corrected here
             $lead = $model->find($leadId); // Assuming find method retrieves the lead
 
             if (!$lead) {
@@ -170,15 +170,12 @@ class Lead extends BaseController
 
             // Prepare the data to be updated (exclude leadId if it's included)
             $updateData = [
-
-                'fName' => $input['fName'],  // Corrected here
-                'lName' => $input['lName'],  // Corrected here
-                'primaryMobileNo' => $input['primaryMobileNo'],  // Corrected here
-                'secondaryMobileNo' => $input['secondaryMobileNo'],  // Corrected here
-                'whatsAppNo' => $input['whatsAppNo'],  // Corrected here
-                'email' => $input['email'],  // Corrected here
-
-
+                'fName' => $input->fName,  // Corrected here
+                'lName' => $input->lName,  // Corrected here
+                'primaryMobileNo' => $input->primaryMobileNo,  // Corrected here
+                'secondaryMobileNo' => $input->secondaryMobileNo,  // Corrected here
+                'whatsAppNo' => $input->whatsAppNo,  // Corrected here
+                'email' => $input->email,  // Corrected here
             ];
 
             // Update the lead with new data

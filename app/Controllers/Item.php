@@ -72,7 +72,7 @@ class Item extends BaseController
         $itemModel = new ItemModel($db);
 
         // Initialize query with 'isDeleted' condition
-        $query = $itemModel->where('isDeleted', 0); // Apply the deleted check at the beginning
+        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId); // Apply the deleted check at the beginning
 
         // Apply search filter for itemName and mrp
         if (!empty($search)) {
@@ -143,8 +143,7 @@ class Item extends BaseController
         
         // Define validation rules for required fields
         $rules = [
-            'itemName' => ['rules' => 'required'],
-            'mrp' => ['rules' => 'required'],
+            'itemName' => ['rules' => 'required']
         ];
 
         if ($this->validate($rules)) {
@@ -529,15 +528,13 @@ class Item extends BaseController
 
     public function getItemByItemTypeId($itemTypeId){
 
-        $model = new ItemModel();
-        $businessModel = new ItemTypeModel();
-        $userBusinesses = $model->where('itemTypeId', $itemTypeId)->findAll();
-        $businesses = array();
-        foreach ($userBusinesses as $key => $userBusiness) {
-            $business = $businessModel->find($userBusiness['itemId']);
-            array_push($businesses, $business);
-        }
-        return $this->respond(['status' => true, 'message' => 'All Business Fetched', 'data' => $businesses], 200);
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemModel($db);
+        $items = $model->where('itemTypeId', $itemTypeId)->findAll();
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $items], 200);
 
     }
 

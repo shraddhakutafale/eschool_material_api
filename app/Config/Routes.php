@@ -298,6 +298,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('updatesubject', 'Course::updateSubject',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('updateshift', 'Course::updateShift',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('deletefee', 'Course::deleteFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('deletesubject', 'Course::deleteSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('deleteshift', 'Course::deleteShift',['filter' => ['authFilter', 'tenantFilter']]);
+
 
   });
 

@@ -173,6 +173,11 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('getallunit', 'Item::getAllUnit',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['authFilter','tenantFilter']]);
 
+
+    // Routes for website
+   
+
+
   });
   
   $routes->group('gallery', function ($routes) {
@@ -311,6 +316,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   $routes->group('tenantuser', function ($routes) {
     $routes->post('login', 'TenantUser::loginWithMobileUid',['filter' => 'tenantFilter']);
     $routes->post('create', 'TenantUser::create',['filter' => ['authFilter','tenantFilter']]);
+    
 
   });
 

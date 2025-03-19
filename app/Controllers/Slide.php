@@ -96,5 +96,14 @@ class Slide extends BaseController
         }
     }
     
+    public function getall()
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $slideModel = new SlideModel($db);
+        
+        $slides = $slideModel->findAll();
+        return $this->respond(["status" => true, "message" => "All Slides Fetched", "data" => $slides], 200);
+    }
 
 }

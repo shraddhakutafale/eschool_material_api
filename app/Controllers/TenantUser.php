@@ -7,7 +7,7 @@ use App\Libraries\TenantService;
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\TenantUserModel;
-
+use App\Models\CustomerModel;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
 
@@ -172,82 +172,73 @@ class TenantUser extends BaseController
     }
 
     public function update()
-{
-    $input = $this->request->getPost();
-
-    // Validate User ID
-    if (!isset($input['userId']) || empty($input['userId'])) {
-        return $this->fail(['status' => false, 'message' => 'User ID is required'], 400);
-    }
-
-    // Define Validation Rules
-    $rules = [
-        'name'      => 'required',
-        'email'     => 'required|valid_email',
-        'mobileNo'  => 'required',
-        'country'   => 'required',
-        'location'  => 'required',
-        'userType'  => 'required',
-        'town'      => 'required',
-        'postcode'  => 'required'
-    ];
-
-    // Validate Input
-    if (!$this->validate($rules)) {
-        return $this->fail(['status' => false, 'message' => 'Validation Failed', 'errors' => $this->validator->getErrors()], 400);
-    }
-
-    // Verify Authorization Token
-    $key = "Exiaa@11";
-    $header = $this->request->getHeader("Authorization");
-    $token = null;
-
-    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
-    }
-
-    try {
-        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    } catch (Exception $e) {
-        log_message('error', 'JWT Decode Error: ' . $e->getMessage());
-        return $this->fail(['status' => false, 'message' => 'Invalid Token'], 401);
-    }
-
-    // File Upload Handling
-    $photoUrl = $this->request->getFile('photoUrl');
-    if ($photoUrl && $photoUrl->isValid() && !$photoUrl->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-
-        // Create Directory if not exists
-        if (!is_dir($uploadPath)) {
-            mkdir($uploadPath, 0777, true);
+    {
+        $input = $this->request->getPost();
+    
+        // Validate User ID
+        if (!isset($input['userId']) || empty($input['userId'])) {
+            return $this->fail(['status' => false, 'message' => 'User ID is required'], 400);
         }
-
-        // Generate a Unique File Name
-        $photoUrlName = $photoUrl->getRandomName();
-        $photoUrl->move($uploadPath, $photoUrlName);
-
-        // Store Relative Path in DB
-        $input['photoUrl'] = 'uploads/' . $decoded->tenantName . '/itemImages/' . $photoUrlName;
+    
+        // Define Validation Rules
+        $rules = [
+            'name'      => 'required',
+            'email'     => 'required|valid_email',
+            'mobileNo'  => 'required',
+            'country'   => 'required',
+            'location'  => 'required',
+            'userType'  => 'required',
+            'town'      => 'required',
+            'postcode'  => 'required'
+        ];
+    
+        // Validate Input
+        if (!$this->validate($rules)) {
+            return $this->fail(['status' => false, 'message' => 'Validation Failed', 'errors' => $this->validator->getErrors()], 400);
+        }
+    
+        // Get Database Connection
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+        if (!$db) {
+            return $this->fail(['status' => false, 'message' => 'Database connection failed'], 500);
+        }
+    
+        // Update User Record in tenant_user
+        $tenantUserModel = new TenantUserModel($db);
+        if (!$tenantUserModel->update($input['userId'], $input)) {
+            return $this->fail(['status' => false, 'message' => 'Update failed'], 500);
+        }
+    
+        // If userType is 'Customer', insert into customer_mst
+        if ($input['userType'] === 'Customer') {
+            $customerModel = new CustomerModel($db);
+            $customerData = [
+                'name'              => $input['name'],
+                'mobileNo'          => $input['mobileNo'],
+                'emailId'           => $input['email'],
+                'gender'            => isset($input['gender']) ? $input['gender'] : null,
+                'dateOfBirth'       => isset($input['dateOfBirth']) ? $input['dateOfBirth'] : null,
+                'alternateMobileNo' => isset($input['alternateMobileNo']) ? $input['alternateMobileNo'] : null,
+                'createdBy'         => $input['userId'],
+                'createdDate'       => date('Y-m-d H:i:s'),
+                'isActive'          => 1,
+                'isDeleted'         => 0
+            ];
+    
+            // Insert into customer_mst and get the inserted customerId
+            $customerId = $customerModel->insert($customerData);
+    
+            if ($customerId) {
+                // Update tenant_user with the customerId in userTypeSpeid
+                $tenantUserModel->update($input['userId'], ['userTypeSpeid' => $customerId]);
+            }
+        }
+    
+        return $this->respond(['status' => true, 'message' => 'User Updated Successfully'], 200);
     }
-
-    // Get Database Connection
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-    if (!$db) {
-        log_message('error', 'Database connection failed');
-        return $this->fail(['status' => false, 'message' => 'Database connection failed'], 500);
-    }
-
-    // Update User Record
-    $model = new TenantUserModel($db);
-    if (!$model->update($input['userId'], $input)) {
-        return $this->fail(['status' => false, 'message' => 'Update failed'], 500);
-    }
-
-    return $this->respond(['status' => true, 'message' => 'User Updated Successfully', 'photoUrl' => $input['photoUrl']], 200);
-}
+    
 
 
 }

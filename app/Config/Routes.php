@@ -332,6 +332,8 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->get('profile', 'TenantUser::getProfile',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('create', 'TenantUser::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'TenantUser::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('create', 'Customer::create',['filter' => ['authFilter','tenantFilter']]);
+
   });
 
   $routes->group('staff', function ($routes) {

@@ -129,6 +129,7 @@ class TenantUser extends BaseController
             'userType' => ['rules' => 'required'],
             'town' => ['rules' => 'required'],
             'postcode' => ['rules' => 'required'],
+            'photoUrl' => isset($input['photoUrl']) ? $input['photoUrl'] : null
         ];
 
         if (!$this->validate($rules)) {
@@ -171,64 +172,85 @@ class TenantUser extends BaseController
     }
 
     public function update()
-    {
-        $input = $this->request->getPost();
-        
-        $rules = [
-            'name' => ['rules' => 'required'],
-            'email' => ['rules' => 'required|valid_email'],
-            'mobileNo' => ['rules' => 'required'],
-            'country' => ['rules' => 'required'],
-            'location' => ['rules' => 'required'],
-            'userType' => ['rules' => 'required'],
-            'town' => ['rules' => 'required'],
-            'postcode' => ['rules' => 'required'],
-        ];
+{
+    $input = $this->request->getPost();
 
-        if (!$this->validate($rules)) {
-            return $this->fail(['status' => false, 'errors' => $this->validator->getErrors(), 'message' => 'Invalid Inputs'], 409);
-        }
-
-        $key = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token = null;
-
-        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-            $token = $matches[1];
-        }
-
-        try {
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-        } catch (Exception $e) {
-            return $this->fail(['status' => false, 'message' => 'Invalid Token'], 401);
-        }
-
-        // Handle Image Upload
-        $photoUrl = $this->request->getFile('photoUrl');
-        if ($photoUrl && $photoUrl->isValid() && !$photoUrl->hasMoved()) {
-            $photoUrlPath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-            if (!is_dir($photoUrlPath)) mkdir($photoUrlPath, 0777, true);
-
-            $photoUrlName = $photoUrl->getRandomName();
-            $photoUrl->move($photoUrlPath, $photoUrlName);
-
-            $input['photoUrl'] = $decoded->tenantName . '/itemImages/' . $photoUrlName;
-        }
-
-        // Update Data
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new TenantUserModel($db);
-        $model->update($input['userId'], $input);
-
-        return $this->respond(['status' => true, 'message' => 'User Updated Successfully'], 200);
+    // Validate User ID
+    if (!isset($input['userId']) || empty($input['userId'])) {
+        return $this->fail(['status' => false, 'message' => 'User ID is required'], 400);
     }
-  
-    
+
+    // Define Validation Rules
+    $rules = [
+        'name'      => 'required',
+        'email'     => 'required|valid_email',
+        'mobileNo'  => 'required',
+        'country'   => 'required',
+        'location'  => 'required',
+        'userType'  => 'required',
+        'town'      => 'required',
+        'postcode'  => 'required'
+    ];
+
+    // Validate Input
+    if (!$this->validate($rules)) {
+        return $this->fail(['status' => false, 'message' => 'Validation Failed', 'errors' => $this->validator->getErrors()], 400);
+    }
+
+    // Verify Authorization Token
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    try {
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    } catch (Exception $e) {
+        log_message('error', 'JWT Decode Error: ' . $e->getMessage());
+        return $this->fail(['status' => false, 'message' => 'Invalid Token'], 401);
+    }
+
+    // File Upload Handling
+    $photoUrl = $this->request->getFile('photoUrl');
+    if ($photoUrl && $photoUrl->isValid() && !$photoUrl->hasMoved()) {
+        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+
+        // Create Directory if not exists
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
+        // Generate a Unique File Name
+        $photoUrlName = $photoUrl->getRandomName();
+        $photoUrl->move($uploadPath, $photoUrlName);
+
+        // Store Relative Path in DB
+        $input['photoUrl'] = 'uploads/' . $decoded->tenantName . '/itemImages/' . $photoUrlName;
+    }
+
+    // Get Database Connection
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    if (!$db) {
+        log_message('error', 'Database connection failed');
+        return $this->fail(['status' => false, 'message' => 'Database connection failed'], 500);
+    }
+
+    // Update User Record
+    $model = new TenantUserModel($db);
+    if (!$model->update($input['userId'], $input)) {
+        return $this->fail(['status' => false, 'message' => 'Update failed'], 500);
+    }
+
+    return $this->respond(['status' => true, 'message' => 'User Updated Successfully', 'photoUrl' => $input['photoUrl']], 200);
 }
 
 
-
+}
 
 
     

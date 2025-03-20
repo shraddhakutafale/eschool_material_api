@@ -306,7 +306,15 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
   });
 
   $routes->group('course', function ($routes) {
-
+    $routes->get('getall', 'Course::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Course::getAllPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('create', 'Course::create',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('update', 'Course::update',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('delete', 'Course::delete',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('getallcategory', 'Course::getAllCategory',['filter' => 'authFilter']);
+    $routes->get('getallfee', 'Course::getAllFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('getallsubject', 'Course::getAllSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('getallshift', 'Course::getAllShift',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getfeepaging', 'Course::getFeePaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getsubjectpaging', 'Course::getSubjectPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getshiftpaging', 'Course::getShiftPaging',['filter' => ['authFilter', 'tenantFilter']]);

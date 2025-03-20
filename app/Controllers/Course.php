@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
+use App\Models\ItemModel;
 use App\Models\FeeModel;
 use App\Models\ShiftModel;
 use App\Models\SubjectModel;
@@ -17,6 +18,404 @@ use \Firebase\JWT\Key;
 class Course extends BaseController
 {
     use ResponseTrait;
+
+    public function index()
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $itemModel = new ItemModel($db);
+        $items = $itemModel->findAll();
+        return $this->respond(['status' => true, 'message' => 'All items fetched successfully', 'data' => $items], 200);
+    }
+
+    public function getAllPaging()
+    {
+        $input = $this->request->getJSON();
+
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'itemId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+
+        $tenantService = new TenantService();
+        
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load StaffModel with the tenant database connection
+        $itemModel = new ItemModel($db);
+
+        // Initialize query with 'isDeleted' condition
+        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId); // Apply the deleted check at the beginning
+
+        // Apply search filter for itemName and mrp
+        if (!empty($search)) {
+            $query->like('itemName', $search)
+                ->orLike('mrp', $search);
+        }
+
+        // Apply additional filters if provided
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
+            
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['itemName', 'mrp', 'sku'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if ($key === 'createdDate') {
+                    $query->where($key, $value); // Exact match filter for createdDate
+                }
+            }
+
+            // Apply Date Range Filter (startDate and endDate)
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                    ->where('createdDate <=', $filter['endDate']);
+            }
+
+            // Apply Last 7 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+                $query->where('createdDate >=', $last7DaysStart);
+            }
+
+            // Apply Last 30 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+                $query->where('createdDate >=', $last30DaysStart);
+            }
+        }
+
+        // Apply sorting
+        $query->orderBy($sortField, $sortOrder);
+
+        // Execute the query with pagination
+        $item = $query->paginate($perPage, 'default', $page);
+
+        // Get pagination data
+        $pager = $itemModel->pager;
+
+        // Prepare the response
+        $response = [
+            "status" => true,
+            "message" => "All item Data Fetched",
+            "data" => $item,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+
+        return $this->respond($response, 200);
+    }
+
+    public function create()
+    {
+        // Retrieve the input data from the request
+        $input = $this->request->getPost();
+        
+        // Define validation rules for required fields
+        $rules = [
+            'itemName' => ['rules' => 'required']
+        ];
+
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
+            }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
+
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/itemImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/itemImages/', '', $coverImageUrl);
+
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageUrl; 
+            }
+
+            
+            $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
+            $imageUrls = []; // Initialize the array for image URLs
+
+            if ($productImages && count($productImages) > 0) {
+                foreach ($productImages as $image) {
+                    // Validate the image: Ensure it's valid, hasn't moved, and exists
+                    if ($image && $image->isValid() && !$image->hasMoved()) {
+                        // Define the upload path for product images
+                        $productImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/itemSlideImages/';
+
+                        // Check if the directory exists; if not, create it
+                        if (!is_dir($productImagePath)) {
+                            mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
+                        }
+
+                        // Generate a unique name for the image to avoid overwriting
+                        $imageName = $image->getRandomName();
+
+                        // Move the uploaded image to the target directory
+                        $image->move($productImagePath, $imageName);
+
+                        // Get the URL for the uploaded image and add it to the array
+                        $imageUrl = 'uploads/itemSlideImages/' . $imageName;
+                        $imageUrl = str_replace('uploads/itemSlideImages/', '', $imageUrl);
+
+                        $imageUrls[] = $imageUrl; // Add the image URL to the array
+                    }
+                }
+
+                // If there are multiple images, join the URLs with commas and save in the input data
+                if (!empty($imageUrls)) {
+                    $input['productImages'] = implode(',', $imageUrls); // Join image URLs with commas
+                }
+            }
+
+
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemModel($db);
+            $model->insert($input);
+
+            return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
+        } else {
+            // If validation fails, return the error messages
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs',
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+
+    public function update()
+    {
+        $input = $this->request->getPost();
+    
+        // Validation rules for the item
+        $rules = [
+            'itemId' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
+        ];
+    
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+            $model = new ItemModel($db);
+    
+           // Retrieve the item by itemId
+           $itemId = $input['itemId'];  // Corrected here
+           $item = $model->find($itemId); // Assuming find method retrieves the item
+    
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+            }
+    
+        
+         // Prepare the data to be updated (exclude itemId if it's included)
+         $updateData = [
+            'itemName' => $input['itemName'],  // Corrected here
+            'itemCategoryId' => $input['itemCategoryId'],  // Corrected here
+            'mrp' => $input['mrp'],  // Corrected here
+            'discountType' => $input['discountType'],  // Corrected here
+            'discount' => $input['discount'],  // Corrected here
+            'barcode' => $input['barcode'],  // Corrected here
+            'description' => $input['description'],  // Corrected here
+            'itemTypeId' => $input['itemTypeId'],  // Corrected here
+            'sku' => $input['sku'], 
+            'hsnCode' => $input['hsnCode'],
+            'feature' =>$input['feature']
+
+        ];              
+    
+            // Handle cover image update
+            $coverImage = $this->request->getFile('coverImage');
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Handle cover image upload as in create() method
+                $key = "Exiaa@11";
+                $header = $this->request->getHeader("Authorization");
+                $token = null;
+    
+                // extract the token from the header
+                if (!empty($header)) {
+                    if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                        $token = $matches[1];
+                    }
+                }
+    
+                $decoded = JWT::decode($token, new Key($key, 'HS256'));
+                $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+    
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+    
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+    
+                // Add the new cover image URL to the update data
+                $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
+            }
+    
+            // Handle product image update (if new images are uploaded)
+            $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
+            $imageUrls = [];
+    
+            if ($productImages && count($productImages) > 0) {
+                foreach ($productImages as $image) {
+                    if ($image && $image->isValid() && !$image->hasMoved()) {
+                        // Handle image upload as in create() method
+                        $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
+                        if (!is_dir($productImagePath)) {
+                            mkdir($productImagePath, 0777, true);
+                        }
+    
+                        $imageName = $image->getRandomName();
+                        $image->move($productImagePath, $imageName);
+    
+                        $imageUrls[] = 'uploads/itemSlideImages/' . $imageName;
+                    }
+                }
+    
+                // If there are multiple images, join the URLs with commas and save in the input data
+                if (!empty($imageUrls)) {
+                    $input['productImages'] = implode(',', $imageUrls);
+                }
+            }
+    
+            // Update the item with new data
+            $updated = $model->update($itemId, $updateData);
+    
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+    
+    public function delete()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the course
+        $rules = [
+            'itemId' => ['rules' => 'required'], // Ensure eventId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+           
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemModel($db);
+
+            // Retrieve the course by eventId
+            $itemId = $input->itemId;
+            $item = $model->find($itemId); // Assuming find method retrieves the course
+
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
+            }
+
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($itemId, $updateData);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Item Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete course'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+    public function getAllCategory()
+    {
+        $input = $this->request->getJSON();
+
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemCategory($db);
+        $itemCategories = $model->findAll();
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
+    }
+
+    public function getAllFee()
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $feeModel = new FeeModel($db);
+        $fees = $feeModel->findAll();
+        return $this->respond(['status' => true, 'message' => 'Fees fetched successfully', 'data' => $fees], 200);
+    }
+
+    public function getAllShift()
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $shiftModel = new ShiftModel($db);
+        $shifts = $shiftModel->findAll();
+        return $this->respond(['status' => true, 'message' => 'Shifts fetched successfully', 'data' => $shifts], 200);
+    }
+
+    public function getAllSubject()
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $subjectModel = new SubjectModel($db);
+        $subjects = $subjectModel->findAll();
+        return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $subjects], 200);
+    }
 
     public function getFeePaging()
     {
@@ -343,10 +742,7 @@ class Course extends BaseController
             ];
             return $this->fail($response, 409);
         }
-    }
-
-
-    
+    } 
 
     public function updateShift()
     {
@@ -455,8 +851,6 @@ class Course extends BaseController
         }
     }
 
-
-    
     public function getSubjectPaging()
     {
         $input = $this->request->getJSON();
@@ -533,7 +927,6 @@ class Course extends BaseController
         return $this->respond($response, 200);
     }
     
-
     public function createSubject()
     {
         // Retrieve the input data from the request
@@ -566,9 +959,6 @@ class Course extends BaseController
             return $this->fail($response, 409);
         }
     }
-
-
-    
 
     public function updateSubject()
     {

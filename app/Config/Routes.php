@@ -248,6 +248,20 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
   });
 
 
+   
+  $routes->group('offer', function ($routes) {
+    //Routes for offer
+    $routes->get('getall', 'Offer::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Offer::getOffersPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Offer::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Offer::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Offer::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Offer::getOffersWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Offer::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
+
+
   $routes->group('testimonial', function ($routes) {
     //Routes for vendor
     $routes->get('getall', 'Testimonial::index',['filter' => ['authFilter', 'tenantFilter']]);

@@ -4,50 +4,52 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
-use App\Models\EventModel;
+use App\Models\OfferModel;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
+
 use Config\Database;
 
-class Event extends BaseController
+
+class Offer extends BaseController
 {
     use ResponseTrait;
 
     public function index()
     {
-       // Insert the product data into the database
-       $tenantService = new TenantService();
-       // Connect to the tenant's database
-       $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); // Load UserModel with the tenant database connection
-        $EventModel = new EventModel($db);
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $EventModel->findAll()], 200);
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load VendorModel with the tenant database connection
+        $OfferModel = new OfferModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $OfferModel->findAll()], 200);
     }
 
-    public function getEventsPaging()
-    {
+
+    public function getOffersPaging() {
         $input = $this->request->getJSON();
     
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
         $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'eventId';
+        $sortField = isset($input->sortField) ? $input->sortField : 'offerId';
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
     
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load EventModel with the tenant database connection
-        $eventModel = new EventModel($db);
+        // Load StaffModel with the tenant database connection
+        $offerModel = new OfferModel($db);
     
-        $query = $eventModel;
+        $query = $offerModel;
     
         if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
     
             foreach ($filter as $key => $value) {
-                if (in_array($key, ['eventName', 'eventDesc', 'venue'])) {
+                if (in_array($key, ['offerName'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
                 } else if ($key === 'createdDate') {
                     $query->where($key, $value); // Exact match filter for createdDate
@@ -82,13 +84,13 @@ class Event extends BaseController
         }
     
         // Get Paginated Results
-        $events = $query->paginate($perPage, 'default', $page);
-        $pager = $eventModel->pager;
+        $offers = $query->paginate($perPage, 'default', $page);
+        $pager = $offerModel->pager;
     
         $response = [
             "status" => true,
-            "message" => "All Event Data Fetched",
-            "data" => $events,
+            "message" => "All Staff Data Fetched",
+            "data" => $offers,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
                 "totalPages" => $pager->getPageCount(),
@@ -99,32 +101,21 @@ class Event extends BaseController
     
         return $this->respond($response, 200);
     }
-
-    public function getEventsWebsite()
-    {// Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load UserModel with the tenant database connection
-        $EventModel = new EventModel($db);
-        $events = $EventModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $events], 200);
-    }
-
+    
+    
     public function create()
     {
-        // Retrieve the input data from the request
         $input = $this->request->getPost();
         
-        // Define validation rules for required fields
+        // Validation rules for other fields
         $rules = [
-            'eventName'  => ['rules' => 'required'],
-            'venue'  => ['rules' => 'required'],
-            'eventDesc'  => ['rules' => 'required'],
+            'offerName'=> ['rules' => 'required'],
+            'discountType'=> ['rules' => 'required'],
 
-
+            
         ];
     
+        // Validate the incoming data
         if ($this->validate($rules)) {
             $key = "Exiaa@11";
             $header = $this->request->getHeader("Authorization");
@@ -151,12 +142,12 @@ class Event extends BaseController
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
            
             // Handle image upload for the cover image
-            $profilePic= $this->request->getFile('profilePic');
+            $profilePic = $this->request->getFile('profilePic');
             $profilePicName = null;
     
             if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
                 // Define the upload path for the cover image
-                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/eventImages/';
+                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/offerImages/';
                 if (!is_dir($profilePicPath)) {
                     mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
                 }
@@ -165,72 +156,87 @@ class Event extends BaseController
                 $profilePicName = $profilePic->getRandomName();
                 $profilePic->move($profilePicPath, $profilePicName);
     
-                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $profilePicUrl = 'uploads/eventImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/eventImages/', '', $profilePicUrl);
+                // Get the URL of the uploaded cover image and remove the 'uploads/profilePics/' prefix
+                $profilePicUrl = 'uploads/offerImages/' . $profilePicName;
+                $profilePicUrl = str_replace('uploads/offerImages/', '', $profilePicUrl);
     
                 // Add the cover image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/eventImages/' .$profilePicUrl; 
+                $input['profilePic'] = $profilePicUrl; 
+                $input['profilePic'] = $decoded->tenantName . '/offerImages/' .$profilePicUrl;
             }
     
-           
+              
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new \App\Models\OfferModel($db);
     
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new EventModel($db);
+          
+            // Insert the student data into the database
             $model->insert($input);
     
-            return $this->respond(['status' => true, 'message' => 'Event Added Successfully'], 200);
+            // Return success response
+            return $this->respond([
+                'status' => true,
+                'message' => 'Offer Added Successfully',
+                'data' => $input
+            ], 200);
+    
         } else {
-            // If validation fails, return the error messages
+            // If validation fails, return errors
             $response = [
                 'status' => false,
                 'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
+                'message' => 'Invalid Inputs'
             ];
             return $this->fail($response, 409);
         }
     }
     
+
     public function update()
     {
         $input = $this->request->getPost();
         
-        // Validation rules for the studentId
         $rules = [
-            'eventId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
+            'offerId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
-             
-        $tenantService = new TenantService();
+            $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new EventModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new OfferModel($db);
 
-            // Retrieve the student by studentId
-            $eventId = $input['eventId'];  // Corrected here
-            $event = $model->find($eventId); // Assuming find method retrieves the student
+            $offerId = $input['offerId'];
+            $offer = $model->find($offerId); 
+            
 
-            if (!$event) {
-                return $this->fail(['status' => false, 'message' => 'event not found'], 404);
+
+
+            if (!$offer) {
+                return $this->fail(['status' => false, 'message' => 'Offer not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude studentId if it's included)
+            // Prepare the data to be updated (exclude vendorId if it's included)
             $updateData = [
-
-                'eventName' => $input['eventName'],  // Corrected here
-               
+                'offerName' =>$input['offerName'],
+                'discountType' =>$input['discountType'],
+                'selectOffer' =>$input['selectOffer'],
+                'allCategory' =>$input['allCategory'],
+                'allItems' =>$input['allItems'],
+ 
             ];
 
-            // Update the student with new data
-            $updated = $model->update($eventId, $updateData);
+            // Update the vendor with new data
+            $updated = $model->update($offerId, $updateData);
+
 
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'event Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Offer Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update event'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update offer'], 500);
             }
         } else {
             // Validation failed
@@ -242,15 +248,13 @@ class Event extends BaseController
             return $this->fail($response, 409);
         }
     }
-
-
     public function delete()
     {
         $input = $this->request->getJSON();
         
 
         $rules = [
-            'eventId' => ['rules' => 'required'], // Ensure vendorId is provided
+            'offerId' => ['rules' => 'required'], // Ensure vendorId is provided
         ];
     
 
@@ -261,20 +265,20 @@ class Event extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new EventModel($db);
+            $model = new OfferModel($db);
     
             // Retrieve the vendor by vendorId
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new EventModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new OfferModel($db);
 
             // Retrieve the lead by leadId
-            $eventId = $input->eventId;
-            $event = $model->find($eventId); // Assuming the find method retrieves the vendor
+            $offerId = $input->offerId;
+            $offer = $model->find($offerId); // Assuming the find method retrieves the vendor
     
             
-            $event = $model->find($eventId); // Assuming find method retrieves the lead
+            $offer = $model->find($offerId); // Assuming find method retrieves the lead
 
-            if (!$event) {
-                return $this->fail(['status' => false, 'message' => 'event not found'], 404);
+            if (!$offer) {
+                return $this->fail(['status' => false, 'message' => 'offer not found'], 404);
             }
     
             // Soft delete by marking 'isDeleted' as 1
@@ -284,12 +288,12 @@ class Event extends BaseController
     
 
             // Proceed to delete the lead
-            $deleted = $model->delete($eventId);
+            $deleted = $model->delete($offerId);
 
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'event Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'offer Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete event'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete offer'], 500);
             }
         } else {
             // Validation failed
@@ -306,12 +310,11 @@ class Event extends BaseController
     public function uploadPageProfile()
     {
         // Retrieve form fields
-        $eventId = $this->request->getPost('eventId'); // Example field
+        $vendorId = $this->request->getPost('offerId'); // Example field
 
         // Retrieve the file
         $file = $this->request->getFile('photoUrl');
 
-        
         // Validate file
         if (!$file->isValid()) {
             return $this->fail($file->getErrorString());
@@ -337,8 +340,8 @@ class Event extends BaseController
             'photoUrl' => $newName,
         ];
 
-        $model = new EventModel();
-        $model->update($eventId,$data);
+        $model = new VendorModel();
+        $model->update($vendorId, $data);
 
         return $this->respond([
             'status' => 201,
@@ -346,6 +349,4 @@ class Event extends BaseController
             'data' => $data,
         ]);
     }
-
-
 }

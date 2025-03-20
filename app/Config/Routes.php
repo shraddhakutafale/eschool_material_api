@@ -316,13 +316,12 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   $routes->group('tenantuser', function ($routes) {
     $routes->post('login', 'TenantUser::loginWithMobileUid',['filter' => 'tenantFilter']);
     $routes->post('create', 'TenantUser::create',['filter' => ['authFilter','tenantFilter']]);
-    
-
   });
 
   $routes->group('staff', function ($routes) {
     //Routes for staff
     $routes->get('getall', 'Staff::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Staff::getStaffPaging',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('item', function ($routes) {
@@ -337,6 +336,24 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   $routes->group('slide', function ($routes) {
     //Routes for gallery
     $routes->get('getall', 'Slide::index',['filter' => ['tenantFilter']]);
+  });
+
+  $routes->group('testimonial', function ($routes) {
+    //Routes for vendor
+    $routes->get('getall', 'Testimonial::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Testimonial::getTestimonialsPaging',['filter' => ['tenantFilter']]);
+  });
+
+  $routes->group('gallery', function ($routes) {
+    //Routes for gallery
+    $routes->get('getall', 'Gallery::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Gallery::getGallerysPaging',['filter' => ['tenantFilter']]);
+  });
+
+  $routes->group('event', function ($routes) {
+    //Routes for event
+    $routes->get('getall', 'Event::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Event::getEventsPaging',['filter' => ['tenantFilter']]);
   });
 
 });

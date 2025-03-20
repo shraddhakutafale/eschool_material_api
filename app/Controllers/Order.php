@@ -26,47 +26,111 @@ class Order extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $OrderModel->findAll()], 200);
     }
 
+    // public function getOrdersPaging()
+    // {
+    //     $input = $this->request->getJSON();
+
+    //     // Get the page number from the input, default to 1 if not provided
+    //     $page = isset($input->page) ? $input->page : 1;
+    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
+    //     $sortField = isset($input->sortField) ? $input->sortField : 'orderId';
+    //     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    //     $search = isset($input->search) ? $input->search : '';
+    //     $filter = $input->filter;
+        
+
+    //     $tenantService = new TenantService();
+        
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     // Load OrderModel with the tenant database connection
+    //     $orderModel = new OrderModel($db);
+
+    //     $order = $orderModel->orderBy($sortField, $sortOrder)
+    //         ->like('orderCode', $search)->orLike('orderDate', $search)->paginate($perPage, 'default', $page);
+    //     if ($filter) {
+    //         $filter = json_decode(json_encode($filter), true);
+    //         $order = $orderModel->where($filter)->paginate($perPage, 'default', $page);   
+    //     }
+    //     $pager = $orderModel->pager;
+
+    //     $response = [
+    //         "status" => true,
+    //         "message" => "All Order Data Fetched",
+    //         "data" => $order,
+    //         "pagination" => [
+    //             "currentPage" => $pager->getCurrentPage(),
+    //             "totalPages" => $pager->getPageCount(),
+    //             "totalItems" => $pager->getTotal(),
+    //             "perPage" => $perPage
+    //         ]
+    //     ];
+
+    //     return $this->respond($response, 200);
+    // }
+
     public function getOrdersPaging()
-    {
-        $input = $this->request->getJSON();
+{
+    $input = $this->request->getJSON();
 
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'orderId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
-        
+    // Get the page number from the input, default to 1 if not provided
+    $page = isset($input->page) ? $input->page : 1;
+    $perPage = isset($input->perPage) ? $input->perPage : 10;
+    $sortField = isset($input->sortField) ? $input->sortField : 'orderId';
+    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    $search = isset($input->search) ? $input->search : '';
+    $filter = $input->filter;
+    
+    // TenantService for dynamic database configuration
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+    // Load OrderModel with the tenant database connection
+    $orderModel = new OrderModel($db);
 
-        $tenantService = new TenantService();
-        
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load OrderModel with the tenant database connection
-        $orderModel = new OrderModel($db);
-
-        $order = $orderModel->orderBy($sortField, $sortOrder)
-            ->like('orderCode', $search)->orLike('orderDate', $search)->paginate($perPage, 'default', $page);
-        if ($filter) {
-            $filter = json_decode(json_encode($filter), true);
-            $order = $orderModel->where($filter)->paginate($perPage, 'default', $page);   
-        }
-        $pager = $orderModel->pager;
-
-        $response = [
-            "status" => true,
-            "message" => "All Order Data Fetched",
-            "data" => $order,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-
-        return $this->respond($response, 200);
+    // Load OrderDetails model to access itemId
+    $orderDetailsModel = new OrderDetailModel($db); // Assuming OrderDetailsModel exists
+    
+    // Fetch order data with search criteria
+    $order = $orderModel->orderBy($sortField, $sortOrder)
+        ->like('orderCode', $search)
+        ->orLike('orderDate', $search)
+        ->paginate($perPage, 'default', $page);
+    
+    // If a filter is provided, apply it
+    if ($filter) {
+        $filter = json_decode(json_encode($filter), true);
+        $order = $orderModel->where($filter)->paginate($perPage, 'default', $page);   
     }
+    
+    // Add item details from the OrderDetails model to the orders
+    foreach ($order as &$orderItem) {
+        // Fetch related order details by orderId
+        $orderDetails = $orderDetailsModel->where('orderId', $orderItem['orderId'])->findAll();
+        
+        // Add the item details to the order
+        $orderItem['items'] = $orderDetails;
+    }
+
+    // Get pagination info from the pager
+    $pager = $orderModel->pager;
+
+    // Prepare the response
+    $response = [
+        "status" => true,
+        "message" => "All Order Data Fetched",
+        "data" => $order,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ];
+
+    // Return the response
+    return $this->respond($response, 200);
+}
+
 
     public function getOrdersWebsite()
     {
@@ -80,68 +144,7 @@ class Order extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $OrderModel], 200);
     }
 
-    // public function create()
-    // {
-    //     $input = $this->request->getJSON();
-    //     $rules = [
-    //          // 'customerName' => ['rules' => 'required'],
-    //         // 'contactNumber' => ['rules' => 'required'],
-    //         // 'deliveryDate' => ['rules' => 'required'],
-    //         // 'shipToStreetAddress' => ['rules' => 'required'],
-    //         // 'shipToPhone' => ['rules' => 'required'],
-    //         // 'shipToCity' => ['rules' => 'required'],
-    //         // 'pincode' => ['rules' => 'required'], // Validate the array field
-    //         // 'sku' => ['rules' => 'required'],
-    //         // 'productName' => ['rules' => 'required'],
-    //         // 'email' => ['rules' => 'required'],                   
-    //         'orderCode' => ['rules' => 'required'],
-    //         'orderDate' => ['rules' => 'required'],
-    //         'businessNameFrom' => ['rules' => 'required'],
-    //         'phoneFrom' => ['rules' => 'required'],
-    //         'addressFrom' => ['rules' => 'required'],
-    //         'emailFrom'=> ['rules' => 'required'],
-    //         'PanFrom'=> ['rules' => 'required'],
-    //         'businessNameFor'=> ['rules' => 'required'],
-    //         'phoneFor' => ['rules' => 'required'],
-    //         'addressFor' => ['rules' => 'required'],
-    //         'emailFor'=> ['rules' => 'required'],
-    //         'PanCardFor'=> ['rules' => 'required'],                 
-
-
-    //     ];
-
-    //     if($this->validate($rules)){
-    //         // Retrieve tenantConfig from the headers
-    //         $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    //         if (!$tenantConfigHeader) {
-    //             throw new \Exception('Tenant configuration not found.');
-    //         }
-
-    //         // Decode the tenantConfig JSON
-    //         $tenantConfig = json_decode($tenantConfigHeader, true);
-
-    //         if (!$tenantConfig) {
-    //             throw new \Exception('Invalid tenant configuration.');
-    //         }
-
-    //         // Connect to the tenant's database
-    //         $db = Database::connect($tenantConfig);
-    //         $model = new OrderModel($db);
-        
-    //         $model->insert($input);
-            
-    //         return $this->respond(['status'=>true,'message' => 'order Added Successfully'], 200);
-    //     }else{
-    //         $response = [
-    //             'status'=>false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response , 409);
-            
-    //     }
-            
-    // }
+ 
 
     public function create()
 {
@@ -165,7 +168,7 @@ class Order extends BaseController
         $orderData = [
             'orderNo' => $input->orderNo,
             'orderDate' => $input->orderDate,
-            'customerName' => $input->customerName,
+            'businessNameFor' => $input->businessNameFor,
             'email' => $input->email,
             'mobileNo' => $input->mobileNo,
             'address'=> $input->address,
@@ -247,6 +250,7 @@ class Order extends BaseController
                 'email' => $input->email,
                 'mobileNo' => $input->mobileNo,
                 'address'=> $input->address,
+                'assignBy' => $input->assignBy,
 
             ];
 
@@ -332,4 +336,6 @@ class Order extends BaseController
 
         return $this->respond(['status' => true, 'message' => 'Last Order Fetched Successfully', 'data' => $lastOrder], 200);
     }
+
+    
 }

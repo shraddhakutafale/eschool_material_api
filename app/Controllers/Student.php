@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\StudentModel;
+use App\Models\AdmissionModel;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -121,24 +122,8 @@ class Student extends BaseController
         
         // Validation rules for other fields
         $rules = [
-            'studentCode'=> ['rules' => 'required'], 
-            'firstName'=> ['rules' => 'required'],
-            // 'middleName'=> ['rules' => 'required'],
-            // 'lastName'=> ['rules' => 'required'],
-            // 'motherName'=> ['rules' => 'required'], 
-            // 'gender'=> ['rules' => 'required'], 
-            // 'birthDate'=> ['rules' => 'required'], 
-            // 'birthPlace'=> ['rules' => 'required'], 
-            // 'religion'=> ['rules' => 'required'], 
-            // 'category'=> ['rules' => 'required'], 
-            // 'cast'=> ['rules' => 'required'], 
-            // 'subCast'=> ['rules' => 'required'], 
-            // 'motherTongue'=> ['rules' => 'required'], 
-            // 'bloodGroup'=> ['rules' => 'required'], 
-            // 'aadharNo'=> ['rules' => 'required'], 
-            // 'medium'=> ['rules' => 'required'], 
-            // 'physicallyHandicapped'=> ['rules' => 'required'], 
-            // 'educationalGap'=> ['rules' => 'required'], 
+            'firstName' => ['rules' => 'required'],
+            'lastName' => ['rules' => 'required'],
         ];
     
         // Validate the incoming data
@@ -147,33 +132,22 @@ class Student extends BaseController
             $header = $this->request->getHeader("Authorization");
             $token = null;
     
-            // extract the token from the header
-            if(!empty($header)) {
+            // Extract the token from the header
+            if (!empty($header)) {
                 if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
                     $token = $matches[1];
                 }
             }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
     
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
-           
-            // Handle image upload for the cover image
+    
+            // Handle image upload for the profile picture
             $profilePic = $this->request->getFile('profilePic');
             $profilePicName = null;
     
             if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                // Define the upload path for the cover image
-                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/studentImages/';
+                // Define the upload path
+                $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/studentImages/';
                 if (!is_dir($profilePicPath)) {
                     mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
                 }
@@ -182,30 +156,40 @@ class Student extends BaseController
                 $profilePicName = $profilePic->getRandomName();
                 $profilePic->move($profilePicPath, $profilePicName);
     
-                // Get the URL of the uploaded cover image and remove the 'uploads/profilePics/' prefix
-                $profilePicUrl = 'uploads/studentImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/studentImages/', '', $profilePicUrl);
-    
-                // Add the cover image URL to the input data
-                $input['profilePic'] = $profilePicUrl; 
-                $input['profilePic'] = $decoded->tenantName . '/studentImages/' .$profilePicUrl;
+                // Generate the profile picture URL
+                $profilePicUrl = $decoded->tenantName . '/studentImages/' . $profilePicName;
+                $input['profilePic'] = $profilePicUrl;
             }
     
-              
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new \App\Models\StudentModel($db);
+            // Connect to the tenant's database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     
-          
-            // Insert the student data into the database
+            $model = new \App\Models\StudentModel($db);
+            $admissionModel = new \App\Models\AdmissionModel($db);
+    
+            // Insert student data
             $model->insert($input);
+            $studentId = $db->insertID(); // Get the last inserted student ID
+    
+            // Prepare admission data
+            $admissionData = [
+                'studentId' => $studentId,
+                'itemId' => $input['itemId'] ?? 1, // Ensure itemId is not null
+                'admissionDate' => date('Y-m-d H:i:s'), // Current date-time
+            ];
+    
+            // Insert admission details
+            $admissionModel->insert($admissionData);
     
             // Return success response
             return $this->respond([
                 'status' => true,
-                'message' => 'Student Added Successfully',
-                'data' => $input
+                'message' => 'Student and Admission Details Added Successfully',
+                'data' => [
+                    'student' => $input,
+                    'admission' => $admissionData
+                ]
             ], 200);
     
         } else {
@@ -218,6 +202,7 @@ class Student extends BaseController
             return $this->fail($response, 409);
         }
     }
+    
     
 
     public function update()

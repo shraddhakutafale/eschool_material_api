@@ -95,6 +95,104 @@ class Slide extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+    public function update()
+    {
+        $input = $this->request->getPost();
+
+        // Validation rules for the slide
+        $rules = [
+            'slideId' => ['rules' => 'required|numeric'], // Ensure slideId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new SlideModel($db);
+
+            // Retrieve the Slide by slideId
+            $slideId = $input['slideId'];  // Corrected here
+            $slide = $model->find($slideId);
+
+            if (!$slide) {
+                return $this->fail(['status' => false, 'message' => 'Slide not found'], 404);
+            }
+
+            // Prepare the data to be updated (exclude slideId if it's included)
+            $updateData = [
+                'title' => $input['title'],
+                'content' => $input['content'],
+                'buttonUrl' => $input['buttonUrl'],
+                'buttonText' => $input['buttonText'],
+                'profilePic' => $input['profilePic'],
+               
+            ];
+
+            // Update the slide with new data
+            $updated = $model->update($slideId, $updateData);
+
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Slide Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update Slide'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+    public function delete()
+    {
+        $input = $this->request->getJSON();
+
+        // Validation rules for the Slide
+        $rules = [
+            'slideId' => ['rules' => 'required'], // Ensure slideId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+                // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new SlideModel($db);
+
+            // Retrieve the slide by slideId
+            $slideId = $input->slideId;
+            $slide = $model->find($slideId); // Assuming find method retrieves the slide
+
+            if (!$slide) {
+                return $this->fail(['status' => false, 'message' => 'slide not found'], 404);
+            }
+
+            // Proceed to delete the slide
+            $deleted = $model->delete($slideId);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'slide Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete slide'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+
     
     public function getall()
     {

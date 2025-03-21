@@ -8,6 +8,10 @@ use App\Models\ItemModel;
 use App\Models\FeeModel;
 use App\Models\ShiftModel;
 use App\Models\SubjectModel;
+use App\Models\ItemCategory;
+use App\Models\ItemFeeMapModel;
+use App\Models\ItemShiftMapModel;
+use App\Models\ItemSubjectMapModel;
 
 
 use Config\Database;
@@ -157,49 +161,128 @@ class Course extends BaseController
                 $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageUrl; 
             }
 
-            
-            $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
-            $imageUrls = []; // Initialize the array for image URLs
-
-            if ($productImages && count($productImages) > 0) {
-                foreach ($productImages as $image) {
-                    // Validate the image: Ensure it's valid, hasn't moved, and exists
-                    if ($image && $image->isValid() && !$image->hasMoved()) {
-                        // Define the upload path for product images
-                        $productImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/itemSlideImages/';
-
-                        // Check if the directory exists; if not, create it
-                        if (!is_dir($productImagePath)) {
-                            mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
-                        }
-
-                        // Generate a unique name for the image to avoid overwriting
-                        $imageName = $image->getRandomName();
-
-                        // Move the uploaded image to the target directory
-                        $image->move($productImagePath, $imageName);
-
-                        // Get the URL for the uploaded image and add it to the array
-                        $imageUrl = 'uploads/itemSlideImages/' . $imageName;
-                        $imageUrl = str_replace('uploads/itemSlideImages/', '', $imageUrl);
-
-                        $imageUrls[] = $imageUrl; // Add the image URL to the array
-                    }
-                }
-
-                // If there are multiple images, join the URLs with commas and save in the input data
-                if (!empty($imageUrls)) {
-                    $input['productImages'] = implode(',', $imageUrls); // Join image URLs with commas
-                }
-            }
-
-
             // Insert the product data into the database
             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new ItemModel($db);
-            $model->insert($input);
+            $itemId = $model->insert($input);
+
+            // Check if feesDetails are provided
+            if (isset($input['feesDetails']) && !empty($input['feesDetails'])) {
+                // Get the fee details from the input
+                $feesDetails = $input['feesDetails'];
+
+                // Ensure there are fee details to process
+                if (count($feesDetails) > 0) {
+                    // Initialize the ItemFeeMapModel
+                    $itemFeeMapModel = new ItemFeeMapModel($db);
+
+                    // Start a transaction for fee mappings to ensure data integrity
+                    $db->transStart(); // Begin a transaction
+
+                    // Loop through each feeId and insert the mapping
+                    foreach ($feesDetails as $feeId) {
+                        // Insert into the ItemFeeMap table
+                        $itemFeeMapModel->insert([
+                            'itemId' => $itemId,
+                            'feeId' => $feeId
+                        ]);
+                    }
+
+                    // Commit the transaction if all inserts were successful
+                    $db->transComplete(); // Complete the transaction
+
+                    // Check if the transaction was successful
+                    if ($db->transStatus() === false) {
+                        // Rollback if the transaction failed
+                        $db->transRollback();
+                        // Handle the error (e.g., log it or throw an exception)
+                        log_message('error', 'Transaction failed while inserting fee mappings');
+                    } else {
+                        // Commit successful, you can perform additional actions if needed
+                        log_message('info', 'Successfully inserted fee mappings');
+                    }
+                }
+            }
+
+            // Check if shiftDetails are provided
+            if (isset($input['shiftDetails']) && !empty($input['shiftDetails'])) {
+                // Get the shift details from the input
+                $shiftDetails = $input['shiftDetails'];
+
+                // Ensure there are shift details to process
+                if (count($shiftDetails) > 0) {
+                    
+                    // Initialize the ItemShiftMapModel
+                    $itemShiftMapModel = new ItemShiftMapModel($db);
+
+                    // Start a transaction for shift mappings to ensure data integrity
+                    $db->transStart(); // Begin a transaction
+
+                    // Loop through each shiftId and insert the mapping
+                    foreach ($shiftDetails as $shiftId) {
+                        
+                        // Insert into the ItemShiftMap table
+                        $itemShiftMapModel->insert([
+                            'itemId' => $itemId,
+                            'shiftId' => $shiftId
+                        ]);
+                    }
+
+                    // Commit the transaction if all inserts were successful
+                    $db->transComplete(); // Complete the transaction
+
+                    // Check if the transaction was successful
+                    if ($db->transStatus() === false) {
+                        // Rollback if the transaction failed
+                        $db->transRollback();
+                        // Handle the error (e.g., log it or throw an exception)
+                        log_message('error', 'Transaction failed while inserting shift mappings');
+                    } else {
+                        // Commit successful, you can perform additional actions if needed
+                        log_message('info', 'Successfully inserted shift mappings');
+                    }
+                }
+            }
+
+            // Check if subjectDetails are provided
+            if (isset($input['subjectDetails']) && !empty($input['subjectDetails'])) {
+                // Get the subject details from the input
+                $subjectDetails = $input['subjectDetails'];
+
+                // Ensure there are subject details to process
+                if (count($subjectDetails) > 0) {
+                    // Initialize the ItemSubjectMapModel
+                    $itemSubjectMapModel = new ItemSubjectMapModel($db);
+
+                    // Start a transaction for subject mappings to ensure data integrity
+                    $db->transStart(); // Begin a transaction
+
+                    // Loop through each subjectId and insert the mapping
+                    foreach ($subjectDetails as $subjectId) {
+                        // Insert into the ItemSubjectMap table
+                        $itemSubjectMapModel->insert([
+                            'itemId' => $itemId,
+                            'subjectId' => $subjectId
+                        ]);
+                    }
+
+                    // Commit the transaction if all inserts were successful    
+                    $db->transComplete(); // Complete the transaction
+
+                    // Check if the transaction was successful
+                    if ($db->transStatus() === false) {
+                        // Rollback if the transaction failed
+                        $db->transRollback();
+                        // Handle the error (e.g., log it or throw an exception)
+                        log_message('error', 'Transaction failed while inserting subject mappings');
+                    } else {
+                        // Commit successful, you can perform additional actions if needed
+                        log_message('info', 'Successfully inserted subject mappings');
+                    }
+                }
+            }
 
             return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
         } else {

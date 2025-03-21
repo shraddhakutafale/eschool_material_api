@@ -246,11 +246,10 @@ class Order extends BaseController
             $updateData = [
                 'orderNo' => $input->orderNo,
                 'orderDate' => $input->orderDate,
-                'customerName' => $input->customerName,
+                'businessNameFor' => $input->businessNameFor,
                 'email' => $input->email,
                 'mobileNo' => $input->mobileNo,
                 'address'=> $input->address,
-                'assignBy' => $input->assignBy,
 
             ];
 

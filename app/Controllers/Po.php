@@ -28,7 +28,7 @@ class Po extends BaseController
     public function getPosPaging()
     {
         $input = $this->request->getJSON();
-
+    
         // Get the page number from the input, default to 1 if not provided
         $page = isset($input->page) ? $input->page : 1;
         $perPage = isset($input->perPage) ? $input->perPage : 10;
@@ -36,25 +36,47 @@ class Po extends BaseController
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
-        
-
+    
         $tenantService = new TenantService();
-        
+    
+        // Get tenant database configuration
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load PoModel with the tenant database connection
+    
+        // Load PoModel and PoDetailModel with the tenant database connection
         $poModel = new PoModel($db);
-
-        $po = $poModel->orderBy($sortField, $sortOrder)
-            ->like('businessNameFrom', $search)->orLike('addressFrom', $search)->paginate($perPage, 'default', $page);
+        $poDetailModel = new PoDetailModel($db); // Assuming PoDetailModel exists
+    
+        // Base query for Purchase Orders
+        $query = $poModel->orderBy($sortField, $sortOrder);
+    
+        // Apply search filter
+        if ($search) {
+            $query->like('businessNameFrom', $search)->orLike('addressFrom', $search);
+        }
+    
+        // Apply additional filters (if provided)
         if ($filter) {
             $filter = json_decode(json_encode($filter), true);
-            $po = $poModel->where($filter)->paginate($perPage, 'default', $page);   
+            $query->where($filter);
         }
+    
+        // Paginate PO data
+        $po = $query->paginate($perPage, 'default', $page);
         $pager = $poModel->pager;
-
+    
+        // Fetch related PO details for each PO
+        foreach ($po as &$purchaseOrder) {
+            // Fetch related PO details by poId
+            $poDetails = $poDetailModel->where('poId', $purchaseOrder['poId'])->findAll();
+    
+            // Add PO details under 'items'
+            $purchaseOrder['items'] = $poDetails;
+        }
+    
+        // Prepare the response
         $response = [
             "status" => true,
-            "message" => "All Po Data Fetched",
+            "message" => "All PO Data Fetched",
             "data" => $po,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
@@ -63,9 +85,11 @@ class Po extends BaseController
                 "perPage" => $perPage
             ]
         ];
-
+    
         return $this->respond($response, 200);
     }
+    
+    
 
 
     public function create()

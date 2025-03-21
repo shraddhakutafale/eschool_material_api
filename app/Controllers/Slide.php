@@ -60,7 +60,7 @@ class Slide extends BaseController
     
             if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
                 // Define the upload path for slide images
-                $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/slideImages/';
+                $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemCategoryImages/';
                 if (!is_dir($profilePicPath)) {
                     mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
                 }
@@ -70,11 +70,11 @@ class Slide extends BaseController
                 $profilePic->move($profilePicPath, $profilePicName);
     
                 // Get the URL of the uploaded image
-                $profilePicUrl = 'uploads/slideImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/slideImages/', '', $profilePicUrl);
+                $profilePicUrl = 'uploads/itemCategoryImages/' . $profilePicName;
+                $profilePicUrl = str_replace('uploads/itemCategoryImages/', '', $profilePicUrl);
     
                 // Add the image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/slideImages/' . $profilePicUrl;
+                $input['profilePic'] = $decoded->tenantName . '/itemCategoryImages/' . $profilePicUrl;
             }
     
             // Connect to the tenant's database

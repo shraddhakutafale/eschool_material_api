@@ -715,6 +715,34 @@ class Course extends BaseController
         }
     }
 
+    public function assignFee(){
+        $input = $this->request->getJSON();
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemFeeMapModel($db);
+        if(is_array($input)){
+            foreach($input as $fee){
+                if($fee->itemFeeMapId == 0 || $fee->itemFeeMapId == null || $fee->itemFeeMapId == ''){
+                    $model->insert(['itemId' => $fee->itemId, 'feeId' => $fee->feeId]);
+                } else {
+                    $model->update($fee->itemFeeMapId, ['itemId' => $fee->itemId, 'feeId' => $fee->feeId]);
+                }
+            }
+        } 
+        return $this->respond(['status' => true, 'message' => 'Fee Assigned Successfully'], 200);
+    }
+
+    public function getFeesByItem(){
+        $input = $this->request->getJSON();
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemFeeMapModel($db);
+        $fees = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
+        return $this->respond(['status' => true, 'message' => 'Fees fetched successfully', 'data' => $fees], 200);
+    }
+
 
     public function getShiftPaging()
     {

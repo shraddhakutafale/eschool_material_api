@@ -328,6 +328,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('deletesubject', 'Course::deleteSubject',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('deleteshift', 'Course::deleteShift',['filter' => ['authFilter', 'tenantFilter']]);
 
+    $routes->post('assignfee', 'Course::assignFee',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getfeesbyitem', 'Course::getFeesByItem',['filter' => ['authFilter', 'tenantFilter']]);
 
   });
 

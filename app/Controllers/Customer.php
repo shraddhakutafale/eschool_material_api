@@ -48,7 +48,7 @@ class Customer extends BaseController
             $filter = json_decode(json_encode($filter), true);
     
             foreach ($filter as $key => $value) {
-                if (in_array($key, ['name', 'mobileNo', 'email'])) {
+                if (in_array($key, ['name', 'mobileNo', 'email', 'customerCode'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
                 } else if ($key === 'createdDate') {
                     $query->where($key, $value); // Exact match filter for createdDate

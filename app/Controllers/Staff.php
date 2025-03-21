@@ -200,7 +200,6 @@ class Staff extends BaseController
         $rules = [
             'empName' => ['rules' => 'required'],
             'empCode' => ['rules' => 'required'],
-            'empSal' => ['rules' => 'required|numeric']
         ];
     
         if ($this->validate($rules)) {
@@ -309,7 +308,7 @@ class Staff extends BaseController
                 'empSal'=> $input['empSal'],
                 'empDoj'=> $input['empDoj'],
                 'empDol'=> $input['empDol'],
-                'createdDate'=> $input['createdDate'],
+                
                
             ];
 
@@ -331,6 +330,9 @@ class Staff extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+
+    
 
     public function delete()
     {

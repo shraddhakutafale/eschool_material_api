@@ -305,6 +305,20 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
   });
 
+
+
+     
+  $routes->group('blog', function ($routes) {
+    //Routes for offer
+    $routes->get('getall', 'Blog::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Blog::getBlogsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Blog::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Blog::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Blog::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Blog::getBlogsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Blog::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
   $routes->group('course', function ($routes) {
     $routes->get('getall', 'Course::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Course::getAllPaging',['filter' => ['authFilter', 'tenantFilter']]);

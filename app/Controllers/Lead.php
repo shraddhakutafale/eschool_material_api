@@ -105,10 +105,6 @@ class Lead extends BaseController
     }
 
 
-
-
-    
-
     // Create a new lead
     public function create()
     {

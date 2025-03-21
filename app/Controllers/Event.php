@@ -221,6 +221,9 @@ class Event extends BaseController
             $updateData = [
 
                 'eventName' => $input['eventName'],  // Corrected here
+                'eventDesc' => $input['eventDesc'],  // Corrected here
+                'venue' => $input['venue'],  // Corrected here
+                
                
             ];
 

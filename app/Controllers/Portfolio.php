@@ -224,6 +224,7 @@ class Portfolio extends BaseController
             $updateData = [
                 'category'=> $input['category'],
                 'projectName'=> $input['projectName'],
+                'description'=> $input['description'],
                
             ];
 

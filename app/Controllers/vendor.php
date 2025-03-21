@@ -58,7 +58,7 @@ class Vendor extends BaseController
          $filter = json_decode(json_encode($filter), true);
 
         foreach ($filter as $key => $value) {
-        if (in_array($key, ['name', 'mobileNo', 'email'])) {
+        if (in_array($key, ['name', 'mobileNo', 'emailId', 'vendorCode'])) {
             $query->like($key, $value);
         } else if ($key === 'createdDate' && !empty($value)) {
             $query->where($key, $value);

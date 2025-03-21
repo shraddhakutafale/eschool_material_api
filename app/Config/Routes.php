@@ -338,9 +338,11 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   $routes->group('tenantuser', function ($routes) {
     $routes->post('login', 'TenantUser::loginWithMobileUid',['filter' => 'tenantFilter']);
     $routes->get('profile', 'TenantUser::getProfile',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('create', 'TenantUser::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('create', 'CustomerAddress::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'TenantUser::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('create', 'Customer::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('add-address', 'CustomerAddress::addAddress', ['filter' => ['authFilter', 'tenantFilter']]);
+
 
   });
 

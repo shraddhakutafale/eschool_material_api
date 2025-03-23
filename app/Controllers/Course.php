@@ -28,7 +28,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $itemModel = new ItemModel($db);
-        $items = $itemModel->findAll();
+        $items = $itemModel->where('itemTypeId', 1)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'All items fetched successfully', 'data' => $items], 200);
     }
 
@@ -49,9 +49,15 @@ class Course extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load StaffModel with the tenant database connection
         $itemModel = new ItemModel($db);
+        $itemFeeMapModel = new ItemFeeMapModel($db);
+        $feeModel = new FeeModel($db);
+        $itemShiftMapModel = new ItemShiftMapModel($db);
+        $shiftModel = new ShiftModel($db);
+        $itemSubjectMapModel = new ItemSubjectMapModel($db);
+        $subjectModel = new SubjectModel($db);
 
         // Initialize query with 'isDeleted' condition
-        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId); // Apply the deleted check at the beginning
+        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId);
 
         // Apply search filter for itemName and mrp
         if (!empty($search)) {
@@ -95,6 +101,31 @@ class Course extends BaseController
 
         // Execute the query with pagination
         $item = $query->paginate($perPage, 'default', $page);
+        foreach ($item as $key => $value) {
+            $itemFeeMapArray = $itemFeeMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
+            $fees = [];
+            foreach ($itemFeeMapArray as $fee) {
+                $feeArray = $feeModel->where('feeId', $fee['feeId'])->where('isDeleted', 0)->first();
+                $fees[] = $feeArray['amount'];
+            }
+            $item[$key]['fees'] = $fees;
+            
+            $itemShiftMapArray = $itemShiftMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
+            $shifts = [];
+            foreach ($itemShiftMapArray as $shift) {
+                $shiftArray = $shiftModel->where('shiftId', $shift['shiftId'])->where('isDeleted', 0)->first();
+                $shifts[] = $shiftArray['startTime'].'-'.$shiftArray['endTime'];
+            }
+            $item[$key]['shifts'] = $shifts;
+            
+            $itemSubjectMapArray = $itemSubjectMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
+            $subjects = [];
+            foreach ($itemSubjectMapArray as $subject) {
+                $subjectArray = $subjectModel->where('subjectId', $subject['subjectId'])->where('isDeleted', 0)->first();
+                $subjects[] = $subjectArray['subjectName'];
+            }
+            $item[$key]['subjects'] = $subjects;
+        }   
 
         // Get pagination data
         $pager = $itemModel->pager;
@@ -724,9 +755,9 @@ class Course extends BaseController
         if(is_array($input)){
             foreach($input as $fee){
                 if($fee->itemFeeMapId == 0 || $fee->itemFeeMapId == null || $fee->itemFeeMapId == ''){
-                    $model->insert(['itemId' => $fee->itemId, 'feeId' => $fee->feeId]);
+                    $model->insert(['itemId' => $fee->itemId, 'feeId' => $fee->feeId, 'isDeleted' => $fee->isDeleted]);
                 } else {
-                    $model->update($fee->itemFeeMapId, ['itemId' => $fee->itemId, 'feeId' => $fee->feeId]);
+                    $model->update($fee->itemFeeMapId, ['itemId' => $fee->itemId, 'feeId' => $fee->feeId, 'isDeleted' => $fee->isDeleted]);
                 }
             }
         } 
@@ -962,6 +993,34 @@ class Course extends BaseController
         }
     }
 
+    public function assignShift(){
+        $input = $this->request->getJSON();
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemShiftMapModel($db);
+        if(is_array($input)){
+            foreach($input as $shift){
+                if($shift->itemShiftMapId == 0 || $shift->itemShiftMapId == null || $shift->itemShiftMapId == ''){
+                    $model->insert(['itemId' => $shift->itemId, 'shiftId' => $shift->shiftId, 'isDeleted' => $shift->isDeleted]);
+                } else {
+                    $model->update($shift->itemShiftMapId, ['itemId' => $shift->itemId, 'shiftId' => $shift->shiftId, 'isDeleted' => $shift->isDeleted]);
+                }
+            }
+        } 
+        return $this->respond(['status' => true, 'message' => 'Shift Assigned Successfully'], 200);
+    }
+
+    public function getShiftsByItem(){
+        $input = $this->request->getJSON();
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemShiftMapModel($db);
+        $shifts = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
+        return $this->respond(['status' => true, 'message' => 'Shifts fetched successfully', 'data' => $shifts], 200);
+    }
+
     public function getSubjectPaging()
     {
         $input = $this->request->getJSON();
@@ -1177,6 +1236,32 @@ class Course extends BaseController
         }
     }
 
+    public function assignSubject(){
+        $input = $this->request->getJSON();
 
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemSubjectMapModel($db);
+        if(is_array($input)){
+            foreach($input as $subject){
+                if($subject->itemSubjectMapId == 0 || $subject->itemSubjectMapId == null || $subject->itemSubjectMapId == ''){
+                    $model->insert(['itemId' => $subject->itemId, 'subjectId' => $subject->subjectId, 'isDeleted' => $subject->isDeleted]);
+                } else {
+                    $model->update($subject->itemSubjectMapId, ['itemId' => $subject->itemId, 'subjectId' => $subject->subjectId, 'isDeleted' => $subject->isDeleted]);
+                }
+            }
+        } 
+        return $this->respond(['status' => true, 'message' => 'Subject Assigned Successfully'], 200);
+    }
+
+    public function getSubjectsByItem(){
+        $input = $this->request->getJSON();
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemSubjectMapModel($db);
+        $subjects = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
+        return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $subjects], 200);
+    }
 
 }

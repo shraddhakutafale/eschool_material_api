@@ -280,8 +280,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('view/(:segment)', 'Lead::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Lead::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Lead::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Lead::getLeadsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
-    $routes->post('delete', 'Lead::delete',['filter' => ['authFilter','tenantFilter']]); 
+    $routes->post('delete', 'Lead::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallleadsource', 'Lead::getAllLeadSource',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallleadinterest', 'Lead::getAllLeadInterested',['filter' => ['authFilter','tenantFilter']]);
   });
 
   $routes->group('order', function ($routes) {
@@ -344,6 +345,12 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
     $routes->post('assignfee', 'Course::assignFee',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getfeesbyitem', 'Course::getFeesByItem',['filter' => ['authFilter', 'tenantFilter']]);
+
+    $routes->post('assignsubject', 'Course::assignSubject',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getsubjectsbyitem', 'Course::getSubjectsByItem',['filter' => ['authFilter', 'tenantFilter']]);
+
+    $routes->post('assignshift', 'Course::assignShift',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getshiftsbyitem', 'Course::getShiftsByItem',['filter' => ['authFilter', 'tenantFilter']]);
 
   });
 

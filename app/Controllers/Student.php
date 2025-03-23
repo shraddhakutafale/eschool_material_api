@@ -45,41 +45,48 @@ class Student extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load studentModel with the tenant database connection
         $studentModel = new StudentModel($db);
+        $admissionModel = new AdmissionModel($db);
 
         $query = $studentModel;
+        // Join with AdmissionModel (assuming studentId is the linking column)
+        $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
 
         if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
 
+            if (!empty($filter['academicYear'])) {
+                $query->where('academicYearId', $filter['academicYear']);
+            }
+
             foreach ($filter as $key => $value) {
-                if (in_array($key, ['studentCode','generalRegisterNo','firstName', 'lastName', 'medium', 'registeredDate'])) {
+                if (in_array($key, ['student_mst.studentCode','student_mst.generalRegisterNo','student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
-                } else if ($key === 'createdDate') {
+                } else if ($key === 'student_mst.createdDate') {
                     $query->where($key, $value); // Exact match filter for createdDate
                 }
             }
 
             // Apply Date Range Filter (startDate and endDate)
             if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                $query->where('createdDate >=', $filter['startDate'])
-                      ->where('createdDate <=', $filter['endDate']);
+                $query->where('student_mst.createdDate >=', $filter['startDate'])
+                      ->where('student_mst.createdDate <=', $filter['endDate']);
             }
     
             // Apply Last 7 Days Filter if requested
             if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
                 $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-                $query->where('createdDate >=', $last7DaysStart);
+                $query->where('student_mst.createdDate >=', $last7DaysStart);
             }
     
             // Apply Last 30 Days Filter if requested
             if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
                 $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-                $query->where('createdDate >=', $last30DaysStart);
+                $query->where('student_mst.createdDate >=', $last30DaysStart);
             }
         }
 
         
-        $query->where('isDeleted',0);
+        $query->where('student_mst.isDeleted',0);
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);
@@ -169,27 +176,22 @@ class Student extends BaseController
             $admissionModel = new \App\Models\AdmissionModel($db);
     
             // Insert student data
-            $model->insert($input);
-            $studentId = $db->insertID(); // Get the last inserted student ID
-    
-            // Prepare admission data
-            $admissionData = [
-                'studentId' => $studentId,
-                'itemId' => $input['itemId'] ?? 1, // Ensure itemId is not null
-                'admissionDate' => date('Y-m-d H:i:s'), // Current date-time
-            ];
-    
-            // Insert admission details
-            $admissionModel->insert($admissionData);
+            $studentId = $model->insert($input);
+
+            if($input['selectedCourses']){
+                $itemIds = explode(',', $input['selectedCourses']);
+                $admissionDataArray = [];
+                foreach ($itemIds as $itemId) {
+                    array_push($admissionDataArray, ['studentId' => $studentId, 'academicYearId' => $input['academicYearId'], 'itemId' => $itemId, 'admissionDate' => date('Y-m-d H:i:s')]);
+                }
+                $admissionModel->insertBatch($admissionDataArray);
+            }
     
             // Return success response
             return $this->respond([
                 'status' => true,
                 'message' => 'Student and Admission Details Added Successfully',
-                'data' => [
-                    'student' => $input,
-                    'admission' => $admissionData
-                ]
+                'data' => $studentId
             ], 200);
     
         } else {
@@ -219,7 +221,9 @@ class Student extends BaseController
              
         $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new StudentModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+        $model = new StudentModel($db);
+        $admissionModel = new AdmissionModel($db);
 
             // Retrieve the student by studentId
             $studentId = $input['studentId'];  // Corrected here
@@ -231,7 +235,6 @@ class Student extends BaseController
 
             // Prepare the data to be updated (exclude studentId if it's included)
             $updateData = [
-
                 'studentCode' => $input['studentCode'],  // Corrected here
                 'generalRegisterNo' => $input['generalRegisterNo'],
                 'firstName' => $input['firstName'],
@@ -249,14 +252,20 @@ class Student extends BaseController
                 'motherTongue' => $input['motherTongue'],
                 'bloodGroup' => $input['bloodGroup'],
                 'aadharNo' => $input['aadharNo'],
-                'medium' => $input['medium'],
-                'physicallyHandicapped' => $input['physicallyHandicapped'],
-                'registeredDate' => $input['registeredDate'],
-
+                'medium' => $input['medium']
             ];
 
             // Update the student with new data
             $updated = $model->update($studentId, $updateData);
+
+            if($input['selectedCourses']){
+                $itemIds = explode(',', $input['selectedCourses']);
+                $admissionDataArray = [];
+                foreach ($itemIds as $itemId) {
+                    array_push($admissionDataArray, ['studentId' => $studentId, 'academicYearId' => $input['academicYearId'], 'itemId' => $itemId, 'admissionDate' => date('Y-m-d H:i:s')]);
+                }
+                $admissionModel->insertBatch($admissionDataArray);
+            }
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Student Updated Successfully'], 200);

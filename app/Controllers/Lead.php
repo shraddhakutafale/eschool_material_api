@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\LeadModel;
-use App\Models\LeadSourceModel;
-use App\Models\LeadInterestedModel;
+use App\Models\LeadSource;
+use App\Models\LeadInterested;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -172,6 +172,10 @@ class Lead extends BaseController
                 'secondaryMobileNo' => $input->secondaryMobileNo,  // Corrected here
                 'whatsAppNo' => $input->whatsAppNo,  // Corrected here
                 'email' => $input->email,  // Corrected here
+                'leadInterestedId' => $input->leadInterestedId,  // Corrected here
+                'leadInterestedIdValue' => $input->leadInterestedIdValue,  // Corrected here
+                'leadSourceId' => $input->leadSourceId,  // Corrected here
+                'leadSourceValue' => $input->leadSourceValue,  // Corrected here
             ];
 
             // Update the lead with new data
@@ -243,27 +247,16 @@ class Lead extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-         $leadSourceModel = new LeadSourceModel($db);
+         $leadSourceModel = new LeadSource($db);
         return $this->respond(["status" => true, "message" => "All Lead Sources Fetched", "data" => $leadSourceModel->findAll()], 200);
     }
 
     // Get all lead interests
     public function getAllLeadInterested()
     {
-        $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-        if (!$tenantConfigHeader) {
-            throw new \Exception('Tenant configuration not found.');
-        }
-
-        // Decode the tenantConfig JSON
-        $tenantConfig = json_decode($tenantConfigHeader, true);
-        if (!$tenantConfig) {
-            throw new \Exception('Invalid tenant configuration.');
-        }
-
-        // Connect to the tenant's database
-        $db = Database::connect($tenantConfig);
-        $leadInterestedModel = new LeadInterestedModel($db);
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $leadInterestedModel = new LeadInterested($db);
         return $this->respond(["status" => true, "message" => "All Lead Interests Fetched", "data" => $leadInterestedModel->findAll()], 200);
     }
 }

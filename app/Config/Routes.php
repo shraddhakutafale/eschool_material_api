@@ -305,8 +305,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('view/(:segment)', 'Student::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Student::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Student::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Student::getStudentsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('addallpayment', 'Student::addAllPayment',['filter' => ['authFilter','tenantFilter']]);
   });
 
 

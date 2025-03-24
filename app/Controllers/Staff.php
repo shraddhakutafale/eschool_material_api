@@ -308,6 +308,7 @@ class Staff extends BaseController
                 'empSal'=> $input['empSal'],
                 'empDoj'=> $input['empDoj'],
                 'empDol'=> $input['empDol'],
+
                 
                
             ];

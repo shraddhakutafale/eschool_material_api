@@ -299,6 +299,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
   $routes->group('student' , function ($routes) {
     $routes->get('getall', 'Student::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Student::getStudentsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Student::getStudentsAdmissionPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Student::getStudentsPaymentPaging',['filter' => ['authFilter', 'tenantFilter']]);
+
     $routes->get('view/(:segment)', 'Student::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Student::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Student::update',['filter' => ['authFilter','tenantFilter']]);

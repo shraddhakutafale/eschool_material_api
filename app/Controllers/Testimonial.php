@@ -58,7 +58,7 @@ class Testimonial extends BaseController
          $filter = json_decode(json_encode($filter), true);
 
         foreach ($filter as $key => $value) {
-        if (in_array($key, ['name', 'mobileNo', 'email'])) {
+        if (in_array($key, ['name', 'mobileNo', 'email', 'designation'])) {
             $query->like($key, $value);
         } else if ($key === 'createdDate' && !empty($value)) {
             $query->where($key, $value);
@@ -182,44 +182,39 @@ class Testimonial extends BaseController
     public function update()
     {
         $input = $this->request->getPost();
-        
-        // Validation rules for the vendor
+
+        // Validation rules for the testimonial
         $rules = [
-            'testimonialId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
+            'testimonialId' => ['rules' => 'required|numeric'], // Ensure testimonialId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
             $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new TestimonialModel($db);
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new TestimonialModel($db);
 
-            // Retrieve the vendor by vendorId
-            $testimonialId = $input['testimonialId'];
-            $testimonial = $model->find($testimonialId); // Assuming find method retrieves the vendor
-            
-
-
+            // Retrieve the testimonial by testimonialId
+            $testimonialId = $input['testimonialId'];  // Corrected here
+            $testimonial = $model->find($testimonialId);
 
             if (!$testimonial) {
                 return $this->fail(['status' => false, 'message' => 'Testimonial not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude vendorId if it's included)
+            // Prepare the data to be updated (exclude testimonialId if it's included)
             $updateData = [
-                'name' =>$input['name'],
-                'designation' =>$input['designation'],
-                'rating' =>$input['rating'],
-                'message' =>$input['message'],
-
+                'name'=> $input['name'],
+                'designation'=> $input['designation'],
+                'message'=> $input['message'],
+                'rating'=> $input['rating'],
                 
-                
+               
             ];
 
-            // Update the vendor with new data
+            // Update the testimonial with new data
             $updated = $model->update($testimonialId, $updateData);
-
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'Testimonial Updated Successfully'], 200);
@@ -236,6 +231,8 @@ class Testimonial extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+    
     public function delete()
     {
         $input = $this->request->getJSON();

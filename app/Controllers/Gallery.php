@@ -235,43 +235,40 @@ class Gallery extends BaseController
     public function update()
     {
         $input = $this->request->getPost();
-        
-        // Validation rules for the course
+
+        // Validation rules for the gallery
         $rules = [
-            'galleryId' => ['rules' => 'required|numeric'], // Ensure courseId is provided and is numeric
+            'galleryId' => ['rules' => 'required|numeric'], // Ensure galleryId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
-               // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new GalleryModel($db);
 
-            // Retrieve the course by courseId
-            $galleryId = $input->galleryId;
-            $gallery = $model->find($galleryId); // Assuming find method retrieves the course
+            // Retrieve the gallery by galleryId
+            $galleryId = $input['galleryId'];  // Corrected here
+            $gallery = $model->find($galleryId);
 
             if (!$gallery) {
                 return $this->fail(['status' => false, 'message' => 'Gallery not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude courseId if it's included)
+            // Prepare the data to be updated (exclude galleryId if it's included)
             $updateData = [
-                'galleryId' => $input->galleryId,
-                'galleryTitle' => $input->galleryTitle,
-                'galleryDescription' => $input->galleryDescription,
-              
+               'galleryTitle'=> $input['galleryTitle'],
+               'galleryDescription'=> $input['galleryDescription'],
             ];
 
-            // Update the course with new data
+            // Update the gallery with new data
             $updated = $model->update($galleryId, $updateData);
 
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => ' Gallery Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Gallery Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update gallery'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update Gallery'], 500);
             }
         } else {
             // Validation failed
@@ -286,6 +283,7 @@ class Gallery extends BaseController
 
 
         public function delete()
+        
     {
         $input = $this->request->getJSON();
         

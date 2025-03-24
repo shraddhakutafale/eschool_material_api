@@ -199,42 +199,43 @@ class Portfolio extends BaseController
     public function update()
     {
         $input = $this->request->getPost();
-
-        // Validation rules for the portfolio
+        
+        // Validation rules for the portfolioId
         $rules = [
             'portfolioId' => ['rules' => 'required|numeric'], // Ensure portfolioId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new PortfolioModel($db);
+             
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new PortfolioModel($db);
 
-            // Retrieve the portfolios by portfolioId
+            // Retrieve the student by studentId
             $portfolioId = $input['portfolioId'];  // Corrected here
-            $portfolio = $model->find($portfolioId);
+            $portfolio = $model->find($portfolioId); // Assuming find method retrieves the student
 
             if (!$portfolio) {
-                return $this->fail(['status' => false, 'message' => 'Portfolio not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'portfolio not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude portfolioId if it's included)
+            // Prepare the data to be updated (exclude studentId if it's included)
             $updateData = [
-                'category'=> $input['category'],
-                'projectName'=> $input['projectName'],
-                'description'=> $input['description'],
+
+                'category' => $input['category'],  // Corrected here
+                'projectName' => $input['projectName'],  // Corrected here
+                'description' => $input['description'],  // Corrected here
                
             ];
 
-            // Update the Portfolio with new data
+            // Update the student with new data
             $updated = $model->update($portfolioId, $updateData);
 
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Portfolio Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'portfolio Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update Portfolio'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update portfolio'], 500);
             }
         } else {
             // Validation failed

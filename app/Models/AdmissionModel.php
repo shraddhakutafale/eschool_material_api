@@ -12,7 +12,7 @@ class AdmissionModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['admissionId', 'studentId', 'academicYearId', 'itemId', 'rollNo', 'rfId', 'admissionDate', 'active'];
+    protected $allowedFields    = ['admissionId', 'studentId', 'academicYearId', 'selectedCourses', 'rollNo', 'rfId', 'admissionDate', 'active'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

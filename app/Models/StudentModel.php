@@ -46,4 +46,5 @@ class StudentModel extends Model
          $data['data']['modifiedBy'] = $userId;
      }
      return $data;
- }}
+ }
+}

@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\QuotationModel;
 use App\Models\QuotationDetailModel;
+use App\Models\ItemModel;
+
 use App\Libraries\TenantService;
 
 use Config\Database;
@@ -123,6 +125,7 @@ class Quotation extends BaseController
 //     return $this->respond($response, 200);
 // }
 
+
 public function getQuotationsPaging()
 {
     $input = $this->request->getJSON();
@@ -142,6 +145,7 @@ public function getQuotationsPaging()
     // Load the models with the tenant database connection
     $QuotationModel = new QuotationModel($db);
     $QuotationDetailModel = new QuotationDetailModel($db);
+    $ItemModel = new ItemModel($db);  // Assuming ItemModel exists
 
     // Base query for quotations
     $query = $QuotationModel;
@@ -180,7 +184,18 @@ public function getQuotationsPaging()
     foreach ($quotes as &$quote) {
         // Fetch related quote details for each quoteId
         $quoteDetails = $QuotationDetailModel->where('quoteId', $quote['quoteId'])->findAll();
-        
+
+        // Merge the details under 'items', and for each quote detail, fetch the corresponding item data
+        foreach ($quoteDetails as &$quoteDetail) {
+            // Fetch item data using itemId from ItemModel
+            $item = $ItemModel->find($quoteDetail['itemId']);  // Assuming 'itemId' is a field in QuotationDetailModel
+            
+            // Merge item data into quoteDetail
+            if ($item) {
+                $quoteDetail['item'] = $item;  // Now each quoteDetail will have item details merged into it
+            }
+        }
+
         // Add the quote details under 'items'
         $quote['items'] = $quoteDetails;
     }
@@ -200,6 +215,8 @@ public function getQuotationsPaging()
 
     return $this->respond($response, 200);
 }
+
+
 
 
     public function getQuotationsWebsite()
@@ -359,173 +376,128 @@ public function getQuotationsPaging()
 
 
 
-    // public function update()
-    // {
-    //     $input = $this->request->getJSON();
-        
-    //     // Validation rules for the Quote
-    //     $rules = [
-    //         'quoteId ' => ['rules' => 'required|numeric'], // Ensure eventId is provided and is numeric
-    //     ];
-
-    //     // Validate the input
-    //     if ($this->validate($rules)) {
-            
-    //     $tenantService = new TenantService();
-    //     // Connect to the tenant's database
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //     $model = new QuotationModel($db);
-
-    //         // Retrieve the Quote by eventId
-    //         $quoteId  = $input->quoteId ;
-    //         $item = $model->find($quoteId ); // Assuming find method retrieves the Quote
-
-    //         if (!$item) {
-    //             return $this->fail(['status' => false, 'message' => 'Quote not found'], 404);
-    //         }
-
-    //         // Prepare the data to be updated (exclude eventId if it's included)
-    //         $updateData = [
-    //            'quoteNo' => $input->quoteNo,
-    //             'quoteDate' => $input->quoteDate,
-    //             'validDate' => $input->validDate,
-    //             'businessNameFrom' => $input->businessNameFrom,
-    //             'phoneFrom' => $input->phoneFrom,
-    //             'addressFrom' => $input->addressFrom,
-    //             'emailFrom' => $input->emailFrom,
-    //             'PanFrom' => $input->PanFrom,
-    //             'businessNameFor' => $input->businessNameFor,
-    //             'phoneFor' => $input->phoneFor,
-    //             'addressFor' => $input->addressFor,
-    //             'emailFor' => $input->emailFor,
-    //             'PanCardFor' => $input->PanCardFor
-    //         ];
-
-    //         // Update the Quote with new data
-    //         $updated = $model->update($quoteId , $updateData);
-
-    //         if ($updated) {
-    //             return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
-    //         } else {
-    //             return $this->fail(['status' => false, 'message' => 'Failed to update Quote'], 500);
-    //         }
-    //     } else {
-    //         // Validation failed
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
-
 
     public function update()
-    {
-        $input = $this->request->getJSON();
-    
-        // Validation rules for the Quote and Quotation Details
-        $rules = [
-            'quoteId' => ['rules' => 'required|numeric'], // Ensure quoteId is provided and is numeric
+{
+    // Get input data from the request body
+    $input = $this->request->getJSON();
+
+    // Validation rules for the Quote and Quotation Details
+    $rules = [
+        'quoteId' => ['rules' => 'required|numeric'], // Ensure quoteId is provided and is numeric
+    ];
+
+    // Validate the input
+    if (!$this->validate($rules)) {
+        // Validation failed
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
         ];
-    
-        // Validate the input
-        if ($this->validate($rules)) {
-    
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    
-            // Start a transaction
-            $db->transBegin();
-    
-            // Instantiate the models
-            $quotationModel = new QuotationModel($db);
-            $quotationDetailModel = new QuotationDetailModel($db);
-    
-            // Retrieve the Quote by quoteId
-            $quoteId = $input->quoteId;
-            $item = $quotationModel->find($quoteId); // Assuming find method retrieves the Quote
-    
-            if (!$item) {
+        return $this->fail($response, 409);
+    }
+
+    // Get tenant database configuration
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    // Start a database transaction
+    $db->transBegin();
+
+    // Instantiate the models
+    $quotationModel = new QuotationModel($db);
+    $quotationDetailModel = new QuotationDetailModel($db);
+
+    // Retrieve the Quote by quoteId
+    $quoteId = $input->quoteId;
+    $quote = $quotationModel->find($quoteId); // Assuming find method retrieves the Quote by quoteId
+
+    if (!$quote) {
+        $db->transRollback();
+        return $this->fail(['status' => false, 'message' => 'Quote not found'], 404);
+    }
+
+    // Prepare the data to be updated for the QuotationModel
+    $updateData = [
+        'quoteNo' => $input->quoteNo,
+        'quoteDate' => $input->quoteDate,
+        'validDate' => $input->validDate,
+        'businessNameFor' => $input->businessNameFor,
+        'phoneFor' => $input->phoneFor,
+        // You can add other fields here as necessary
+    ];
+
+    // Update the Quote in the QuotationModel
+    $updated = $quotationModel->update($quoteId, $updateData);
+
+    if (!$updated) {
+        $db->transRollback();
+        return $this->fail(['status' => false, 'message' => 'Failed to update Quote'], 500);
+    }
+
+    // Handle quotation details (multiple items)
+    if (isset($input->items) && is_array($input->items)) {
+        foreach ($input->items as $item) {
+            // Ensure itemId is provided and valid
+            if (empty($item->itemId)) {
                 $db->transRollback();
-                return $this->fail(['status' => false, 'message' => 'Quote not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'itemId is required and cannot be null for all items'], 400);
             }
-    
-            // Prepare the data to be updated for QuotationModel
-            $updateData = [
-                'quoteNo' => $input->quoteNo,
-                'quoteDate' => $input->quoteDate,
-                'validDate' => $input->validDate,
-                'businessNameFrom' => $input->businessNameFrom,
-                'phoneFrom' => $input->phoneFrom,
+
+            // Prepare the detail data for update or insert
+            $detailData = [
+                'quoteId' => $quoteId,  // Ensure the quoteId is linked to the detail
+                'itemId' => $item->itemId,  // Use the provided itemId
+                'quantity' => $item->quantity,  // Quantity
+                'rate' => $item->rate,  // Rate
+                'amount' => $item->amount,  // Amount = quantity * rate
+                // You can add more fields as needed
             ];
-    
-            // Update the Quote in the QuotationModel
-            $updated = $quotationModel->update($quoteId, $updateData);
-    
-            if (!$updated) {
-                $db->transRollback();
-                return $this->fail(['status' => false, 'message' => 'Failed to update Quote'], 500);
-            }
-    
-            // Handle quotation details (multiple items)
-            if (isset($input->quotationDetails) && is_array($input->quotationDetails)) {
-                foreach ($input->quotationDetails as $detail) {
-                    // Prepare the detail data for update
-                    $detailData = [
-                        'quoteId' => $quoteId,  // This ensures the quoteId is linked to the detail
-                        'itemId' => $detail->itemId,  // itemId to update
-                        'item' => $detail->item,  // item description or name
-                        'itemCode' => $detail->itemCode,  // item code
-                        'unitName' => $detail->unitName,  // unit name (e.g., piece, kg)
-                        'unitSize' => $detail->unitSize,  // unit size (e.g., 1kg, 100g)
-                        'quantity' => $detail->quantity,  // quantity
-                        'rate' => $detail->rate,  // rate
-                        'amount' => $detail->amount,  // amount = quantity * rate
-                    ];
-    
-                    // Check if quoteDetailId exists to update or if we need to insert it
-                    if (isset($detail->quoteDetailId)) {
-                        // Update the existing quote detail using `quoteDetailId`
-                        $updatedDetail = $quotationDetailModel->update($detail->quoteDetailId, $detailData);
-                        if (!$updatedDetail) {
-                            $db->transRollback();
-                            return $this->fail(['status' => false, 'message' => 'Failed to update Quote Detail for quoteDetailId ' . $detail->quoteDetailId], 500);
-                        }
-                    } else {
-                        // Insert a new detail if no `quoteDetailId` is provided
-                        $detailData['quoteId'] = $quoteId; // Make sure the quoteId is linked to the new detail
-                        $insertedDetail = $quotationDetailModel->insert($detailData);
-                        if (!$insertedDetail) {
-                            $db->transRollback();
-                            return $this->fail(['status' => false, 'message' => 'Failed to insert new Quote Detail'], 500);
-                        }
+
+            // Check if quoteItemId exists to update or if we need to insert it
+            if (isset($item->quoteItemId) && $item->quoteItemId) {
+                // Update the existing quote detail using quoteItemId
+                $updatedDetail = $quotationDetailModel->update($item->quoteItemId, $detailData);
+                if (!$updatedDetail) {
+                    $db->transRollback();
+                    return $this->fail(['status' => false, 'message' => 'Failed to update Quote Detail for quoteItemId ' . $item->quoteItemId], 500);
+                }
+            } else {
+                // Check if the item already exists in the quote details before inserting
+                $existingItem = $quotationDetailModel->where('quoteId', $quoteId)
+                                                      ->where('itemId', $item->itemId)
+                                                      ->first();
+
+                if ($existingItem) {
+                    // If item exists, update it instead of inserting
+                    $detailData['quoteItemId'] = $existingItem['quoteItemId'];
+                    $updatedDetail = $quotationDetailModel->update($existingItem['quoteItemId'], $detailData);
+                    if (!$updatedDetail) {
+                        $db->transRollback();
+                        return $this->fail(['status' => false, 'message' => 'Failed to update existing Quote Detail'], 500);
+                    }
+                } else {
+                    // Insert a new detail if no quoteItemId is provided and it's not already in the quote
+                    $insertedDetail = $quotationDetailModel->insert($detailData);
+                    if (!$insertedDetail) {
+                        $db->transRollback();
+                        return $this->fail(['status' => false, 'message' => 'Failed to insert new Quote Detail'], 500);
                     }
                 }
             }
-    
-            // Commit the transaction if everything is successful
-            $db->transCommit();
-    
-            // Return success message if both quote and details updated
-            return $this->respond(['status' => true, 'message' => 'Quote and Details Updated Successfully'], 200);
-    
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
         }
     }
-    
-    
-    
 
+    // Commit the transaction if everything is successful
+    $db->transCommit();
+
+    // Return success message if both quote and details are updated successfully
+    return $this->respond(['status' => true, 'message' => 'Quote and Details Updated Successfully'], 200);
+}
+
+    
+    
 
     public function delete()
     {

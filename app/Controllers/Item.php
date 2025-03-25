@@ -25,16 +25,20 @@ class Item extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-       
+        
         // Load UserModel with the tenant database connection
         $itemModel = new ItemModel($db);
+        
+        // Apply the condition where isDeleted = 0
         $response = [
             "status" => true,
             "message" => "All Data Fetched",
-            "data" => $itemModel->findAll(),
+            "data" => $itemModel->where('isDeleted', 0)->findAll(),  // Add condition for isDeleted = 0
         ];
+        
         return $this->respond($response, 200);
     }
+    
 
     public function getAllUnit()
     {

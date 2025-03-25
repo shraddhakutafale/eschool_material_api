@@ -260,32 +260,30 @@ class Item extends BaseController
     
             $model = new ItemModel($db);
     
-           // Retrieve the item by itemId
-           $itemId = $input['itemId'];  // Corrected here
-           $item = $model->find($itemId); // Assuming find method retrieves the item
+            // Retrieve the item by itemId
+            $itemId = $input['itemId'];  // Corrected here
+            $item = $model->find($itemId); // Assuming find method retrieves the item
     
             if (!$item) {
                 return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
             }
     
-        
-         // Prepare the data to be updated (exclude itemId if it's included)
-         $updateData = [
-            'itemName' => $input['itemName'],  // Corrected here
-            'itemCategoryId' => $input['itemCategoryId'],  // Corrected here
-            'mrp' => $input['mrp'],  // Corrected here
-            'discountType' => $input['discountType'],  // Corrected here
-            'discount' => $input['discount'],  // Corrected here
-            'barcode' => $input['barcode'],  // Corrected here
-            'description' => $input['description'],  // Corrected here
-            'itemTypeId' => $input['itemTypeId'],  // Corrected here
-            'sku' => $input['sku'], 
-            'hsnCode' => $input['hsnCode'],
-            'feature' =>$input['feature'],
-            'unitName' =>$input['unitName'],
-            'finalPrice'=>$input['finalPrice']
-
-        ];              
+            // Prepare the data to be updated (exclude itemId if it's included)
+            $updateData = [
+                'itemName' => $input['itemName'],  // Corrected here
+                'itemCategoryId' => $input['itemCategoryId'],  // Corrected here
+                'mrp' => $input['mrp'],  // Corrected here
+                'discountType' => $input['discountType'],  // Corrected here
+                'discount' => $input['discount'],  // Corrected here
+                'barcode' => $input['barcode'],  // Corrected here
+                'description' => $input['description'],  // Corrected here
+                'itemTypeId' => $input['itemTypeId'],  // Corrected here
+                'sku' => $input['sku'], 
+                'hsnCode' => $input['hsnCode'],
+                'feature' =>$input['feature'],
+                'unitName' =>$input['unitName'],
+                'finalPrice'=>$input['finalPrice']
+            ];              
     
             // Handle cover image update
             $coverImage = $this->request->getFile('coverImage');
@@ -295,7 +293,7 @@ class Item extends BaseController
                 $header = $this->request->getHeader("Authorization");
                 $token = null;
     
-                // extract the token from the header
+                // Extract the token from the header
                 if (!empty($header)) {
                     if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
                         $token = $matches[1];
@@ -305,15 +303,18 @@ class Item extends BaseController
                 $decoded = JWT::decode($token, new Key($key, 'HS256'));
                 $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
     
+                // Create directory if it doesn't exist
                 if (!is_dir($coverImagePath)) {
-                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                    mkdir($coverImagePath, 0777, true);
                 }
     
+                // Save the image and get the name
                 $coverImageName = $coverImage->getRandomName();
                 $coverImage->move($coverImagePath, $coverImageName);
     
                 // Add the new cover image URL to the update data
                 $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
+                $updateData['coverImage'] = $input['coverImage'];  // Add cover image URL to update data
             }
     
             // Handle product image update (if new images are uploaded)
@@ -339,6 +340,7 @@ class Item extends BaseController
                 // If there are multiple images, join the URLs with commas and save in the input data
                 if (!empty($imageUrls)) {
                     $input['productImages'] = implode(',', $imageUrls);
+                    $updateData['productImages'] = $input['productImages'];  // Add product images URLs to update data
                 }
             }
     
@@ -360,6 +362,7 @@ class Item extends BaseController
             return $this->fail($response, 409);
         }
     }
+    
     
     public function delete()
     {

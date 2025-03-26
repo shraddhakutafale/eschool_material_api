@@ -425,6 +425,9 @@ public function getQuotationsPaging()
         'validDate' => $input->validDate,
         'businessNameFor' => $input->businessNameFor,
         'phoneFor' => $input->phoneFor,
+        'total'=> $input->total,
+        'totalItem'=> $input->totalItem,
+        'finalAmount'=> $input->totalPrice,
         // You can add other fields here as necessary
     ];
 

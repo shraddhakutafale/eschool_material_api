@@ -12,7 +12,7 @@ class PoDetailModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [ 'poDetailId', 'poId', 'itemId','itemCode','unitName','item', 'quantity', 'rate', 'amount', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = [ 'poDetailId', 'poId', 'itemId', 'quantity', 'rate', 'amount', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

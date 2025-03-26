@@ -509,7 +509,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $feeModel = new FeeModel($db);
-        $fees = $feeModel->findAll();
+        $fees = $feeModel->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Fees fetched successfully', 'data' => $fees], 200);
     }
 
@@ -518,7 +518,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $shiftModel = new ShiftModel($db);
-        $shifts = $shiftModel->findAll();
+        $shifts = $shiftModel->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Shifts fetched successfully', 'data' => $shifts], 200);
     }
 
@@ -527,7 +527,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $subjectModel = new SubjectModel($db);
-        $subjects = $subjectModel->findAll();
+        $subjects = $subjectModel->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $subjects], 200);
     }
 
@@ -554,7 +554,7 @@ class Course extends BaseController
             $filter = json_decode(json_encode($filter), true);
     
             foreach ($filter as $key => $value) {
-                if (in_array($key, ['particularName', 'amount'])) {
+                if (in_array($key, ['perticularName', 'amount'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
                 } else if ($key === 'createdDate') {
                     $query->where($key, $value); // Exact match filter for createdDate

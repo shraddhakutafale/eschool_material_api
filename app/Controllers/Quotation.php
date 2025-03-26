@@ -338,10 +338,6 @@ public function getQuotationsPaging()
                     $itemData = [
                         'quoteId' => $quoteId,  // Foreign key linking to the quotation
                         'itemId' => $item->itemId,
-                        'item' => $item->itemName,
-                        'itemCode' => $item->itemCode,
-                        'unitSize'=>$item->unitSize,
-                        'unitName'=>$item->unitName,
                         'quantity' => $item->quantity,
                         'rate' => $item->rate,
                         'amount' => $item->amount
@@ -377,127 +373,127 @@ public function getQuotationsPaging()
 
 
 
-    public function update()
-{
-    // Get input data from the request body
-    $input = $this->request->getJSON();
+        public function update()
+    {
+        // Get input data from the request body
+        $input = $this->request->getJSON();
 
-    // Validation rules for the Quote and Quotation Details
-    $rules = [
-        'quoteId' => ['rules' => 'required|numeric'], // Ensure quoteId is provided and is numeric
-    ];
-
-    // Validate the input
-    if (!$this->validate($rules)) {
-        // Validation failed
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
+        // Validation rules for the Quote and Quotation Details
+        $rules = [
+            'quoteId' => ['rules' => 'required|numeric'], // Ensure quoteId is provided and is numeric
         ];
-        return $this->fail($response, 409);
-    }
 
-    // Get tenant database configuration
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-    // Start a database transaction
-    $db->transBegin();
-
-    // Instantiate the models
-    $quotationModel = new QuotationModel($db);
-    $quotationDetailModel = new QuotationDetailModel($db);
-
-    // Retrieve the Quote by quoteId
-    $quoteId = $input->quoteId;
-    $quote = $quotationModel->find($quoteId); // Assuming find method retrieves the Quote by quoteId
-
-    if (!$quote) {
-        $db->transRollback();
-        return $this->fail(['status' => false, 'message' => 'Quote not found'], 404);
-    }
-
-    // Prepare the data to be updated for the QuotationModel
-    $updateData = [
-        'quoteNo' => $input->quoteNo,
-        'quoteDate' => $input->quoteDate,
-        'validDate' => $input->validDate,
-        'businessNameFor' => $input->businessNameFor,
-        'phoneFor' => $input->phoneFor,
-        'total'=> $input->total,
-        'totalItem'=> $input->totalItem,
-        'finalAmount'=> $input->totalPrice,
-        // You can add other fields here as necessary
-    ];
-
-    // Update the Quote in the QuotationModel
-    $updated = $quotationModel->update($quoteId, $updateData);
-
-    if (!$updated) {
-        $db->transRollback();
-        return $this->fail(['status' => false, 'message' => 'Failed to update Quote'], 500);
-    }
-
-    // Handle quotation details (multiple items)
-    if (isset($input->items) && is_array($input->items)) {
-        foreach ($input->items as $item) {
-            // Ensure itemId is provided and valid
-            if (empty($item->itemId)) {
-                $db->transRollback();
-                return $this->fail(['status' => false, 'message' => 'itemId is required and cannot be null for all items'], 400);
-            }
-
-            // Prepare the detail data for update or insert
-            $detailData = [
-                'quoteId' => $quoteId,  // Ensure the quoteId is linked to the detail
-                'itemId' => $item->itemId,  // Use the provided itemId
-                'quantity' => $item->quantity,  // Quantity
-                'rate' => $item->rate,  // Rate
-                'amount' => $item->amount,  // Amount = quantity * rate
-                // You can add more fields as needed
+        // Validate the input
+        if (!$this->validate($rules)) {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
             ];
+            return $this->fail($response, 409);
+        }
 
-            // Check if quoteItemId exists to update or if we need to insert it
-            if (isset($item->quoteItemId) && $item->quoteItemId) {
-                // Update the existing quote detail using quoteItemId
-                $updatedDetail = $quotationDetailModel->update($item->quoteItemId, $detailData);
-                if (!$updatedDetail) {
+        // Get tenant database configuration
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        // Start a database transaction
+        $db->transBegin();
+
+        // Instantiate the models
+        $quotationModel = new QuotationModel($db);
+        $quotationDetailModel = new QuotationDetailModel($db);
+
+        // Retrieve the Quote by quoteId
+        $quoteId = $input->quoteId;
+        $quote = $quotationModel->find($quoteId); // Assuming find method retrieves the Quote by quoteId
+
+        if (!$quote) {
+            $db->transRollback();
+            return $this->fail(['status' => false, 'message' => 'Quote not found'], 404);
+        }
+
+        // Prepare the data to be updated for the QuotationModel
+        $updateData = [
+            'quoteNo' => $input->quoteNo,
+            'quoteDate' => $input->quoteDate,
+            'validDate' => $input->validDate,
+            'businessNameFor' => $input->businessNameFor,
+            'phoneFor' => $input->phoneFor,
+            'total'=> $input->total,
+            'totalItem'=> $input->totalItem,
+            'finalAmount'=> $input->totalPrice,
+            // You can add other fields here as necessary
+        ];
+
+        // Update the Quote in the QuotationModel
+        $updated = $quotationModel->update($quoteId, $updateData);
+
+        if (!$updated) {
+            $db->transRollback();
+            return $this->fail(['status' => false, 'message' => 'Failed to update Quote'], 500);
+        }
+
+        // Handle quotation details (multiple items)
+        if (isset($input->items) && is_array($input->items)) {
+            foreach ($input->items as $item) {
+                // Ensure itemId is provided and valid
+                if (empty($item->itemId)) {
                     $db->transRollback();
-                    return $this->fail(['status' => false, 'message' => 'Failed to update Quote Detail for quoteItemId ' . $item->quoteItemId], 500);
+                    return $this->fail(['status' => false, 'message' => 'itemId is required and cannot be null for all items'], 400);
                 }
-            } else {
-                // Check if the item already exists in the quote details before inserting
-                $existingItem = $quotationDetailModel->where('quoteId', $quoteId)
-                                                      ->where('itemId', $item->itemId)
-                                                      ->first();
 
-                if ($existingItem) {
-                    // If item exists, update it instead of inserting
-                    $detailData['quoteItemId'] = $existingItem['quoteItemId'];
-                    $updatedDetail = $quotationDetailModel->update($existingItem['quoteItemId'], $detailData);
+                // Prepare the detail data for update or insert
+                $detailData = [
+                    'quoteId' => $quoteId,  // Ensure the quoteId is linked to the detail
+                    'itemId' => $item->itemId,  // Use the provided itemId
+                    'quantity' => $item->quantity,  // Quantity
+                    'rate' => $item->rate,  // Rate
+                    'amount' => $item->amount,  // Amount = quantity * rate
+                    // You can add more fields as needed
+                ];
+
+                // Check if quoteItemId exists to update or if we need to insert it
+                if (isset($item->quoteItemId) && $item->quoteItemId) {
+                    // Update the existing quote detail using quoteItemId
+                    $updatedDetail = $quotationDetailModel->update($item->quoteItemId, $detailData);
                     if (!$updatedDetail) {
                         $db->transRollback();
-                        return $this->fail(['status' => false, 'message' => 'Failed to update existing Quote Detail'], 500);
+                        return $this->fail(['status' => false, 'message' => 'Failed to update Quote Detail for quoteItemId ' . $item->quoteItemId], 500);
                     }
                 } else {
-                    // Insert a new detail if no quoteItemId is provided and it's not already in the quote
-                    $insertedDetail = $quotationDetailModel->insert($detailData);
-                    if (!$insertedDetail) {
-                        $db->transRollback();
-                        return $this->fail(['status' => false, 'message' => 'Failed to insert new Quote Detail'], 500);
+                    // Check if the item already exists in the quote details before inserting
+                    $existingItem = $quotationDetailModel->where('quoteId', $quoteId)
+                                                        ->where('itemId', $item->itemId)
+                                                        ->first();
+
+                    if ($existingItem) {
+                        // If item exists, update it instead of inserting
+                        $detailData['quoteItemId'] = $existingItem['quoteItemId'];
+                        $updatedDetail = $quotationDetailModel->update($existingItem['quoteItemId'], $detailData);
+                        if (!$updatedDetail) {
+                            $db->transRollback();
+                            return $this->fail(['status' => false, 'message' => 'Failed to update existing Quote Detail'], 500);
+                        }
+                    } else {
+                        // Insert a new detail if no quoteItemId is provided and it's not already in the quote
+                        $insertedDetail = $quotationDetailModel->insert($detailData);
+                        if (!$insertedDetail) {
+                            $db->transRollback();
+                            return $this->fail(['status' => false, 'message' => 'Failed to insert new Quote Detail'], 500);
+                        }
                     }
                 }
             }
         }
+
+        // Commit the transaction if everything is successful
+        $db->transCommit();
+
+        // Return success message if both quote and details are updated successfully
+        return $this->respond(['status' => true, 'message' => 'Quote and Details Updated Successfully'], 200);
     }
-
-    // Commit the transaction if everything is successful
-    $db->transCommit();
-
-    // Return success message if both quote and details are updated successfully
-    return $this->respond(['status' => true, 'message' => 'Quote and Details Updated Successfully'], 200);
-}
 
     
     

@@ -247,6 +247,18 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Vendor::delete',['filter' => ['authFilter','tenantFilter']]);
   });
 
+  $routes->group('exam', function ($routes) {
+  
+    $routes->get('getall', 'Exam::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Exam::getExamsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Exam::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Exam::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Exam::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Exam::getExamsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Exam::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
+
 
    
   $routes->group('offer', function ($routes) {

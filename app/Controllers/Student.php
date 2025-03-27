@@ -197,7 +197,7 @@ class Student extends BaseController
                 $students[$key]['fees'] = $fees;
             }
 
-            $payments = $paymentDetailModel->where('admissionId', $value['admissionId'])->findAll();
+            $payments = $paymentDetailModel->where('admissionId', $value['admissionId'])->where('isDeleted', 0)->findAll();
             foreach ($payments as $payment) {
                 $paidFees = [];
                 if($payment['status'] == 'Paid'){
@@ -205,10 +205,11 @@ class Student extends BaseController
                 }
                 $students[$key]['paidFees'] = $paidFees;
 
-                if($payment['status'] == 'Pending' && count($payments) > 0){
-                    $students[$key]['paymentStatus'] = 'installment';
+                if($payment['status']){
+                    $students[$key]['paymentStatus'] = $payment['status'];
                 }
             }
+            
         }
         $pager = $studentModel->pager;
 
@@ -247,6 +248,8 @@ class Student extends BaseController
         $studentModel = new StudentModel($db);
         $admissionModel = new AdmissionModel($db);
         $paymentDetailModel = new PaymentDetailModel($db);
+        $feeModel = new FeeModel($db);
+        $itemFeeMapModel = new ItemFeeMapModel($db);
 
 
         $query = $paymentDetailModel;
@@ -297,6 +300,18 @@ class Student extends BaseController
 
         // Get Paginated Results
         $payments = $query->paginate($perPage, 'default', $page);
+        foreach ($payments as $key => $payment) {
+            $fees = [];
+            $selectedCourseArray = explode(',',$payment['selectedCourses']);
+            foreach ($selectedCourseArray as $itemId) {
+                $itemFeeMapArray = $itemFeeMapModel->where('itemId', $itemId)->where('isDeleted', 0)->findAll();
+                foreach ($itemFeeMapArray as $fee) {
+                    $feeArray = $feeModel->where('feeId', $fee['feeId'])->where('isDeleted', 0)->first();
+                    $fees[] = $feeArray['amount'];
+                }
+                $payments[$key]['fees'] = $fees;
+            }
+        }
         
         $pager = $paymentDetailModel->pager;
 
@@ -664,6 +679,29 @@ class Student extends BaseController
             'data' => $input
         ]);
 
+    }
+
+    public function addPayment(){
+        $input = $this->request->getJSON();
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $paymentDetailModel = new PaymentDetailModel($db);
+        if(isset($input->paymentId) && !empty($input->paymentId)){
+            $paymentDetailModel->update($input->paymentId, $input);
+            return $this->respond([
+                'status' => 201,
+                'message' => 'Payment updated successfully',
+                'data' => $input
+            ]);
+        }else{
+            $paymentDetailModel->insert($input);
+            return $this->respond([
+                'status' => 201,
+                'message' => 'Payment added successfully',
+                'data' => $input
+            ]);
+        }   
     }
 
 

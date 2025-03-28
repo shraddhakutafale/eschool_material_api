@@ -665,44 +665,70 @@ class Student extends BaseController
         }
     }
 
-    public function addAllPayment() {
-        $input = $this->request->getJSON();
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $paymentDetailModel = new PaymentDetailModel($db);
 
-        $paymentDetailModel->insertbatch($input);
+    // public function addAllPayment() {
+    //     $input = $this->request->getJSON();
+    //     $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     $paymentDetailModel = new PaymentDetailModel($db);
+
+    //     $paymentDetailModel->insertbatch($input);
+    //     return $this->respond([
+    //         'status' => 201,
+    //         'message' => 'Payment added successfully',
+    //         'data' => $input
+    //     ]);
+
+    // }
+
+public function addallpayment()
+{
+    $input = $this->request->getJSON(true); // Use getJSON(true) to get an array instead of stdClass
+    
+    // Validate input
+    if (!is_array($input) || empty($input)) {
+        return $this->respond([
+            'status' => 400,
+            'message' => 'Invalid input data'
+        ], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $paymentDetailModel = new PaymentDetailModel($db);
+
+    try {
+        // Process each payment to ensure proper format
+        $payments = array_map(function($payment) {
+            return [
+                'student_id' => $payment['studentId'] ?? null,
+                'total_amount' => $payment['totalAmount'] ?? 0,
+                'paid_amount' => $payment['paidAmount'] ?? 0,
+                'due_date' => $payment['dueDate'] ?? null,
+                'label' => $payment['label'] ?? null,
+                'payment_method' => $payment['paymentMethod'] ?? 'cash',
+                'transaction_id' => $payment['transactionId'] ?? null,
+                'payment_date' => $payment['paymentDate'] ?? date('Y-m-d'),
+                'status' => $payment['status'] ?? 'Paid'
+            ];
+        }, $input);
+
+        // Insert batch
+        $result = $paymentDetailModel->insertBatch($payments);
+
         return $this->respond([
             'status' => 201,
-            'message' => 'Payment added successfully',
-            'data' => $input
+            'message' => 'Payments added successfully',
+            'data' => $result
         ]);
-
+    } catch (\Exception $e) {
+        return $this->respond([
+            'status' => 500,
+            'message' => 'Error processing payments: ' . $e->getMessage()
+        ], 500);
     }
-
-    public function addPayment(){
-        $input = $this->request->getJSON();
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $paymentDetailModel = new PaymentDetailModel($db);
-        if(isset($input->paymentId) && !empty($input->paymentId)){
-            $paymentDetailModel->update($input->paymentId, $input);
-            return $this->respond([
-                'status' => 201,
-                'message' => 'Payment updated successfully',
-                'data' => $input
-            ]);
-        }else{
-            $paymentDetailModel->insert($input);
-            return $this->respond([
-                'status' => 201,
-                'message' => 'Payment added successfully',
-                'data' => $input
-            ]);
-        }   
-    }
+}
 
 
 }

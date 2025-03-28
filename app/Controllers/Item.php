@@ -140,225 +140,229 @@ class Item extends BaseController
         return $this->respond($response, 200);
     }
 
-    // public function create()
-    // {
-    //     // Retrieve the input data from the request
-    //     $input = $this->request->getPost();
-        
-    //     // Define validation rules for required fields
-    //     $rules = [
-    //         'itemName' => ['rules' => 'required']
-    //     ];
-
-    //     if ($this->validate($rules)) {
-    //         $key = "Exiaa@11";
-    //         $header = $this->request->getHeader("Authorization");
-    //         $token = null;
-    
-    //         // extract the token from the header
-    //         if(!empty($header)) {
-    //             if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-    //                 $token = $matches[1];
-    //             }
-    //         }
-            
-    //         $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    //         // Handle image upload for the cover image
-    //         $coverImage = $this->request->getFile('coverImage');
-    //         $coverImageName = null;
-
-    //         if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
-    //             // Define the upload path for the cover image
-    //             $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-    //             if (!is_dir($coverImagePath)) {
-    //                 mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
-    //             }
-
-    //             // Move the file to the desired directory with a unique name
-    //             $coverImageName = $coverImage->getRandomName();
-    //             $coverImage->move($coverImagePath, $coverImageName);
-
-    //             // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-    //             $coverImageUrl = 'uploads/itemImages/' . $coverImageName;
-    //             $coverImageUrl = str_replace('uploads/itemImages/', '', $coverImageUrl);
-
-    //             // Add the cover image URL to the input data
-    //             $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageUrl; 
-    //         }
-
-            
-            
-
-    //         $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
-    //         $imageUrls = []; // Initialize the array for image URLs
-        
-    //         // if ($productImages && count($productImages) > 0) {
-    //             foreach ($productImages as $image) {
-    //                 // Ensure the image is valid before proceeding
-    //                 if ($image && $image->isValid() && !$image->hasMoved()) {
-    //                     $key = "Exiaa@11";
-    //                     $header = $this->request->getHeader("Authorization");
-    //                     $token = null;
-                
-    //                     // extract the token from the header
-    //                     if(!empty($header)) {
-    //                         if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-    //                             $token = $matches[1];
-    //                         }
-    //                     }
-                        
-    //                     $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    //                     // Define the upload path for product images
-    //                     $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
-        
-    //                     // Check if the directory exists, and create it if it doesn't
-    //                     if (!is_dir($productImagePath)) {
-    //                         mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
-    //                     }
-        
-    //                     // Generate a unique name for the image to avoid overwriting
-    //                     $imageName = $image->getRandomName();
-        
-    //                     // Move the uploaded image to the target directory
-    //                     $image->move($productImagePath, $imageName);
-        
-    //                     // Save the image URL (relative to the uploads folder)
-    //                     $imageUrls[] = '' . $decoded->tenantName . '/itemSlideImages/' . $imageName;
-    //                 }
-    //             }
-        
-    //             // If there are multiple images, join the URLs with commas and save them
-    //             if (!empty($imageUrls)) {
-    //                 $input['productImages'] = implode(',', $imageUrls); // Join the image URLs with commas
-    //                 $updateData['productImages'] = $input['productImages'];  // Add the image URLs to the update data
-    //             }
-    //         // }
-
-    //         // Insert the product data into the database
-    //         $tenantService = new TenantService();
-    //         // Connect to the tenant's database
-    //         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //         $model = new ItemModel($db);
-    //         $model->insert($input);
-
-    //         return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
-    //     } else {
-    //         // If validation fails, return the error messages
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs',
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
-
-
     public function create()
-{
-    // Retrieve the input data from the request
-    $input = $this->request->getPost();
+    {
+        // Retrieve the input data from the request
+        $input = $this->request->getPost();
+        
+        // Define validation rules for required fields
+        $rules = [
+            'itemName' => ['rules' => 'required']
+        ];
 
-    // Define validation rules for required fields
-    $rules = [
-        'itemName' => ['rules' => 'required']
-    ];
-
-    if ($this->validate($rules)) {
-        $key = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token = null;
-
-        // Extract the token from the header
-        if (!empty($header)) {
-            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                $token = $matches[1];
-            }
-        }
-
-        // Decode the JWT token
-        try {
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); // Decode JWT token
-        } catch (Exception $e) {
-            return $this->fail('Invalid token: ' . $e->getMessage(), 401); // Handle token decoding failure
-        }
-
-        // Handle cover image upload (single image)
-        $coverImage = $this->request->getFile('coverImage');
-        $coverImageUrl = null;
-
-        if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
-            // Define the upload path for the cover image
-            $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-            if (!is_dir($coverImagePath)) {
-                mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
-            }
-
-            // Generate a random name for the cover image to avoid overwriting
-            $coverImageName = $coverImage->getRandomName();
-
-            // Move the file to the desired directory
-            $coverImage->move($coverImagePath, $coverImageName);
-
-            // Get the URL of the uploaded cover image
-            $coverImageUrl = 'uploads/' . $decoded->tenantName . '/itemImages/' . $coverImageName;
-        }
-
-        // Add cover image URL to the input data
-        if ($coverImageUrl) {
-            $input['coverImage'] = $coverImageUrl;
-        }
-
-        // Handle multiple product image uploads
-        $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
-        $imageUrls = []; // Initialize the array for image URLs
-
-        if ($productImages && count($productImages) > 0) {
-            foreach ($productImages as $index => $image) {
-                if ($image && $image->isValid() && !$image->hasMoved()) {
-                    // Define the upload path for product images
-                    $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
-
-                    // Check if the directory exists, and create it if it doesn't
-                    if (!is_dir($productImagePath)) {
-                        mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
-                    }
-
-                    // Generate a unique name for the image to avoid overwriting
-                    $imageName = $image->getRandomName();
-
-                    // Move the uploaded image to the target directory
-                    $image->move($productImagePath, $imageName);
-
-                    // Save the image URL (relative to the uploads folder)
-                    $imageUrls[] = 'uploads/' . $decoded->tenantName . '/itemSlideImages/' . $imageName;
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
+    
+            // extract the token from the header
+            if(!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
                 }
             }
+            
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            // Handle image upload for the cover image
+            $coverImage = $this->request->getFile('coverImage');
+            $coverImageName = null;
 
-            // If there are multiple images, join the URLs with commas and save them
-            if (!empty($imageUrls)) {
-                $input['productImages'] = implode(',', $imageUrls); // Join the image URLs with commas
+            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+                // Define the upload path for the cover image
+                $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+                if (!is_dir($coverImagePath)) {
+                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+                }
+
+                // Move the file to the desired directory with a unique name
+                $coverImageName = $coverImage->getRandomName();
+                $coverImage->move($coverImagePath, $coverImageName);
+
+                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+                $coverImageUrl = 'uploads/itemImages/' . $coverImageName;
+                $coverImageUrl = str_replace('uploads/itemImages/', '', $coverImageUrl);
+
+                // Add the cover image URL to the input data
+                $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageUrl; 
             }
+
+            
+            
+
+            $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
+            $imageUrls = []; // Initialize the array for image URLs
+        
+            // if ($productImages && count($productImages) > 0) {
+                foreach ($productImages as $image) {
+                    // Ensure the image is valid before proceeding
+                    if ($image && $image->isValid() && !$image->hasMoved()) {
+                        $key = "Exiaa@11";
+                        $header = $this->request->getHeader("Authorization");
+                        $token = null;
+                
+                        // extract the token from the header
+                        if(!empty($header)) {
+                            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                                $token = $matches[1];
+                            }
+                        }
+                        
+                        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+                        // Define the upload path for product images
+                        $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
+        
+                        // Check if the directory exists, and create it if it doesn't
+                        if (!is_dir($productImagePath)) {
+                            mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
+                        }
+        
+                        // Generate a unique name for the image to avoid overwriting
+                        $imageName = $image->getRandomName();
+        
+                        // Move the uploaded image to the target directory
+                        $image->move($productImagePath, $imageName);
+        
+                        // Save the image URL (relative to the uploads folder)
+                        $imageUrls[] = '' . $decoded->tenantName . '/itemSlideImages/' . $imageName;
+                    }
+                }
+        
+                // If there are multiple images, join the URLs with commas and save them
+                if (!empty($imageUrls)) {
+                    $input['productImages'] = implode(',', $imageUrls); // Join the image URLs with commas
+                    $updateData['productImages'] = $input['productImages'];  // Add the image URLs to the update data
+                }
+            // }
+
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemModel($db);
+            $model->insert($input);
+
+            return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
+        } else {
+            // If validation fails, return the error messages
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs',
+            ];
+            return $this->fail($response, 409);
         }
-
-        // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new ItemModel($db);
-        $model->insert($input);
-
-        return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
-    } else {
-        // If validation fails, return the error messages
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs',
-        ];
-        return $this->fail($response, 409);
     }
-}
+
+
+//     public function create()
+// {
+//     // Retrieve the input data from the request
+//     $input = $this->request->getPost();
+
+//     // Define validation rules for required fields
+//     $rules = [
+//         'itemName' => ['rules' => 'required']
+//     ];
+
+//     if ($this->validate($rules)) {
+//         $key = "Exiaa@11";
+//         $header = $this->request->getHeader("Authorization");
+//         $token = null;
+
+//         // Extract the token from the header
+//         if (!empty($header)) {
+//             if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+//                 $token = $matches[1];
+//             }
+//         }
+
+//         // Decode the JWT token
+//         try {
+//             $decoded = JWT::decode($token, new Key($key, 'HS256')); // Decode JWT token
+//         } catch (Exception $e) {
+//             return $this->fail('Invalid token: ' . $e->getMessage(), 401); // Handle token decoding failure
+//         }
+
+//         // Handle cover image upload (single image)
+//         $coverImage = $this->request->getFile('coverImage');
+//         $coverImageUrl = null;
+
+//         if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+//             // Define the upload path for the cover image
+//             $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+//             if (!is_dir($coverImagePath)) {
+//                 mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
+//             }
+
+//             // Generate a random name for the cover image to avoid overwriting
+//             $coverImageName = $coverImage->getRandomName();
+
+//             // Move the file to the desired directory
+//             $coverImage->move($coverImagePath, $coverImageName);
+//             // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
+//              $coverImageUrl = 'uploads/itemImages/' . $coverImageName;
+//              $coverImageUrl = str_replace('uploads/itemImages/', '', $coverImageUrl);
+
+//             // Get the URL of the uploaded cover image
+//             $coverImageUrl = 'uploads/' . $decoded->tenantName . '/itemImages/' . $coverImageName;
+
+//         }
+
+//         // Add cover image URL to the input data
+//         if ($coverImageUrl) {
+//             $input['coverImage'] = $coverImageUrl;
+//         }
+
+//         // Handle multiple product image uploads
+//         $productImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
+//         $imageUrls = []; // Initialize the array for image URLs
+
+//         if ($productImages && count($productImages) > 0) {
+//             foreach ($productImages as $index => $image) {
+//                 if ($image && $image->isValid() && !$image->hasMoved()) {
+//                     // Define the upload path for product images
+//                     $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
+
+//                     // Check if the directory exists, and create it if it doesn't
+//                     if (!is_dir($productImagePath)) {
+//                         mkdir($productImagePath, 0777, true); // Create directory if it doesn't exist
+//                     }
+
+//                     // Generate a unique name for the image to avoid overwriting
+//                     $imageName = $image->getRandomName();
+
+//                     // Move the uploaded image to the target directory
+//                     $image->move($productImagePath, $imageName);
+
+//                     // Save the image URL (relative to the uploads folder)
+//                     $imageUrls[] = 'uploads/' . $decoded->tenantName . '/itemSlideImages/' . $imageName;
+//                 }
+//             }
+
+//             // If there are multiple images, join the URLs with commas and save them
+//             if (!empty($imageUrls)) {
+//                 $input['productImages'] = implode(',', $imageUrls); // Join the image URLs with commas
+//             }
+//         }
+
+//         // Insert the product data into the database
+//         $tenantService = new TenantService();
+//         // Connect to the tenant's database
+//         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//         $model = new ItemModel($db);
+//         $model->insert($input);
+
+//         return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
+//     } else {
+//         // If validation fails, return the error messages
+//         $response = [
+//             'status' => false,
+//             'errors' => $this->validator->getErrors(),
+//             'message' => 'Invalid Inputs',
+//         ];
+//         return $this->fail($response, 409);
+//     }
+// }
 
 
     public function update()

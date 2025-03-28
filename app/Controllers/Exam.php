@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\ExamModel;
+use App\Models\ExamTimetable;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -55,22 +56,22 @@ class Exam extends BaseController
     
        // Apply filtering
         if (!empty($filter)) {
-         $filter = json_decode(json_encode($filter), true);
+            $filter = json_decode(json_encode($filter), true);
 
-        foreach ($filter as $key => $value) {
-        if (in_array($key, [])) {
-            $query->like($key, $value);
-        } else if ($key === 'createdDate' && !empty($value)) {
-            $query->where($key, $value);
+            foreach ($filter as $key => $value) {
+                if (in_array($key, [])) {
+                    $query->like($key, $value);
+                } else if ($key === 'createdDate' && !empty($value)) {
+                    $query->where($key, $value);
+                }
+            }
+
+            // Apply Date Range Filter using startDate and endDate
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                ->where('createdDate <=', $filter['endDate']);
+            }
         }
-    }
-
-        // Apply Date Range Filter using startDate and endDate
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-        $query->where('createdDate >=', $filter['startDate'])
-        ->where('createdDate <=', $filter['endDate']);
-    }
-    }
 
         $query->where('isDeleted',0);
         // Apply Sorting
@@ -185,6 +186,7 @@ class Exam extends BaseController
             return $this->fail($response, 409);
         }
     }
+
     public function delete()
     {
         $input = $this->request->getJSON();
@@ -245,48 +247,32 @@ class Exam extends BaseController
             return $this->fail($response, 409);
         }
     }
-    
 
-    public function uploadPageProfile()
-    {
-        // Retrieve form fields
-        $vendorId = $this->request->getPost('vendorId'); // Example field
+    public function addAllExamTimetable(){
+        $input = $this->request->getJSON();
 
-        // Retrieve the file
-        $file = $this->request->getFile('photoUrl');
-
-        // Validate file
-        if (!$file->isValid()) {
-            return $this->fail($file->getErrorString());
+        if(empty($input)){
+            return $this->respond(['status' => false, 'message' => 'No data found'], 200);
         }
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ExamModel($db);
 
-        $mimeType = $file->getMimeType();
-        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
-        }
+        $examTimetable = new ExamTimetable($db);
 
-        // Validate file type and size
-        if ($file->getSize() > 2048 * 1024) {
-            return $this->fail('Invalid file type or size exceeds 2MB');
-        }
+        $examTimetable->insertbatch($input);
 
-        // Generate a random file name and move the file
-        $newName = $file->getRandomName();
-        $filePath = '/uploads/' . $newName;
-        $file->move(WRITEPATH . '../public/uploads', $newName);
+        return $this->respond(['status' => true, 'message' => 'Subjects Added Successfully'], 200);
+    }
 
-        // Save file and additional data in the database
-        $data = [
-            'photoUrl' => $newName,
-        ];
+    public function getSubjectsByExam(){
+        $input = $this->request->getJSON();
+        $examId = $input->examId;
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ExamTimetable($db);
 
-        $model = new VendorModel();
-        $model->update($vendorId, $data);
-
-        return $this->respond([
-            'status' => 201,
-            'message' => 'File and data uploaded successfully',
-            'data' => $data,
-        ]);
+        $examTimetables = $model->where('examId', $examId)->where('isDeleted', 0)->findAll();
+        return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $examTimetables], 200);
     }
 }

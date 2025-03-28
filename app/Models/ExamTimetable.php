@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ExamModel extends Model
+class ExamTimetable extends Model
 {
-    protected $table            = 'exam_mst';
-    protected $primaryKey       = 'examId';
+    protected $table            = 'exam_timetable_mst';
+    protected $primaryKey       = 'timetableId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['examId', 'examName', 'examCode', 'description', 'subject', 'academicYear', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['timetableId', 'academicYearId', 'examId', 'itemId', 'subjectId', 'examDate', 'startTime', 'endTime', 'totalMarks', 'passingMarks', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -20,13 +20,12 @@ class ExamModel extends Model
     protected array $casts = [];
     protected array $castHandlers = [];
 
-    
-     // Dates
-     protected $useTimestamps = true;
-     protected $dateFormat    = 'datetime';
-     protected $createdField  = 'createdDate';
-     protected $updatedField  = 'modifiedDate';
-     protected $beforeInsert = ['addCreatedBy'];
+    // Dates
+    protected $useTimestamps = false;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $beforeInsert = ['addCreatedBy'];
      protected $beforeUpdate = ['addModifiedBy'];
  
      protected function addCreatedBy(array $data)
@@ -49,6 +48,3 @@ class ExamModel extends Model
          return $data;
      }
 }
-    
-  
-

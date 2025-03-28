@@ -320,7 +320,7 @@ public function getQuotationsPaging()
                 'phoneFor' => $input->phoneFor,
                 'emailFor' => $input->emailFor,
                 'total'=> $input->total,
-                'totalItem'=> $input->totalItems,
+                'totalItem'=> $input->totalItem,
                 'finalAmount'=> $input->totalPrice,
                 // 'PanCardFor' => $input->PanCardFor
             ];

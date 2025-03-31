@@ -7,6 +7,9 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\PoModel;
 use App\Models\PoDetailModel;
 use App\Models\ItemModel;
+use App\Models\OrderModel;
+use App\Models\OrderDetailModel;
+use App\Models\ItemCategory;
 use App\Libraries\TenantService;
 
 use Config\Database;
@@ -27,39 +30,45 @@ class Po extends BaseController
     }
 
     
+
+    
+
     public function getPosPaging()
 {
-    $input = $this->request->getJSON();
+    // Convert JSON input to array
+    $input = json_decode(json_encode($this->request->getJSON()), true);
+    
+    // Get request parameters with default values
+    $page = $input['page'] ?? 1;
+    $perPage = $input['perPage'] ?? 10;
+    $sortField = $input['sortField'] ?? 'poId';
+    $sortOrder = strtoupper($input['sortOrder'] ?? 'ASC');
+    $search = $input['search'] ?? '';
+    $filter = $input['filter'] ?? [];
 
-    // Get the page number from the input, default to 1 if not provided
-    $page = isset($input->page) ? $input->page : 1;
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'poId';
-    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    $search = isset($input->search) ? $input->search : '';
-    $filter = $input->filter;
+    // Ensure sortOrder is either ASC or DESC
+    $sortOrder = in_array($sortOrder, ['ASC', 'DESC']) ? $sortOrder : 'ASC';
 
     $tenantService = new TenantService();
-    
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    
-    // Load the models with the tenant database connection
+
+    // Load models with tenant database connection
     $PoModel = new PoModel($db);
     $PoDetailModel = new PoDetailModel($db);
-    $ItemModel = new ItemModel($db);  // Assuming ItemModel exists
+    $OrderDetailModel = new OrderDetailModel($db);
+    $ItemModel = new ItemModel($db);
+    $CategoryModel = new ItemCategory($db);
 
-    // Base query for Pos
-    $query = $PoModel;
+    // Base query for POs
+    $query = $PoModel->where('isDeleted', 0);
 
-    // Apply filters based on user input
+    // Apply filters dynamically
     if (!empty($filter)) {
-        $filter = json_decode(json_encode($filter), true);
-
         foreach ($filter as $key => $value) {
-            if (in_array($key, ['poNo', 'poCode',  'businessNameFor'])) {
-                $query->like($key, $value); // LIKE filter for specific fields
-            } else if (in_array($key, ['createdDate'])) {
-                $query->where($key, $value); // Exact match filter
+            if (in_array($key, ['poNo', 'poCode', 'businessNameFor'])) {
+                $query->like($key, $value);
+            } elseif ($key === 'createdDate') {
+                $query->where($key, $value);
             }
         }
 
@@ -70,41 +79,49 @@ class Po extends BaseController
         }
     }
 
-    $query->where('isDeleted', 0);
+    // Apply sorting
+    $query->orderBy($sortField, $sortOrder);
 
-    // Apply Sorting
-    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-        $query->orderBy($sortField, $sortOrder);
-    }
-
-    // Fetch all Pos
+    // Fetch POs with pagination
     $Pos = $query->paginate($perPage, 'default', $page);
     $pager = $PoModel->pager;
 
-    // Fetch details for each Pos and merge with the main Pos data
+    // Fetch details for each PO and merge with item and category data
     foreach ($Pos as &$Po) {
-        // Fetch related Pos details for each PosId
-        $PosDetails = $PoDetailModel->where('poId', $Po['poId'])->findAll();
+        // Fetch related PoDetails for each poId
+        $PoDetails = $PoDetailModel->where('poId', $Po['poId'])->findAll();
 
-        // Merge the details under 'items', and for each Pos detail, fetch the corresponding item data
-        foreach ($PosDetails as &$PosDetail) {
-            // Fetch item data using itemId from ItemModel
-            $item = $ItemModel->find($PosDetail['itemId']);  // Assuming 'itemId' is a field in PoDetailModel
-            
-            // Merge item data into PosDetail
+        // Fetch OrderDetails in bulk to avoid multiple queries
+        $orderDetails = $OrderDetailModel->findAll();
+        $orderDetailsMap = [];
+        foreach ($orderDetails as $orderDetail) {
+            $orderDetailsMap[$orderDetail['itemId']] = $orderDetail;
+        }
+
+        foreach ($PoDetails as &$PoDetail) {
+            $item = $ItemModel->find($PoDetail['itemId']);
+
             if ($item) {
-                $PosDetail['item'] = $item;  // Now each PosDetail will have item details merged into it
+                $category = $CategoryModel->find($item['itemCategoryId'] ?? null);
+                $PoDetail['item'] = array_merge($item, [
+                    'category' => $category ?: []
+                ]);
+            }
+
+            // Attach OrderDetail if exists
+            if (isset($orderDetailsMap[$PoDetail['itemId']])) {
+                $PoDetail['orderDetail'] = $orderDetailsMap[$PoDetail['itemId']];
             }
         }
 
-        // Add the Pos details under 'items'
-        $Po['items'] = $PosDetails;
+        // Add all items to the PO object
+        $Po['items'] = $PoDetails;
     }
 
     // Prepare the response
-    $response = [
+    return $this->respond([
         "status" => true,
-        "message" => "All Lead Data Fetched",
+        "message" => "All PO Data Fetched",
         "data" => $Pos,
         "pagination" => [
             "currentPage" => $pager->getCurrentPage(),
@@ -112,11 +129,8 @@ class Po extends BaseController
             "totalItems" => $pager->getTotal(),
             "perPage" => $perPage
         ]
-    ];
-
-    return $this->respond($response, 200);
+    ], 200);
 }
-
 
     public function create()
     {

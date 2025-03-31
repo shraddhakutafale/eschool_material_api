@@ -25,19 +25,27 @@ class Item extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        
-        // Load UserModel with the tenant database connection
+    
+        // Load ItemModel with the tenant database connection
         $itemModel = new ItemModel($db);
-        
-        // Apply the condition where isDeleted = 0
+    
+        $items = $itemModel
+            ->select('item_mst.*, item_category.itemCategoryName, item_mst.discount,item_mst.discountType, item_category.gstTax')  
+            ->join('item_category', 'item_category.itemCategoryId = item_mst.itemCategoryId', 'left')  
+            ->where('item_mst.isDeleted', 0)  
+            ->findAll();
+
+    
+        // Prepare response
         $response = [
             "status" => true,
             "message" => "All Data Fetched",
-            "data" => $itemModel->where('isDeleted', 0)->findAll(),  // Add condition for isDeleted = 0
+            "data" => $items,
         ];
-        
+    
         return $this->respond($response, 200);
     }
+    
     
 
     public function getAllUnit()
@@ -404,7 +412,8 @@ class Item extends BaseController
                 'hsnCode' => $input['hsnCode'],
                 'feature' =>$input['feature'],
                 'unitName' =>$input['unitName'],
-                'finalPrice'=>$input['finalPrice']
+                'finalPrice'=>$input['finalPrice'],
+                ' minStockLevel'=>$input['minStockLevel']
             ];              
     
             // Handle cover image update

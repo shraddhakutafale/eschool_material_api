@@ -12,7 +12,7 @@ class ItemCategory extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemCategoryId', 'itemCategoryName','coverImage', 'description', 'isActive', 'isDeleted', 'modifiedDate', 'modifiedBy', 'createdDate', 'createdBy'];
+    protected $allowedFields    = ['itemCategoryId', 'itemCategoryName','coverImage', 'description','hsnCode','gstTax','isActive', 'isDeleted', 'modifiedDate', 'modifiedBy', 'createdDate', 'createdBy'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

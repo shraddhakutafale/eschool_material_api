@@ -370,6 +370,12 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('getshiftsbyitem', 'Course::getShiftsByItem',['filter' => ['authFilter', 'tenantFilter']]);
 
   });
+    
+  $routes->group('iotdevice', function ($routes) {
+    $routes->post('getallpaging', 'IotDevice::getIotDevicePaging',['filter' => ['authFilter','tenantFilter']]);
+  });
+
+
 
 });
 
@@ -385,6 +391,11 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
 
 
   });
+
+   $routes->group('iotdevice', function ($routes) {
+    $routes->post('add-parameter', 'IotDevice::addParameter', ['filter' => ['tenantFilter']]);
+  });
+
 
   $routes->group('staff', function ($routes) {
     //Routes for staff

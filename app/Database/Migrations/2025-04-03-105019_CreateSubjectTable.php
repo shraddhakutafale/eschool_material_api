@@ -4,61 +4,65 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateAdmissionDetailTable extends Migration
+class CreateSubjectTable extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'admissionId' => [
+            'subjectId' => [
                 'type'           => 'INT',
                 'constraint'     => 25,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'studentId' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 25,
-                'null'       => false,
-            ],
-            'academicYearId' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 25,
-                'null'       => false,
-            ],
-            'selectedCourses' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 25,
-                'null'       => false,
-            ],
-            'rollNo' => [
-                'type'       => 'INT',
-                'constraint' => 25,
-                'null'       => true,
-            ],
-            'rfId' => [
+            'subjectName' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
-                'null'       => true,
+                'null'       => false,
             ],
-            'admissionDate' => [
+            'subjectDesc' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => false,
             ],
             'active' => [
-                'type'       => 'TINYINT',
-                'constraint' => 1,
+                'type'       => 'INT',
+                'constraint' => 2,
                 'default'    => 1,
-                'null'       => false,
+            ],
+            'isDeleted' => [
+                'type'       => 'INT',
+                'constraint' => 1,
+                'default'    => 0,
+            ],
+            'createdBy' => [
+                'type'       => 'INT',
+                'constraint' => 25,
+                'null'       => true,
+            ],
+            'createdDate' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null'       => true,
+            ],
+            'modifiedBy' => [
+                'type'       => 'INT',
+                'constraint' => 25,
+                'null'       => true,
+            ],
+            'modifiedDate' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null'       => true,
             ],
         ]);
 
-        $this->forge->addKey('admissionId', true);
-        $this->forge->createTable('admission_details');
+        $this->forge->addKey('subjectId', true);
+        $this->forge->createTable('subject_mst');
     }
 
     public function down()
     {
-        $this->forge->dropTable('admission_details');
+        $this->forge->dropTable('subject_mst');
     }
 }

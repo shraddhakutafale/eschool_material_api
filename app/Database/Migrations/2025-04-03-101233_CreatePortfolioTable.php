@@ -4,61 +4,76 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateAdmissionDetailTable extends Migration
+class CreatePortfolioTable extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'admissionId' => [
+            'portfolioId' => [
                 'type'           => 'INT',
                 'constraint'     => 25,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'studentId' => [
+            'category' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 25,
+                'constraint' => 255,
                 'null'       => false,
             ],
-            'academicYearId' => [
+            'projectName' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 25,
+                'constraint' => 255,
                 'null'       => false,
             ],
-            'selectedCourses' => [
+            'description' => [
+                'type' => 'TEXT',
+                'null' => false,
+            ],
+            'profilePic' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 25,
+                'constraint' => 255,
                 'null'       => false,
             ],
-            'rollNo' => [
+            'createdBy' => [
                 'type'       => 'INT',
                 'constraint' => 25,
                 'null'       => true,
             ],
-            'rfId' => [
+            'createdDate' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => true,
             ],
-            'admissionDate' => [
+            'modifiedBy' => [
+                'type'       => 'INT',
+                'constraint' => 25,
+                'null'       => true,
+            ],
+            'modifiedDate' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
-                'null'       => false,
+                'null'       => true,
             ],
-            'active' => [
-                'type'       => 'TINYINT',
+            'isActive' => [
+                'type'       => 'INT',
                 'constraint' => 1,
                 'default'    => 1,
                 'null'       => false,
             ],
+            'isDeleted' => [
+                'type'       => 'INT',
+                'constraint' => 1,
+                'default'    => 0,
+                'null'       => false,
+            ],
         ]);
 
-        $this->forge->addKey('admissionId', true);
-        $this->forge->createTable('admission_details');
+        $this->forge->addKey('portfolioId', true);
+        $this->forge->createTable('portfolio_mst');
     }
 
     public function down()
     {
-        $this->forge->dropTable('admission_details');
+        $this->forge->dropTable('portfolio_mst');
     }
 }

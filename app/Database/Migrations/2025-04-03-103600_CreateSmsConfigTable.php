@@ -4,61 +4,66 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateAdmissionDetailTable extends Migration
+class CreateSmsConfigTable extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'admissionId' => [
+            'smsConfigId' => [
                 'type'           => 'INT',
                 'constraint'     => 25,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'studentId' => [
+            'templateId' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 25,
+                'constraint' => 255,
                 'null'       => false,
             ],
-            'academicYearId' => [
+            'smsGatewayUrl' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 25,
+                'constraint' => 255,
                 'null'       => false,
             ],
-            'selectedCourses' => [
+            'authkey' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 25,
+                'constraint' => 255,
                 'null'       => false,
             ],
-            'rollNo' => [
+            'apiElement' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null'       => false,
+            ],
+            'updUserId' => [
                 'type'       => 'INT',
                 'constraint' => 25,
-                'null'       => true,
+                'unsigned'   => true,
+                'null'       => false,
             ],
-            'rfId' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 255,
-                'null'       => true,
-            ],
-            'admissionDate' => [
+            'updDatetime' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => false,
             ],
-            'active' => [
+            'isActive' => [
                 'type'       => 'TINYINT',
                 'constraint' => 1,
                 'default'    => 1,
-                'null'       => false,
+            ],
+            'isDeleted' => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'default'    => 0,
             ],
         ]);
 
-        $this->forge->addKey('admissionId', true);
-        $this->forge->createTable('admission_details');
+        $this->forge->addKey('smsConfigId', true);
+        $this->forge->createTable('sms_config_mst');
     }
 
     public function down()
     {
-        $this->forge->dropTable('admission_details');
+        $this->forge->dropTable('sms_config_mst');
     }
 }

@@ -4,61 +4,77 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateAdmissionDetailTable extends Migration
+class CreateShiftTable extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'admissionId' => [
+            'shiftId' => [
                 'type'           => 'INT',
                 'constraint'     => 25,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'studentId' => [
+            'shiftName' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 25,
                 'null'       => false,
             ],
-            'academicYearId' => [
+            'startTime' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 25,
                 'null'       => false,
             ],
-            'selectedCourses' => [
+            'endTime' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 25,
                 'null'       => false,
             ],
-            'rollNo' => [
+            'emailTime' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 25,
+                'null'       => false,
+            ],
+            'createdDate' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null'       => false,
+            ],
+            'createdBy' => [
                 'type'       => 'INT',
                 'constraint' => 25,
+                'unsigned'   => true,
                 'null'       => true,
             ],
-            'rfId' => [
+            'modifiedDate' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => true,
             ],
-            'admissionDate' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 255,
-                'null'       => false,
+            'modifiedBy' => [
+                'type'       => 'INT',
+                'constraint' => 25,
+                'unsigned'   => true,
+                'null'       => true,
             ],
-            'active' => [
+            'isDeleted' => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'default'    => 0,
+            ],
+            'isActive' => [
                 'type'       => 'TINYINT',
                 'constraint' => 1,
                 'default'    => 1,
-                'null'       => false,
             ],
         ]);
 
-        $this->forge->addKey('admissionId', true);
-        $this->forge->createTable('admission_details');
+        $this->forge->addKey('shiftId', true);
+        $this->forge->createTable('shift_mst');
     }
 
     public function down()
     {
-        $this->forge->dropTable('admission_details');
+        $this->forge->dropTable('shift_mst');
     }
 }

@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $allowed_origins = [
   'http://localhost:4200',
+  'http://localhost:8100',
   'https://shritej.in',
   'https://www.shritej.in',
   'http://shritej.in',

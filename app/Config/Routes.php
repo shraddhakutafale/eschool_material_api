@@ -376,6 +376,14 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('getallpaging', 'IotDevice::getIotDevicePaging',['filter' => ['authFilter','tenantFilter']]);
   });
 
+  $routes->group('tenant', function ($routes) {
+    $routes->get('getall', 'Tenant::index',['filter' => ['authFilter']]);
+    $routes->post('getallpaging', 'Tenant::getTenantsPaging',['filter' => ['authFilter']]);
+    $routes->post('create', 'Tenant::create',['filter' => ['authFilter']]);
+    $routes->post('generatedatabase', 'Tenant::generateTenantDatabase',['filter' => ['authFilter']]);
+    $routes->post('update', 'Tenant::update',['filter' => ['authFilter']]);
+    $routes->post('delete', 'Tenant::delete',['filter' => ['authFilter']]);
+  });
 
 
 });

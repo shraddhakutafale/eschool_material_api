@@ -412,9 +412,10 @@ class Student extends BaseController
             return $this->fail($response, 409);
         }
     }
-    
+
     
 
+      
     public function update()
     {
         $input = $this->request->getPost();
@@ -429,16 +430,14 @@ class Student extends BaseController
              
         $tenantService = new TenantService();
         // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-        $model = new StudentModel($db);
-        $admissionModel = new AdmissionModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new StudentModel($db);
 
             // Retrieve the student by studentId
             $studentId = $input['studentId'];  // Corrected here
             $student = $model->find($studentId); // Assuming find method retrieves the student
 
             if (!$student) {
-                return $this->fail(['status' => false, 'message' => 'Student not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'student not found'], 404);
             }
 
             // Prepare the data to be updated (exclude studentId if it's included)
@@ -461,22 +460,15 @@ class Student extends BaseController
                 'bloodGroup' => $input['bloodGroup'],
                 'aadharNo' => $input['aadharNo'],
                 'medium' => $input['medium']
+                
+               
             ];
 
             // Update the student with new data
             $updated = $model->update($studentId, $updateData);
 
-            if($input['selectedCourses']){
-                $itemIds = explode(',', $input['selectedCourses']);
-                $admissionDataArray = [];
-                foreach ($itemIds as $itemId) {
-                    array_push($admissionDataArray, ['studentId' => $studentId, 'academicYearId' => $input['academicYearId'], 'itemId' => $itemId, 'admissionDate' => date('Y-m-d H:i:s')]);
-                }
-                $admissionModel->insertBatch($admissionDataArray);
-            }
-
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Student Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'student Updated Successfully'], 200);
             } else {
                 return $this->fail(['status' => false, 'message' => 'Failed to update student'], 500);
             }
@@ -490,6 +482,10 @@ class Student extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+    
+    
+
 
 
     public function delete()

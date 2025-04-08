@@ -11,7 +11,11 @@ $allowed_origins = [
   'https://shritej.in',
   'https://www.shritej.in',
   'http://shritej.in',
-  'https://admin.exiaa.com'
+  'https://admin.exiaa.com',
+  'https://jisarwa.in',
+  'https://www.jisarwa.in',
+  'https://realpowershop.com',
+  'https://www.realpowershop.com',
 ];
 $routes->options('(:any)', function () use ($allowed_origins){
   if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {

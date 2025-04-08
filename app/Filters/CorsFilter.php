@@ -19,7 +19,11 @@ class CorsFilter implements FilterInterface
             'http://localhost:8100',
             'https://shritej.in',
             'https://www.shritej.in',
-            'http://shritej.in'
+            'http://shritej.in',
+            'https://jisarwa.in',
+            'https://www.jisarwa.in',
+            'https://realpowershop.com',
+            'https://www.realpowershop.com',
         ];
 
         // Get the origin of the request

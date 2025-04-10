@@ -97,7 +97,7 @@ class Course extends BaseController
         }
 
         // Apply sorting
-        $query->orderBy($sortField, $sortOrder);
+        $query->orderBy('itemId', 'desc');
 
         // Execute the query with pagination
         $item = $query->paginate($perPage, 'default', $page);
@@ -129,6 +129,7 @@ class Course extends BaseController
 
         // Get pagination data
         $pager = $itemModel->pager;
+        
 
         // Prepare the response
         $response = [
@@ -640,53 +641,105 @@ class Course extends BaseController
     }
 
 
+    // public function updateFee()
+    // {
+    //     $input = $this->request->getJSON();
+        
+    //     // Validation rules for the vendor
+    //     $rules = [
+    //         'feeId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
+    //     ];
+
+    //     // Validate the input
+    //     if ($this->validate($rules)) {
+    //         $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     $model = new FeeModel($db);
+
+    //         // Retrieve the vendor by vendorId
+    //         // $feeId = $input ->$feeId;
+    //         // $fee = $model->find($feeId); 
+
+    //         $fee = $model->find($input->feeId);
+
+
+
+
+    //     if (!$fee) {
+    //         return $this->fail(['status' => false, 'message' => 'Fee not found'], 404);
+    //      }
+
+            
+    //      $updateData = [
+    //         'perticularName' => $input -> perticularName,  // Corrected here
+    //         'amount' => $input -> amount,  // Corrected here
+        
+    //     ];     
+
+    //         // Update the vendor with new data
+    //      $updated = $model->update($fee, $updateData);
+
+
+    //      if ($updated) {
+    //          return $this->respond(['status' => true, 'message' => 'Fee Updated Successfully'], 200);
+    //     } else {
+    //         return $this->fail(['status' => false, 'message' => 'Failed to update Fee'], 500);
+    //     }
+
+
+    //     } else {
+    //         // Validation failed
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
+
+
+
     public function updateFee()
     {
         $input = $this->request->getJSON();
-        
-        // Validation rules for the vendor
+
+        // Validation rules for the lead
         $rules = [
-            'feeId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
+            'feeId' => ['rules' => 'required|numeric'], // Ensure leadId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
+            // Insert the product data into the database
             $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new FeeModel($db);
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            $model = new FeeModel($db);  // Use LeadModel for lead-related operations
 
-            // Retrieve the vendor by vendorId
-            // $feeId = $input ->$feeId;
-            // $fee = $model->find($feeId); 
+            // Retrieve the lead by leadId
+            $feeId = $input->feeId;  // Corrected here
+            $fee = $model->find($feeId); // Assuming find method retrieves the lead
 
-            $fee = $model->find($input->feeId);
+            if (!$fee) {
+                return $this->fail(['status' => false, 'message' => 'Fee not found'], 404);
+            }
 
+            // Prepare the data to be updated (exclude leadId if it's included)
+            $updateData = [
+                'perticularName' => $input -> perticularName,  // Corrected here
+                'amount' => $input -> amount,  // Corrected here
+            ];
 
+            // Update the lead with new data
+            $updated = $model->update($feeId, $updateData);
 
-
-        if (!$fee) {
-            return $this->fail(['status' => false, 'message' => 'Fee not found'], 404);
-         }
-
-            
-         $updateData = [
-            'perticularName' => $input -> perticularName,  // Corrected here
-            'amount' => $input -> amount,  // Corrected here
-        
-        ];     
-
-            // Update the vendor with new data
-         $updated = $model->update($fee, $updateData);
-
-
-         if ($updated) {
-             return $this->respond(['status' => true, 'message' => 'Fee Updated Successfully'], 200);
-        } else {
-            return $this->fail(['status' => false, 'message' => 'Failed to update Fee'], 500);
-        }
-
-
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Fee Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update Fee'], 500);
+            }
         } else {
             // Validation failed
             $response = [
@@ -697,6 +750,7 @@ class Course extends BaseController
             return $this->fail($response, 409);
         }
     }
+    
 
 
     public function deleteFee()
@@ -886,54 +940,110 @@ class Course extends BaseController
         }
     } 
 
-    public function updateShift()
+    // public function updateShift()
+    // {
+    //     $input = $this->request->getJSON();
+        
+    //     // Validation rules for the vendor
+    //     $rules = [
+    //         'shiftId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
+    //     ];
+
+    //     // Validate the input
+    //     if ($this->validate($rules)) {
+    //         $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     $model = new ShiftModel($db);
+
+    //         // Retrieve the vendor by vendorId
+    //         // $feeId = $input ->$feeId;
+    //         // $fee = $model->find($feeId); 
+
+    //         $shift = $model->find($input->shiftId);
+
+
+
+
+    //     if (!$shift) {
+    //         return $this->fail(['status' => false, 'message' => 'Shift not found'], 404);
+    //      }
+
+            
+    //      $updateData = [
+    //         'shiftName' => $input -> shiftName,  
+    //         'startTime' => $input -> startTime,  
+    //         'endTime' => $input -> endTime, 
+    //         'emailTime' => $input -> emailTime 
+    //     ];     
+
+    //         // Update the vendor with new data
+    //      $updated = $model->update($shift, $updateData);
+
+
+    //      if ($updated) {
+    //          return $this->respond(['status' => true, 'message' => 'Shift Updated Successfully'], 200);
+    //     } else {
+    //         return $this->fail(['status' => false, 'message' => 'Failed to update Shift'], 500);
+    //     }
+
+
+    //     } else {
+    //         // Validation failed
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
+
+
+
+
+
+    public function  updateShift()
     {
         $input = $this->request->getJSON();
-        
-        // Validation rules for the vendor
+
+        // Validation rules for the lead
         $rules = [
-            'shiftId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
+            'shiftId' => ['rules' => 'required|numeric'], // Ensure leadId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
+            // Insert the product data into the database
             $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new ShiftModel($db);
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            $model = new ShiftModel($db);  // Use LeadModel for lead-related operations
 
-            // Retrieve the vendor by vendorId
-            // $feeId = $input ->$feeId;
-            // $fee = $model->find($feeId); 
+            // Retrieve the lead by leadId
+            $shiftId = $input->shiftId;  // Corrected here
+            $shift = $model->find($shiftId); // Assuming find method retrieves the lead
 
-            $shift = $model->find($input->shiftId);
+            if (!$shift) {
+                return $this->fail(['status' => false, 'message' => 'Shift not found'], 404);
+            }
 
-
-
-
-        if (!$shift) {
-            return $this->fail(['status' => false, 'message' => 'Shift not found'], 404);
-         }
-
-            
-         $updateData = [
+            // Prepare the data to be updated (exclude leadId if it's included)
+            $updateData = [
             'shiftName' => $input -> shiftName,  
             'startTime' => $input -> startTime,  
             'endTime' => $input -> endTime, 
             'emailTime' => $input -> emailTime 
-        ];     
+            ];
 
-            // Update the vendor with new data
-         $updated = $model->update($shift, $updateData);
+            // Update the lead with new data
+            $updated = $model->update($shiftId, $updateData);
 
-
-         if ($updated) {
-             return $this->respond(['status' => true, 'message' => 'Shift Updated Successfully'], 200);
-        } else {
-            return $this->fail(['status' => false, 'message' => 'Failed to update Shift'], 500);
-        }
-
-
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Shift Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update shift'], 500);
+            }
         } else {
             // Validation failed
             $response = [

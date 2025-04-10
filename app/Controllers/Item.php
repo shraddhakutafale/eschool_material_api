@@ -124,7 +124,7 @@ class Item extends BaseController
         }
 
         // Apply sorting
-        $query->orderBy($sortField, $sortOrder);
+        $query->orderBy('itemId', 'desc');
 
         // Execute the query with pagination
         $item = $query->paginate($perPage, 'default', $page);

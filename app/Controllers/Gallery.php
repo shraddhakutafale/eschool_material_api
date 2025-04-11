@@ -283,50 +283,63 @@ class Gallery extends BaseController
 
 
         public function delete()
-        
-    {
-        $input = $this->request->getJSON();
-        
-        // Validation rules for the course
-        $rules = [
-            'galleryId' => ['rules' => 'required'], // Ensure courseId is provided and is numeric
-        ];
-
-        // Validate the input
-        if ($this->validate($rules)) {
-                // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-            $model = new GalleryModel($db);
-
-            // Retrieve the course by courseId
-            $galleryId = $input->galleryId;
-            $gallery = $model->find($galleryId); // Assuming find method retrieves the course
-
-            if (!$gallery) {
-                return $this->fail(['status' => false, 'message' => 'Gallery not found'], 404);
-            }
-
-            // Proceed to delete the course
-            $deleted = $model->delete($galleryId);
-
-            if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Gallery Deleted Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete Gallery'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
+        {
+            $input = $this->request->getJSON();
+            
+    
+            $rules = [
+                'galleryId' => ['rules' => 'required'], // Ensure vendorId is provided
             ];
-            return $this->fail($response, 409);
+        
+    
+            // Validate the input
+            if ($this->validate($rules)) {
+                $tenantService = new TenantService();
+                    // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+                $model = new GalleryModel($db);
+        
+                // Retrieve the vendor by vendorId
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new GalleryModel($db);
+    
+                // Retrieve the lead by leadId
+                $galleryId = $input->galleryId;
+                $gallery = $model->find($galleryId); // Assuming the find method retrieves the vendor
+        
+                
+                $gallery = $model->find($galleryId); // Assuming find method retrieves the lead
+    
+                if (!$gallery) {
+                    return $this->fail(['status' => false, 'message' => 'gallery not found'], 404);
+                }
+        
+                // Soft delete by marking 'isDeleted' as 1
+                $updateData = [
+                    'isDeleted' => 1,
+                ];
+        
+    
+                // Proceed to delete the lead
+                $deleted = $model->delete($galleryId);
+    
+                if ($deleted) {
+                    return $this->respond(['status' => true, 'message' => 'gallery Deleted Successfully'], 200);
+                } else {
+                    return $this->fail(['status' => false, 'message' => 'Failed to delete gallery'], 500);
+                }
+            } else {
+                // Validation failed
+                $response = [
+                    'status' => false,
+                    'errors' => $this->validator->getErrors(),
+                    'message' => 'Invalid Inputs'
+                ];
+                return $this->fail($response, 409);
+            }
         }
-    }
-
+        
     
 
     public function uploadPageProfile()

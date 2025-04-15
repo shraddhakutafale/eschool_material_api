@@ -38,7 +38,6 @@ class Exam extends BaseController
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
-    
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     
@@ -132,44 +131,36 @@ class Exam extends BaseController
     public function update()
     {
         $input = $this->request->getJSON();
-        
-        // Validation rules for the vendor
+
+        // Validation rules for the lead
         $rules = [
             'examId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
         ];
 
         // Validate the input
         if ($this->validate($rules)) {
+            // Insert the product data into the database
             $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new ExamModel($db);
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            $model = new ExamModel($db);  // Use LeadModel for lead-related operations
 
-            // Retrieve the vendor by vendorId
-            $examId = $input['examId'];
-            $exam = $model->find($examId); // Assuming find method retrieves the vendor
-            
-
-
+            // Retrieve the lead by leadId
+            $examId = $input->examId;  // Corrected here
+            $exam = $model->find($examId); // Assuming find method retrieves the lead
 
             if (!$exam) {
-                return $this->fail(['status' => false, 'message' => 'Exam not found'], 404);
+                return $this->fail(['status' => false, 'message' => 'exam not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude vendorId if it's included)
+            // Prepare the data to be updated (exclude leadId if it's included)
             $updateData = [
-                'name' =>$input['name'],
-                'vendorCode' =>$input['vendorCode'],
-                'mobileNo' => $input['mobileNo'],
-                'alternateMobileNo' => $input['alternateMobileNo'],  // Corrected here
-                'emailId' => $input['emailId'],  // Corrected here
-                'dateOfBirth' => $input['dateOfBirth'],  // Corrected here
-                'gender' => $input['gender'],  // Corrected here
+                'examName' =>$input-> examName,
+                'examCode' => $input -> examCode,  // Corrected here
             ];
 
-            // Update the vendor with new data
+            // Update the lead with new data
             $updated = $model->update($examId, $updateData);
-
 
             if ($updated) {
                 return $this->respond(['status' => true, 'message' => 'exam Updated Successfully'], 200);
@@ -186,6 +177,8 @@ class Exam extends BaseController
             return $this->fail($response, 409);
         }
     }
+    
+
 
     public function delete()
     {
@@ -195,7 +188,7 @@ class Exam extends BaseController
 
         // Validation rules for the lead
         $rules = [
-            'vendorId' => ['rules' => 'required'], // Ensure vendorId is provided
+            'examId' => ['rules' => 'required'], // Ensure vendorId is provided
         ];
     
 
@@ -206,36 +199,32 @@ class Exam extends BaseController
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new VendorModel($db);
+            $model = new ExamModel($db);
     
             // Retrieve the vendor by vendorId
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new VendorModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new ExamModel($db);
 
             // Retrieve the lead by leadId
-            $vendorId = $input->vendorId;
-            $vendor = $model->find($vendorId); // Assuming the find method retrieves the vendor
-    
-            
-            $vendor = $model->find($vendorId); // Assuming find method retrieves the lead
+            $examId = $input->examId;
+            $exam = $model->find($examId);
+            $exam = $model->find($examId); 
 
-            if (!$vendor) {
-                return $this->fail(['status' => false, 'message' => 'Vendor not found'], 404);
+            if (!$exam) {
+                return $this->fail(['status' => false, 'message' => 'exam not found'], 404);
             }
     
-            // Proceed to delete the vendor
-            // Soft delete by marking 'isDeleted' as 1
             $updateData = [
                 'isDeleted' => 1,
             ];
     
 
             // Proceed to delete the lead
-            $deleted = $model->delete($vendorId);
+            $deleted = $model->delete($examId);
 
             if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'Vendor Deleted Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Exam Deleted Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete vendor'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to delete exam'], 500);
             }
         } else {
             // Validation failed

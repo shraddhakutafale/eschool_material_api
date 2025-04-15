@@ -260,7 +260,6 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('create', 'Exam::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Exam::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('delete', 'Exam::delete',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('delete', 'Exam::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('addallexamtimetable', 'Exam::addAllExamTimetable',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getsubjectsbyexam', 'Exam::getSubjectsByExam',['filter' => ['authFilter','tenantFilter']]);
   });

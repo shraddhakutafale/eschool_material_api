@@ -413,7 +413,7 @@ class Item extends BaseController
                 'feature' =>$input['feature'],
                 'unitName' =>$input['unitName'],
                 'finalPrice'=>$input['finalPrice'],
-                ' minStockLevel'=>$input['minStockLevel']
+                'minStockLevel'=>$input['minStockLevel']
             ];              
     
             // Handle cover image update

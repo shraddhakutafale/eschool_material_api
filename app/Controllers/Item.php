@@ -412,8 +412,8 @@ class Item extends BaseController
                 'hsnCode' => $input['hsnCode'],
                 'feature' =>$input['feature'],
                 'unitName' =>$input['unitName'],
-                'finalPrice'=>$input['finalPrice'],
-                'minStockLevel'=>$input['minStockLevel']
+                // 'finalPrice'=>$input['finalPrice'],
+                // 'minStockLevel'=>$input['minStockLevel']
             ];              
     
             // Handle cover image update

@@ -435,6 +435,19 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallpaging', 'Testimonial::getTestimonialsPaging',['filter' => ['tenantFilter']]);
   });
 
+  $routes->group('blog', function ($routes) {
+    //Routes for vendor
+    $routes->get('getall', 'Blog::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Blog::getBlogsPaging',['filter' => ['tenantFilter']]);
+  });
+
+    $routes->group('portfolio', function ($routes) {
+    //Routes for vendor
+    $routes->get('getall', 'Portfolio::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Portfolio::getPortfolioPaging',['filter' => ['tenantFilter']]);
+  });
+
+
   $routes->group('gallery', function ($routes) {
     //Routes for gallery
     $routes->get('getall', 'Gallery::index',['filter' => ['tenantFilter']]);

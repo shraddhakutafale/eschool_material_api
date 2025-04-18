@@ -259,4 +259,37 @@ class Lead extends BaseController
         $leadInterestedModel = new LeadInterested($db);
         return $this->respond(["status" => true, "message" => "All Lead Interests Fetched", "data" => $leadInterestedModel->findAll()], 200);
     }
+
+    public function createWeb()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'fName' => ['rules' => 'required'],
+        ];
+
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            $model = new LeadModel($db);
+
+            // Insert the lead data into the database
+            $model->insert($input);
+
+            // Return a success response
+            return $this->respond(['status' => true, 'message' => 'Lead Created Successfully'], 200);
+        } else {
+            // Return validation errors if the rules are not satisfied
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
 }
+
+

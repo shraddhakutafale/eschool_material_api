@@ -778,7 +778,7 @@ class Item extends BaseController
         
         // Pagination parameters
         $page = isset($input->page) ? (int)$input->page : 1;  // Default to page 1 if not provided
-        $limit = isset($input->limit) ? (int)$input->limit : 10;  // Default to 10 items per page if not provided
+        $limit = isset($input->limit) ? (int)$input->limit : 30;  // Default to 10 items per page if not provided
         
         $tenantService = new TenantService();
         // Connect to the tenant's database

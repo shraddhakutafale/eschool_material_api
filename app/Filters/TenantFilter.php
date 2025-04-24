@@ -50,6 +50,7 @@ class TenantFilter implements FilterInterface
                 ->setStatusCode(404)
                 ->setJSON([
                     'status'  => false,
+                    'tenant' => $tenant,                    
                     'message' => 'Tenant database configuration not found or inactive.',
                 ]);
         }

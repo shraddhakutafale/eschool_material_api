@@ -12,7 +12,7 @@ class UserBusiness extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['userBusinessId', 'userId', 'businessId', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modeifiedDate'];
+    protected $allowedFields    = ['userBusinessId', 'userId', 'businessId','roleId','isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modeifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

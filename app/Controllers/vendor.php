@@ -156,13 +156,19 @@ class Vendor extends BaseController
                 // Add the cover image URL to the input data
                 $input['profilePic'] = $decoded->tenantName . '/vendorImages/' .$profilePicUrl; 
             }
-    
-           
-    
+
             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new VendorModel($db);
+            // 🔍 Check if mobileNo already exists
+            $existingVendor = $model->where('mobileNo', $input['mobileNo'])->first();
+            if ($existingVendor) {
+                return $this->fail([
+                    'status' => false,
+                    'message' => 'Vendor with this mobile number already exists.'
+                ], 409);
+            }
             $model->insert($input);
     
             return $this->respond(['status' => true, 'message' => 'Vendor Added Successfully'], 200);
@@ -215,6 +221,40 @@ class Vendor extends BaseController
                 'dateOfBirth' => $input['dateOfBirth'],  // Corrected here
                 'gender' => $input['gender'],  // Corrected here
             ];
+
+             // Handle cover image update
+             $profilePic = $this->request->getFile('profilePic');
+             if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+                 // Handle cover image upload as in create() method
+                 $key = "Exiaa@11";
+                 $header = $this->request->getHeader("Authorization");
+                 $token = null;
+     
+                 // Extract the token from the header
+                 if (!empty($header)) {
+                     if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                         $token = $matches[1];
+                     }
+                 }
+     
+                 $decoded = JWT::decode($token, new Key($key, 'HS256'));
+                 $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/vendorImages/';
+     
+                 // Create directory if it doesn't exist
+                 if (!is_dir($profilePicPath)) {
+                     mkdir($profilePicPath, 0777, true);
+                 }
+     
+                 // Save the image and get the name
+                 $profilePicName = $profilePic->getRandomName();
+                 $profilePic->move($profilePicPath, $profilePicName);
+     
+                 // Add the new cover image URL to the update data
+                 $input['profilePic'] = $decoded->tenantName . '/vendorImages/' . $profilePicName;
+                 $updateData['profilePic'] = $input['profilePic'];  // Add cover image URL to update data
+             }
+ 
+ 
 
             // Update the vendor with new data
             $updated = $model->update($vendorId, $updateData);

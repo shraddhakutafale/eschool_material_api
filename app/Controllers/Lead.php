@@ -164,28 +164,35 @@ class Lead extends BaseController
                 return $this->fail(['status' => false, 'message' => 'Lead not found'], 404);
             }
 
-            // Prepare the data to be updated (exclude leadId if it's included)
-            $updateData = [
-                'fName' => $input->fName,  // Corrected here
-                'lName' => $input->lName,  // Corrected here
-                'primaryMobileNo' => $input->primaryMobileNo,  // Corrected here
-                'secondaryMobileNo' => $input->secondaryMobileNo,  // Corrected here
-                'whatsAppNo' => $input->whatsAppNo,  // Corrected here
-                'email' => $input->email,  // Corrected here
-                'leadInterestedId' => $input->leadInterestedId,  // Corrected here
-                'leadInterestedIdValue' => $input->leadInterestedIdValue,  // Corrected here
-                'leadSourceId' => $input->leadSourceId,  // Corrected here
-                'leadSourceValue' => $input->leadSourceValue,  // Corrected here
+           // List of fields you allow to update
+            $allowedFields = [
+                'fName', 'lName', 'primaryMobileNo', 'secondaryMobileNo',
+                'whatsAppNo', 'email', 'leadInterestedId', 'leadInterestedIdValue',
+                'leadSourceId', 'leadSourceValue', 'status', 'followUpDate', 'remark'
             ];
 
-            // Update the lead with new data
-            $updated = $model->update($leadId, $updateData);
+            $updateData = [];
 
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Lead Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update lead'], 500);
+            // Build updateData only from existing input fields
+            foreach ($allowedFields as $field) {
+                if (isset($input->$field)) {
+                    $updateData[$field] = $input->$field;
+                }
             }
+
+            // Update only if there's something to update
+            if (!empty($updateData)) {
+                $updated = $model->update($leadId, $updateData);
+
+                if ($updated) {
+                    return $this->respond(['status' => true, 'message' => 'Lead updated successfully'], 200);
+                } else {
+                    return $this->fail(['status' => false, 'message' => 'Failed to update lead'], 500);
+                }
+            } else {
+                return $this->fail(['status' => false, 'message' => 'No data provided to update'], 400);
+            }
+
         } else {
             // Validation failed
             $response = [
@@ -196,6 +203,8 @@ class Lead extends BaseController
             return $this->fail($response, 409);
         }
     }
+
+
 
     // Delete a lead
     public function delete()

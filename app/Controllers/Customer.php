@@ -196,118 +196,6 @@ class Customer extends BaseController
     }
 
 
-    // public function update()
-    // {
-    //     $input = $this->request->getJSON();
-        
-    //     // Validation rules for the customer
-    //     $rules = [
-    //         'customerId' => ['rules' => 'required|numeric'], // Ensure customerId is provided and is numeric
-    //     ];
-
-    //     // Validate the input
-    //     if ($this->validate($rules)) {
-    //        // Insert the product data into the database
-    //     $tenantService = new TenantService();
-    //     // Connect to the tenant's database
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        
-    //         $model = new CustomerModel($db);
-
-    //         // Retrieve the customer by customerId
-    //         $customerId = $input->customerId;
-    //         $customer = $model->find($customerId); // Assuming find method retrieves the customer
-
-    //         if (!$customer) {
-    //             return $this->fail(['status' => false, 'message' => 'Customer not found'], 404);
-    //         }
-
-    //         // Prepare the data to be updated (exclude customerId if it's included)
-    //         $updateData = [
-    //             'name' =>$input->name,
-    //             'customerCode' =>$input->customerCode,
-    //             'mobileNo' => $input->mobileNo,
-    //             'alternateMobileNo' => $input->alternateMobileNo,
-    //             'emailId' => $input->emailId,
-    //             'dateOfBirth' => $input->dateOfBirth,
-    //             'gender' => $input->gender
-    //         ];
-
-    //         // Update the customer with new data
-    //         $updated = $model->update($customerId, $updateData);
-
-    //         if ($updated) {
-    //             return $this->respond(['status' => true, 'message' => 'Customer Updated Successfully'], 200);
-    //         } else {
-    //             return $this->fail(['status' => false, 'message' => 'Failed to update customer'], 500);
-    //         }
-    //     } else {
-    //         // Validation failed
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
-
-
-
-    // public function update()
-    // {
-    //     $input = $this->request->getJSON();
-        
-    //     // Validation rules for the studentId
-    //     $rules = [
-    //         'customerId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
-    //     ];
-
-    //     // Validate the input
-    //     if ($this->validate($rules)) {
-             
-    //     $tenantService = new TenantService();
-    //     // Connect to the tenant's database
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new CustomerModel($db);
-
-    //         // Retrieve the student by studentId
-    //         $customerId = $input->customerId;
-    //         $customer = $model->find($customerId); // Assuming find method retrieves the student
-
-    //         if (!$student) {
-    //             return $this->fail(['status' => false, 'message' => 'Student not found'], 404);
-    //         }
-
-    //         // Prepare the data to be updated (exclude studentId if it's included)
-    //         $updateData = 
-    //          [
-    //          'name' =>$input->name,
-    //         'customerCode' =>$input->customerCode,
-    //         'mobileNo' => $input->mobileNo,
-    //         'alternateMobileNo' => $input->alternateMobileNo,
-    //         'emailId' => $input->emailId,
-    //          'dateOfBirth' => $input->dateOfBirth,
-    //         'gender' => $input->gender 
-    //         ];
-
-    //         // Update the student with new data
-    //         $updated = $model->update($customerId, $updateData);
-
-    //         if ($updated) {
-    //             return $this->respond(['status' => true, 'message' => 'Student Updated Successfully'], 200);
-    //         } else {
-    //             return $this->fail(['status' => false, 'message' => 'Failed to update student'], 500);
-    //         }
-    //     } else {
-    //         // Validation failed
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
 
 
     public function update()
@@ -330,7 +218,7 @@ class Customer extends BaseController
             $customerId = $input['customerId'];
             $customer = $model->find($customerId); // Assuming find method retrieves the vendor
             
-
+           
 
 
             if (!$customer) {
@@ -350,6 +238,39 @@ class Customer extends BaseController
                 
     
             ];     
+
+            // Handle cover image update
+            $profilePic = $this->request->getFile('profilePic');
+            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+                // Handle cover image upload as in create() method
+                $key = "Exiaa@11";
+                $header = $this->request->getHeader("Authorization");
+                $token = null;
+    
+                // Extract the token from the header
+                if (!empty($header)) {
+                    if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                        $token = $matches[1];
+                    }
+                }
+    
+                $decoded = JWT::decode($token, new Key($key, 'HS256'));
+                $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/customerImages/';
+    
+                // Create directory if it doesn't exist
+                if (!is_dir($profilePicPath)) {
+                    mkdir($profilePicPath, 0777, true);
+                }
+    
+                // Save the image and get the name
+                $profilePicName = $profilePic->getRandomName();
+                $profilePic->move($profilePicPath, $profilePicName);
+    
+                // Add the new cover image URL to the update data
+                $input['profilePic'] = $decoded->tenantName . '/customerImages/' . $profilePicName;
+                $updateData['profilePic'] = $input['profilePic'];  // Add cover image URL to update data
+            }
+
 
             // Update the vendor with new data
             $updated = $model->update($customerId, $updateData);
@@ -372,48 +293,7 @@ class Customer extends BaseController
     }
 
 
-    // public function delete()
-    // {
-    //     $input = $this->request->getJSON();
 
-    //     // Validation rules for the lead
-    //     $rules = [
-    //         'customerId' => ['rules' => 'required'], // Ensure leadId is provided and is numeric
-    //     ];
-
-    //     // Validate the input
-    //     if ($this->validate($rules)) {
-    //             // Insert the product data into the database
-    //     $tenantService = new TenantService();
-    //     // Connect to the tenant's database
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new CustomerModel($db);
-
-    //         // Retrieve the lead by leadId
-    //         $customerId = $input->customerId;
-    //         $customer = $model->find($customerId); // Assuming find method retrieves the lead
-
-    //         if (!$customer) {
-    //             return $this->fail(['status' => false, 'message' => 'Lead not found'], 404);
-    //         }
-
-    //         // Proceed to delete the lead
-    //         $deleted = $model->delete($customerId);
-
-    //         if ($deleted) {
-    //             return $this->respond(['status' => true, 'message' => 'Customer Deleted Successfully'], 200);
-    //         } else {
-    //             return $this->fail(['status' => false, 'message' => 'Failed to delete customer'], 500);
-    //         }
-    //     } else {
-    //         // Validation failed
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
 
     public function delete()
 {

@@ -629,15 +629,11 @@ class Item extends BaseController
     public function getFourItemByCategory()
     {
         try {
-            $this->response->setHeader('Access-Control-Allow-Origin', '*')
-                           ->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-                           ->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    
             $tenantService = new TenantService();
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     
-            $model = new ItemCategory($db);
-            $data = $model->getFourItemsPerCategory(); // Custom method to fetch 4 items per category
+            $model = new ItemModel($db);
+            $data = $model->where('isDeleted', 0)->where('itemTypeId', 3)->findAll(); // Custom method to fetch 4 items per category
     
             return $this->respond(["status" => true, "message" => "Items fetched successfully", "data" => $data], 200);
         } catch (\Exception $e) {

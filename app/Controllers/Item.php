@@ -477,7 +477,7 @@ class Item extends BaseController
     
         try {
             $model = new ItemCategory($db);
-            $itemCategories = $model->findAll();
+            $itemCategories = $model->where('isDeleted', 0)->findAll();
             return $this->respond(['status' => true, 'message' => 'Data fetched successfully', 'data' => $itemCategories], 200);
         } catch (\Throwable $e) {
             log_message('error', 'Exception: ' . $e->getMessage());
@@ -549,6 +549,139 @@ class Item extends BaseController
             return $this->fail($response, 409);
         }
             
+    }
+
+    public function updateCategory()
+    {
+        $input = $this->request->getPost();
+    
+        // Validation rules for the item
+        $rules = [
+            'itemCategoryId' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
+        ];
+    
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+            $model = new ItemCategory($db);
+    
+            // Retrieve the item by itemId
+            $itemCategoryId = $input['itemCategoryId'];
+            $item = $model->find($itemCategoryId);
+    
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+            }
+    
+            // Prepare the data to be updated
+                $updateData = [
+                    'itemCategoryName'=> $input['itemCategoryName'],	
+                    'gstTax'=> $input['gstTax'],
+                    'itemTypeId'=> $input['itemTypeId'],				
+                    'description'=> $input['description'],	
+                    'hsnCode'=> $input['hsnCode'],
+                ];
+    
+                    // Handle cover image update as base64
+                    if (isset($input['coverImage']) && !empty($input['coverImage'])) {
+                        $coverImageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $input['coverImage']));
+    
+                        // Handle cover image upload
+                        $key = "Exiaa@11";
+                        $header = $this->request->getHeader("Authorization");
+                        $token = null;
+    
+                        // Extract the token from the header
+                        if (!empty($header)) {
+                            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                                $token = $matches[1];
+                            }
+                        }
+    
+                        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+                        $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+    
+                        if (!is_dir($coverImagePath)) {
+                            mkdir($coverImagePath, 0777, true);
+                        }
+    
+                        $coverImageName = uniqid() . '.png'; // Ensure the file extension is .png
+                        file_put_contents($coverImagePath . $coverImageName, $coverImageData);
+    
+                        $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
+                        $updateData['coverImage'] = $input['coverImage'];
+                    }
+    
+                
+    
+    
+            // Update the item with new data
+            $updated = $model->update($itemCategoryId, $updateData);
+    
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+    public function deleteCategory()
+    {
+        $input = $this->request->getJSON();
+        
+        // Validation rules for the course
+        $rules = [
+            'itemCategoryId' => ['rules' => 'required'], // Ensure eventId is provided and is numeric
+        ];
+
+        // Validate the input
+        if ($this->validate($rules)) {
+           
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemCategory($db);
+
+            // Retrieve the course by eventId
+            $itemCategoryId = $input->itemCategoryId;
+            $item = $model->find($itemCategoryId); // Assuming find method retrieves the course
+
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Course not found'], 404);
+            }
+
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($itemCategoryId, $updateData);
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Item Deleted Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete course'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
     }
 
     public function getAllCategoryWeb()

@@ -177,6 +177,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Item::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]); 
     $routes->post('createcategory', 'Item::createCategory',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updatecategory', 'Item::updateCategory',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletecategory', 'Item::deleteCategory',['filter' => ['authFilter','tenantFilter']]);
+
     $routes->get('getallunit', 'Item::getAllUnit',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['authFilter','tenantFilter']]);
 

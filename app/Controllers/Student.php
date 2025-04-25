@@ -226,121 +226,7 @@ class Student extends BaseController
     ], 200);
 }
 
-    // public function getStudentsAdmissionPaging()
-    // {
-    //     $input = $this->request->getJSON();
 
-    //     // Get the page number from the input, default to 1 if not provided
-    //     $page = isset($input->page) ? $input->page : 1;
-    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
-    //     $sortField = isset($input->sortField) ? $input->sortField : 'studentId';
-    //     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    //     $search = isset($input->search) ? $input->search : '';
-    //     $filter = $input->filter;
-        
-
-    //     $tenantService = new TenantService();
-        
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //     // Load studentModel with the tenant database connection
-    //     $studentModel = new StudentModel($db);
-    //     $admissionModel = new AdmissionModel($db);
-    //     $itemFeeMapModel = new ItemFeeMapModel($db);
-    //     $feeModel = new FeeModel($db);
-    //     $paymentDetailModel = new PaymentDetailModel($db);
-
-    //     $query = $studentModel;
-    //     // Join with AdmissionModel (assuming studentId is the linking column)
-    //     $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
-
-    //     if (!empty($filter)) {
-    //         $filter = json_decode(json_encode($filter), true);
-
-    //         if (!empty($filter['academicYear'])) {
-    //             $query->where('academicYearId', $filter['academicYear']);
-    //         }
-
-    //         foreach ($filter as $key => $value) {
-    //             if (in_array($key, ['student_mst.studentCode','student_mst.generalRegisterNo','student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
-    //                 $query->like($key, $value); // LIKE filter for specific fields
-    //             } else if ($key === 'student_mst.createdDate') {
-    //                 $query->where($key, $value); // Exact match filter for createdDate
-    //             }
-    //         }
-
-    //         // Apply Date Range Filter (startDate and endDate)
-    //         if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-    //             $query->where('student_mst.createdDate >=', $filter['startDate'])
-    //                   ->where('student_mst.createdDate <=', $filter['endDate']);
-    //         }
-    
-    //         // Apply Last 7 Days Filter if requested
-    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-    //             $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-    //             $query->where('student_mst.createdDate >=', $last7DaysStart);
-    //         }
-    
-    //         // Apply Last 30 Days Filter if requested
-    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-    //             $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-    //             $query->where('student_mst.createdDate >=', $last30DaysStart);
-    //         }
-    //     }
-
-        
-    //     $query->where('student_mst.isDeleted',0);
-    //     // Apply Sorting
-    //     if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-    //         $query->orderBy($sortField, $sortOrder);
-    //     }
-
-    //     // Get Paginated Results
-    //     $students = $query->paginate($perPage, 'default', $page);
-    //     foreach ($students as $key => $value) {
-    //         $fees = [];
-    //         $selectedCourseArray = explode(',',$value['selectedCourses']);
-    //         foreach ($selectedCourseArray as $itemId) {
-    //             $itemFeeMapArray = $itemFeeMapModel->where('itemId', $itemId)->where('isDeleted', 0)->findAll();
-    //             foreach ($itemFeeMapArray as $fee) {
-    //                 $feeArray = $feeModel->where('feeId', $fee['feeId'])->where('isDeleted', 0)->first();
-    //                 $fees[] = $feeArray['amount'];
-    //             }
-    //             $students[$key]['fees'] = $fees;
-    //             $totalFee += (int)$fee['amount'];
-    //         }
-
-
-
-    //         $payments = $paymentDetailModel->where('admissionId', $value['admissionId'])->where('isDeleted', 0)->findAll();
-    //         foreach ($payments as $payment) {
-    //             $paidFees = [];
-    //             if($payment['status'] == 'Paid'){
-    //                 $paidFees[] = $payment['paidAmount'];
-    //             }
-    //             $students[$key]['paidFees'] = $paidFees;
-
-    //             if($payment['status']){
-    //                 $students[$key]['paymentStatus'] = $payment['status'];
-    //             }
-    //         }
-            
-    //     }
-    //     $pager = $studentModel->pager;
-
-    //     $response = [
-    //         "status" => true,
-    //         "message" => "All Student Data Fetched",
-    //         "data" => $students,
-    //         "pagination" => [
-    //             "currentPage" => $pager->getCurrentPage(),
-    //             "totalPages" => $pager->getPageCount(),
-    //             "totalItems" => $pager->getTotal(),
-    //             "perPage" => $perPage
-    //         ]
-    //     ];
-
-    //     return $this->respond($response, 200);
-    // }
 
     public function getStudentsPaymentPaging()
     {
@@ -415,16 +301,33 @@ class Student extends BaseController
         // Get Paginated Results
         $payments = $query->paginate($perPage, 'default', $page);
         foreach ($payments as $key => $payment) {
+            $totalFee = 0;
             $fees = [];
-            $selectedCourseArray = explode(',',$payment['selectedCourses']);
+
+            $selectedCourseArray = explode(',', $payment['selectedCourses'] ?? '');
+
             foreach ($selectedCourseArray as $itemId) {
-                $itemFeeMapArray = $itemFeeMapModel->where('itemId', $itemId)->where('isDeleted', 0)->findAll();
-                foreach ($itemFeeMapArray as $fee) {
-                    $feeArray = $feeModel->where('feeId', $fee['feeId'])->where('isDeleted', 0)->first();
-                    $fees[] = $feeArray['amount'];
+                $itemFeeMapArray = $itemFeeMapModel
+                    ->where('itemId', $itemId)
+                    ->where('isDeleted', 0)
+                    ->findAll();
+
+                foreach ($itemFeeMapArray as $feeMap) {
+                    $fee = $feeModel
+                        ->where('feeId', $feeMap['feeId'])
+                        ->where('isDeleted', 0)
+                        ->first();
+
+                    if ($fee && isset($fee['amount'])) {
+                        $fees[] = $fee['amount'];
+                        $totalFee += (float)$fee['amount'];
+                    }
                 }
-                $payments[$key]['fees'] = $fees;
             }
+
+            $payments[$key]['fees'] = $fees;
+            $payments[$key]['totalFee'] = $totalFee;
+
         }
         
         $pager = $paymentDetailModel->pager;
@@ -792,53 +695,99 @@ class Student extends BaseController
 
     // }
 
-public function addallpayment()
-{
-    $input = $this->request->getJSON(true); // Use getJSON(true) to get an array instead of stdClass
+    public function addallpayment()
+    {
+        $input = $this->request->getJSON();
     
-    // Validate input
-    if (!is_array($input) || empty($input)) {
-        return $this->respond([
-            'status' => 400,
-            'message' => 'Invalid input data'
-        ], 400);
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+        $paymentDetailModel = new PaymentDetailModel($db);
+        $admissionModel = new AdmissionModel($db);
+    
+        // Get admissionId from studentId
+        $admission = $admissionModel
+            ->select('admissionId')
+            ->where('studentId', $input->studentId)
+            ->orderBy('admissionId', 'DESC') // optional: to get the latest admission
+            ->first();
+    
+        if (!$admission || !isset($admission['admissionId'])) {
+            return $this->respond([
+                'status' => 404,
+                'message' => 'Admission record not found for studentId: ' . $input->studentId
+            ], 404);
+        }
+    
+        // Assign admissionId into input
+        $input->admissionId = $admission['admissionId'];
+    
+        // Convert to array for insert/update
+        $paymentData = (array) $input;
+    
+        if (isset($input->paymentId) && !empty($input->paymentId)) {
+            $paymentDetailModel->update($input->paymentId, $paymentData);
+            return $this->respond([
+                'status' => 201,
+                'message' => 'Payment updated successfully',
+                'data' => $paymentData
+            ]);
+        } else {
+            $paymentDetailModel->insert($paymentData);
+            return $this->respond([
+                'status' => 201,
+                'message' => 'Payment added successfully',
+                'data' => $paymentData
+            ]);
+        }
     }
+    
 
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $paymentDetailModel = new PaymentDetailModel($db);
-
-    try {
-        // Process each payment to ensure proper format
-        $payments = array_map(function($payment) {
-            return [
-                'student_id' => $payment['studentId'] ?? null,
-                'total_amount' => $payment['totalAmount'] ?? 0,
-                'paid_amount' => $payment['paidAmount'] ?? 0,
-                'due_date' => $payment['dueDate'] ?? null,
-                'label' => $payment['label'] ?? null,
-                'payment_method' => $payment['paymentMethod'] ?? 'cash',
-                'transaction_id' => $payment['transactionId'] ?? null,
-                'payment_date' => $payment['paymentDate'] ?? date('Y-m-d'),
-                'status' => $payment['status'] ?? 'Paid'
-            ];
-        }, $input);
-
-        // Insert batch
-        $result = $paymentDetailModel->insertBatch($payments);
-
-        return $this->respond([
-            'status' => 201,
-            'message' => 'Payments added successfully',
-            'data' => $result
-        ]);
-    } catch (\Exception $e) {
-        return $this->respond([
-            'status' => 500,
-            'message' => 'Error processing payments: ' . $e->getMessage()
-        ], 500);
-    }
-}
-
-
+    // public function addallpayment()
+    // {
+    //     $input = $this->request->getPost(); // Use getJSON(true) to get an array instead of stdClass
+        
+    //     // Validate input
+    //     if (!is_array($input) || empty($input)) {
+    //         return $this->respond([
+    //             'status' => 400,
+    //             'message' => 'Invalid input data'
+    //         ], 400);
+    //     }
+    
+    //     $tenantService = new TenantService();
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     $paymentDetailModel = new PaymentDetailModel($db);
+    
+    //     try {
+    //         // Process each payment to ensure proper format
+    //         $payments = array_map(function($payment) {
+    //             return [
+    //                 'student_id' => $payment['studentId'] ?? null,
+    //                 'total_amount' => $payment['totalAmount'] ?? 0,
+    //                 'paid_amount' => $payment['paidAmount'] ?? 0,
+    //                 'due_date' => $payment['dueDate'] ?? null,
+    //                 'label' => $payment['label'] ?? null,
+    //                 'payment_method' => $payment['paymentMethod'] ?? 'cash',
+    //                 'transaction_id' => $payment['transactionId'] ?? null,
+    //                 'payment_date' => $payment['paymentDate'] ?? date('Y-m-d'),
+    //                 'status' => $payment['status'] ?? 'Paid'
+    //             ];
+    //         }, $input);
+    
+    //         // Insert batch
+    //         $result = $paymentDetailModel->insertBatch($payments);
+    
+    //         return $this->respond([
+    //             'status' => 201,
+    //             'message' => 'Payments added successfully',
+    //             'data' => $result
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return $this->respond([
+    //             'status' => 500,
+    //             'message' => 'Error processing payments: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 }

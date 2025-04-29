@@ -26,6 +26,8 @@ class CorsFilter implements FilterInterface
             'https://www.realpowershop.com',
             'https://netbugs.in/',
             'https://www.netbugs.in/',
+            'https://netbugs.co.in',
+            'https://www.netbugs.co.in',
         ];
 
         // Get the origin of the request

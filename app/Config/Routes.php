@@ -18,6 +18,8 @@ $allowed_origins = [
   'https://www.realpowershop.com',
   'https://netbugs.in',
   'https://www.netbugs.in',
+  'https://netbugs.co.in',
+  'https://www.netbugs.co.in',
 ];
 $routes->options('(:any)', function () use ($allowed_origins){
   if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
@@ -424,7 +426,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     //Routes for item
     $routes->get('getallcategory', 'Item::getAllItemCategory',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Item::getItemsPaging',['filter' => ['tenantFilter']]);
-    $routes->get('getfouritembycategory', 'Item::getFourItemByCategory',['filter' => ['tenantFilter']]);
+    $routes->get('getfouritemproductbycategory', 'Item::getFourItemProductByCategory',['filter' => ['tenantFilter']]);
     $routes->post('view', 'Item::show',['filter' => ['tenantFilter']]);
     $routes->post('getallfiltereditem', 'Item::filteredItems',['filter' => ['tenantFilter']]);
   });

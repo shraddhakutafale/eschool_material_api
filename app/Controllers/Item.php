@@ -274,141 +274,141 @@ class Item extends BaseController
 
 
     public function update()
-{
-    $input = $this->request->getPost();
+    {
+        $input = $this->request->getPost();
 
-    // Validation rules for the item
-    $rules = [
-        'itemId' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
-    ];
-
-    // Validate the input
-    if ($this->validate($rules)) {
-        // Insert the product data into the database
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        $model = new ItemModel($db);
-
-        // Retrieve the item by itemId
-        $itemId = $input['itemId'];
-        $item = $model->find($itemId);
-
-        if (!$item) {
-            return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
-        }
-
-        // Prepare the data to be updated
-        $updateData = [
-            'itemName' => $input['itemName'],
-            'itemCategoryId' => $input['itemCategoryId'],
-            'mrp' => $input['mrp'],
-            'discountType' => $input['discountType'],
-            'discount' => $input['discount'],
-            'barcode' => $input['barcode'],
-            'description' => $input['description'],
-            'itemTypeId' => $input['itemTypeId'],
-            'sku' => $input['sku'],
-            'hsnCode' => $input['hsnCode'],
-            'feature' => $input['feature'],
-            'unitName' => $input['unitName'],
+        // Validation rules for the item
+        $rules = [
+            'itemId' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
         ];
 
-                // Handle cover image update as base64
-                if (isset($input['coverImage']) && !empty($input['coverImage'])) {
-                    $coverImageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $input['coverImage']));
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-                    // Handle cover image upload
-                    $key = "Exiaa@11";
-                    $header = $this->request->getHeader("Authorization");
-                    $token = null;
+            $model = new ItemModel($db);
 
-                    // Extract the token from the header
-                    if (!empty($header)) {
-                        if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                            $token = $matches[1];
-                        }
-                    }
+            // Retrieve the item by itemId
+            $itemId = $input['itemId'];
+            $item = $model->find($itemId);
 
-                    $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                    $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+            }
 
-                    if (!is_dir($coverImagePath)) {
-                        mkdir($coverImagePath, 0777, true);
-                    }
+            // Prepare the data to be updated
+            $updateData = [
+                'itemName' => $input['itemName'],
+                'itemCategoryId' => $input['itemCategoryId'],
+                'mrp' => $input['mrp'],
+                'discountType' => $input['discountType'],
+                'discount' => $input['discount'],
+                'barcode' => $input['barcode'],
+                'description' => $input['description'],
+                'itemTypeId' => $input['itemTypeId'],
+                'sku' => $input['sku'],
+                'hsnCode' => $input['hsnCode'],
+                'feature' => $input['feature'],
+                'unitName' => $input['unitName'],
+            ];
 
-                    $coverImageName = uniqid() . '.png'; // Ensure the file extension is .png
-                    file_put_contents($coverImagePath . $coverImageName, $coverImageData);
+                    // Handle cover image update as base64
+                    if (isset($input['coverImage']) && !empty($input['coverImage'])) {
+                        $coverImageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $input['coverImage']));
 
-                    $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
-                    $updateData['coverImage'] = $input['coverImage'];
-                }
-
-                // Handle product image update as base64
-                if (isset($input['productImages']) && !empty($input['productImages'])) {
-                    // Split the base64 images
-                    $base64Images = explode(',', $input['productImages']);
-                    $imageUrls = [];
-        
-                    // Process each image in the array
-                    foreach ($base64Images as $index => $base64Image) {
-                        // Only process if the image exists
-                        if (empty($base64Image)) {
-                            continue;
-                        }
-        
-                        $imageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $base64Image));
-                        $imageName = uniqid() . '.png'; // Ensure the file extension is .png
-        
-                        // Handle product image upload
+                        // Handle cover image upload
                         $key = "Exiaa@11";
                         $header = $this->request->getHeader("Authorization");
                         $token = null;
-        
+
                         // Extract the token from the header
                         if (!empty($header)) {
                             if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
                                 $token = $matches[1];
                             }
                         }
-        
+
                         $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                        $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
-        
-                        if (!is_dir($productImagePath)) {
-                            mkdir($productImagePath, 0777, true);
+                        $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+
+                        if (!is_dir($coverImagePath)) {
+                            mkdir($coverImagePath, 0777, true);
                         }
-        
-                        file_put_contents($productImagePath . $imageName, $imageData);
-                        $imageUrls[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
+
+                        $coverImageName = uniqid() . '.png'; // Ensure the file extension is .png
+                        file_put_contents($coverImagePath . $coverImageName, $coverImageData);
+
+                        $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
+                        $updateData['coverImage'] = $input['coverImage'];
                     }
-        
-                    // Only update the product images if we have valid image URLs
-                    if (count($imageUrls) > 0) {
-                        $input['productImages'] = implode(',', $imageUrls);
-                        $updateData['productImages'] = $input['productImages'];
+
+                    // Handle product image update as base64
+                    if (isset($input['productImages']) && !empty($input['productImages'])) {
+                        // Split the base64 images
+                        $base64Images = explode(',', $input['productImages']);
+                        $imageUrls = [];
+            
+                        // Process each image in the array
+                        foreach ($base64Images as $index => $base64Image) {
+                            // Only process if the image exists
+                            if (empty($base64Image)) {
+                                continue;
+                            }
+            
+                            $imageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $base64Image));
+                            $imageName = uniqid() . '.png'; // Ensure the file extension is .png
+            
+                            // Handle product image upload
+                            $key = "Exiaa@11";
+                            $header = $this->request->getHeader("Authorization");
+                            $token = null;
+            
+                            // Extract the token from the header
+                            if (!empty($header)) {
+                                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                                    $token = $matches[1];
+                                }
+                            }
+            
+                            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+                            $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
+            
+                            if (!is_dir($productImagePath)) {
+                                mkdir($productImagePath, 0777, true);
+                            }
+            
+                            file_put_contents($productImagePath . $imageName, $imageData);
+                            $imageUrls[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
+                        }
+            
+                        // Only update the product images if we have valid image URLs
+                        if (count($imageUrls) > 0) {
+                            $input['productImages'] = implode(',', $imageUrls);
+                            $updateData['productImages'] = $input['productImages'];
+                        }
                     }
-                }
 
 
-        // Update the item with new data
-        $updated = $model->update($itemId, $updateData);
+            // Update the item with new data
+            $updated = $model->update($itemId, $updateData);
 
-        if ($updated) {
-            return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
+            }
         } else {
-            return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
-    } else {
-        // Validation failed
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
     }
-}
 
 
     
@@ -759,16 +759,36 @@ class Item extends BaseController
 
    
 
-    public function getFourItemByCategory()
+    public function getFourItemProductByCategory()
     {
         try {
             $tenantService = new TenantService();
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     
-            $model = new ItemModel($db);
-            $data = $model->where('isDeleted', 0)->where('itemTypeId', 3)->findAll(); // Custom method to fetch 4 items per category
+            $categoryModel = new ItemCategory($db);
+            $categories = $categoryModel->where('itemTypeId', 3)->where('isDeleted', 0)->where('isActive', 1)->findAll(); // Fetch all categories')->where('isActive', 1)->where('isDeleted', 0)->findAll(); // Fetch all categories
+
+            if (empty($categories)) {
+                return $this->respond(["status" => false, "message" => "No categories found"], 404);
+            }
+
+            $categoryList = array();
+
+            foreach ($categories as $category) {;
+                $category['items'] = []; // Initialize items array for each category
     
-            return $this->respond(["status" => true, "message" => "Items fetched successfully", "data" => $data], 200);
+                $itemModel = new ItemModel($db);
+                // Fetch 4 random items by category ID that are not deleted
+                $items = $itemModel->where('itemCategoryId', $category['itemCategoryId'])
+                ->where('isActive', 1)
+                ->where('isDeleted', 0)
+                ->orderBy('RAND()') // Random order
+                ->findAll(4); // Limit to 4 items
+                $category['items'] = $items;
+                array_push($categoryList, $category);
+            }
+
+            return $this->respond(["status" => true, "message" => "Items fetched successfully", "data" => $categoryList], 200);
         } catch (\Exception $e) {
             return $this->failServerError("Server Error: " . $e->getMessage());
         }
@@ -848,71 +868,29 @@ class Item extends BaseController
         return $this->respond(["status" => true, "message" => "All Slides Fetched", "data" => $slides], 200);
     }
 
-//     public function filteredItems()
-// {
-//     $input = $this->request->getJSON();
+    public function deleteItem($id)
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemModel($db);
 
-//     // Check if required fields exist in the input
-//     $categories = isset($input->selectedCategoryIds) ? (is_array($input->selectedCategoryIds) ? $input->selectedCategoryIds : explode(',', $input->selectedCategoryIds)) : [];
-//     $brands = isset($input->brands) ? (is_array($input->brands) ? $input->brands : explode(',', $input->brands)) : [];
-//     $minPrice = isset($input->minPrice) ? $input->minPrice : null;
-//     $maxPrice = isset($input->maxPrice) ? $input->maxPrice : null;
+        // Check if item exists
+        $item = $model->find($id);
+        if (!$item) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'Item not found.'
+            ], 404);
+        }
 
-//     // Pagination parameters
-//     $page = isset($input->page) ? (int)$input->page : 1;
-//     $limit = isset($input->limit) ? (int)$input->limit : 10;
+        // Soft delete the item (set isDeleted = 1)
+        $model->update($id, ['isDeleted' => 1]);
 
-//     // Get tenant-specific DB connection
-//     $tenantService = new TenantService();
-//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-//     $model = new ItemModel($db);
-
-//     // Get filtered items with pagination (excluding deleted)
-//     $items = $model->getFilteredItems($categories, $brands, $minPrice, $maxPrice, $page, $limit);
-
-//     // Get total count of filtered (not deleted) items
-//     $totalItems = $model->getFilteredItemsCount($categories, $brands, $minPrice, $maxPrice);
-
-//     // Calculate total pages
-//     $totalPages = ceil($totalItems / $limit);
-
-//     // Return paginated response
-//     return $this->respond([
-//         "status" => true,
-//         "message" => "All Data Fetched",
-//         "data" => $items,
-//         "pagination" => [
-//             "currentPage" => $page,
-//             "totalPages" => $totalPages,
-//             "totalItems" => $totalItems,
-//             "limit" => $limit
-//         ]
-//     ], 200);
-// }
-
-public function deleteItem($id)
-{
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new ItemModel($db);
-
-    // Check if item exists
-    $item = $model->find($id);
-    if (!$item) {
         return $this->respond([
-            'status' => false,
-            'message' => 'Item not found.'
-        ], 404);
+            'status' => true,
+            'message' => 'Item deleted successfully.'
+        ], 200);
     }
-
-    // Soft delete the item (set isDeleted = 1)
-    $model->update($id, ['isDeleted' => 1]);
-
-    return $this->respond([
-        'status' => true,
-        'message' => 'Item deleted successfully.'
-    ], 200);
-}
 
 
 }

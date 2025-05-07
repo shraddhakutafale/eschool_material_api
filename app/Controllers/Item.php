@@ -148,125 +148,84 @@ class Item extends BaseController
         return $this->respond($response, 200);
     }
 
+
+
     public function create()
     {
-        // Retrieve the input data from the request
+        // Retrieve POST data
         $input = $this->request->getPost();
-        
-        // Define validation rules for required fields
+    
+        // Validate required fields
         $rules = [
             'itemName' => ['rules' => 'required']
         ];
-
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
     
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                      // Handle cover image update as base64
-                      if (isset($input['coverImage']) && !empty($input['coverImage'])) {
-                        $coverImageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $input['coverImage']));
-    
-                        // Handle cover image upload
-                        $key = "Exiaa@11";
-                        $header = $this->request->getHeader("Authorization");
-                        $token = null;
-    
-                        // Extract the token from the header
-                        if (!empty($header)) {
-                            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                                $token = $matches[1];
-                            }
-                        }
-    
-                        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                        $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-    
-                        if (!is_dir($coverImagePath)) {
-                            mkdir($coverImagePath, 0777, true);
-                        }
-    
-                        $coverImageName = uniqid() . '.png'; // Ensure the file extension is .png
-                        file_put_contents($coverImagePath . $coverImageName, $coverImageData);
-    
-                        $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
-                        $updateData['coverImage'] = $input['coverImage'];
-                    }
-    
-                    // Handle product image update as base64
-                    if (isset($input['productImages']) && !empty($input['productImages'])) {
-                        // Split the base64 images
-                        $base64Images = explode(',', $input['productImages']);
-                        $imageUrls = [];
-            
-                        // Process each image in the array
-                        foreach ($base64Images as $index => $base64Image) {
-                            // Only process if the image exists
-                            if (empty($base64Image)) {
-                                continue;
-                            }
-            
-                            $imageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $base64Image));
-                            $imageName = uniqid() . '.png'; // Ensure the file extension is .png
-            
-                            // Handle product image upload
-                            $key = "Exiaa@11";
-                            $header = $this->request->getHeader("Authorization");
-                            $token = null;
-            
-                            // Extract the token from the header
-                            if (!empty($header)) {
-                                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                                    $token = $matches[1];
-                                }
-                            }
-            
-                            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                            $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
-            
-                            if (!is_dir($productImagePath)) {
-                                mkdir($productImagePath, 0777, true);
-                            }
-            
-                            file_put_contents($productImagePath . $imageName, $imageData);
-                            $imageUrls[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
-                        }
-            
-                        // Only update the product images if we have valid image URLs
-                        if (count($imageUrls) > 0) {
-                            $input['productImages'] = implode(',', $imageUrls);
-                            $updateData['productImages'] = $input['productImages'];
-                        }
-                    }
-        
-
-            // Insert the product data into the database
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new ItemModel($db);
-            $model->insert($input);
-
-            return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
-            $response = [
+        if (!$this->validate($rules)) {
+            return $this->fail([
                 'status' => false,
                 'errors' => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs',
-            ];
-            return $this->fail($response, 409);
+            ], 409);
         }
+    
+        // JWT decode from header
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+    
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+    
+        try {
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        } catch (\Exception $e) {
+            return $this->failUnauthorized('Invalid Token');
+        }
+    
+        // ✅ Handle cover image (base64)
+        if (!empty($input['coverImage'])) {
+            $coverImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $input['coverImage']));
+            $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+            if (!is_dir($coverImagePath)) {
+                mkdir($coverImagePath, 0777, true);
+            }
+    
+            $coverImageName = uniqid() . '.png';
+            file_put_contents($coverImagePath . $coverImageName, $coverImageData);
+            $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
+        }
+    
+        // ✅ Handle multiple product images (array of base64)
+        if (!empty($input['productImages']) && is_array($input['productImages'])) {
+            $imageUrls = [];
+            $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
+            if (!is_dir($productImagePath)) {
+                mkdir($productImagePath, 0777, true);
+            }
+    
+            foreach ($input['productImages'] as $base64Image) {
+                if (empty($base64Image)) continue;
+    
+                $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
+                $imageName = uniqid() . '.png';
+                file_put_contents($productImagePath . $imageName, $imageData);
+                $imageUrls[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
+            }
+    
+            if (!empty($imageUrls)) {
+                $input['productImages'] = implode(',', $imageUrls);
+            }
+        }
+    
+        // ✅ Insert into database
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemModel($db);
+        $model->insert($input);
+    
+        return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
     }
-
 
 
 
@@ -274,141 +233,130 @@ class Item extends BaseController
 
 
     public function update()
-    {
-        $input = $this->request->getPost();
+{
+    $input = $this->request->getPost();
 
-        // Validation rules for the item
-        $rules = [
-            'itemId' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
-        ];
+    $rules = [
+        'itemId' => ['rules' => 'required|numeric'],
+    ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            // Insert the product data into the database
-            $tenantService = new TenantService();
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
 
-            $model = new ItemModel($db);
+    // Get DB config
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ItemModel($db);
 
-            // Retrieve the item by itemId
-            $itemId = $input['itemId'];
-            $item = $model->find($itemId);
+    $itemId = $input['itemId'];
+    $item = $model->find($itemId);
 
-            if (!$item) {
-                return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+    if (!$item) {
+        return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+    }
+
+    // JWT Auth
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    try {
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    } catch (\Exception $e) {
+        return $this->failUnauthorized('Invalid Token');
+    }
+
+    // Prepare update data
+    $updateData = [
+        'itemName' => $input['itemName'],
+        'itemCategoryId' => $input['itemCategoryId'],
+        'mrp' => $input['mrp'],
+        'discountType' => $input['discountType'],
+        'discount' => $input['discount'],
+        'barcode' => $input['barcode'],
+        'description' => $input['description'],
+        'itemTypeId' => $input['itemTypeId'],
+        'sku' => $input['sku'],
+        'hsnCode' => $input['hsnCode'],
+        'feature' => $input['feature'],
+        'unitName' => $input['unitName'],
+    ];
+
+    // ✅ Handle cover image update
+    if (!empty($input['coverImage'])) {
+        $coverImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $input['coverImage']));
+        $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
+        if (!is_dir($coverImagePath)) {
+            mkdir($coverImagePath, 0777, true);
+        }
+
+        // Delete old cover image if exists
+        if (!empty($item['coverImage'])) {
+            $oldCoverImage = FCPATH . 'uploads/' . $item['coverImage'];
+            if (file_exists($oldCoverImage)) {
+                unlink($oldCoverImage);
             }
+        }
 
-            // Prepare the data to be updated
-            $updateData = [
-                'itemName' => $input['itemName'],
-                'itemCategoryId' => $input['itemCategoryId'],
-                'mrp' => $input['mrp'],
-                'discountType' => $input['discountType'],
-                'discount' => $input['discount'],
-                'barcode' => $input['barcode'],
-                'description' => $input['description'],
-                'itemTypeId' => $input['itemTypeId'],
-                'sku' => $input['sku'],
-                'hsnCode' => $input['hsnCode'],
-                'feature' => $input['feature'],
-                'unitName' => $input['unitName'],
-            ];
+        $coverImageName = uniqid() . '.png';
+        file_put_contents($coverImagePath . $coverImageName, $coverImageData);
+        $updateData['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
+    }
 
-                    // Handle cover image update as base64
-                    if (isset($input['coverImage']) && !empty($input['coverImage'])) {
-                        $coverImageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $input['coverImage']));
+    // ✅ Handle multiple product images
+    $existingImages = [];
+    if (!empty($item['productImages'])) {
+        $existingImages = explode(',', $item['productImages']);
+    }
 
-                        // Handle cover image upload
-                        $key = "Exiaa@11";
-                        $header = $this->request->getHeader("Authorization");
-                        $token = null;
+    $newImages = [];
+    $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
+    if (!is_dir($productImagePath)) {
+        mkdir($productImagePath, 0777, true);
+    }
 
-                        // Extract the token from the header
-                        if (!empty($header)) {
-                            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                                $token = $matches[1];
-                            }
-                        }
+    if (!empty($input['productImages']) && is_array($input['productImages'])) {
+        foreach ($input['productImages'] as $img) {
+            if (empty($img)) continue;
 
-                        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                        $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-
-                        if (!is_dir($coverImagePath)) {
-                            mkdir($coverImagePath, 0777, true);
-                        }
-
-                        $coverImageName = uniqid() . '.png'; // Ensure the file extension is .png
-                        file_put_contents($coverImagePath . $coverImageName, $coverImageData);
-
-                        $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
-                        $updateData['coverImage'] = $input['coverImage'];
-                    }
-
-                    // Handle product image update as base64
-                    if (isset($input['productImages']) && !empty($input['productImages'])) {
-                        // Split the base64 images
-                        $base64Images = explode(',', $input['productImages']);
-                        $imageUrls = [];
-            
-                        // Process each image in the array
-                        foreach ($base64Images as $index => $base64Image) {
-                            // Only process if the image exists
-                            if (empty($base64Image)) {
-                                continue;
-                            }
-            
-                            $imageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $base64Image));
-                            $imageName = uniqid() . '.png'; // Ensure the file extension is .png
-            
-                            // Handle product image upload
-                            $key = "Exiaa@11";
-                            $header = $this->request->getHeader("Authorization");
-                            $token = null;
-            
-                            // Extract the token from the header
-                            if (!empty($header)) {
-                                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                                    $token = $matches[1];
-                                }
-                            }
-            
-                            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                            $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
-            
-                            if (!is_dir($productImagePath)) {
-                                mkdir($productImagePath, 0777, true);
-                            }
-            
-                            file_put_contents($productImagePath . $imageName, $imageData);
-                            $imageUrls[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
-                        }
-            
-                        // Only update the product images if we have valid image URLs
-                        if (count($imageUrls) > 0) {
-                            $input['productImages'] = implode(',', $imageUrls);
-                            $updateData['productImages'] = $input['productImages'];
-                        }
-                    }
-
-
-            // Update the item with new data
-            $updated = $model->update($itemId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
+            // If base64 image
+            if (str_starts_with($img, 'data:image')) {
+                $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $img));
+                $imageName = uniqid() . '.png';
+                file_put_contents($productImagePath . $imageName, $imageData);
+                $newImages[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
             }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            // If already existing image URL, just keep
+            elseif (!str_contains($img, 'base64')) {
+                $newImages[] = $img;
+            }
         }
     }
+
+    // Merge old + new images (ensure no duplicates)
+    $finalImageList = array_unique(array_merge($existingImages, $newImages));
+
+    $updateData['productImages'] = implode(',', $finalImageList);
+
+    // 🔄 Perform the update
+    $updated = $model->update($itemId, $updateData);
+
+    if ($updated) {
+        return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
+    }
+}
+
 
 
     

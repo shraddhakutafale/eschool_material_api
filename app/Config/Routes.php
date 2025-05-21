@@ -308,6 +308,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Lead::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallleadsource', 'Lead::getAllLeadSource',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallleadinterest', 'Lead::getAllLeadInterested',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('createweb', 'Lead::createWeb',['filter' => 'tenantFilter']);
+
   });
 
   $routes->group('order', function ($routes) {
@@ -434,6 +436,13 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallpaging', 'Staff::getStaffPaging',['filter' => ['tenantFilter']]);
   });
 
+    $routes->group('customer', function ($routes) {
+    //Routes for customer
+    $routes->get('getall', 'Customer::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Customer::getCustomersPaging',['filter' => ['tenantFilter']]);
+  });
+
+
   $routes->group('item', function ($routes) {
     //Routes for item
     $routes->get('getallcategory', 'Item::getAllItemCategory',['filter' => ['tenantFilter']]);
@@ -460,10 +469,19 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallpaging', 'Blog::getBlogsPaging',['filter' => ['tenantFilter']]);
   });
 
-    $routes->group('portfolio', function ($routes) {
+  $routes->group('portfolio', function ($routes) {
     //Routes for vendor
     $routes->get('getall', 'Portfolio::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Portfolio::getPortfolioPaging',['filter' => ['tenantFilter']]);
+  });
+
+  $routes->group('lead', function ($routes) {
+    //Routes for vendor
+    $routes->get('getall', 'Lead::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Lead::getLeadsPaging',['filter' => ['tenantFilter']]);
+    $routes->post('createweb', 'Lead::createWeb',['filter' => 'tenantFilter']);
+
+
   });
 
 

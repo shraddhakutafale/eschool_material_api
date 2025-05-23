@@ -452,6 +452,16 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallfiltereditem', 'Item::filteredItems',['filter' => ['tenantFilter']]);
   });
 
+  $routes->group('order', function ($routes) {
+    //Routes for order
+    $routes->get('getall', 'Order::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Order::getOrdersPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('create', 'Order::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Order::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('delete', 'Order::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['authFilter','tenantFilter']]);
+  });
+
   $routes->group('slide', function ($routes) {
     //Routes for gallery
     $routes->get('getall', 'Slide::index',['filter' => ['tenantFilter']]);

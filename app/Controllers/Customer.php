@@ -296,51 +296,51 @@ class Customer extends BaseController
 
 
     public function delete()
-{
-    $input = $this->request->getJSON();
+    {
+        $input = $this->request->getJSON();
 
-    // Validation rules for the customer
-    $rules = [
-        'customerId' => ['rules' => 'required'], // Ensure customerId is provided
-    ];
-
-    // Validate the input
-    if ($this->validate($rules)) {
-        // Connect to the tenant's database
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
-        $model = new CustomerModel($db);
-
-        // Retrieve the customer by customerId
-        $customerId = $input->customerId;
-        $customer = $model->where('customerId', $customerId)->where('isDeleted', 0)->first(); // Only find active customers
-
-        if (!$customer) {
-            return $this->fail(['status' => false, 'message' => 'Customer not found or already deleted'], 404);
-        }
-
-        // Perform a soft delete (mark as deleted instead of removing the record)
-        $updateData = [
-            'isDeleted' => 1,
+        // Validation rules for the customer
+        $rules = [
+            'customerId' => ['rules' => 'required'], // Ensure customerId is provided
         ];
-        $deleted = $model->update($customerId, $updateData);
-        
 
-        if ($deleted) {
-            return $this->respond(['status' => true, 'message' => 'Customer marked as deleted'], 200);
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Connect to the tenant's database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
+            $model = new CustomerModel($db);
+
+            // Retrieve the customer by customerId
+            $customerId = $input->customerId;
+            $customer = $model->where('customerId', $customerId)->where('isDeleted', 0)->first(); // Only find active customers
+
+            if (!$customer) {
+                return $this->fail(['status' => false, 'message' => 'Customer not found or already deleted'], 404);
+            }
+
+            // Perform a soft delete (mark as deleted instead of removing the record)
+            $updateData = [
+                'isDeleted' => 1,
+            ];
+            $deleted = $model->update($customerId, $updateData);
+            
+
+            if ($deleted) {
+                return $this->respond(['status' => true, 'message' => 'Customer marked as deleted'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to delete customer'], 500);
+            }
         } else {
-            return $this->fail(['status' => false, 'message' => 'Failed to delete customer'], 500);
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
-    } else {
-        // Validation failed
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
     }
-}
 
 
     public function uploadPageProfile()

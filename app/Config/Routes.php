@@ -463,30 +463,31 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   });
 
   $routes->group('slide', function ($routes) {
-    //Routes for gallery
     $routes->get('getall', 'Slide::index',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('testimonial', function ($routes) {
-    //Routes for vendor
     $routes->get('getall', 'Testimonial::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Testimonial::getTestimonialsPaging',['filter' => ['tenantFilter']]);
   });
 
+
+  $routes->group('course', function ($routes) {
+    $routes->get('getall', 'Course::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Course::getAllPaging',['filter' => ['tenantFilter']]);
+  });
+
   $routes->group('blog', function ($routes) {
-    //Routes for vendor
     $routes->get('getall', 'Blog::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Blog::getBlogsPaging',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('portfolio', function ($routes) {
-    //Routes for vendor
     $routes->get('getall', 'Portfolio::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Portfolio::getPortfolioPaging',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('lead', function ($routes) {
-    //Routes for vendor
     $routes->get('getall', 'Lead::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Lead::getLeadsPaging',['filter' => ['tenantFilter']]);
     $routes->post('createweb', 'Lead::createWeb',['filter' => 'tenantFilter']);

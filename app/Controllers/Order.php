@@ -162,7 +162,7 @@ public function getOrdersPaging()
             'mobileNo' => $input->mobileNo,
             'address'=> $input->address,
             'total'=> $input->total,
-            'totalItem'=> $input->totalItems,
+            'totalItem'=> $input->totalItem ??  0,
             'totalPrice'=> $input->totalPrice,
 
         ];

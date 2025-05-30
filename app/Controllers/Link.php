@@ -219,7 +219,7 @@ class Link extends BaseController
             // Prepare the data to be updated (exclude studentId if it's included)
             $updateData = [
 
-                'itemCategoryId' => $input['itemCategoryId'],  // Corrected here
+                'categoryName' => $input['categoryName'],  // Corrected here
                 'labelName' => $input['labelName'],  // Corrected here
                 'link' => $input['link'],  // Corrected here
 

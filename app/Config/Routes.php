@@ -492,6 +492,12 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallpaging', 'Lead::getLeadsPaging',['filter' => ['tenantFilter']]);
     $routes->post('createweb', 'Lead::createWeb',['filter' => 'tenantFilter']);
 
+  });
+
+    $routes->group('link', function ($routes) {
+    //Routes for vendor
+    $routes->get('getall', 'Link::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Link::getLinksPaging',['filter' => ['tenantFilter']]);
 
   });
 

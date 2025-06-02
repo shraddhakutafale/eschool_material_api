@@ -20,6 +20,8 @@ $allowed_origins = [
   'https://www.netbugs.in',
   'https://netbugs.co.in',
   'https://www.netbugs.co.in',
+  'https://chesskhiladi.com',
+  'https://www.chesskhiladi.com',
 ];
 $routes->options('(:any)', function () use ($allowed_origins){
   if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {

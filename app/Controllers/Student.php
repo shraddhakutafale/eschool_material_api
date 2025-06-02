@@ -461,6 +461,7 @@ class Student extends BaseController
             $updateData = [
                 'studentCode' => $input['studentCode'],  // Corrected here
                 'generalRegisterNo' => $input['generalRegisterNo'],
+                'mobileNo' => $input['mobileNo'],
                 'firstName' => $input['firstName'],
                 'middleName' => $input['middleName'],
                 'lastName' => $input['lastName'],

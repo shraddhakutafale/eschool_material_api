@@ -12,7 +12,7 @@ class LeadModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['leadId', 'fName', 'lName', 'primaryMobileNo', 'secondaryMobileNo', 'whatsAppNo', 'email', 'leadInterestedId', 'leadInterestedIdValue', 'leadSourceId', 'leadSourceValue','status', 'followUpDate', 'remark', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['leadId', 'fName', 'lName', 'primaryMobileNo', 'secondaryMobileNo', 'whatsAppNo', 'email', 'leadInterestedId', 'leadInterestedIdValue', 'leadSourceId', 'leadSourceName', 'leadSourceValue', 'status', 'followUpDate', 'remark', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

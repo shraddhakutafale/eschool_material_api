@@ -7,6 +7,7 @@ use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\LeadModel;
 use App\Models\LeadSource;
+use App\Models\LeadSourceValue;
 use App\Models\LeadInterested;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
@@ -258,6 +259,15 @@ class Lead extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
          $leadSourceModel = new LeadSource($db);
         return $this->respond(["status" => true, "message" => "All Lead Sources Fetched", "data" => $leadSourceModel->findAll()], 200);
+    }
+
+      public function getAllLeadSourceValue()
+    {     // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+         $leadSourceValueModel = new LeadSourceValue($db);
+        return $this->respond(["status" => true, "message" => "All Lead Sources Fetched", "data" => $leadSourceValueModel->findAll()], 200);
     }
 
     // Get all lead interests

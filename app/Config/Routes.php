@@ -309,6 +309,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('update', 'Lead::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('delete', 'Lead::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallleadsource', 'Lead::getAllLeadSource',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallleadsourcevalue', 'Lead::getAllLeadSourceValue',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallleadinterest', 'Lead::getAllLeadInterested',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createweb', 'Lead::createWeb',['filter' => 'tenantFilter']);
 

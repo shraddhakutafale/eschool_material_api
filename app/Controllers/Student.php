@@ -236,7 +236,7 @@ class Student extends BaseController
         $page = isset($input->page) ? $input->page : 1;
         $perPage = isset($input->perPage) ? $input->perPage : 10;
         $sortField = isset($input->sortField) ? $input->sortField : 'paymentId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'desc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
         
@@ -680,68 +680,68 @@ class Student extends BaseController
     }
 
 
-    // public function addAllPayment() {
-    //     $input = $this->request->getJSON();
-    //     $tenantService = new TenantService();
-    //     // Connect to the tenant's database
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //     $paymentDetailModel = new PaymentDetailModel($db);
-
-    //     $paymentDetailModel->insertbatch($input);
-    //     return $this->respond([
-    //         'status' => 201,
-    //         'message' => 'Payment added successfully',
-    //         'data' => $input
-    //     ]);
-
-    // }
-
-    public function addallpayment()
-    {
+    public function addAllPayment() {
         $input = $this->request->getJSON();
-    
         $tenantService = new TenantService();
+        // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    
         $paymentDetailModel = new PaymentDetailModel($db);
-        $admissionModel = new AdmissionModel($db);
-    
-        // Get admissionId from studentId
-        $admission = $admissionModel
-            ->select('admissionId')
-            ->where('studentId', $input->studentId)
-            ->orderBy('admissionId', 'DESC') // optional: to get the latest admission
-            ->first();
-    
-        if (!$admission || !isset($admission['admissionId'])) {
-            return $this->respond([
-                'status' => 404,
-                'message' => 'Admission record not found for studentId: ' . $input->studentId
-            ], 404);
-        }
-    
-        // Assign admissionId into input
-        $input->admissionId = $admission['admissionId'];
-    
-        // Convert to array for insert/update
-        $paymentData = (array) $input;
-    
-        if (isset($input->paymentId) && !empty($input->paymentId)) {
-            $paymentDetailModel->update($input->paymentId, $paymentData);
-            return $this->respond([
-                'status' => 201,
-                'message' => 'Payment updated successfully',
-                'data' => $paymentData
-            ]);
-        } else {
-            $paymentDetailModel->insert($paymentData);
-            return $this->respond([
-                'status' => 201,
-                'message' => 'Payment added successfully',
-                'data' => $paymentData
-            ]);
-        }
+
+        $paymentDetailModel->insertbatch($input);
+        return $this->respond([
+            'status' => 201,
+            'message' => 'Payment added successfully',
+            'data' => $input
+        ]);
+
     }
+
+    // public function addallpayment()
+    // {
+    //     $input = $this->request->getJSON();
+    
+    //     $tenantService = new TenantService();
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+    //     $paymentDetailModel = new PaymentDetailModel($db);
+    //     $admissionModel = new AdmissionModel($db);
+    
+    //     // Get admissionId from studentId
+    //     $admission = $admissionModel
+    //         ->select('admissionId')
+    //         ->where('studentId', $input->studentId)
+    //         ->orderBy('admissionId', 'DESC') // optional: to get the latest admission
+    //         ->first();
+    
+    //     if (!$admission || !isset($admission['admissionId'])) {
+    //         return $this->respond([
+    //             'status' => 404,
+    //             'message' => 'Admission record not found for studentId: ' . $input->studentId
+    //         ], 404);
+    //     }
+    
+    //     // Assign admissionId into input
+    //     $input->admissionId = $admission['admissionId'];
+    
+    //     // Convert to array for insert/update
+    //     $paymentData = (array) $input;
+    
+    //     if (isset($input->paymentId) && !empty($input->paymentId)) {
+    //         $paymentDetailModel->update($input->paymentId, $paymentData);
+    //         return $this->respond([
+    //             'status' => 201,
+    //             'message' => 'Payment updated successfully',
+    //             'data' => $paymentData
+    //         ]);
+    //     } else {
+    //         $paymentDetailModel->insert($paymentData);
+    //         return $this->respond([
+    //             'status' => 201,
+    //             'message' => 'Payment added successfully',
+    //             'data' => $paymentData
+    //         ]);
+    //     }
+    // }
     
 
     // public function addallpayment()

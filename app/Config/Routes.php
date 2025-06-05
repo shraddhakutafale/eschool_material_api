@@ -414,6 +414,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Tenant::delete',['filter' => ['authFilter']]);
   });
 
+  $routes->group('dashboard', function ($routes) {
+    $routes->post('getstatsforinstitute', 'Dashboard::getStatsForInstitute',['filter' => ['authFilter','tenantFilter']]);
+  });
 
 });
 

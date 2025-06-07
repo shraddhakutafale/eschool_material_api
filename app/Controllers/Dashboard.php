@@ -102,4 +102,6 @@ class Dashboard extends BaseController
                 'pendingAmount' => $pendingAmount ? $pendingAmount['totalPendingAmount'] : 0
             ]
         ], 200);
+
+    }
 }

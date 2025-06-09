@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class VendorModel extends Model
+class ItemSubCategory extends Model
 {
-    protected $table            = 'vendor_mst';
-    protected $primaryKey       = 'vendorId';
+    protected $table            = 'item_sub_category';
+    protected $primaryKey       = 'itemSubCategoryId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['vendorId', 'vendorType', 'name', 'vendorCode', 'gender', 'mobileNo', 'profilePic', 'alternateMobileNo', 'dateOfBirth', 'emailId', 'address', 'businessId','modifiedBy', 'modifiedDate', 'createdBy', 'createdDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['itemSubCategoryId', 'itemSubCategoryName', 'description', 'isDeleted', 'isActive', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -20,13 +20,14 @@ class VendorModel extends Model
     protected array $casts = [];
     protected array $castHandlers = [];
 
-      // Dates
-      protected $useTimestamps = true;
-      protected $dateFormat    = 'datetime';
-      protected $createdField  = 'createdDate';
-      protected $updatedField  = 'modifiedDate';
-      protected $beforeInsert = ['addCreatedBy'];
-      protected $beforeUpdate = ['addModifiedBy'];
+    // Dates
+    protected $useTimestamps = false;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+    protected $beforeInsert = ['addCreatedBy'];
+    protected $beforeUpdate = ['addModifiedBy'];
   
       protected function addCreatedBy(array $data)
       {
@@ -47,6 +48,4 @@ class VendorModel extends Model
           }
           return $data;
       }
-    }
-  
-
+}

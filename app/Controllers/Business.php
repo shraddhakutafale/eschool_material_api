@@ -8,6 +8,9 @@ use App\Models\BusinessModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\UserBusiness;
 
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
+
 class Business extends BaseController
 {
     use ResponseTrait;
@@ -200,8 +203,20 @@ class Business extends BaseController
         }
     }
 
-    public function getAllBusinessByUser($userId){
-
+    public function getAllBusinessByUser(){
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+  
+        // extract the token from the header
+        if(!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
+        }
+        
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $userId = $decoded->userId;
         $model = new UserBusiness();
         $businessModel = new BusinessModel();
         $userBusinesses = $model->where('userId', $userId)->findAll();

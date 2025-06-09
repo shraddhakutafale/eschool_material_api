@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SlideModel extends Model
+class ItemGroup extends Model
 {
-    protected $table            = 'slide_mst';
-    protected $primaryKey       = 'slideId';
+    protected $table            = 'item_group';
+    protected $primaryKey       = 'itemGroupId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['slideId', 'title', 'profilePic', 'content', 'buttonUrl', 'buttonText', 'businessId','isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['itemGroupId', 'itemGroupName', 'description', 'itemList','businessId', 'isDeleted', 'isActive', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -12,7 +12,7 @@ class OfferModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['offerId', 'offerName', 'offerCode', 'profilePic', 'discountType', 'selectOffer', 'allCategory', 'allItems', 'description', 'discountValue', 'startDate', 'endDate', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['offerId', 'offerName', 'offerCode', 'profilePic', 'discountType', 'selectOffer', 'allCategory', 'allItems', 'description', 'discountValue', 'startDate', 'endDate', 'businessId','isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
 
 

@@ -84,7 +84,7 @@ class Item extends BaseController
         $itemModel = new ItemModel($db);
 
         // Initialize query with 'isDeleted' condition
-        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId); // Apply the deleted check at the beginning
+        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
 
         // Apply search filter for itemName and mrp
         if (!empty($search)) {

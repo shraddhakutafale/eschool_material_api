@@ -12,7 +12,7 @@ class PoModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [ 'poId', 'poDate', 'poCode', 'poAmount', 'vendorId','unitName','unitSize', 'taxInvoiceNumber', 'invoiceUrl','totalItem', 'totalPrice','businessNameFrom', 'phoneFrom', 'addressFrom', 'emailFrom', 'PanFrom', 'businessNameFor', 'phoneFor', 'addressFor', 'emailFor', 'PanCardFor', 'total','isActive', 'isDeleted', 'remarks', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = [ 'poId', 'poDate', 'poCode', 'poAmount', 'vendorId','unitName','unitSize', 'taxInvoiceNumber', 'invoiceUrl','totalItem', 'totalPrice','businessNameFrom', 'phoneFrom', 'addressFrom', 'emailFrom', 'PanFrom', 'businessNameFor', 'phoneFor', 'addressFor', 'emailFor', 'PanCardFor', 'total','isActive', 'isDeleted', 'remarks','businessId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

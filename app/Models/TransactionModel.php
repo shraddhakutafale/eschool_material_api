@@ -12,7 +12,7 @@ class TransactionModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['transactionId', 'transactionFor', 'transactionNo', 'memberId', 'paymentMode', 'amount', 'status', 'razorpayNo', 'transactionDate', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['transactionId', 'transactionFor', 'transactionNo', 'memberId', 'paymentMode', 'amount', 'status', 'razorpayNo', 'transactionDate','businessId', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -12,7 +12,7 @@ class FeeModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['feeId', 'perticularName', 'feesType', 'amount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modeifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['feeId', 'perticularName', 'feesType', 'amount','businessId', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modeifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

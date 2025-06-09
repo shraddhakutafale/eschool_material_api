@@ -12,7 +12,7 @@ class LinkModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['linkId', 'itemCategoryId', 'categoryName', 'labelName', 'link', 'profilePic', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['linkId', 'itemCategoryId', 'categoryName', 'labelName', 'link', 'profilePic','businessId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

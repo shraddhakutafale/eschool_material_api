@@ -12,7 +12,7 @@ class PurchaseModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['purchaseId', 'companyName', 'address', 'phone', 'fax', 'website', 'city', 'vendorCompanyName', 'contactDepartment', 'vendorStreetAddress', 'vendorPhone', 'vendorFax', 'vendorCity', 'shipToName', 'shipToCompanyName', 'shipToStreetAddress', 'shipToPhone', 'shipToCity', 'items', 'modifiedBy', 'modifiedDate', 'createdBy', 'createdDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['purchaseId', 'companyName', 'address', 'phone', 'fax', 'website', 'city', 'vendorCompanyName', 'contactDepartment', 'vendorStreetAddress', 'vendorPhone', 'vendorFax', 'vendorCity', 'shipToName', 'shipToCompanyName', 'shipToStreetAddress', 'shipToPhone', 'shipToCity', 'items','businessId', 'modifiedBy', 'modifiedDate', 'createdBy', 'createdDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

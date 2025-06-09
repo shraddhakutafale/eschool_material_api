@@ -172,6 +172,7 @@ class User extends BaseController
         $roleModel = new RoleModel();
         $userBusiness = new UserBusiness();
         $business = new BusinessModel();
+        $tenant = new TenantModel();
 
         $input = $this->request->getJSON();
         
@@ -212,17 +213,13 @@ class User extends BaseController
             }
 
             $user['business'] = $business->where('businessId', $userBusiness[0]['businessId'])->first();
-
+    
             if($user['business']['isActive'] == 0 || $user['business']['isDeleted'] == 1){
                 return $this->respond(['status' => false, 'message' => 'User is not active or deleted, contact admin', 'data' => []], 401);
             }
 
-            if($user['business']['tenantName'] == null || $user['business']['tenantName'] == ''){
-                return $this->respond(['status' => false, 'message' => 'Tenant not assigned to any business, contact admin', 'data' => []], 401);
-            }
-
+            $user['business']['tenant'] = $tenant->where('categoryId', $user['business']['businessCategoryId'])->first();
             
-    
             $payload = array(
                 "iss" => "Issuer of the JWT",
                 "aud" => "Audience that the JWT",
@@ -233,7 +230,7 @@ class User extends BaseController
                 "roleId" => $user['roleId'],
                 "userId" => $user['userId'],
                 "businessId" => $user['business']['businessId'],
-                "tenantName" => $user['business']['tenantName'],
+                "tenantName" => $user['business']['tenant']['tenantName'],
                 "businessCategoryId" => $user['business']['businessCategoryId'],
             );
         }
@@ -660,329 +657,329 @@ class User extends BaseController
     }
 
     public function createTenant()
-{
-    $input = $this->request->getJSON();
-    $rules = [
-        'tenantName'   => ['rules' => 'required'],
-        'databaseName' => ['rules' => 'required'],
-        'username'     => ['rules' => 'required'],
-        'password'     => ['rules' => 'required'],
-        'hostUrl'      => ['rules' => 'required'],
-        'businessId'   => ['rules' => 'required']
-    ];
-
-    if ($this->validate($rules)) {
-        $model = new TenantModel();  // Assuming you have a TenantModel
-        $data = [
-            'tenantName'   => $input->tenantName,
-            'databaseName' => $input->databaseName,
-            'username'     => $input->username,
-            'password'     => password_hash($input->password, PASSWORD_BCRYPT), // Encrypting password for security
-            'hostUrl'      => $input->hostUrl,
-            'businessId'   => $input->businessId
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'tenantName'   => ['rules' => 'required'],
+            'databaseName' => ['rules' => 'required'],
+            'username'     => ['rules' => 'required'],
+            'password'     => ['rules' => 'required'],
+            'hostUrl'      => ['rules' => 'required'],
+            'businessId'   => ['rules' => 'required']
         ];
-        $model->insert($data);
 
-        return $this->respond(["status" => true, 'message' => 'Tenant Created Successfully'], 200);
-    } else {
-        $response = [
-            'status'  => false,
-            'errors'  => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
-    }
-}
+        if ($this->validate($rules)) {
+            $model = new TenantModel();  // Assuming you have a TenantModel
+            $data = [
+                'tenantName'   => $input->tenantName,
+                'databaseName' => $input->databaseName,
+                'username'     => $input->username,
+                'password'     => password_hash($input->password, PASSWORD_BCRYPT), // Encrypting password for security
+                'hostUrl'      => $input->hostUrl,
+                'businessId'   => $input->businessId
+            ];
+            $model->insert($data);
 
-public function deleteTenant()
-{
-    $input = $this->request->getJSON();
-
-    // Validation rules for tenantId
-    $rules = [
-        'tenantId' => ['rules' => 'required|numeric']
-    ];
-
-    if ($this->validate($rules)) {
-        $model = new TenantModel(); // Assuming you have a TenantModel
-
-        // Check if the tenant exists
-        $tenant = $model->find($input->tenantId);
-        if (!$tenant) {
-            return $this->fail(['status' => false, 'message' => 'Tenant not found'], 404);
+            return $this->respond(["status" => true, 'message' => 'Tenant Created Successfully'], 200);
+        } else {
+            $response = [
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
-
-        // Soft delete by setting isDeleted to 1
-        $updateData = ['isDeleted' => 1];
-        $model->update($input->tenantId, $updateData);
-
-        return $this->respond(["status" => true, 'message' => 'Tenant Deleted Successfully'], 200);
-    } else {
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
     }
-}
 
+    public function deleteTenant()
+    {
+        $input = $this->request->getJSON();
 
+        // Validation rules for tenantId
+        $rules = [
+            'tenantId' => ['rules' => 'required|numeric']
+        ];
 
-public function updateTenant()
-{
-    $input = $this->request->getJSON();
+        if ($this->validate($rules)) {
+            $model = new TenantModel(); // Assuming you have a TenantModel
 
-    // Validation rules for updating tenant
-    $rules = [
-        'tenantId'     => ['rules' => 'required|numeric'],
-        'tenantName'   => ['rules' => 'required'],
-        'databaseName' => ['rules' => 'required'],
-        'username'     => ['rules' => 'required'],
-        'password'     => ['rules' => 'required'],
-        'hostUrl'      => ['rules' => 'required'],
-        'businessId'   => ['rules' => 'required|numeric']
-    ];
+            // Check if the tenant exists
+            $tenant = $model->find($input->tenantId);
+            if (!$tenant) {
+                return $this->fail(['status' => false, 'message' => 'Tenant not found'], 404);
+            }
 
-    if ($this->validate($rules)) {
-        $model = new TenantModel(); // Assuming you have a TenantModel
+            // Soft delete by setting isDeleted to 1
+            $updateData = ['isDeleted' => 1];
+            $model->update($input->tenantId, $updateData);
 
-        // Check if the tenant exists
-        $tenant = $model->find($input->tenantId);
-        if (!$tenant) {
-            return $this->fail(['status' => false, 'message' => 'Tenant not found'], 404);
+            return $this->respond(["status" => true, 'message' => 'Tenant Deleted Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
-
-        // Data to update
-        $updateData = [
-            'tenantName'   => $input->tenantName,
-            'databaseName' => $input->databaseName,
-            'username'     => $input->username,
-            'password'     => $input->password,
-            'hostUrl'      => $input->hostUrl,
-            'businessId'   => $input->businessId
-        ];
-
-        // Update the tenant
-        $model->update($input->tenantId, $updateData);
-
-        return $this->respond(["status" => true, "message" => "Tenant Updated Successfully"], 200);
-    } else {
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
     }
-}
 
 
 
+    public function updateTenant()
+    {
+        $input = $this->request->getJSON();
 
-
-public function getAllBusiness()
-{
-    $businesses = new BusinessModel;
-    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $businesses->findAll()], 200);
-}
-
-
-
-public function createBusiness()
-{
-    $input = $this->request->getJSON();
-    $rules = [
-        'businessName' => ['rules' => 'required'],
-        'tenantName' => ['rules' => 'required'],
-
-        'businessDesc' => ['rules' => 'required'],
-        'businessCategoryId' => ['rules' => 'required']
-    ];
-
-    if ($this->validate($rules)) {
-        $model = new BusinessModel(); // Assuming you have a BusinessModel
-        $data = [
-            'businessName' => $input->businessName,
-            'tenantName' => $input->tenantName,
-
-            'businessDesc' => $input->businessDesc,
-            'businessCategoryId' => $input->businessCategoryId
-         
+        // Validation rules for updating tenant
+        $rules = [
+            'tenantId'     => ['rules' => 'required|numeric'],
+            'tenantName'   => ['rules' => 'required'],
+            'databaseName' => ['rules' => 'required'],
+            'username'     => ['rules' => 'required'],
+            'password'     => ['rules' => 'required'],
+            'hostUrl'      => ['rules' => 'required'],
+            'businessId'   => ['rules' => 'required|numeric']
         ];
+
+        if ($this->validate($rules)) {
+            $model = new TenantModel(); // Assuming you have a TenantModel
+
+            // Check if the tenant exists
+            $tenant = $model->find($input->tenantId);
+            if (!$tenant) {
+                return $this->fail(['status' => false, 'message' => 'Tenant not found'], 404);
+            }
+
+            // Data to update
+            $updateData = [
+                'tenantName'   => $input->tenantName,
+                'databaseName' => $input->databaseName,
+                'username'     => $input->username,
+                'password'     => $input->password,
+                'hostUrl'      => $input->hostUrl,
+                'businessId'   => $input->businessId
+            ];
+
+            // Update the tenant
+            $model->update($input->tenantId, $updateData);
+
+            return $this->respond(["status" => true, "message" => "Tenant Updated Successfully"], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+
+
+
+
+    public function getAllBusiness()
+    {
+        $businesses = new BusinessModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $businesses->findAll()], 200);
+    }
+
+
+
+    public function createBusiness()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'businessName' => ['rules' => 'required'],
+            'tenantName' => ['rules' => 'required'],
+
+            'businessDesc' => ['rules' => 'required'],
+            'businessCategoryId' => ['rules' => 'required']
+        ];
+
+        if ($this->validate($rules)) {
+            $model = new BusinessModel(); // Assuming you have a BusinessModel
+            $data = [
+                'businessName' => $input->businessName,
+                'tenantName' => $input->tenantName,
+
+                'businessDesc' => $input->businessDesc,
+                'businessCategoryId' => $input->businessCategoryId
+            
+            ];
+            
+            $model->insert($data);
+
+            return $this->respond(["status" => true, 'message' => 'Business Created Successfully'], 200);
+        } else {
+            $response = [
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+    public function updateBusiness()
+    {
+        $input = $this->request->getJSON();
+
+        // Validation rules for updating business
+        $rules = [
+            'businessId'   => ['rules' => 'required|numeric'],
+            'businessName' => ['rules' => 'required|min_length[3]'],
+            'businessDesc' => ['rules' => 'required|min_length[5]']
+        ];
+
+        if ($this->validate($rules)) {
+            $model = new BusinessModel(); // Assuming you have a BusinessModel
+
+            // Check if the business exists
+            $business = $model->find($input->businessId);
+            if (!$business) {
+                return $this->fail(['status' => false, 'message' => 'Business not found'], 404);
+            }
+
+            // Data to update
+            $updateData = [
+                'businessName' => $input->businessName,
+                'businessDesc' => $input->businessDesc,
+                'businessCategoryId' => $input->businessCategoryId,
+                'tenantName' => $input->tenantName
+            ];
+
+            // Update the business
+            $model->update($input->businessId, $updateData);
+
+            return $this->respond(["status" => true, 'message' => 'Business Updated Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+
+
+    public function deleteBusiness()
+    {
+        $input = $this->request->getJSON();
         
-        $model->insert($data);
-
-        return $this->respond(["status" => true, 'message' => 'Business Created Successfully'], 200);
-    } else {
-        $response = [
-            'status'  => false,
-            'errors'  => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
-    }
-}
-
-public function updateBusiness()
-{
-    $input = $this->request->getJSON();
-
-    // Validation rules for updating business
-    $rules = [
-        'businessId'   => ['rules' => 'required|numeric'],
-        'businessName' => ['rules' => 'required|min_length[3]'],
-        'businessDesc' => ['rules' => 'required|min_length[5]']
-    ];
-
-    if ($this->validate($rules)) {
-        $model = new BusinessModel(); // Assuming you have a BusinessModel
-
-        // Check if the business exists
-        $business = $model->find($input->businessId);
-        if (!$business) {
-            return $this->fail(['status' => false, 'message' => 'Business not found'], 404);
-        }
-
-        // Data to update
-        $updateData = [
-            'businessName' => $input->businessName,
-            'businessDesc' => $input->businessDesc,
-            'businessCategoryId' => $input->businessCategoryId,
-            'tenantName' => $input->tenantName
+        // Validation rules for businessId
+        $rules = [
+            'businessId' => ['rules' => 'required|numeric']
         ];
 
-        // Update the business
-        $model->update($input->businessId, $updateData);
+        if ($this->validate($rules)) {
+            $model = new BusinessModel(); // Assuming you have a BusinessModel
 
-        return $this->respond(["status" => true, 'message' => 'Business Updated Successfully'], 200);
-    } else {
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
-    }
-}
+            // Check if the business exists
+            $business = $model->find($input->businessId);
+            if (!$business) {
+                return $this->fail(['status' => false, 'message' => 'Business not found'], 404);
+            }
 
+            // Soft delete by setting isDeleted to 1
+            $updateData = ['isDeleted' => 1];
+            $model->update($input->businessId, $updateData);
 
-
-public function deleteBusiness()
-{
-    $input = $this->request->getJSON();
-    
-    // Validation rules for businessId
-    $rules = [
-        'businessId' => ['rules' => 'required|numeric']
-    ];
-
-    if ($this->validate($rules)) {
-        $model = new BusinessModel(); // Assuming you have a BusinessModel
-
-        // Check if the business exists
-        $business = $model->find($input->businessId);
-        if (!$business) {
-            return $this->fail(['status' => false, 'message' => 'Business not found'], 404);
-        }
-
-        // Soft delete by setting isDeleted to 1
-        $updateData = ['isDeleted' => 1];
-        $model->update($input->businessId, $updateData);
-
-        return $this->respond(["status" => true, 'message' => 'Business Deleted Successfully'], 200);
-    } else {
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
-    }
-}
-
-
-public function getBusinessesPaging()
-{
-    $input = $this->request->getJSON();
-    $businessModel = new BusinessModel(); // Assuming you have a BusinessModel
-
-    // Get the page number from the input, default to 1 if not provided
-    $page = isset($input->page) ? $input->page : 1;
-    // Define the number of items per page
-    $perPage = isset($input->perPage) ? $input->perPage : 50;
-
-    // Fetch paginated business data
-    $businesses = $businessModel->paginate($perPage, 'default', $page);
-    $pager = $businessModel->pager;
-
-    $response = [
-        "status" => true,
-        "message" => "All Businesses Fetched",
-        "data" => $businesses,
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ];
-
-    return $this->respond($response, 200);
-}
-
-
-
-
-public function getAllBusinessCategory()
-{
-    $categories = new BusinessCategoryModel;
-    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $categories->findAll()], 200);
-}
-
-
-
-public function getAllTenantName()
-{
-    $tenants = new TenantModel;
-    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $tenants->findAll()], 200);
-}
-
-public function getAllPermissionByCategory()
-{
-    $input = $this->request->getJSON();
-    $categoryId = $input->categoryId;
-    $model = new RolePermissionModel;
-    $rightsModel = new RightModel;
-    $permissions = $model->where('categoryId', $categoryId)->findAll();
-
-    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $permissions], 200);
-}
-
-public function updatePermissions()
-{
-    $input = $this->request->getJSON();
-    $model = new RolePermissionModel;
-    foreach ($input as $permission) {
-        if(isset($permission->permissionId)){
-            $model->update($permission->permissionId, $permission);
-            continue;
-        }else{
-            $model->insert($permission);
-            continue;
+            return $this->respond(["status" => true, 'message' => 'Business Deleted Successfully'], 200);
+        } else {
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
     }
-    return $this->respond(["status" => true, "message" => "Permissions Updated Successfully", "data" => []], 200);
 
-}
 
-public function assignBusiness()
-{
-    $input = $this->request->getJSON();
-    $model = new UserBusiness;
-    $model->insertBatch($input);
-    return $this->respond(["status" => true, "message" => "Business Assigned Successfully", "data" => []], 200);
+    public function getBusinessesPaging()
+    {
+        $input = $this->request->getJSON();
+        $businessModel = new BusinessModel(); // Assuming you have a BusinessModel
 
-}
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        // Define the number of items per page
+        $perPage = isset($input->perPage) ? $input->perPage : 50;
+
+        // Fetch paginated business data
+        $businesses = $businessModel->paginate($perPage, 'default', $page);
+        $pager = $businessModel->pager;
+
+        $response = [
+            "status" => true,
+            "message" => "All Businesses Fetched",
+            "data" => $businesses,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+
+        return $this->respond($response, 200);
+    }
+
+
+
+
+    public function getAllBusinessCategory()
+    {
+        $categories = new BusinessCategoryModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $categories->findAll()], 200);
+    }
+
+
+
+    public function getAllTenantName()
+    {
+        $tenants = new TenantModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $tenants->findAll()], 200);
+    }
+
+    public function getAllPermissionByCategory()
+    {
+        $input = $this->request->getJSON();
+        $categoryId = $input->categoryId;
+        $model = new RolePermissionModel;
+        $rightsModel = new RightModel;
+        $permissions = $model->where('categoryId', $categoryId)->findAll();
+
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $permissions], 200);
+    }
+
+    public function updatePermissions()
+    {
+        $input = $this->request->getJSON();
+        $model = new RolePermissionModel;
+        foreach ($input as $permission) {
+            if(isset($permission->permissionId)){
+                $model->update($permission->permissionId, $permission);
+                continue;
+            }else{
+                $model->insert($permission);
+                continue;
+            }
+        }
+        return $this->respond(["status" => true, "message" => "Permissions Updated Successfully", "data" => []], 200);
+
+    }
+
+    public function assignBusiness()
+    {
+        $input = $this->request->getJSON();
+        $model = new UserBusiness;
+        $model->insertBatch($input);
+        return $this->respond(["status" => true, "message" => "Business Assigned Successfully", "data" => []], 200);
+
+    }
 
 }

@@ -116,7 +116,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
      // Routes for Business
      $routes->get('getall', 'Business::index',['filter' => ['authFilter', 'tenantFilter']]);
      $routes->post('getallpaging', 'Business::getBusinessesPaging',['filter' => ['authFilter', 'tenantFilter']]);
-     $routes->get('getallbyuser/(:segment)', 'Business::getAllBusinessByUser/$1',['filter' => 'authFilter']);
+     $routes->get('getallbyuser', 'Business::getAllBusinessByUser',['filter' => 'authFilter']);
      $routes->post('create', 'Business::create',['filter' => ['authFilter','tenantFilter']]);
      $routes->post('update', 'Business::update',['filter' => ['authFilter','tenantFilter']]);
      $routes->get('getallwebsite', 'Business::getBusinessesWebsite',['filter' => ['tenantFilter']]); // Get all customer for website

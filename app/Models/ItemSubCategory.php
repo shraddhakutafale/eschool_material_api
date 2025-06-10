@@ -12,7 +12,7 @@ class ItemSubCategory extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemSubCategoryId', 'itemSubCategoryName', 'description', 'isDeleted', 'isActive', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['itemSubCategoryId', 'itemSubCategoryName', 'itemCategoryId', 'description', 'isDeleted', 'isActive', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

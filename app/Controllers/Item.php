@@ -7,6 +7,8 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\ItemModel;
 use App\Models\ItemTypeModel;
 use App\Models\ItemCategory;
+use App\Models\ItemSubCategory;
+use App\Models\ItemGroup;
 use App\Models\Unit;
 use Config\Database;
 use App\Libraries\TenantService;
@@ -629,6 +631,124 @@ class Item extends BaseController
                 'message' => 'Invalid Inputs'
             ];
             return $this->fail($response, 409);
+        }
+    }
+
+    public function getAllItemSubCategory()
+    {
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+        // Load ItemCategory model with the tenant database connection
+        $model = new ItemCategory($db);
+    
+        $itemCategories = $model->where('isDeleted', 0)->findAll();
+    
+        // Prepare response
+        $response = [
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $itemCategories,
+        ];
+    
+        return $this->respond($response, 200);
+    }
+
+    public function createSubCategory()
+    {
+        // Retrieve the input data from the request
+        $input = $this->request->getPost();
+
+        // Define validation rules for required fields
+        $rules = [
+            'itemSubCategoryName' => ['rules' => 'required'],
+            'itemCategoryId' => ['rules' => 'required|numeric'],
+        ];
+
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemSubCategory($db);
+            $itemSubCategory = $model->insert($input);
+            return $this->respond(["status" => true, "message" => "Item Sub Category Added Successfully", "data" => $itemSubCategory], 200);
+        }else{
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+    public function updateSubCategory()
+    {
+        $input = $this->request->getPost();
+    
+        // Validation rules for the item
+        $rules = [
+            'itemSubCategoryId' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
+        ];
+    
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+            $model = new ItemSubCategory($db);
+    
+            // Retrieve the item by itemId
+            $itemSubCategoryId = $input['itemSubCategoryId'];
+            $item = $model->find($itemSubCategoryId);
+    
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+            }
+    
+            // Prepare the data to be updated
+            $updateData = [
+                'itemSubCategoryName'=> $input['itemSubCategoryName'],	
+                'itemCategoryId'=> $input['itemCategoryId'],				
+                'description'=> $input['description'],	
+                'hsnCode'=> $input['hsnCode'],
+            ];
+    
+            // Update the item with new data
+            $updated = $model->update($itemSubCategoryId, $updateData);
+    
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+    public function deleteSubCategory()
+    {
+        $input = $this->request->getPost();
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemSubCategory($db);
+        $itemSubCategoryId = $input['itemSubCategoryId'];
+        $deleted = $model->delete($itemSubCategoryId);
+        if ($deleted) {
+            return $this->respond(['status' => true, 'message' => 'Item Deleted Successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to delete item'], 500);
         }
     }
 

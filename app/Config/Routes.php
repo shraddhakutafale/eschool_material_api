@@ -179,10 +179,14 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('update', 'Item::update',['filter' => ['authFilter','tenantFilter']]);
     
     $routes->post('delete', 'Item::delete',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]); 
+    $routes->post('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getallsubcategory', 'Item::getAllItemSubCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createcategory', 'Item::createCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('updatecategory', 'Item::updateCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('deletecategory', 'Item::deleteCategory',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('createsubcategory', 'Item::createSubCategory',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updatesubcategory', 'Item::updateSubCategory',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletesubcategory', 'Item::deleteSubCategory',['filter' => ['authFilter','tenantFilter']]);
 
     $routes->get('getallunit', 'Item::getAllUnit',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['authFilter','tenantFilter']]);

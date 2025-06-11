@@ -779,6 +779,103 @@ class Item extends BaseController
         return $this->respond($response, 200);
     }
 
+
+      public function createItemGroup()
+    {
+        // Retrieve the input data from the request
+        $input = $this->request->getJSON();
+
+        // Define validation rules for required fields
+        $rules = [
+            'itemGroupName' => ['rules' => 'required'],
+            'itemGroupId' => ['rules' => 'required|numeric'],
+        ];
+
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $model = new ItemGroup($db);
+            $itemGroup = $model->insert($input);
+            return $this->respond(["status" => true, "message" => "Item Group Added Successfully", "data" => $itemGroup], 200);
+        }else{
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+      public function updateItemGroup()
+    {
+        $input = $this->request->getPost();
+    
+        // Validation rules for the item
+        $rules = [
+            'itemGroupId ' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
+        ];
+    
+        // Validate the input
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+            $model = new ItemGroup($db);
+    
+            // Retrieve the item by itemId
+            $itemGroupId = $input['itemGroupId'];
+            $item = $model->find($itemGroupId);
+    
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Grouo not found'], 404);
+            }
+    
+            // Prepare the data to be updated
+            $updateData = [
+                'itemGroupName'=> $input['itemGroupName'],	
+                'itemGroupId '=> $input['itemGroupId '],				
+                'description'=> $input['description'],	
+            ];
+    
+            // Update the item with new data
+            $updated = $model->update($itemGroupId, $updateData);
+    
+            if ($updated) {
+                return $this->respond(['status' => true, 'message' => 'Group Updated Successfully'], 200);
+            } else {
+                return $this->fail(['status' => false, 'message' => 'Failed to update Group'], 500);
+            }
+        } else {
+            // Validation failed
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+     public function deleteItemGroup()
+    {
+        $input = $this->request->getPost();
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemSubCategory($db);
+        $itemGroupId = $input['itemGroupId'];
+        $deleted = $model->delete($itemGroupId);
+        if ($deleted) {
+            return $this->respond(['status' => true, 'message' => 'Group Deleted Successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to delete Group'], 500);
+        }
+    }
+
+    
     public function getAllCategoryWeb()
     {
         $input = $this->request->getJSON();

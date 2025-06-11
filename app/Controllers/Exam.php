@@ -251,7 +251,7 @@ class Exam extends BaseController
 
         $examTimetable->insertbatch($input);
 
-        return $this->respond(['status' => true, 'message' => 'Subjects Added Successfully'], 200);
+        return $this->respond(['status' => true, 'message' => 'Subjects Assigned Successfully'], 200);
     }
 
     public function getSubjectsByExam(){

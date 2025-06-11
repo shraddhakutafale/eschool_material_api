@@ -437,69 +437,69 @@ class Item extends BaseController
     
 
    public function createCategory()
-{
-    // Get input based on content type
-    $input = $this->request->getPost();
-    if (empty($input)) {
-        $input = $this->request->getJSON(true);
-    }
-
-    $rules = [
-        'itemCategoryName' => ['rules' => 'required'],
-    ];
-
-    if (!$this->validate($rules)) {
-        return $this->fail([
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ], 409);
-    }
-
-    // JWT and tenant handling
-    $key = "Exiaa@11";
-    $header = $this->request->getHeader("Authorization");
-    $token = $header ? (preg_match('/Bearer\s(\S+)/', $header, $matches) ? $matches[1] : null) : null;
-    
-    if (!$token) {
-        return $this->fail('Authorization token missing', 401);
-    }
-
-    try {
-        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    } catch (Exception $e) {
-        return $this->fail('Invalid token', 401);
-    }
-
-    // Handle file upload
-    $coverImage = $this->request->getFile('coverImage');
-    if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
-        $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemCategoryImages/';
-        if (!is_dir($coverImagePath)) {
-            mkdir($coverImagePath, 0777, true);
+    {
+        // Get input based on content type
+        $input = $this->request->getPost();
+        if (empty($input)) {
+            $input = $this->request->getJSON(true);
         }
-        $coverImageName = $coverImage->getRandomName();
-        $coverImage->move($coverImagePath, $coverImageName);
-        $input['coverImage'] = $decoded->tenantName . '/itemCategoryImages/' . $coverImageName;
+
+        $rules = [
+            'itemCategoryName' => ['rules' => 'required'],
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->fail([
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+
+        // JWT and tenant handling
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = $header ? (preg_match('/Bearer\s(\S+)/', $header, $matches) ? $matches[1] : null) : null;
+        
+        if (!$token) {
+            return $this->fail('Authorization token missing', 401);
+        }
+
+        try {
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        } catch (Exception $e) {
+            return $this->fail('Invalid token', 401);
+        }
+
+        // Handle file upload
+        $coverImage = $this->request->getFile('coverImage');
+        if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
+            $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemCategoryImages/';
+            if (!is_dir($coverImagePath)) {
+                mkdir($coverImagePath, 0777, true);
+            }
+            $coverImageName = $coverImage->getRandomName();
+            $coverImage->move($coverImagePath, $coverImageName);
+            $input['coverImage'] = $decoded->tenantName . '/itemCategoryImages/' . $coverImageName;
+        }
+
+        // Database operations
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new ItemCategory($db);
+
+        // Final validation before insert
+        if (empty($input)) {
+            return $this->fail('No valid data to insert', 400);
+        }
+
+        $itemCategory = $model->insert($input);
+        return $this->respond([
+            'status' => true,
+            'message' => "Item Category Added Successfully",
+            'data' => $itemCategory
+        ], 200);
     }
-
-    // Database operations
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new ItemCategory($db);
-
-    // Final validation before insert
-    if (empty($input)) {
-        return $this->fail('No valid data to insert', 400);
-    }
-
-    $itemCategory = $model->insert($input);
-    return $this->respond([
-        'status' => true,
-        'message' => "Item Category Added Successfully",
-        'data' => $itemCategory
-    ], 200);
-}
 
     public function updateCategory()
     {
@@ -637,6 +637,7 @@ class Item extends BaseController
 
     public function getAllItemSubCategory()
     {
+        $data = $this->request->getJSON();
         // Insert the product data into the database
         $tenantService = new TenantService();
         // Connect to the tenant's database
@@ -644,16 +645,17 @@ class Item extends BaseController
     
         // Load ItemCategory model with the tenant database connection
         $itemSubCategory = new ItemSubCategory($db);
-        $model = new ItemCategory($db);
+        
+        $itemSubCategories = $itemSubCategory->select('item_sub_category.*, item_category.itemCategoryId as itemCategoryId, item_category.itemCategoryName as itemCategoryName, item_category.businessId as businessId')
+        ->join('item_category', 'item_category.itemCategoryId = item_sub_category.itemCategoryId')
+        ->where('item_sub_category.isDeleted', 0)
+        ->where('item_category.businessId', $data->businessId)->where('item_category.isDeleted', 0)
+        ->findAll();
 
-    
-        $itemCategories = $model->where('isDeleted', 0)->findAll();
-    
-        // Prepare response
         $response = [
             "status" => true,
             "message" => "All Data Fetched",
-            "data" => $itemCategories,
+            "data" => $itemSubCategories,
         ];
     
         return $this->respond($response, 200);
@@ -662,7 +664,7 @@ class Item extends BaseController
     public function createSubCategory()
     {
         // Retrieve the input data from the request
-        $input = $this->request->getPost();
+        $input = $this->request->getJSON();
 
         // Define validation rules for required fields
         $rules = [
@@ -753,6 +755,28 @@ class Item extends BaseController
         } else {
             return $this->fail(['status' => false, 'message' => 'Failed to delete item'], 500);
         }
+    }
+
+    public function getAllItemGroup()
+    {
+        $data = $this->request->getJSON();
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+        // Load ItemGroup model with the tenant database connection
+        $itemGroup = new ItemGroup($db);
+        
+        $itemGroups = $itemGroup->where('isDeleted', 0)->where('businessId',$data->businessId)->findAll();
+
+        $response = [
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $itemGroups,
+        ];
+    
+        return $this->respond($response, 200);
     }
 
     public function getAllCategoryWeb()

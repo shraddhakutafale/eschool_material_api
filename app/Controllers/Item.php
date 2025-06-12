@@ -23,7 +23,7 @@ class Item extends BaseController
 
     public function index()
     {
-        // Insert the product data into the database
+        $input = $this->request->getJSON();
         $tenantService = new TenantService();
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
@@ -32,9 +32,11 @@ class Item extends BaseController
         $itemModel = new ItemModel($db);
     
         $items = $itemModel
-            ->select('item_mst.*, item_category.itemCategoryName, item_mst.discount,item_mst.discountType, item_category.gstTax')  
+            ->select('item_mst.*, item_category.itemCategoryName')  
             ->join('item_category', 'item_category.itemCategoryId = item_mst.itemCategoryId', 'left')  
-            ->where('item_mst.isDeleted', 0)  
+            ->where('item_mst.isDeleted', 0)
+            ->where('item_mst.itemTypeId', $input->itemTypeId)
+            ->where('item_mst.businessId', $input->businessId)
             ->findAll();
 
     
@@ -661,6 +663,33 @@ class Item extends BaseController
         return $this->respond($response, 200);
     }
 
+    public function getAllItemSubCategoryByCategory()
+    {
+        $data = $this->request->getJSON();
+        // Insert the product data into the database
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+        // Load ItemCategory model with the tenant database connection
+        $itemSubCategory = new ItemSubCategory($db);
+        
+        $itemSubCategories = $itemSubCategory->select('item_sub_category.*, item_category.itemCategoryId as itemCategoryId, item_category.itemCategoryName as itemCategoryName, item_category.businessId as businessId')
+        ->join('item_category', 'item_category.itemCategoryId = item_sub_category.itemCategoryId')
+        ->where('item_sub_category.isDeleted', 0)
+        ->where('item_sub_category.itemCategoryId', $data->itemCategoryId)
+        ->where('item_category.businessId', $data->businessId)->where('item_category.isDeleted', 0)
+        ->findAll();
+
+        $response = [
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $itemSubCategories,
+        ];
+    
+        return $this->respond($response, 200);
+    }
+
     public function createSubCategory()
     {
         // Retrieve the input data from the request
@@ -780,7 +809,7 @@ class Item extends BaseController
     }
 
 
-      public function createItemGroup()
+    public function createItemGroup()
     {
         // Retrieve the input data from the request
         $input = $this->request->getJSON();
@@ -788,7 +817,6 @@ class Item extends BaseController
         // Define validation rules for required fields
         $rules = [
             'itemGroupName' => ['rules' => 'required'],
-            'itemGroupId' => ['rules' => 'required|numeric'],
         ];
 
         if ($this->validate($rules)) {
@@ -809,7 +837,7 @@ class Item extends BaseController
         }
     }
 
-      public function updateItemGroup()
+    public function updateItemGroup()
     {
         $input = $this->request->getPost();
     

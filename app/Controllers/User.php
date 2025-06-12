@@ -11,6 +11,7 @@ use App\Models\RightModel;
 use App\Models\RoleModel;
 use App\Models\BusinessModel;
 use App\Models\BusinessCategoryModel;
+use App\Models\RightBusinessCategory;
 
 
 use App\Models\TenantModel;
@@ -53,6 +54,8 @@ class User extends BaseController
 
         $role = $roleModel->where('roleId', $user['roleId'])->first();
         $user['role'] = $role;
+        $user['businessId'] = $decoded->businessId ?? 0;
+        $user['businessCategoryId'] = $decoded->businessCategoryId ?? 0;
 
         if(is_null($user)) {
             return $this->respond(['status' => false, 'message' => 'User not found.'], 404);
@@ -81,6 +84,7 @@ class User extends BaseController
         $rolePermissionModel = new RolePermissionModel();
         $rightModel = new RightModel();
         $roleModel = new RoleModel();
+        $rightBusinessCategory = new RightBusinessCategory();
 
         $input = $this->request->getJSON();
         
@@ -116,11 +120,10 @@ class User extends BaseController
                 $menu[] = $menuItem;
             }
         }else{
-
             if(isset($decoded->businessCategoryId) && !empty($decoded->businessCategoryId)){
-                $rolePermissions = $rolePermissionModel->where('roleId', $user['roleId'])->where('categoryId', $decoded->businessCategoryId)->findAll();
-                foreach($rolePermissions as $key => $rolePermission){
-                    $right = $rightModel->where('rightId', $rolePermission['rightId'])->where('isDeleted',0)->where('isActive',1)->where('parentRightId',0)->first();
+                $rightBusinessCategories = $rightBusinessCategory->where('categoryId', $decoded->businessCategoryId)->findAll();
+                foreach($rightBusinessCategories as $key => $rightBusinessCategory){
+                    $right = $rightModel->where('rightId', $rightBusinessCategory['rightId'])->where('isDeleted',0)->where('isActive',1)->where('parentRightId',0)->first();
                     
                     if ($right) {
                         // Store the parent menu details

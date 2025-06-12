@@ -172,7 +172,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
   $routes->group('item', function ($routes) {
     //Routes for item
-    $routes->get('getall', 'Item::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getall', 'Item::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Item::getItemsPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->get('view/(:segment)', 'Item::show/$1',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('create', 'Item::create',['filter' => ['authFilter','tenantFilter']]);
@@ -181,6 +181,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Item::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallsubcategory', 'Item::getAllItemSubCategory',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getallsubcategorybycategory', 'Item::getAllItemSubCategoryByCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallitemgroup', 'Item::getAllItemGroup',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createcategory', 'Item::createCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('updatecategory', 'Item::updateCategory',['filter' => ['authFilter','tenantFilter']]);
@@ -464,8 +465,6 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('update', 'TenantUser::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('create', 'Customer::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('add-address', 'CustomerAddress::addAddress', ['filter' => ['authFilter', 'tenantFilter']]);
-
-
   });
 
    $routes->group('iotdevice', function ($routes) {
@@ -474,14 +473,12 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
 
 
   $routes->group('staff', function ($routes) {
-    //Routes for staff
     $routes->get('getall', 'Staff::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Staff::getStaffPaging',['filter' => ['tenantFilter']]);
   });
 
-    $routes->group('customer', function ($routes) {
-    //Routes for customer
-    $routes->get('getall', 'Customer::index',['filter' => ['authFilter', 'tenantFilter']]);
+  $routes->group('customer', function ($routes) {
+    $routes->post('getall', 'Customer::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Customer::getCustomersPaging',['filter' => ['tenantFilter']]);
   });
 

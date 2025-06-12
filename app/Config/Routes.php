@@ -427,6 +427,32 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('getstatsforinstitute', 'Dashboard::getStatsForInstitute',['filter' => ['authFilter','tenantFilter']]);
   });
 
+      $routes->group('staffAttendance', function ($routes) {
+    //Routes for staff
+    $routes->get('getall', 'StaffAttendance::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'StaffAttendance::getStaffPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'StaffAttendance::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'StaffAttendance::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'StaffAttendance::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'StaffAttendance::getStaffsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'StaffAttendance::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
+    $routes->group('studentAttendance' , function ($routes) {
+    $routes->get('getall', 'StudentAttendance::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'StudentAttendance::getStudentsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getalladmissionpaging', 'StudentAttendance::getStudentsAdmissionPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaymentpaging', 'StudentAttendance::getStudentsPaymentPaging',['filter' => ['authFilter', 'tenantFilter']]);
+
+    $routes->get('view/(:segment)', 'StudentAttendance::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'StudentAttendance::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'StudentAttendance::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('delete', 'StudentAttendance::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('addallpayment', 'StudentAttendance::addAllPayment',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('addpayment', 'StudentAttendance::addPayment',['filter' => ['authFilter','tenantFilter']]);
+
+  });
+
 });
 
 $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) {

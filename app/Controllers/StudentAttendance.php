@@ -11,13 +11,14 @@ use App\Models\ItemModel;
 use App\Models\ItemFeeMapModel;
 use App\Models\FeeModel;
 use App\Models\PaymentDetailModel;
+use App\Models\StudentAttendanceModel;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
 
 use Config\Database;
 
-class Student extends BaseController
+class StudentAttendance extends BaseController
 {
     use ResponseTrait;
 
@@ -32,89 +33,174 @@ class Student extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $studentModel->findAll()], 200);
     }
 
+    // public function getStudentsPaging()
+    // {
+    //     $input = $this->request->getJSON();
+
+    //     // Get the page number from the input, default to 1 if not provided
+    //     $page = isset($input->page) ? $input->page : 1;
+    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
+    //     $sortField = isset($input->sortField) ? $input->sortField : 'studentId';
+    //     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    //     $search = isset($input->search) ? $input->search : '';
+    //     $filter = $input->filter;
+        
+
+    //     $tenantService = new TenantService();
+        
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     // Load studentModel with the tenant database connection
+    //     $studentModel = new StudentModel($db);
+    //     $admissionModel = new AdmissionModel($db);
+
+    //     $query = $studentModel;
+    //     // Join with AdmissionModel (assuming studentId is the linking column)
+    //     $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
+
+    //     if (!empty($filter)) {
+    //         $filter = json_decode(json_encode($filter), true);
+
+    //         if (!empty($filter['academicYear'])) {
+    //             $query->where('academicYearId', $filter['academicYear']);
+    //         }
+
+    //         foreach ($filter as $key => $value) {
+    //             if (in_array($key, ['student_mst.studentCode','student_mst.generalRegisterNo','student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
+    //                 $query->like($key, $value); // LIKE filter for specific fields
+    //             } else if ($key === 'student_mst.createdDate') {
+    //                 $query->where($key, $value); // Exact match filter for createdDate
+    //             }
+    //         }
+
+    //         // Apply Date Range Filter (startDate and endDate)
+    //         if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+    //             $query->where('student_mst.createdDate >=', $filter['startDate'])
+    //                   ->where('student_mst.createdDate <=', $filter['endDate']);
+    //         }
+    
+    //         // Apply Last 7 Days Filter if requested
+    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+    //             $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+    //             $query->where('student_mst.createdDate >=', $last7DaysStart);
+    //         }
+    
+    //         // Apply Last 30 Days Filter if requested
+    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+    //             $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+    //             $query->where('student_mst.createdDate >=', $last30DaysStart);
+    //         }
+    //     }
+
+        
+    //     $query->where('student_mst.isDeleted',0);
+    //     // Apply Sorting
+    //     if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+    //         $query->orderBy($sortField, $sortOrder);
+    //     }
+
+    //     // Get Paginated Results
+    //     $students = $query->paginate($perPage, 'default', $page);
+    //     $pager = $studentModel->pager;
+
+    //     $response = [
+    //         "status" => true,
+    //         "message" => "All Student Data Fetched",
+    //         "data" => $students,
+    //         "pagination" => [
+    //             "currentPage" => $pager->getCurrentPage(),
+    //             "totalPages" => $pager->getPageCount(),
+    //             "totalItems" => $pager->getTotal(),
+    //             "perPage" => $perPage
+    //         ]
+    //     ];
+
+    //     return $this->respond($response, 200);
+    // }
+
     public function getStudentsPaging()
-    {
-        $input = $this->request->getJSON();
+{
+    $input = $this->request->getJSON();
 
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'studentId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
-        
+    $page = isset($input->page) ? $input->page : 1;
+    $perPage = isset($input->perPage) ? $input->perPage : 10;
+    $sortField = isset($input->sortField) ? $input->sortField : 'student_mst.studentId';
+    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    $search = isset($input->search) ? $input->search : '';
+    $filter = $input->filter;
 
-        $tenantService = new TenantService();
-        
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load studentModel with the tenant database connection
-        $studentModel = new StudentModel($db);
-        $admissionModel = new AdmissionModel($db);
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        $query = $studentModel;
-        // Join with AdmissionModel (assuming studentId is the linking column)
-        $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
+    $studentModel = new StudentModel($db);
+    $query = $studentModel;
 
-        if (!empty($filter)) {
-            $filter = json_decode(json_encode($filter), true);
+    // Join admission_details
+    $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
 
-            if (!empty($filter['academicYear'])) {
-                $query->where('academicYearId', $filter['academicYear']);
-            }
+    // ✅ Join attendance_mst
+    $query->join('attendance_mst', 'attendance_mst.studentId = student_mst.studentId', 'left');
 
-            foreach ($filter as $key => $value) {
-                if (in_array($key, ['student_mst.studentCode','student_mst.generalRegisterNo','student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
-                    $query->like($key, $value); // LIKE filter for specific fields
-                } else if ($key === 'student_mst.createdDate') {
-                    $query->where($key, $value); // Exact match filter for createdDate
-                }
-            }
+    // Filters
+    if (!empty($filter)) {
+        $filter = json_decode(json_encode($filter), true);
 
-            // Apply Date Range Filter (startDate and endDate)
-            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                $query->where('student_mst.createdDate >=', $filter['startDate'])
-                      ->where('student_mst.createdDate <=', $filter['endDate']);
-            }
-    
-            // Apply Last 7 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-                $query->where('student_mst.createdDate >=', $last7DaysStart);
-            }
-    
-            // Apply Last 30 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-                $query->where('student_mst.createdDate >=', $last30DaysStart);
+        if (!empty($filter['academicYear'])) {
+            $query->where('admission_details.academicYearId', $filter['academicYear']);
+        }
+
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
+                $query->like($key, $value);
+            } else if ($key === 'student_mst.createdDate') {
+                $query->where($key, $value);
             }
         }
 
-        
-        $query->where('student_mst.isDeleted',0);
-        // Apply Sorting
-        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-            $query->orderBy($sortField, $sortOrder);
+        // Date range filters
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+            $query->where('student_mst.createdDate >=', $filter['startDate'])
+                  ->where('student_mst.createdDate <=', $filter['endDate']);
         }
 
-        // Get Paginated Results
-        $students = $query->paginate($perPage, 'default', $page);
-        $pager = $studentModel->pager;
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+            $last7DaysStart = date('Y-m-d', strtotime('-7 days'));
+            $query->where('student_mst.createdDate >=', $last7DaysStart);
+        }
 
-        $response = [
-            "status" => true,
-            "message" => "All Student Data Fetched",
-            "data" => $students,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-
-        return $this->respond($response, 200);
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+            $last30DaysStart = date('Y-m-d', strtotime('-30 days'));
+            $query->where('student_mst.createdDate >=', $last30DaysStart);
+        }
     }
+
+    $query->where('student_mst.isDeleted', 0);
+
+    // Sorting
+    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+        $query->orderBy($sortField, $sortOrder);
+    }
+
+    // Paginate
+    $students = $query->select('student_mst.*, admission_details.academicYearId,attendance_mst.attendanceId as attendanceId, attendance_mst.status ,attendance_mst.inTime ,attendance_mst.outTime, attendance_mst.attendanceDate')
+                      ->paginate($perPage, 'default', $page);
+
+    $pager = $studentModel->pager;
+
+    $response = [
+        "status" => true,
+        "message" => "All Student Data Fetched with Attendance",
+        "data" => $students,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ];
+
+    return $this->respond($response, 200);
+}
+
 
 
     public function getStudentsAdmissionPaging()
@@ -524,74 +610,146 @@ class Student extends BaseController
     
 
       
-    public function update()
-    {
-        $input = $this->request->getPost();
+    // public function update()
+    // {
+    //     $input = $this->request->getPost();
         
-        // Validation rules for the studentId
-        $rules = [
-            'studentId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
-        ];
+    //     // Validation rules for the studentId
+    //     $rules = [
+    //         'studentId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
+    //     ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
+    //     // Validate the input
+    //     if ($this->validate($rules)) {
              
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new StudentModel($db);
+    //     $tenantService = new TenantService();
+    //     // Connect to the tenant's database
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new StudentModel($db);
 
-            // Retrieve the student by studentId
-            $studentId = $input['studentId'];  // Corrected here
-            $student = $model->find($studentId); // Assuming find method retrieves the student
+    //         // Retrieve the student by studentId
+    //         $studentId = $input['studentId'];  // Corrected here
+    //         $student = $model->find($studentId); // Assuming find method retrieves the student
 
-            if (!$student) {
-                return $this->fail(['status' => false, 'message' => 'student not found'], 404);
-            }
+    //         if (!$student) {
+    //             return $this->fail(['status' => false, 'message' => 'student not found'], 404);
+    //         }
 
-            // Prepare the data to be updated (exclude studentId if it's included)
-            $updateData = [
-                'studentCode' => $input['studentCode'],  // Corrected here
-                'generalRegisterNo' => $input['generalRegisterNo'],
-                'mobileNo' => $input['mobileNo'],
-                'firstName' => $input['firstName'],
-                'middleName' => $input['middleName'],
-                'lastName' => $input['lastName'],
-                'motherName' => $input['motherName'],
-                'gender' => $input['gender'],
-                'birthDate' => $input['birthDate'],
-                'birthPlace' => $input['birthPlace'],
-                'nationality' => $input['nationality'],
-                'religion' => $input['religion'],
-                'category' => $input['category'],
-                'cast' => $input['cast'],
-                'subCast' => $input['subCast'],
-                'motherTongue' => $input['motherTongue'],
-                'bloodGroup' => $input['bloodGroup'],
-                'aadharNo' => $input['aadharNo'],
-                'medium' => $input['medium']
+    //         // Prepare the data to be updated (exclude studentId if it's included)
+    //         $updateData = [
+    //             'studentCode' => $input['studentCode'],  // Corrected here
+    //             'generalRegisterNo' => $input['generalRegisterNo'],
+    //             'mobileNo' => $input['mobileNo'],
+    //             'firstName' => $input['firstName'],
+    //             'middleName' => $input['middleName'],
+    //             'lastName' => $input['lastName'],
+    //             'motherName' => $input['motherName'],
+    //             'gender' => $input['gender'],
+    //             'birthDate' => $input['birthDate'],
+    //             'birthPlace' => $input['birthPlace'],
+    //             'nationality' => $input['nationality'],
+    //             'religion' => $input['religion'],
+    //             'category' => $input['category'],
+    //             'cast' => $input['cast'],
+    //             'subCast' => $input['subCast'],
+    //             'motherTongue' => $input['motherTongue'],
+    //             'bloodGroup' => $input['bloodGroup'],
+    //             'aadharNo' => $input['aadharNo'],
+    //             'medium' => $input['medium']
                 
                
+    //         ];
+
+    //         // Update the student with new data
+    //         $updated = $model->update($studentId, $updateData);
+
+    //         if ($updated) {
+    //             return $this->respond(['status' => true, 'message' => 'student Updated Successfully'], 200);
+    //         } else {
+    //             return $this->fail(['status' => false, 'message' => 'Failed to update student'], 500);
+    //         }
+    //     } else {
+    //         // Validation failed
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
+
+
+    public function update()
+{
+    $input = $this->request->getJSON(true); // Array of attendance data
+
+    if (!is_array($input)) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Invalid input format, expected array of attendance records'
+        ], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new AttendanceModel($db);
+
+    $errors = [];
+    $updatedCount = 0;
+    $updatedRecords = [];
+
+    foreach ($input as $index => $attendanceData) {
+        if (!isset($attendanceData['attendanceId']) || !is_numeric($attendanceData['attendanceId'])) {
+            $errors[] = "Record $index: attendanceId is required and must be numeric.";
+            continue;
+        }
+
+        $attendanceId = $attendanceData['attendanceId'];
+
+        $attendance = $model->find($attendanceId);
+        if (!$attendance) {
+            $errors[] = "Record $index: Attendance record with ID $attendanceId not found.";
+            continue;
+        }
+
+        $updateData = [
+            'inTime'   => $attendanceData['inTime']   ?? $attendance['inTime'],
+            'outTime'  => $attendanceData['outTime']  ?? $attendance['outTime'],
+            'deviceId' => $attendanceData['deviceId'] ?? $attendance['deviceId'],
+            'status'   => $attendanceData['status']   ?? $attendance['status'],
+            'present'  => $attendanceData['present']  ?? $attendance['present'],
+        ];
+
+        if ($model->update($attendanceId, $updateData)) {
+            $updatedCount++;
+            // Fetch updated record to send in response
+            $updatedRecord = $model->find($attendanceId);
+            $updatedRecords[] = [
+                'attendanceId' => $attendanceId,
+                'status' => $updatedRecord['status'],
+                'present' => $updatedRecord['present'],
             ];
-
-            // Update the student with new data
-            $updated = $model->update($studentId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'student Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update student'], 500);
-            }
         } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            $errors[] = "Record $index: Failed to update attendance ID $attendanceId.";
         }
     }
 
+    if (count($errors) > 0) {
+        return $this->respond([
+            'status' => false,
+            'message' => 'Some records failed to update.',
+            'updatedCount' => $updatedCount,
+            'updatedRecords' => $updatedRecords,
+            'errors' => $errors,
+        ], 207);
+    }
+
+    return $this->respond([
+        'status' => true,
+        'message' => "All $updatedCount attendance records updated successfully.",
+        'updatedRecords' => $updatedRecords,
+    ], 200);
+}
     
     
 

@@ -12,7 +12,7 @@ use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
 
 
-class Staff extends BaseController
+class StaffAttendance extends BaseController
 {
     use ResponseTrait;
 
@@ -38,82 +38,6 @@ class Staff extends BaseController
 
         return $this->respond(["status" => true, "message" => "All Staff Data Fetched", "data" => $staffModel->findAll()], 200);
     }
-
-    public function getStaffPaging() {
-        $input = $this->request->getJSON();
-    
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'staffId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
-    
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load StaffModel with the tenant database connection
-        $staffModel = new StaffModel($db);
-    
-        $query = $staffModel;
-    
-        if (!empty($filter)) {
-            $filter = json_decode(json_encode($filter), true);
-    
-            foreach ($filter as $key => $value) {
-                if (in_array($key, ['empName', 'empCategory', 'empCode', 'empSal'])) {
-                    $query->like($key, $value); // LIKE filter for specific fields
-                } else if ($key === 'createdDate') {
-                    $query->where($key, $value); // Exact match filter for createdDate
-                }
-            }
-    
-            // Apply Date Range Filter (startDate and endDate)
-            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                $query->where('createdDate >=', $filter['startDate'])
-                      ->where('createdDate <=', $filter['endDate']);
-            }
-    
-            // Apply Last 7 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-                $query->where('createdDate >=', $last7DaysStart);
-            }
-    
-            // Apply Last 30 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-                $query->where('createdDate >=', $last30DaysStart);
-            }
-        }
-    
-        // Ensure that the "deleted" status is 0 (active records)
-        $query->where('isDeleted', 0);
-    
-        // Apply Sorting
-        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-            $query->orderBy($sortField, $sortOrder);
-        }
-    
-        // Get Paginated Results
-        $staffs = $query->paginate($perPage, 'default', $page);
-        $pager = $staffModel->pager;
-    
-        $response = [
-            "status" => true,
-            "message" => "All Staff Data Fetched",
-            "data" => $staffs,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-    
-        return $this->respond($response, 200);
-    }
-    
 
     // public function getStaffPaging() {
     //     $input = $this->request->getJSON();
@@ -147,7 +71,7 @@ class Staff extends BaseController
     //         // Apply Date Range Filter (startDate and endDate)
     //         if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
     //             $query->where('createdDate >=', $filter['startDate'])
-    //                 ->where('createdDate <=', $filter['endDate']);
+    //                   ->where('createdDate <=', $filter['endDate']);
     //         }
     
     //         // Apply Last 7 Days Filter if requested
@@ -190,6 +114,81 @@ class Staff extends BaseController
     //     return $this->respond($response, 200);
     // }
     
+    public function getStaffPaging()
+    {
+        $input = $this->request->getJSON();
+
+        // Safely extract input
+        $page           = isset($input->page) ? (int)$input->page : 1;
+        $perPage        = isset($input->perPage) ? (int)$input->perPage : 10;
+        $sortFieldInput = isset($input->sortField) ? $input->sortField : 'staffId';
+        $sortOrder      = isset($input->sortOrder) ? strtoupper($input->sortOrder) : 'ASC';
+        $search         = isset($input->search) ? $input->search : '';
+        $filter         = isset($input->filter) ? (array)$input->filter : [];
+
+        // Allowed sort fields
+        $allowedSortFields = [
+            'staffId'         => 's.staffId',
+            'empName'         => 's.empName',
+            'empCategory'     => 's.empCategory',
+            'empCode'         => 's.empCode',
+            'empSal'          => 's.empSal',
+            'attendanceDate'  => 'a.attendanceDate'
+        ];
+
+        $sortField = $allowedSortFields[$sortFieldInput] ?? 's.staffId';
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $builder = $db->table('staff_mst s');
+        $builder->select('s.*, a.attendanceId, a.attendanceDate, a.inTime, a.outTime, a.status as status');
+        $builder->join('staff_attendance a', 'a.staffId = s.staffId', 'left');
+        $builder->where('s.isDeleted', 0);
+
+        // Filters
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['empName', 'empCategory', 'empCode', 'empSal'])) {
+                $builder->like('s.' . $key, $value);
+            } elseif ($key === 'createdDate') {
+                $builder->where('s.createdDate', $value);
+            }
+        }
+
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+            $builder->where('s.createdDate >=', $filter['startDate']);
+            $builder->where('s.createdDate <=', $filter['endDate']);
+        }
+
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+            $builder->where('s.createdDate >=', date('Y-m-d', strtotime('-7 days')));
+        }
+
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+            $builder->where('s.createdDate >=', date('Y-m-d', strtotime('-30 days')));
+        }
+
+        // Sorting and pagination
+        $builder->orderBy($sortField, $sortOrder);
+        $offset = ($page - 1) * $perPage;
+        $total = $builder->countAllResults(false);  // false keeps query state
+        $staffs = $builder->limit($perPage, $offset)->get()->getResult();
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Staff with Attendance fetched successfully',
+            'data' => $staffs,
+            'pagination' => [
+                'currentPage' => $page,
+                'totalPages' => ceil($total / $perPage),
+                'totalItems' => $total,
+                'perPage' => $perPage
+            ]
+        ], 200);
+    }
+
+
+
 
 
     public function create()
@@ -257,30 +256,8 @@ class Staff extends BaseController
             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            // $model = new StaffModel($db);
-            // $model->insert($input);
-            //     // Start DB transaction
-                // $db->transStart();
-
-                // Save staff
-                $staffModel = new StaffModel($db);
-                $staffModel->insert($input);
-                $staffId = $staffModel->getInsertID();
-
-                // Save attendance
-                $attendanceModel = new StaffAttendanceModel($db);
-                $attendanceData = [
-                    'staffId'        => $staffId,
-                    'attendanceDate' => date('Y-m-d'),
-                    'inTime'         => date('H:i:s'),
-                    'outTime'        => null,
-                    'deviceId'       => null,
-                    'status'         => 'Present',
-                    'present'        => 1
-                ];
-                $attendanceModel->insert($attendanceData);
-
-                $db->transComplete();
+            $model = new StaffModel($db);
+            $model->insert($input);
     
             return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
         } else {
@@ -294,144 +271,149 @@ class Staff extends BaseController
         }
     }
 
-    //     public function create()
-    // {
-    //     $input = $this->request->getPost();
 
-    //     $rules = [
-    //         'empName' => ['rules' => 'required'],
-    //         'empCode' => ['rules' => 'required'],
-    //     ];
+//      public function update()
+// {
+//     $input = $this->request->getJSON(true); // get JSON as associative array
 
-    //     if (!$this->validate($rules)) {
-    //         return $this->fail([
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs',
-    //         ], 409);
-    //     }
+//     if (!is_array($input)) {
+//         return $this->fail([
+//             'status' => false,
+//             'message' => 'Invalid input format, expected array of attendance records'
+//         ], 400);
+//     }
 
-    //     // Decode JWT token
-    //     $key = "Exiaa@11";
-    //     $header = $this->request->getHeader("Authorization");
-    //     $token = null;
+//     $tenantService = new TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//     $model = new StaffAttendanceModel($db);
 
-    //     if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-    //         $token = $matches[1];
-    //     }
+//     $errors = [];
+//     $updatedCount = 0;
 
-    //     $decoded = JWT::decode($token, new Key($key, 'HS256'));
+//     foreach ($input as $index => $attendanceData) {
+//         // Validate attendanceId exists and numeric
+//         if (!isset($attendanceData['attendanceId']) || !is_numeric($attendanceData['attendanceId'])) {
+//             $errors[] = "Record $index: attendanceId is required and must be numeric.";
+//             continue;
+//         }
 
-    //     // Handle profilePic upload
-    //     $profilePic = $this->request->getFile('profilePic');
-    //     if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-    //         $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/staffImages/';
-    //         if (!is_dir($profilePicPath)) {
-    //             mkdir($profilePicPath, 0777, true);
-    //         }
-    //         $profilePicName = $profilePic->getRandomName();
-    //         $profilePic->move($profilePicPath, $profilePicName);
-    //         $input['profilePic'] = $decoded->tenantName . '/staffImages/' . $profilePicName;
-    //     }
+//         $attendanceId = $attendanceData['attendanceId'];
 
-    //     // Connect to tenant DB
-    //     $tenantService = new TenantService();
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//         // Find existing record
+//         $attendance = $model->find($attendanceId);
+//         if (!$attendance) {
+//             $errors[] = "Record $index: Attendance record with ID $attendanceId not found.";
+//             continue;
+//         }
 
-    //     // Start DB transaction
-    //     $db->transStart();
+//         // Prepare update data, keep old values if keys missing
+//         $updateData = [
+//             'inTime'   => $attendanceData['inTime']   ?? $attendance['inTime'],
+//             'outTime'  => $attendanceData['outTime']  ?? $attendance['outTime'],
+//             'deviceId' => $attendanceData['deviceId'] ?? $attendance['deviceId'],
+//             'status'   => $attendanceData['status']   ?? $attendance['status'],
+//             'present'  => $attendanceData['present']  ?? $attendance['present'],
+//         ];
 
-    //     // Save staff
-    //     $staffModel = new StaffModel($db);
-    //     $staffModel->insert($input);
-    //     $staffId = $staffModel->getInsertID();
+//         // Update record
+//         if ($model->update($attendanceId, $updateData)) {
+//             $updatedCount++;
+//         } else {
+//             $errors[] = "Record $index: Failed to update attendance ID $attendanceId.";
+//         }
+//     }
 
-    //     // Save attendance
-    //     $attendanceModel = new StaffAttendanceModel($db);
-    //     $attendanceData = [
-    //         'staffId'        => $staffId,
-    //         'attendanceDate' => date('Y-m-d'),
-    //         'inTime'         => date('H:i:s'),
-    //         'outTime'        => null,
-    //         'deviceId'       => null,
-    //         'status'         => 'Present',
-    //         'present'        => 1
-    //     ];
-    //     $attendanceModel->insert($attendanceData);
+//     if (count($errors) > 0) {
+//         return $this->respond([
+//             'status' => false,
+//             'message' => 'Some records failed to update.',
+//             'updatedCount' => $updatedCount,
+//             'errors' => $errors,
+//         ], 207); // 207 Multi-Status
+//     }
 
-    //     $db->transComplete();
-
-    //     if ($db->transStatus() === false) {
-    //         return $this->failServerError('Failed to add staff or attendance.');
-    //     }
-
-    //     return $this->respond(['status' => true, 'message' => 'Staff and attendance added successfully'], 200);
-    // }
+//     return $this->respond([
+//         'status' => true,
+//         'message' => "All $updatedCount attendance records updated successfully.",
+//     ], 200);
+// }
 
 
-    public function update()
-    {
-        $input = $this->request->getPost();
 
-        // Validation rules for the staff
-        $rules = [
-            'staffId' => ['rules' => 'required|numeric'], // Ensure staffId is provided and is numeric
+public function update()
+{
+    $input = $this->request->getJSON(true); // Array of attendance data
+
+    if (!is_array($input)) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Invalid input format, expected array of attendance records'
+        ], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new StaffAttendanceModel($db);
+
+    $errors = [];
+    $updatedCount = 0;
+    $updatedRecords = [];
+
+    foreach ($input as $index => $attendanceData) {
+        if (!isset($attendanceData['attendanceId']) || !is_numeric($attendanceData['attendanceId'])) {
+            $errors[] = "Record $index: attendanceId is required and must be numeric.";
+            continue;
+        }
+
+        $attendanceId = $attendanceData['attendanceId'];
+
+        $attendance = $model->find($attendanceId);
+        if (!$attendance) {
+            $errors[] = "Record $index: Attendance record with ID $attendanceId not found.";
+            continue;
+        }
+
+        $updateData = [
+            'inTime'   => $attendanceData['inTime']   ?? $attendance['inTime'],
+            'outTime'  => $attendanceData['outTime']  ?? $attendance['outTime'],
+            'deviceId' => $attendanceData['deviceId'] ?? $attendance['deviceId'],
+            'status'   => $attendanceData['status']   ?? $attendance['status'],
+            'present'  => $attendanceData['present']  ?? $attendance['present'],
         ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new StaffModel($db);
-
-            // Retrieve the staff by staffId
-            $staffId = $input['staffId'];  // Corrected here
-            $staff = $model->find($staffId);
-
-            if (!$staff) {
-                return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude staffId if it's included)
-            $updateData = [
-                'empName'=> $input['empName'],
-                'empCategory'=> $input['empCategory'],
-                'empCode'=> $input['empCode'],
-                'aadharNumber'=> $input['aadharNumber'],
-                'panNumber'=> $input['panNumber'],
-                'uanNumber'=> $input['uanNumber'],
-                'ipNumber'=> $input['ipNumber'],
-                'fatherName'=> $input['fatherName'],
-                'empSal'=> $input['empSal'],
-                'empDoj'=> $input['empDoj'],
-                'empDol'=> $input['empDol'],
-
-                
-               
+        if ($model->update($attendanceId, $updateData)) {
+            $updatedCount++;
+            // Fetch updated record to send in response
+            $updatedRecord = $model->find($attendanceId);
+            $updatedRecords[] = [
+                'attendanceId' => $attendanceId,
+                'status' => $updatedRecord['status'],
+                'present' => $updatedRecord['present'],
             ];
-
-            // Update the staff with new data
-            $updated = $model->update($staffId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Staff Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update staff'], 500);
-            }
         } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            $errors[] = "Record $index: Failed to update attendance ID $attendanceId.";
         }
     }
 
+    if (count($errors) > 0) {
+        return $this->respond([
+            'status' => false,
+            'message' => 'Some records failed to update.',
+            'updatedCount' => $updatedCount,
+            'updatedRecords' => $updatedRecords,
+            'errors' => $errors,
+        ], 207);
+    }
 
-    
+    return $this->respond([
+        'status' => true,
+        'message' => "All $updatedCount attendance records updated successfully.",
+        'updatedRecords' => $updatedRecords,
+    ], 200);
+}
+
+
+
 
     public function delete()
     {

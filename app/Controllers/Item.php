@@ -413,6 +413,7 @@ class Item extends BaseController
 
     public function getAllItemCategory()
     {
+        $input = $this->request->getJSON();
         // 🧪 Debug logs
         log_message('error', 'Inside getAllItemCategory function');
     
@@ -429,7 +430,7 @@ class Item extends BaseController
     
         try {
             $model = new ItemCategory($db);
-            $itemCategories = $model->where('isDeleted', 0)->findAll();
+            $itemCategories = $model->where('isDeleted', 0)->where('businessId',$input->businessId)->findAll();
             return $this->respond(['status' => true, 'message' => 'Data fetched successfully', 'data' => $itemCategories], 200);
         } catch (\Throwable $e) {
             log_message('error', 'Exception: ' . $e->getMessage());

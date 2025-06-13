@@ -30,6 +30,7 @@ class CorsFilter implements FilterInterface
             'https://www.netbugs.co.in',
             'https://chesskhiladi.com',
             'https://www.chesskhiladi.com',
+            'https://pos.exiaa.com',
         ];
 
         // Get the origin of the request

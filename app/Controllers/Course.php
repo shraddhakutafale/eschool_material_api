@@ -28,7 +28,11 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $itemModel = new ItemModel($db);
-        $items = $itemModel->where('itemTypeId', 1)->where('isDeleted', 0)->findAll();
+        $items = $itemModel
+            ->where('item_mst.itemTypeId', $input->itemTypeId)
+            ->where('item_mst.businessId', $input->businessId)
+            ->where('item_mst.isDeleted', 0)
+            ->findAll();
         return $this->respond(['status' => true, 'message' => 'All items fetched successfully', 'data' => $items], 200);
     }
 
@@ -57,7 +61,7 @@ class Course extends BaseController
         $subjectModel = new SubjectModel($db);
 
         // Initialize query with 'isDeleted' condition
-        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId);
+        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
 
         // Apply search filter for itemName and mrp
         if (!empty($search)) {
@@ -501,7 +505,7 @@ class Course extends BaseController
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemCategory($db);
-        $itemCategories = $model->findAll();
+        $itemCategories = $model->where('isDeleted', 0)->where('businessId',$input->businessId)->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
     }
 
@@ -510,7 +514,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $feeModel = new FeeModel($db);
-        $fees = $feeModel->where('isDeleted', 0)->findAll();
+        $fees = $model->where('isDeleted', 0)->where('businessId',$input->businessId)->findAll();
         return $this->respond(['status' => true, 'message' => 'Fees fetched successfully', 'data' => $fees], 200);
     }
 
@@ -519,7 +523,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $shiftModel = new ShiftModel($db);
-        $shifts = $shiftModel->where('isDeleted', 0)->findAll();
+        $shifts = $model->where('isDeleted', 0)->where('businessId',$input->businessId)->findAll();
         return $this->respond(['status' => true, 'message' => 'Shifts fetched successfully', 'data' => $shifts], 200);
     }
 
@@ -528,7 +532,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $subjectModel = new SubjectModel($db);
-        $subjects = $subjectModel->where('isDeleted', 0)->findAll();
+        $subjects = $model->where('isDeleted', 0)->where('businessId',$input->businessId)->findAll();
         return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $subjects], 200);
     }
 
@@ -582,7 +586,7 @@ class Course extends BaseController
         }
     
         // Ensure that the "deleted" status is 0 (active records)
-        $query->where('isDeleted', 0);
+        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
     
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
@@ -824,7 +828,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemFeeMapModel($db);
-        $fees = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
+        $fees = $model->where('itemId', $input->itemId)->where('businessId', $input->businessId)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Fees fetched successfully', 'data' => $fees], 200);
     }
 
@@ -846,7 +850,7 @@ class Course extends BaseController
         // Load CustomerModel with the tenant database connection
         $shiftModel = new ShiftModel($db);
     
-        $query = $shiftModel;
+        $query = $shiftModel->where('businessId', $input->businessId);
     
         if (!empty($filter)) {
             $filter = json_decode(json_encode($filter), true);
@@ -879,7 +883,7 @@ class Course extends BaseController
         }
     
         // Ensure that the "deleted" status is 0 (active records)
-        $query->where('isDeleted', 0);
+        $query = $shiftModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
     
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
@@ -1127,7 +1131,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemShiftMapModel($db);
-        $shifts = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
+        $shifts = $model->where('itemId', $input->itemId)->where('businessId', $input->businessId)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Shifts fetched successfully', 'data' => $shifts], 200);
     }
 
@@ -1181,7 +1185,7 @@ class Course extends BaseController
         }
     
         // Ensure that the "deleted" status is 0 (active records)
-        $query->where('isDeleted', 0);
+        $query = $subjectModel->where('itemId', $input->itemId)->where('businessId', $input->businessId)->where('isDeleted', 0);
     
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
@@ -1370,7 +1374,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemSubjectMapModel($db);
-        $subjects = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
+        $subjects = $model->where('itemId', $input->itemId)->where('businessId', $input->businessId)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $subjects], 200);
     }
 

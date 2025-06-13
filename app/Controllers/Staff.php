@@ -35,6 +35,11 @@ class Staff extends BaseController
         $db = Database::connect($tenantConfig);
         // Load StaffModel with the tenant database connection
         $staffModel = new StaffModel($db);
+         $staffs = $staffModel
+            ->where('staff_mst.staffId', $input->staffId)
+            ->where('staff_mst.businessId', $input->businessId)
+            ->where('staff_mst.isDeleted', 0)
+            ->findAll();
 
         return $this->respond(["status" => true, "message" => "All Staff Data Fetched", "data" => $staffModel->findAll()], 200);
     }
@@ -88,7 +93,7 @@ class Staff extends BaseController
         }
     
         // Ensure that the "deleted" status is 0 (active records)
-        $query->where('isDeleted', 0);
+        $query = $staffModel->where('isDeleted', 0)->where('staffId', $input->staffId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
     
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {

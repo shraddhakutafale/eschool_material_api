@@ -24,6 +24,11 @@ class Exam extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         // Load VendorModel with the tenant database connection
         $ExamModel = new ExamModel($db);
+         $exams = $ExamModel
+            ->where('exam_mst.examId', $input->examId)
+            ->where('exam_mst.businessId', $input->businessId)
+            ->where('exam_mst.isDeleted', 0)
+            ->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $ExamModel->findAll()], 200);
     }
 
@@ -72,7 +77,7 @@ class Exam extends BaseController
             }
         }
 
-        $query->where('isDeleted',0);
+        $query = $examModel->where('isDeleted', 0)->where('examId', $input->examId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);
@@ -261,7 +266,7 @@ class Exam extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ExamTimetable($db);
 
-        $examTimetables = $model->where('examId', $examId)->where('isDeleted', 0)->findAll();
+        $examTimetables = $model->where('examId', $examId)->where('businessId', $input->businessId)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $examTimetables], 200);
     }
 }

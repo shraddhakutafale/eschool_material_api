@@ -366,6 +366,17 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Blog::delete',['filter' => ['authFilter','tenantFilter']]);
   });
 
+    $routes->group('brand', function ($routes) {
+    //Routes for brand
+    $routes->get('getall', 'Brand::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Brand::getBrandsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Brand::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Brand::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Brand::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Brand::getBrandsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Brand::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
   $routes->group('link', function ($routes) {
     //Routes for link
     $routes->get('getall', 'Link::index',['filter' => ['authFilter', 'tenantFilter']]);

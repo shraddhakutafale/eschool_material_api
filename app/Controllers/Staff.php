@@ -93,7 +93,7 @@ class Staff extends BaseController
         }
     
         // Ensure that the "deleted" status is 0 (active records)
-        $query = $staffModel->where('isDeleted', 0)->where('staffId', $input->staffId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
+        $query = $staffModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
     
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {

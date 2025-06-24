@@ -77,7 +77,7 @@ class Exam extends BaseController
             }
         }
 
-        $query = $examModel->where('isDeleted', 0)->where('examId', $input->examId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
+        $query = $examModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);

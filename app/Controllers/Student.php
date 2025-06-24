@@ -96,7 +96,7 @@ class Student extends BaseController
         }
 
         
-        $query = $studentModel->where('isDeleted', 0)->where('studentId', $input->studentId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
+        $query = $studentModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);
@@ -174,7 +174,7 @@ class Student extends BaseController
         }
     }
 
-    $query = $studentModel->where('isDeleted', 0)->where('studentId', $input->studentId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
+    $query = $studentModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
 
     if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
         $query->orderBy($sortField, $sortOrder);

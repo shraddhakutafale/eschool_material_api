@@ -586,7 +586,7 @@ class Course extends BaseController
         }
     
         // Ensure that the "deleted" status is 0 (active records)
-        $query = $feeModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
+        $query = $feeModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
     
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {

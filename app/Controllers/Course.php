@@ -29,8 +29,6 @@ class Course extends BaseController
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $itemModel = new ItemModel($db);
         $items = $itemModel
-            ->where('item_mst.itemTypeId', $input->itemTypeId)
-            ->where('item_mst.businessId', $input->businessId)
             ->where('item_mst.isDeleted', 0)
             ->findAll();
         return $this->respond(['status' => true, 'message' => 'All items fetched successfully', 'data' => $items], 200);
@@ -505,7 +503,7 @@ class Course extends BaseController
         // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemCategory($db);
-        $itemCategories = $model->where('isDeleted', 0)->where('businessId',$input->businessId)->findAll();
+        $itemCategories = $model->where('isDeleted', 0)->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
     }
 
@@ -828,7 +826,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemFeeMapModel($db);
-        $fees = $model->where('itemId', $input->itemId)->where('businessId', $input->businessId)->where('isDeleted', 0)->findAll();
+        $fees = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Fees fetched successfully', 'data' => $fees], 200);
     }
 
@@ -1131,7 +1129,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemShiftMapModel($db);
-        $shifts = $model->where('itemId', $input->itemId)->where('businessId', $input->businessId)->where('isDeleted', 0)->findAll();
+        $shifts = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Shifts fetched successfully', 'data' => $shifts], 200);
     }
 
@@ -1374,7 +1372,7 @@ class Course extends BaseController
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ItemSubjectMapModel($db);
-        $subjects = $model->where('itemId', $input->itemId)->where('businessId', $input->businessId)->where('isDeleted', 0)->findAll();
+        $subjects = $model->where('itemId', $input->itemId)->where('isDeleted', 0)->findAll();
         return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $subjects], 200);
     }
 

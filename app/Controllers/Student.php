@@ -297,7 +297,7 @@ class Student extends BaseController
         }
 
         
-        $query = $studentModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
+        // $query = $studentModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
         
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
@@ -336,7 +336,8 @@ class Student extends BaseController
 
         }
         
-        $pager = $studentModel->pager;
+        // $pager = $studentModel->pager;
+        $pager = $paymentDetailModel->pager;
 
         $response = [
             "status" => true,
@@ -805,7 +806,6 @@ class Student extends BaseController
         // Get admissionId from studentId
         $admission = $admissionModel
             ->select('admissionId')
-            ->where('businessId', $input->businessId)
             ->where('studentId', $input->studentId)
             ->orderBy('admissionId', 'DESC') // optional: to get the latest admission
             ->first();

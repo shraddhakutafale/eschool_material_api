@@ -203,17 +203,23 @@ class Student extends BaseController
         $students[$key]['totalFee'] = $totalFee;
 
         // Payments
-        $paidFees = [];
-        $payments = $paymentDetailModel->where('admissionId', $student['admissionId'])->where('isDeleted', 0)->findAll();
+       $payments = $paymentDetailModel
+    ->where('admissionId', $student['admissionId'])
+    ->where('isDeleted', 0)
+    ->findAll();
 
-        foreach ($payments as $payment) {
-            if ($payment['status'] == 'Paid') {
-                $paidFees[] = $payment['paidAmount'];
-            }
-        }
+$paidAmount = array_sum(array_column($payments, 'paidAmount'));
 
-        $students[$key]['paidFees'] = $paidFees;
-        $students[$key]['paymentStatus'] = $payments[0]['status'] ?? null;
+if ($paidAmount >= $totalFee && $totalFee > 0) {
+    $students[$key]['paymentStatus'] = 'Paid';
+} elseif ($paidAmount > 0 && $paidAmount < $totalFee) {
+    $students[$key]['paymentStatus'] = 'Installment';
+} elseif (!empty($payments)) {
+    $students[$key]['paymentStatus'] = 'Installment'; // For 0-paid or first record after split
+} else {
+    $students[$key]['paymentStatus'] = 'Unpaid';
+}
+
     }
 
     $pager = $studentModel->pager;
@@ -333,6 +339,9 @@ class Student extends BaseController
 
             $payments[$key]['fees'] = $fees;
             $payments[$key]['totalFee'] = $totalFee;
+            $payments[$key]['isPaid'] = (isset($payment['status']) && $payment['status'] === 'paid');
+
+            
 
         }
         

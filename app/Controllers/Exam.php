@@ -25,8 +25,6 @@ class Exam extends BaseController
         // Load VendorModel with the tenant database connection
         $ExamModel = new ExamModel($db);
          $exams = $ExamModel
-            ->where('exam_mst.examId', $input->examId)
-            ->where('exam_mst.businessId', $input->businessId)
             ->where('exam_mst.isDeleted', 0)
             ->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $ExamModel->findAll()], 200);

@@ -454,7 +454,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->group('studentAttendance' , function ($routes) {
     $routes->get('getall', 'StudentAttendance::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'StudentAttendance::getStudentsPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getalladmissionpaging', 'StudentAttendance::getStudentsAdmissionPaging',['filter' => ['authFilter', 'tenantFilter']]);
+   
     $routes->post('getallpaymentpaging', 'StudentAttendance::getStudentsPaymentPaging',['filter' => ['authFilter', 'tenantFilter']]);
 
     $routes->get('view/(:segment)', 'StudentAttendance::show/$1',['filter' => 'authFilter']);

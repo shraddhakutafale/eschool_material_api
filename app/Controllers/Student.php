@@ -122,103 +122,103 @@ class Student extends BaseController
 
 
     public function getStudentsAdmissionPaging()
-{
-    $input = $this->request->getJSON();
+    {
+        $input = $this->request->getJSON();
 
-    $page = isset($input->page) ? $input->page : 1;
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'studentId';
-    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    $search = isset($input->search) ? $input->search : '';
-    $filter = $input->filter;
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'studentId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
 
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-    $studentModel = new StudentModel($db);
-    $admissionModel = new AdmissionModel($db);
-    $itemFeeMapModel = new ItemFeeMapModel($db);
-    $feeModel = new FeeModel($db);
-    $paymentDetailModel = new PaymentDetailModel($db);
+        $studentModel = new StudentModel($db);
+        $admissionModel = new AdmissionModel($db);
+        $itemFeeMapModel = new ItemFeeMapModel($db);
+        $feeModel = new FeeModel($db);
+        $paymentDetailModel = new PaymentDetailModel($db);
 
-    $query = $studentModel;
-    $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
+        $query = $studentModel;
+        $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
 
-    if (!empty($filter)) {
-        $filter = json_decode(json_encode($filter), true);
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
 
-        if (!empty($filter['academicYear'])) {
-            $query->where('academicYearId', $filter['academicYear']);
-        }
-
-        foreach ($filter as $key => $value) {
-            if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
-                $query->like($key, $value);
-            } else if ($key === 'student_mst.createdDate') {
-                $query->where($key, $value);
+            if (!empty($filter['academicYear'])) {
+                $query->where('academicYearId', $filter['academicYear']);
             }
-        }
 
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('student_mst.createdDate >=', $filter['startDate'])
-                  ->where('student_mst.createdDate <=', $filter['endDate']);
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
-        }
-    }
-
-    $query = $studentModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
-
-    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-        $query->orderBy($sortField, $sortOrder);
-    }
-
-    $students = $query->paginate($perPage, 'default', $page);
-
-    foreach ($students as $key => $student) {
-        $fees = [];
-        $totalFee = 0;
-
-        $selectedCourseArray = explode(',', $student['selectedCourses']);
-
-        foreach ($selectedCourseArray as $itemId) {
-            $itemFeeMapArray = $itemFeeMapModel->where('itemId', $itemId)->where('isDeleted', 0)->findAll();
-
-            foreach ($itemFeeMapArray as $feeMap) {
-                $fee = $feeModel->where('feeId', $feeMap['feeId'])->where('isDeleted', 0)->first();
-                if ($fee) {
-                    $fees[] = $fee['amount'];
-                    $totalFee += (int)$fee['amount'];
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
+                    $query->like($key, $value);
+                } else if ($key === 'student_mst.createdDate') {
+                    $query->where($key, $value);
                 }
             }
+
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('student_mst.createdDate >=', $filter['startDate'])
+                    ->where('student_mst.createdDate <=', $filter['endDate']);
+            }
+
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
+            }
+
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
+            }
         }
 
-        $students[$key]['fees'] = $fees;
-        $students[$key]['totalFee'] = $totalFee;
+        $query = $studentModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
 
-        // Payments
-       $payments = $paymentDetailModel
-    ->where('admissionId', $student['admissionId'])
-    ->where('isDeleted', 0)
-    ->findAll();
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
 
-$paidAmount = array_sum(array_column($payments, 'paidAmount'));
+        $students = $query->paginate($perPage, 'default', $page);
 
-if ($paidAmount >= $totalFee && $totalFee > 0) {
-    $students[$key]['paymentStatus'] = 'Paid';
-} elseif ($paidAmount > 0 && $paidAmount < $totalFee) {
-    $students[$key]['paymentStatus'] = 'Installment';
-} elseif (!empty($payments)) {
-    $students[$key]['paymentStatus'] = 'Installment'; // For 0-paid or first record after split
-} else {
-    $students[$key]['paymentStatus'] = 'Unpaid';
-}
+        foreach ($students as $key => $student) {
+            $fees = [];
+            $totalFee = 0;
+
+            $selectedCourseArray = explode(',', $student['selectedCourses']);
+
+            foreach ($selectedCourseArray as $itemId) {
+                $itemFeeMapArray = $itemFeeMapModel->where('itemId', $itemId)->where('isDeleted', 0)->findAll();
+
+                foreach ($itemFeeMapArray as $feeMap) {
+                    $fee = $feeModel->where('feeId', $feeMap['feeId'])->where('isDeleted', 0)->first();
+                    if ($fee) {
+                        $fees[] = $fee['amount'];
+                        $totalFee += (int)$fee['amount'];
+                    }
+                }
+            }
+
+            $students[$key]['fees'] = $fees;
+            $students[$key]['totalFee'] = $totalFee;
+
+            // Payments
+        $payments = $paymentDetailModel
+        ->where('admissionId', $student['admissionId'])
+        ->where('isDeleted', 0)
+        ->findAll();
+
+        $paidAmount = array_sum(array_column($payments, 'paidAmount'));
+
+        if ($paidAmount >= $totalFee && $totalFee > 0) {
+            $students[$key]['paymentStatus'] = 'Paid';
+        } elseif ($paidAmount > 0 && $paidAmount < $totalFee) {
+            $students[$key]['paymentStatus'] = 'Installment';
+        } elseif (!empty($payments)) {
+            $students[$key]['paymentStatus'] = 'Installment'; // For 0-paid or first record after split
+        } else {
+            $students[$key]['paymentStatus'] = 'Unpaid';
+        }
 
     }
 

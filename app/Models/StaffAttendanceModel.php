@@ -12,7 +12,7 @@ class StaffAttendanceModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [ 'staffId', 'attendanceDate', 'inTime', 'outTime', 'deviceId', 'status', 'present','createdDate', 'modifiedDate', 'createdBy', 'modifiedBy'];
+    protected $allowedFields    = [ 'attendanceId','staffId', 'attendanceDate', 'inTime', 'outTime', 'deviceId', 'status', 'present','createdDate', 'modifiedDate', 'createdBy', 'modifiedBy'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

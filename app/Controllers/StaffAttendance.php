@@ -114,78 +114,118 @@ class StaffAttendance extends BaseController
     //     return $this->respond($response, 200);
     // }
     
-    public function getStaffPaging()
-    {
-        $input = $this->request->getJSON();
+  public function getStaffPaging()
+{
+    $input = $this->request->getJSON();
 
-        // Safely extract input
-        $page           = isset($input->page) ? (int)$input->page : 1;
-        $perPage        = isset($input->perPage) ? (int)$input->perPage : 10;
-        $sortFieldInput = isset($input->sortField) ? $input->sortField : 'staffId';
-        $sortOrder      = isset($input->sortOrder) ? strtoupper($input->sortOrder) : 'ASC';
-        $search         = isset($input->search) ? $input->search : '';
-        $filter         = isset($input->filter) ? (array)$input->filter : [];
+    // Safe input extraction
+    $page           = isset($input->page) ? (int)$input->page : 1;
+    $perPage        = isset($input->perPage) ? (int)$input->perPage : 10;
+    $sortFieldInput = isset($input->sortField) ? $input->sortField : 'staffId';
+    $sortOrder      = isset($input->sortOrder) ? strtoupper($input->sortOrder) : 'ASC';
+    $search         = isset($input->search) ? $input->search : '';
+    $filter         = isset($input->filter) ? (array)$input->filter : [];
 
-        // Allowed sort fields
-        $allowedSortFields = [
-            'staffId'         => 's.staffId',
-            'empName'         => 's.empName',
-            'empCategory'     => 's.empCategory',
-            'empCode'         => 's.empCode',
-            'empSal'          => 's.empSal',
-            'attendanceDate'  => 'a.attendanceDate'
-        ];
+   
+    $today = date('Y-m-d');
 
-        $sortField = $allowedSortFields[$sortFieldInput] ?? 's.staffId';
+    // Allowed sort fields
+    $allowedSortFields = [
+        'staffId'         => 's.staffId',
+        'empName'         => 's.empName',
+        'empCategory'     => 's.empCategory',
+        'empCode'         => 's.empCode',
+        'empSal'          => 's.empSal',
+        'attendanceDate'  => 'a.attendanceDate'
+    ];
+    $sortField = $allowedSortFields[$sortFieldInput] ?? 's.staffId';
 
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        $builder = $db->table('staff_mst s');
-        $builder->select('s.*, a.attendanceId, a.attendanceDate, a.inTime, a.outTime, a.status as status');
-        $builder->join('staff_attendance a', 'a.staffId = s.staffId', 'left');
-        $builder->where('s.isDeleted', 0);
+    // ✅ Ensure today's attendance exists for each staff
+    $staffIds = $db->table('staff_mst')
+        ->select('staffId')
+        ->where('isDeleted', 0)
+        ->get()
+        ->getResultArray();
 
-        // Filters
-        foreach ($filter as $key => $value) {
-            if (in_array($key, ['empName', 'empCategory', 'empCode', 'empSal'])) {
-                $builder->like('s.' . $key, $value);
-            } elseif ($key === 'createdDate') {
-                $builder->where('s.createdDate', $value);
-            }
+    foreach ($staffIds as $staff) {
+        $exists = $db->table('staff_attendance')
+            ->where('staffId', $staff['staffId'])
+            ->where('attendanceDate', $today)
+            ->countAllResults();
+
+        if ($exists == 0) {
+            $db->table('staff_attendance')->insert([
+                'staffId'        => $staff['staffId'],
+                'attendanceDate' => $today,
+                'present'        => 0,
+                'inTime'         => null,
+                'outTime'        => null,
+                'status'         => '',
+                'deviceId'       => null
+            ]);
         }
-
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $builder->where('s.createdDate >=', $filter['startDate']);
-            $builder->where('s.createdDate <=', $filter['endDate']);
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $builder->where('s.createdDate >=', date('Y-m-d', strtotime('-7 days')));
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $builder->where('s.createdDate >=', date('Y-m-d', strtotime('-30 days')));
-        }
-
-        // Sorting and pagination
-        $builder->orderBy($sortField, $sortOrder);
-        $offset = ($page - 1) * $perPage;
-        $total = $builder->countAllResults(false);  // false keeps query state
-        $staffs = $builder->limit($perPage, $offset)->get()->getResult();
-
-        return $this->respond([
-            'status' => true,
-            'message' => 'Staff with Attendance fetched successfully',
-            'data' => $staffs,
-            'pagination' => [
-                'currentPage' => $page,
-                'totalPages' => ceil($total / $perPage),
-                'totalItems' => $total,
-                'perPage' => $perPage
-            ]
-        ], 200);
     }
+
+    // Build main query
+    $builder = $db->table('staff_mst s')
+        ->select('s.*, a.attendanceId, a.attendanceDate, a.present, a.inTime, a.outTime, a.status as attendanceStatus')
+        ->join('staff_attendance a', 'a.staffId = s.staffId AND a.attendanceDate = ' . $db->escape($today), 'left')
+        ->where('s.isDeleted', 0);
+
+    // Filters
+    foreach ($filter as $key => $value) {
+        if (in_array($key, ['empName', 'empCategory', 'empCode', 'empSal'])) {
+            $builder->like("s.$key", $value);
+        } elseif ($key === 'createdDate') {
+            $builder->where("s.$key", $value);
+        }
+    }
+
+    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+        $builder->where('s.createdDate >=', $filter['startDate']);
+        $builder->where('s.createdDate <=', $filter['endDate']);
+    }
+
+    if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+        $builder->where('s.createdDate >=', date('Y-m-d', strtotime('-7 days')));
+    }
+
+    if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+        $builder->where('s.createdDate >=', date('Y-m-d', strtotime('-30 days')));
+    }
+
+    // Search
+    if (!empty($search)) {
+        $builder->groupStart()
+            ->like('s.empName', $search)
+            ->orLike('s.empCode', $search)
+            ->groupEnd();
+    }
+
+    // Sorting
+    $builder->orderBy($sortField, $sortOrder);
+
+    // Total before pagination
+    $total = $builder->countAllResults(false);
+
+    // Pagination
+    $staffs = $builder->limit($perPage, ($page - 1) * $perPage)->get()->getResultArray();
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Staff with Attendance fetched successfully',
+        'data' => $staffs,
+        'pagination' => [
+            'currentPage' => $page,
+            'totalPages' => ceil($total / $perPage),
+            'totalItems' => $total,
+            'perPage' => $perPage
+        ]
+    ], 200);
+}
 
 
 
@@ -373,13 +413,14 @@ public function update()
             continue;
         }
 
-        $updateData = [
-            'inTime'   => $attendanceData['inTime']   ?? $attendance['inTime'],
-            'outTime'  => $attendanceData['outTime']  ?? $attendance['outTime'],
-            'deviceId' => $attendanceData['deviceId'] ?? $attendance['deviceId'],
-            'status'   => $attendanceData['status']   ?? $attendance['status'],
-            'present'  => $attendanceData['present']  ?? $attendance['present'],
-        ];
+      $updateData = [
+    'inTime'   => $attendanceData['inTime']   ?? $attendance['inTime'],
+    'outTime'  => $attendanceData['outTime']  ?? $attendance['outTime'],
+    'deviceId' => $attendanceData['deviceId'] ?? $attendance['deviceId'],
+    'status'   => $attendanceData['status']   ?? $attendance['status'],
+    'present'  => isset($attendanceData['present']) ? $attendanceData['present'] : $attendance['present'],
+];
+
 
         if ($model->update($attendanceId, $updateData)) {
             $updatedCount++;

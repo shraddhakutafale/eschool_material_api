@@ -280,8 +280,8 @@ class Staff extends BaseController
                     'inTime'         => date('H:i:s'),
                     'outTime'        => null,
                     'deviceId'       => null,
-                    'status'         => 'Present',
-                    'present'        => 1
+                    'status'         => '',
+                    'present' => 0
                 ];
                 $attendanceModel->insert($attendanceData);
 

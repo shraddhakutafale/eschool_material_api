@@ -12,7 +12,7 @@ class StudentModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['studentId', 'studentCode', 'generalRegisterNo', 'mobileNo', 'firstName', 'middleName', 'lastName', 'motherName', 'gender', 'birthDate', 'birthPlace', 'nationality', 'religion', 'category', 'cast', 'subCast', 'motherTongue', 'bloodGroup', 'aadharNo', 'medium', 'physicallyHandicapped', 'educationalGap', 'profilePic', 'registeredDate', 'dueDate', 'isLeft','businessId', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['studentId', 'businessId', 'studentCode', 'generalRegisterNo', 'firstName', 'middleName', 'selectedCourses', 'lastName', 'mobileNo', 'motherName', 'gender', 'birthDate', 'birthPlace', 'nationality', 'religion', 'category', 'cast', 'subCast', 'motherTongue', 'bloodGroup', 'aadharNo', 'medium', 'physicallyHandicapped',  'educationalGap', 'profilePic', 'registeredDate', 'dueDate', 'isLeft', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

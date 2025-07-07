@@ -502,7 +502,7 @@ public function getStudentsPaging()
         $admissionData = [
             'studentId' => $studentId,
             'academicYearId' => $input['academicYearId'],
-            'admissionDate' => date('Y-m-d H:i:s'),
+            'registeredDate' => date('Y-m-d H:i:s'),
             'selectedCourses' => $input['selectedCourses'],
         ];
 

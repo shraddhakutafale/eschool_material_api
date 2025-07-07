@@ -419,7 +419,7 @@ public function update()
     'deviceId' => $attendanceData['deviceId'] ?? $attendance['deviceId'],
     'status'   => $attendanceData['status']   ?? $attendance['status'],
     'present'  => isset($attendanceData['present']) ? $attendanceData['present'] : $attendance['present'],
-];
+    ];
 
 
         if ($model->update($attendanceId, $updateData)) {

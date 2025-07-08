@@ -506,12 +506,12 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
 
   $routes->group('order', function ($routes) {
     //Routes for order
-    $routes->get('getall', 'Order::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Order::getOrdersPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('create', 'Order::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Order::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('delete', 'Order::delete',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getall', 'Order::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'Order::getOrdersPaging',['filter' => ['tenantFilter']]);
+    $routes->post('create', 'Order::create',['filter' => ['tenantFilter']]);
+    $routes->post('update', 'Order::update',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Order::delete',['filter' => ['tenantFilter']]);
+    $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('slide', function ($routes) {

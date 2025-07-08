@@ -116,8 +116,7 @@ class StudentAttendance extends BaseController
 
     //     return $this->respond($response, 200);
     // }
-
-    public function getStudentsPaging()
+public function getStudentsPaging()
 {
     $input = $this->request->getJSON();
 
@@ -137,8 +136,9 @@ class StudentAttendance extends BaseController
     // Join admission_details
     $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
 
-    // ✅ Join attendance_mst
-    $query->join('attendance_mst', 'attendance_mst.studentId = student_mst.studentId', 'left');
+    // ✅ Join only today's attendance
+    $today = date('Y-m-d');
+    $query->join("(SELECT * FROM attendance_mst WHERE attendanceDate = '$today') as attendance_mst", 'attendance_mst.studentId = student_mst.studentId', 'left');
 
     // Filters
     if (!empty($filter)) {
@@ -180,8 +180,8 @@ class StudentAttendance extends BaseController
         $query->orderBy($sortField, $sortOrder);
     }
 
-    // Paginate
-    $students = $query->select('student_mst.*, admission_details.academicYearId,attendance_mst.attendanceId as attendanceId, attendance_mst.status ,attendance_mst.inTime ,attendance_mst.outTime, attendance_mst.attendanceDate')
+    // ✅ Include `present` field in selection
+    $students = $query->select('student_mst.*, admission_details.academicYearId, attendance_mst.attendanceId, attendance_mst.status, attendance_mst.inTime, attendance_mst.outTime, attendance_mst.attendanceDate, attendance_mst.present')
                       ->paginate($perPage, 'default', $page);
 
     $pager = $studentModel->pager;
@@ -517,23 +517,20 @@ class StudentAttendance extends BaseController
     //     }
     // }
 
-    public function create()
+  public function create()
 {
     $input = $this->request->getPost();
-    
-    // Validation rules for other fields
+
     $rules = [
         'firstName' => ['rules' => 'required'],
         'lastName' => ['rules' => 'required'],
     ];
 
-    // Validate the incoming data
     if ($this->validate($rules)) {
         $key = "Exiaa@11";
         $header = $this->request->getHeader("Authorization");
         $token = null;
 
-        // Extract the token from the header
         if (!empty($header)) {
             if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
                 $token = $matches[1];
@@ -542,32 +539,28 @@ class StudentAttendance extends BaseController
 
         $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
-        // Handle image upload for the profile picture
         $profilePic = $this->request->getFile('profilePic');
         $profilePicName = null;
 
         if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
             $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/studentImages/';
             if (!is_dir($profilePicPath)) {
-                mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
+                mkdir($profilePicPath, 0777, true);
             }
 
             $profilePicName = $profilePic->getRandomName();
             $profilePic->move($profilePicPath, $profilePicName);
-
             $profilePicUrl = $decoded->tenantName . '/studentImages/' . $profilePicName;
             $input['profilePic'] = $profilePicUrl;
         }
 
-        // Connect to the tenant's database
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         $model = new StudentModel($db);
         $admissionModel = new AdmissionModel($db);
-        $attendanceModel = new AttendanceModel($db); // ✅ Added attendance model
+        $attendanceModel = new AttendanceModel($db);
 
-        // Insert student data
         $studentId = $model->insert($input);
 
         $admissionData = [
@@ -577,19 +570,18 @@ class StudentAttendance extends BaseController
             'selectedCourses' => $input['selectedCourses'],
         ];
 
-        // Insert admission data
         $admissionModel->insert($admissionData);
 
-        // ✅ Insert attendance data
+        // ✅ Default attendance: Absent
         $attendanceData = [
             'studentId' => $studentId,
-            'status' => 'present', // or 'absent' as default
-            'date' => date('Y-m-d'), // today's date
+            'status' => 'Absent',
+            'present' => 0,
+            'attendanceDate' => date('Y-m-d'),
         ];
 
         $attendanceModel->insert($attendanceData);
 
-        // Return success response
         return $this->respond([
             'status' => true,
             'message' => 'Student, Admission & Attendance Details Added Successfully',
@@ -597,13 +589,11 @@ class StudentAttendance extends BaseController
         ], 200);
 
     } else {
-        // If validation fails, return errors
-        $response = [
+        return $this->fail([
             'status' => false,
             'errors' => $this->validator->getErrors(),
             'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
+        ], 409);
     }
 }
 
@@ -677,11 +667,9 @@ class StudentAttendance extends BaseController
     //         return $this->fail($response, 409);
     //     }
     // }
-
-
-    public function update()
+public function update()
 {
-    $input = $this->request->getJSON(true); // Array of attendance data
+    $input = $this->request->getJSON(); // expects array of attendance records
 
     if (!is_array($input)) {
         return $this->fail([
@@ -699,59 +687,85 @@ class StudentAttendance extends BaseController
     $updatedRecords = [];
 
     foreach ($input as $index => $attendanceData) {
-        if (!isset($attendanceData['attendanceId']) || !is_numeric($attendanceData['attendanceId'])) {
-            $errors[] = "Record $index: attendanceId is required and must be numeric.";
+        $studentId = $attendanceData->studentId ?? null;
+
+        if (!$studentId || !is_numeric($studentId)) {
+            $errors[] = "Record $index: studentId is required and must be numeric.";
             continue;
         }
 
-        $attendanceId = $attendanceData['attendanceId'];
+        $attendanceDate = (!empty($attendanceData->attendanceDate) && $attendanceData->attendanceDate !== '0000-00-00')
+            ? $attendanceData->attendanceDate
+            : date('Y-m-d');
 
-        $attendance = $model->find($attendanceId);
-        if (!$attendance) {
-            $errors[] = "Record $index: Attendance record with ID $attendanceId not found.";
+        if ($attendanceDate === '0000-00-00') {
+            $errors[] = "Record $index: Invalid attendanceDate.";
             continue;
         }
+
+        $status = (isset($attendanceData->present) && $attendanceData->present == 1) ? 'Present' : 'Absent';
 
         $updateData = [
-            'inTime'   => $attendanceData['inTime']   ?? $attendance['inTime'],
-            'outTime'  => $attendanceData['outTime']  ?? $attendance['outTime'],
-            'deviceId' => $attendanceData['deviceId'] ?? $attendance['deviceId'],
-            'status'   => $attendanceData['status']   ?? $attendance['status'],
-            'present'  => $attendanceData['present']  ?? $attendance['present'],
+            'studentId'      => $studentId,
+            'attendanceDate' => $attendanceDate,
+            'inTime'         => $attendanceData->inTime   ?? '',
+            'outTime'        => $attendanceData->outTime  ?? '',
+            'deviceId'       => $attendanceData->deviceId ?? '',
+            'status'         => $status,
+            'present'        => $attendanceData->present  ?? 0,
+            'modifiedDate'   => date('Y-m-d H:i:s'),
+            'modifiedBy'     => session()->get('userId') ?? 0
         ];
 
-        if ($model->update($attendanceId, $updateData)) {
-            $updatedCount++;
-            // Fetch updated record to send in response
-            $updatedRecord = $model->find($attendanceId);
-            $updatedRecords[] = [
-                'attendanceId' => $attendanceId,
-                'status' => $updatedRecord['status'],
-                'present' => $updatedRecord['present'],
-            ];
-        } else {
-            $errors[] = "Record $index: Failed to update attendance ID $attendanceId.";
-        }
-    }
+        // Check if a record already exists for the student on that date
+        $existing = $model->where('studentId', $studentId)
+                          ->where('attendanceDate', $attendanceDate)
+                          ->first();
 
-    if (count($errors) > 0) {
-        return $this->respond([
-            'status' => false,
-            'message' => 'Some records failed to update.',
-            'updatedCount' => $updatedCount,
-            'updatedRecords' => $updatedRecords,
-            'errors' => $errors,
-        ], 207);
+        if ($existing) {
+            if ($model->update($existing['attendanceId'], $updateData)) {
+                $updatedCount++;
+                $updatedRecords[] = [
+                    'attendanceId' => $existing['attendanceId'],
+                    'studentId'    => $studentId,
+                    'status'       => $status,
+                    'present'      => $updateData['present'],
+                ];
+            } else {
+                $errors[] = "Record $index: Failed to update existing record.";
+            }
+        } else {
+            // Insert new
+            $updateData['createdDate'] = date('Y-m-d H:i:s');
+            $updateData['createdBy']   = session()->get('userId') ?? 0;
+
+            $newId = $model->insert($updateData);
+            if ($newId) {
+                $updatedCount++;
+                $updatedRecords[] = [
+                    'attendanceId' => $newId,
+                    'studentId'    => $studentId,
+                    'status'       => $status,
+                    'present'      => $updateData['present'],
+                ];
+            } else {
+                $errors[] = "Record $index: Failed to insert new attendance.";
+            }
+        }
     }
 
     return $this->respond([
-        'status' => true,
-        'message' => "All $updatedCount attendance records updated successfully.",
-        'updatedRecords' => $updatedRecords,
-    ], 200);
+        'status' => count($errors) === 0,
+        'message' => count($errors) === 0
+            ? "All $updatedCount attendance records updated/created successfully."
+            : "Some records failed to update/insert.",
+        'updatedCount'    => $updatedCount,
+        'updatedRecords'  => $updatedRecords,
+        'errors'          => $errors,
+    ], count($errors) === 0 ? 200 : 207);
 }
-    
-    
+
+
 
 
 

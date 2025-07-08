@@ -53,7 +53,6 @@ public function getStudentsPaging()
     $studentModel = new StudentModel($db);
     $query = $studentModel;
 
-    // 🟢 Use passed attendanceDate (from frontend), fallback to today
     $attendanceDate = $filter['attendanceDate'] ?? date('Y-m-d');
 
     // Join attendance_mst only for that date
@@ -63,6 +62,9 @@ public function getStudentsPaging()
     // Filters
     if (!empty($filter['academicYear'])) {
         $query->where('academicYearId', $filter['academicYear']);
+    }
+    if (!empty($filter['itemId'])) {
+        $query->like('admission_details.selectedCourses', $filter['itemId']);
     }
 
     foreach ($filter as $key => $value) {

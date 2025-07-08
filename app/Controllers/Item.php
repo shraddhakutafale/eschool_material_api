@@ -9,6 +9,7 @@ use App\Models\ItemTypeModel;
 use App\Models\ItemCategory;
 use App\Models\ItemSubCategory;
 use App\Models\ItemGroup;
+use App\Models\BrandModel;
 use App\Models\Unit;
 use Config\Database;
 use App\Libraries\TenantService;
@@ -902,6 +903,8 @@ class Item extends BaseController
             return $this->fail(['status' => false, 'message' => 'Failed to delete Group'], 500);
         }
     }
+
+ 
 
     
     public function getAllCategoryWeb()

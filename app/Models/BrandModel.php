@@ -12,7 +12,7 @@ class BrandModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['brandId', 'businessId', 'brandName', 'brandLogo', 'brandDescription', 'establishedYear', 'headquarters', 'contactEmail', 'contactNumber', 'website_url', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['brandId', 'brandName', 'brandShortName', 'description', 'isDeleted', 'isActive', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

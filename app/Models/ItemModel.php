@@ -12,7 +12,7 @@ class ItemModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemId', 'itemName','itemCode','coverImage', 'productImages', 'itemTypeId', 'categoryInputFieldValues', 'itemCategoryId','itemSubCategoryId', 'brandName', 'unit', 'unitSize', 'mrp', 'sku','startDate','duration', 'gstPercentage', 'discountType', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'tags','feature', 'termsCondition', 'type', 'assignBy','unitName','finalPrice','businessId','createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['itemId','itemType', 'itemName','itemCode','coverImage', 'productImages', 'itemTypeId', 'categoryInputFieldValues', 'itemCategoryId','itemSubCategoryId', 'brandName', 'unit', 'unitSize', 'mrp', 'sku','startDate','duration', 'gstPercentage', 'discountType', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'tags','feature', 'termsCondition', 'type', 'assignBy','unitName','finalPrice','businessId','createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -34,7 +34,6 @@ class Brand extends BaseController
         $sortField = isset($input->sortField) ? $input->sortField : 'brandId';
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
     
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
@@ -47,7 +46,7 @@ class Brand extends BaseController
             $filter = json_decode(json_encode($filter), true);
     
             foreach ($filter as $key => $value) {
-                if (in_array($key, ['title', 'description', 'authorName','categoryName'])) {
+                if (in_array($key, ['brandName'])) {
                     $query->like($key, $value); // LIKE filter for specific fields
                 } else if ($key === 'createdDate') {
                     $query->where($key, $value); // Exact match filter for createdDate
@@ -87,7 +86,7 @@ class Brand extends BaseController
     
         $response = [
             "status" => true,
-            "message" => "All Event Data Fetched",
+            "message" => "All Brand Data Fetched",
             "data" => $brands,
             "pagination" => [
                 "currentPage" => $pager->getCurrentPage(),
@@ -114,123 +113,69 @@ class Brand extends BaseController
     public function create()
     {
         // Retrieve the input data from the request
-        $input = $this->request->getPost();
-        
+        $input = $this->request->getJSON();
+
         // Define validation rules for required fields
         $rules = [
-            'title'  => ['rules' => 'required'],
-
-
+            'brandName' => ['rules' => 'required'],
         ];
-    
+
         if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-           
-            // Handle image upload for the cover image
-            $profilePic= $this->request->getFile('profilePic');
-            $profilePicName = null;
-    
-            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                // Define the upload path for the cover image
-                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/brandImages/';
-                if (!is_dir($profilePicPath)) {
-                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-                }
-    
-                // Move the file to the desired directory with a unique name
-                $profilePicName = $profilePic->getRandomName();
-                $profilePic->move($profilePicPath, $profilePicName);
-    
-                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $profilePicUrl = 'uploads/brandImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/brandImages/', '', $profilePicUrl);
-    
-                // Add the cover image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/brandImages/' .$profilePicUrl; 
-            }
-    
-           
-    
+            // Insert the product data into the database
             $tenantService = new TenantService();
             // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
             $model = new BrandModel($db);
-            $model->insert($input);
-    
-            return $this->respond(['status' => true, 'message' => 'Brands Added Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
+            $brandModel = $model->insert($input);
+            return $this->respond(["status" => true, "message" => "Brand Added Successfully", "data" => $brandModel], 200);
+        }else{
             $response = [
                 'status' => false,
                 'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
+                'message' => 'Invalid Inputs'
             ];
             return $this->fail($response, 409);
         }
     }
     
-    public function update()
+    public function updateItemGroup()
     {
         $input = $this->request->getPost();
-        
-        // Validation rules for the studentId
+    
+        // Validation rules for the item
         $rules = [
-            'brandId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
+            'brandId ' => ['rules' => 'required|numeric'], // Ensure itemId is provided and is numeric
         ];
-
+    
         // Validate the input
         if ($this->validate($rules)) {
-             
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new BrandModel($db);
-
-            // Retrieve the student by studentId
-            $brandId = $input['brandId'];  // Corrected here
-            $brand = $model->find($brandId); // Assuming find method retrieves the student
-
-            if (!$brand) {
-                return $this->fail(['status' => false, 'message' => 'brand not found'], 404);
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    
+            $model = new BrandModel($db);
+    
+            // Retrieve the item by itemId
+            $brandId = $input['brandId'];
+            $item = $model->find($brandId);
+    
+            if (!$item) {
+                return $this->fail(['status' => false, 'message' => 'Grouo not found'], 404);
             }
-
-            // Prepare the data to be updated (exclude studentId if it's included)
+    
+            // Prepare the data to be updated
             $updateData = [
-
-                'title' => $input['title'],  // Corrected here
-                'authorName' => $input['authorName'],  // Corrected here
-                'description' => $input['description'],  // Corrected here
-
+                'brandName'=> $input['brandName'],	
+                	
             ];
-
-            // Update the student with new data
+    
+            // Update the item with new data
             $updated = $model->update($brandId, $updateData);
-
+    
             if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'brand Updated Successfully'], 200);
+                return $this->respond(['status' => true, 'message' => 'Brand Updated Successfully'], 200);
             } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update brand'], 500);
+                return $this->fail(['status' => false, 'message' => 'Failed to update Brand'], 500);
             }
         } else {
             // Validation failed
@@ -306,7 +251,7 @@ class Brand extends BaseController
     public function uploadPageProfile()
     {
         // Retrieve form fields
-        $eventId = $this->request->getPost('eventId'); // Example field
+        $brandId = $this->request->getPost('brandId'); // Example field
 
         // Retrieve the file
         $file = $this->request->getFile('photoUrl');
@@ -337,8 +282,8 @@ class Brand extends BaseController
             'photoUrl' => $newName,
         ];
 
-        $model = new EventModel();
-        $model->update($eventId,$data);
+        $model = new BrandModel();
+        $model->update($brandId,$data);
 
         return $this->respond([
             'status' => 201,

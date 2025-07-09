@@ -237,6 +237,10 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('update', 'Po::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallwebsite', 'Po::getPosWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Po::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getallpospaging', 'Po::getPos',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createpos', 'Po::createPos',['filter' => ['authFilter','tenantFilter']]);
+
+
   });  
   
   $routes->group('staff', function ($routes) {

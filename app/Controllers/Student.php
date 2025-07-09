@@ -419,21 +419,31 @@ class Student extends BaseController
             $studentId = $model->insert($input);
             $courseDataArray = [];
 
-            if($input['selectedCourses']) {
-                if($input['selectedCourses'].includes(',')) {
-                   foreach($input['selectedCourses'].split(',') as $course) {
-                        $courseData = [
-                            'studentId' => $studentId,
-                            'itemId' => $course,
-                            'academicYearId' => $input['academicYearId'],
-                            'registeredDate' => date('Y-m-d H:i:s'),
-                        ];
-                        $courseDataArray[] = $courseData;
-                    } 
-                }
+          $courseDataArray = [];
+
+        if (!empty($input['selectedCourses'])) {
+
+            $courses = strpos($input['selectedCourses'], ',') !== false
+                ? explode(',', $input['selectedCourses'])
+                : [$input['selectedCourses']]; // single course fallback
+
+            foreach ($courses as $course) {
+                $courseData = [
+                    'studentId' => $studentId,
+                    'itemId' => $course,
+                    'academicYearId' => $input['academicYearId'],
+                    'registeredDate' => date('Y-m-d H:i:s'),
+                ];
+                $courseDataArray[] = $courseData;
             }
+
+            // Only insert if there's data
+            if (!empty($courseDataArray)) {
+                $admissionModel->insertBatch($courseDataArray);
+            }
+        }
+
             
-            $admissionModel->insertBatch($courseDataArray);
 
             // ✅ Insert attendance data
             $attendanceData = [

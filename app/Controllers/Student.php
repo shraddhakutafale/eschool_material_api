@@ -36,91 +36,91 @@ class Student extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $studentModel->findAll()], 200);
     }
 
-public function getStudentsPaging()
-{
-    $input = $this->request->getJSON();
+    public function getStudentsPaging()
+    {
+        $input = $this->request->getJSON();
 
-    $page = isset($input->page) ? $input->page : 1;
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'student_mst.studentId';
-    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    $search = isset($input->search) ? $input->search : '';
-    $filter = (array)($input->filter ?? []);
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'student_mst.studentId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = (array)($input->filter ?? []);
 
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-    $studentModel = new StudentModel($db);
-    $query = $studentModel;
+        $studentModel = new StudentModel($db);
+        $query = $studentModel;
 
-    $attendanceDate = $filter['attendanceDate'] ?? date('Y-m-d');
+        $attendanceDate = $filter['attendanceDate'] ?? date('Y-m-d');
 
-    // Join attendance_mst only for that date
-    $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
-    $query->join('attendance_mst', "attendance_mst.studentId = student_mst.studentId AND attendance_mst.attendanceDate = '$attendanceDate'", 'left');
+        // Join attendance_mst only for that date
+        $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
+        $query->join('attendance_mst', "attendance_mst.studentId = student_mst.studentId AND attendance_mst.attendanceDate = '$attendanceDate'", 'left');
 
-    // Filters
-    if (!empty($filter['academicYear'])) {
-        $query->where('academicYearId', $filter['academicYear']);
-    }
-    if (!empty($filter['itemId'])) {
-        $query->like('admission_details.selectedCourses', $filter['itemId']);
-    }
-
-    foreach ($filter as $key => $value) {
-        if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
-            $query->like($key, $value);
-        } elseif ($key === 'student_mst.createdDate') {
-            $query->where($key, $value);
+        // Filters
+        if (!empty($filter['academicYear'])) {
+            $query->where('academicYearId', $filter['academicYear']);
         }
+        if (!empty($filter['itemId'])) {
+            $query->like('admission_details.selectedCourses', $filter['itemId']);
+        }
+
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
+                $query->like($key, $value);
+            } elseif ($key === 'student_mst.createdDate') {
+                $query->where($key, $value);
+            }
+        }
+
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+            $query->where('student_mst.createdDate >=', $filter['startDate']);
+            $query->where('student_mst.createdDate <=', $filter['endDate']);
+        }
+
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+            $last7 = date('Y-m-d', strtotime('-7 days'));
+            $query->where('student_mst.createdDate >=', $last7);
+        }
+
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+            $last30 = date('Y-m-d', strtotime('-30 days'));
+            $query->where('student_mst.createdDate >=', $last30);
+        }
+
+        $query->where('student_mst.isDeleted', 0)
+            ->where('student_mst.businessId', $input->businessId);
+
+        if (!empty($sortField)) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+
+        $query->select('student_mst.*, 
+                        admission_details.academicYearId,
+                        attendance_mst.attendanceId,
+                        attendance_mst.present,
+                        attendance_mst.status,
+                        attendance_mst.inTime,
+                        attendance_mst.outTime,
+                        attendance_mst.attendanceDate');
+
+        $students = $query->paginate($perPage, 'default', $page);
+        $pager = $studentModel->pager;
+
+        return $this->respond([
+            "status" => true,
+            "message" => "All Student Data Fetched with Attendance",
+            "data" => $students,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ]);
     }
-
-    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-        $query->where('student_mst.createdDate >=', $filter['startDate']);
-        $query->where('student_mst.createdDate <=', $filter['endDate']);
-    }
-
-    if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-        $last7 = date('Y-m-d', strtotime('-7 days'));
-        $query->where('student_mst.createdDate >=', $last7);
-    }
-
-    if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-        $last30 = date('Y-m-d', strtotime('-30 days'));
-        $query->where('student_mst.createdDate >=', $last30);
-    }
-
-    $query->where('student_mst.isDeleted', 0)
-          ->where('student_mst.businessId', $input->businessId);
-
-    if (!empty($sortField)) {
-        $query->orderBy($sortField, $sortOrder);
-    }
-
-    $query->select('student_mst.*, 
-                    admission_details.academicYearId,
-                    attendance_mst.attendanceId,
-                    attendance_mst.present,
-                    attendance_mst.status,
-                    attendance_mst.inTime,
-                    attendance_mst.outTime,
-                    attendance_mst.attendanceDate');
-
-    $students = $query->paginate($perPage, 'default', $page);
-    $pager = $studentModel->pager;
-
-    return $this->respond([
-        "status" => true,
-        "message" => "All Student Data Fetched with Attendance",
-        "data" => $students,
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ]);
-}
 
 
     public function getStudentsAdmissionPaging()
@@ -205,39 +205,39 @@ public function getStudentsPaging()
             $students[$key]['totalFee'] = $totalFee;
 
             // Payments
-        $payments = $paymentDetailModel
-        ->where('admissionId', $student['admissionId'])
-        ->where('isDeleted', 0)
-        ->findAll();
+            $payments = $paymentDetailModel
+            ->where('admissionId', $student['admissionId'])
+            ->where('isDeleted', 0)
+            ->findAll();
 
-        $paidAmount = array_sum(array_column($payments, 'paidAmount'));
+            $paidAmount = array_sum(array_column($payments, 'paidAmount'));
 
-        if ($paidAmount >= $totalFee && $totalFee > 0) {
-            $students[$key]['paymentStatus'] = 'Paid';
-        } elseif ($paidAmount > 0 && $paidAmount < $totalFee) {
-            $students[$key]['paymentStatus'] = 'Installment';
-        } elseif (!empty($payments)) {
-            $students[$key]['paymentStatus'] = 'Installment'; // For 0-paid or first record after split
-        } else {
-            $students[$key]['paymentStatus'] = 'Unpaid';
+            if ($paidAmount >= $totalFee && $totalFee > 0) {
+                $students[$key]['paymentStatus'] = 'Paid';
+            } elseif ($paidAmount > 0 && $paidAmount < $totalFee) {
+                $students[$key]['paymentStatus'] = 'Installment';
+            } elseif (!empty($payments)) {
+                $students[$key]['paymentStatus'] = 'Installment'; // For 0-paid or first record after split
+            } else {
+                $students[$key]['paymentStatus'] = 'Unpaid';
+            }
+
         }
 
+        $pager = $studentModel->pager;
+
+        return $this->respond([
+            "status" => true,
+            "message" => "All Student Data Fetched",
+            "data" => $students,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ], 200);
     }
-
-    $pager = $studentModel->pager;
-
-    return $this->respond([
-        "status" => true,
-        "message" => "All Student Data Fetched",
-        "data" => $students,
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ], 200);
-}
 
 
 
@@ -365,178 +365,102 @@ public function getStudentsPaging()
         return $this->respond($response, 200);
     }
 
-    // public function create()
-    // {
-    //     $input = $this->request->getPost();
-        
-    //     // Validation rules for other fields
-    //     $rules = [
-    //         'firstName' => ['rules' => 'required'],
-    //         'lastName' => ['rules' => 'required'],
-    //     ];
-    
-    //     // Validate the incoming data
-    //     if ($this->validate($rules)) {
-    //         $key = "Exiaa@11";
-    //         $header = $this->request->getHeader("Authorization");
-    //         $token = null;
-    
-    //         // Extract the token from the header
-    //         if (!empty($header)) {
-    //             if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-    //                 $token = $matches[1];
-    //             }
-    //         }
-    
-    //         $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    
-    //         // Handle image upload for the profile picture
-    //         $profilePic = $this->request->getFile('profilePic');
-    //         $profilePicName = null;
-    
-    //         if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-    //             // Define the upload path
-    //             $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/studentImages/';
-    //             if (!is_dir($profilePicPath)) {
-    //                 mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-    //             }
-    
-    //             // Move the file to the desired directory with a unique name
-    //             $profilePicName = $profilePic->getRandomName();
-    //             $profilePic->move($profilePicPath, $profilePicName);
-    
-    //             // Generate the profile picture URL
-    //             $profilePicUrl = $decoded->tenantName . '/studentImages/' . $profilePicName;
-    //             $input['profilePic'] = $profilePicUrl;
-    //         }
-    
-    //         // Connect to the tenant's database
-    //         $tenantService = new TenantService();
-    //         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    
-    //         $model = new StudentModel($db);
-    //         $admissionModel = new AdmissionModel($db);
-    
-    //         // Insert student data
-    //         $studentId = $model->insert($input);
-
-    //         $admissionData = [
-    //             'studentId' => $studentId,
-    //             'academicYearId' => $input['academicYearId'],
-    //             'admissionDate' => date('Y-m-d H:i:s'),
-    //             'selectedCourses' => $input['selectedCourses'],
-    //         ];
-
-    //         // Insert admission data
-    //         $admissionModel->insert($admissionData);
-                
-    //         // Return success response
-    //         return $this->respond([
-    //             'status' => true,
-    //             'message' => 'Student and Admission Details Added Successfully',
-    //             'data' => $studentId
-    //         ], 200);
-    
-    //     } else {
-    //         // If validation fails, return errors
-    //         $response = [
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ];
-    //         return $this->fail($response, 409);
-    //     }
-    // }
-
     public function create()
-{
-    $input = $this->request->getPost();
-    
-    // Validation rules for other fields
-    $rules = [
-        'firstName' => ['rules' => 'required'],
-        'lastName' => ['rules' => 'required'],
-    ];
+    {
+        $input = $this->request->getPost();
+        
+        // Validation rules for other fields
+        $rules = [
+            'firstName' => ['rules' => 'required'],
+            'lastName' => ['rules' => 'required'],
+        ];
 
-    // Validate the incoming data
-    if ($this->validate($rules)) {
-        $key = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token = null;
+        // Validate the incoming data
+        if ($this->validate($rules)) {
+            $key = "Exiaa@11";
+            $header = $this->request->getHeader("Authorization");
+            $token = null;
 
-        // Extract the token from the header
-        if (!empty($header)) {
-            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                $token = $matches[1];
-            }
-        }
-
-        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-
-        // Handle image upload for the profile picture
-        $profilePic = $this->request->getFile('profilePic');
-        $profilePicName = null;
-
-        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-            $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/studentImages/';
-            if (!is_dir($profilePicPath)) {
-                mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
+            // Extract the token from the header
+            if (!empty($header)) {
+                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                    $token = $matches[1];
+                }
             }
 
-            $profilePicName = $profilePic->getRandomName();
-            $profilePic->move($profilePicPath, $profilePicName);
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
-            $profilePicUrl = $decoded->tenantName . '/studentImages/' . $profilePicName;
-            $input['profilePic'] = $profilePicUrl;
+            // Handle image upload for the profile picture
+            $profilePic = $this->request->getFile('profilePic');
+            $profilePicName = null;
+
+            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+                $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/studentImages/';
+                if (!is_dir($profilePicPath)) {
+                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
+                }
+
+                $profilePicName = $profilePic->getRandomName();
+                $profilePic->move($profilePicPath, $profilePicName);
+
+                $profilePicUrl = $decoded->tenantName . '/studentImages/' . $profilePicName;
+                $input['profilePic'] = $profilePicUrl;
+            }
+
+            // Connect to the tenant's database
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+            $model = new StudentModel($db);
+            $admissionModel = new AdmissionModel($db);
+            $attendanceModel = new AttendanceModel($db); // ✅ Added attendance model
+
+            // Insert student data
+            $studentId = $model->insert($input);
+            $courseDataArray = [];
+
+            if($input['selectedCourses']) {
+                if($input['selectedCourses'].includes(',')) {
+                   foreach($input['selectedCourses'].split(',') as $course) {
+                        $courseData = [
+                            'studentId' => $studentId,
+                            'itemId' => $course,
+                            'academicYearId' => $input['academicYearId'],
+                            'registeredDate' => date('Y-m-d H:i:s'),
+                        ];
+                        $courseDataArray[] = $courseData;
+                    } 
+                }
+            }
+            
+            $admissionModel->insertBatch($courseDataArray);
+
+            // ✅ Insert attendance data
+            $attendanceData = [
+                'studentId' => $studentId,
+                'status' => 'Absent', // or 'absent' as default
+                'date' => date('Y-m-d'), // today's date
+            ];
+
+            $attendanceModel->insert($attendanceData);
+
+            // Return success response
+            return $this->respond([
+                'status' => true,
+                'message' => 'Student, Admission & Attendance Details Added Successfully',
+                'data' => $studentId
+            ], 200);
+
+        } else {
+            // If validation fails, return errors
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
         }
-
-        // Connect to the tenant's database
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        $model = new StudentModel($db);
-        $admissionModel = new AdmissionModel($db);
-        $attendanceModel = new AttendanceModel($db); // ✅ Added attendance model
-
-        // Insert student data
-        $studentId = $model->insert($input);
-
-        $admissionData = [
-            'studentId' => $studentId,
-            'academicYearId' => $input['academicYearId'],
-            'registeredDate' => date('Y-m-d H:i:s'),
-            'selectedCourses' => $input['selectedCourses'],
-        ];
-
-        // Insert admission data
-        $admissionModel->insert($admissionData);
-
-        // ✅ Insert attendance data
-        $attendanceData = [
-            'studentId' => $studentId,
-            'status' => 'Absent', // or 'absent' as default
-            'date' => date('Y-m-d'), // today's date
-        ];
-
-        $attendanceModel->insert($attendanceData);
-
-        // Return success response
-        return $this->respond([
-            'status' => true,
-            'message' => 'Student, Admission & Attendance Details Added Successfully',
-            'data' => $studentId
-        ], 200);
-
-    } else {
-        // If validation fails, return errors
-        $response = [
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
     }
-}
 
     
 

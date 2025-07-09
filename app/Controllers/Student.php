@@ -36,208 +36,227 @@ class Student extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $studentModel->findAll()], 200);
     }
 
-    public function getStudentsPaging()
-    {
-        $input = $this->request->getJSON();
+  public function getStudentsPaging()
+{
+    $input = $this->request->getJSON();
 
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'student_mst.studentId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = (array)($input->filter ?? []);
+    $page = isset($input->page) ? $input->page : 1;
+    $perPage = isset($input->perPage) ? $input->perPage : 10;
+    $sortField = isset($input->sortField) ? $input->sortField : 'student_mst.studentId';
+    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    $search = isset($input->search) ? $input->search : '';
+    $filter = (array)($input->filter ?? []);
 
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        $studentModel = new StudentModel($db);
-        $query = $studentModel;
+    $studentModel = new StudentModel($db);
+    $query = $studentModel;
 
-        $attendanceDate = $filter['attendanceDate'] ?? date('Y-m-d');
+    $attendanceDate = $filter['attendanceDate'] ?? date('Y-m-d');
 
-        // Join attendance_mst only for that date
-        $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
-        $query->join('attendance_mst', "attendance_mst.studentId = student_mst.studentId AND attendance_mst.attendanceDate = '$attendanceDate'", 'left');
+    // Join tables
+    $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
+    $query->join('attendance_mst', "attendance_mst.studentId = student_mst.studentId AND attendance_mst.attendanceDate = '$attendanceDate'", 'left');
 
-        // Filters
-        if (!empty($filter['academicYear'])) {
-            $query->where('academicYearId', $filter['academicYear']);
-        }
-        if (!empty($filter['itemId'])) {
-            $query->like('admission_details.selectedCourses', $filter['itemId']);
-        }
-
-        foreach ($filter as $key => $value) {
-            if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
-                $query->like($key, $value);
-            } elseif ($key === 'student_mst.createdDate') {
-                $query->where($key, $value);
-            }
-        }
-
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('student_mst.createdDate >=', $filter['startDate']);
-            $query->where('student_mst.createdDate <=', $filter['endDate']);
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $last7 = date('Y-m-d', strtotime('-7 days'));
-            $query->where('student_mst.createdDate >=', $last7);
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $last30 = date('Y-m-d', strtotime('-30 days'));
-            $query->where('student_mst.createdDate >=', $last30);
-        }
-
-        $query->where('student_mst.isDeleted', 0)
-            ->where('student_mst.businessId', $input->businessId);
-
-        if (!empty($sortField)) {
-            $query->orderBy($sortField, $sortOrder);
-        }
-
-        $query->select('student_mst.*, 
-                        admission_details.academicYearId,
-                        attendance_mst.attendanceId,
-                        attendance_mst.present,
-                        attendance_mst.status,
-                        attendance_mst.inTime,
-                        attendance_mst.outTime,
-                        attendance_mst.attendanceDate');
-
-        $students = $query->paginate($perPage, 'default', $page);
-        $pager = $studentModel->pager;
-
-        return $this->respond([
-            "status" => true,
-            "message" => "All Student Data Fetched with Attendance",
-            "data" => $students,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ]);
+    // Academic Year filter
+    if (!empty($filter['academicYear'])) {
+        $query->where('admission_details.academicYearId', $filter['academicYear']);
     }
 
+    // ✅ Course filter (itemId is now directly stored in admission_details)
+    if (!empty($filter['itemId'])) {
+        $query->where('admission_details.itemId', $filter['itemId']);
+    }
 
-    public function getStudentsAdmissionPaging()
-    {
-        $input = $this->request->getJSON();
+    // Other filters
+    foreach ($filter as $key => $value) {
+        if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
+            $query->like($key, $value);
+        } elseif ($key === 'student_mst.createdDate') {
+            $query->where($key, $value);
+        }
+    }
 
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'studentId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
+    // Date range filters
+    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+        $query->where('student_mst.createdDate >=', $filter['startDate']);
+        $query->where('student_mst.createdDate <=', $filter['endDate']);
+    }
 
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    if (!empty($filter['dateRange'])) {
+        if ($filter['dateRange'] === 'last7days') {
+            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
+        } elseif ($filter['dateRange'] === 'last30days') {
+            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
+        }
+    }
 
-        $studentModel = new StudentModel($db);
-        $admissionModel = new AdmissionModel($db);
-        $itemFeeMapModel = new ItemFeeMapModel($db);
-        $feeModel = new FeeModel($db);
-        $paymentDetailModel = new PaymentDetailModel($db);
+    // Common filters
+    $query->where('student_mst.isDeleted', 0)
+        ->where('student_mst.businessId', $input->businessId);
 
-        $query = $studentModel;
-        $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
+    if (!empty($sortField)) {
+        $query->orderBy($sortField, $sortOrder);
+    }
 
-        if (!empty($filter)) {
-            $filter = json_decode(json_encode($filter), true);
+    // Select fields
+    $query->select('student_mst.*, 
+                    admission_details.academicYearId,
+                    admission_details.itemId,
+                    attendance_mst.attendanceId,
+                    attendance_mst.present,
+                    attendance_mst.status,
+                    attendance_mst.inTime,
+                    attendance_mst.outTime,
+                    attendance_mst.attendanceDate');
 
-            if (!empty($filter['academicYear'])) {
-                $query->where('academicYearId', $filter['academicYear']);
-            }
+    $students = $query->paginate($perPage, 'default', $page);
+    $pager = $studentModel->pager;
 
-            foreach ($filter as $key => $value) {
-                if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
-                    $query->like($key, $value);
-                } else if ($key === 'student_mst.createdDate') {
-                    $query->where($key, $value);
-                }
-            }
+    return $this->respond([
+        "status" => true,
+        "message" => "All Student Data Fetched with Attendance",
+        "data" => $students,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ]);
+}
 
-            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                $query->where('student_mst.createdDate >=', $filter['startDate'])
-                    ->where('student_mst.createdDate <=', $filter['endDate']);
-            }
 
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-                $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
-            }
+   public function getStudentsAdmissionPaging()
+{
+    $input = $this->request->getJSON();
 
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-                $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
+    $page = isset($input->page) ? $input->page : 1;
+    $perPage = isset($input->perPage) ? $input->perPage : 10;
+    $sortField = isset($input->sortField) ? $input->sortField : 'student_mst.studentId';
+    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    $search = isset($input->search) ? $input->search : '';
+    $filter = isset($input->filter) ? (array)$input->filter : [];
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $studentModel = new StudentModel($db);
+    $admissionModel = new AdmissionModel($db);
+    $itemFeeMapModel = new ItemFeeMapModel($db);
+    $feeModel = new FeeModel($db);
+    $paymentDetailModel = new PaymentDetailModel($db);
+
+    $query = $studentModel->select('student_mst.*, admission_details.admissionId, admission_details.itemId')
+        ->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left')
+        ->where('student_mst.isDeleted', 0)
+        ->where('student_mst.businessId', $input->businessId);
+
+    // Apply filters
+    if (!empty($filter['academicYear'])) {
+        $query->where('admission_details.academicYearId', $filter['academicYear']);
+    }
+
+    if (!empty($filter['itemId'])) {
+        $query->where('admission_details.itemId', $filter['itemId']);
+    }
+
+    if (!empty($filter['firstName'])) {
+        $query->like('student_mst.firstName', $filter['firstName']);
+    }
+
+    if (!empty($filter['lastName'])) {
+        $query->like('student_mst.lastName', $filter['lastName']);
+    }
+
+    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+        $query->where('student_mst.createdDate >=', $filter['startDate']);
+        $query->where('student_mst.createdDate <=', $filter['endDate']);
+    }
+
+    if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+        $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
+    }
+
+    if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+        $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
+    }
+
+    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+        $query->orderBy($sortField, $sortOrder);
+    }
+
+    // Get paginated results
+    $students = $query->paginate($perPage, 'default', $page);
+    $pager = $studentModel->pager;
+
+    $finalData = [];
+
+    foreach ($students as $student) {
+        $fees = [];
+        $totalFee = 0;
+
+        // Get fees for this itemId (i.e. course)
+        $itemFeeMapArray = $itemFeeMapModel
+            ->where('itemId', $student['itemId'])
+            ->where('isDeleted', 0)
+            ->findAll();
+
+        foreach ($itemFeeMapArray as $feeMap) {
+            $fee = $feeModel
+                ->where('feeId', $feeMap['feeId'])
+                ->where('isDeleted', 0)
+                ->first();
+            if ($fee) {
+                $fees[] = $fee['amount'];
+                $totalFee += (int)$fee['amount'];
             }
         }
 
-        $query = $studentModel->where('isDeleted', 0)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
-
-        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-            $query->orderBy($sortField, $sortOrder);
-        }
-
-        $students = $query->paginate($perPage, 'default', $page);
-
-        foreach ($students as $key => $student) {
-            $fees = [];
-            $totalFee = 0;
-
-            $selectedCourseArray = explode(',', $student['selectedCourses']);
-
-            foreach ($selectedCourseArray as $itemId) {
-                $itemFeeMapArray = $itemFeeMapModel->where('itemId', $itemId)->where('isDeleted', 0)->findAll();
-
-                foreach ($itemFeeMapArray as $feeMap) {
-                    $fee = $feeModel->where('feeId', $feeMap['feeId'])->where('isDeleted', 0)->first();
-                    if ($fee) {
-                        $fees[] = $fee['amount'];
-                        $totalFee += (int)$fee['amount'];
-                    }
-                }
-            }
-
-            $students[$key]['fees'] = $fees;
-            $students[$key]['totalFee'] = $totalFee;
-
-            // Payments
-            $payments = $paymentDetailModel
+        // Get payments for this admission and course
+        $payments = $paymentDetailModel
             ->where('admissionId', $student['admissionId'])
             ->where('isDeleted', 0)
             ->findAll();
 
-            $paidAmount = array_sum(array_column($payments, 'paidAmount'));
+        $paidAmount = array_sum(array_column($payments, 'paidAmount'));
 
-            if ($paidAmount >= $totalFee && $totalFee > 0) {
-                $students[$key]['paymentStatus'] = 'Paid';
-            } elseif ($paidAmount > 0 && $paidAmount < $totalFee) {
-                $students[$key]['paymentStatus'] = 'Installment';
-            } elseif (!empty($payments)) {
-                $students[$key]['paymentStatus'] = 'Installment'; // For 0-paid or first record after split
-            } else {
-                $students[$key]['paymentStatus'] = 'Unpaid';
-            }
-
+        if ($paidAmount >= $totalFee && $totalFee > 0) {
+            $paymentStatus = 'Paid';
+        } elseif ($paidAmount > 0 && $paidAmount < $totalFee) {
+            $paymentStatus = 'Installment';
+        } elseif (!empty($payments)) {
+            $paymentStatus = 'Installment';
+        } else {
+            $paymentStatus = 'Unpaid';
         }
 
-        $pager = $studentModel->pager;
-
-        return $this->respond([
-            "status" => true,
-            "message" => "All Student Data Fetched",
-            "data" => $students,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ], 200);
+        $finalData[] = [
+            'studentId' => $student['studentId'],
+            'firstName' => $student['firstName'],
+            'lastName' => $student['lastName'],
+            'mobileNo' => $student['mobileNo'],
+            'admissionId' => $student['admissionId'],
+            'itemId' => $student['itemId'],
+            'fees' => $fees,
+            'totalFee' => $totalFee,
+            'paymentStatus' => $paymentStatus,
+        ];
     }
+
+    return $this->respond([
+        "status" => true,
+        "message" => "All Student Data Fetched",
+        "data" => $finalData,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ], 200);
+}
 
 
 

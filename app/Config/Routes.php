@@ -47,6 +47,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('profile', 'User::profile',['filter' => 'authFilter']);
     $routes->get('usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('register', 'User::register');
+    $routes->post('registerbusinessuser', 'User::registerBusinessUser');
 
     $routes->get('getallrole', 'User::getAllRole',['filter' => 'authFilter']); 
     $routes->post('createrole', 'User::createRole',['filter' => 'authFilter']); 
@@ -69,7 +70,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('deletebusiness', 'User::deleteBusiness',['filter' => 'authFilter']); // Delete an item
     $routes->post('assignbusiness', 'User::assignBusiness',['filter' => 'authFilter']); // Get all businesscategory
 
-    $routes->get('getallbusinesscategory', 'User::getAllBusinesscategory',['filter' => 'authFilter']); // Get all businesscategory
+    $routes->get('getallbusinesscategory', 'User::getAllBusinesscategory'); // Get all businesscategory
     $routes->get('getalltenantname', 'User::getAllTenantname',['filter' => 'authFilter']);
     $routes->post('getallpermissionbycategory', 'User::getAllPermissionByCategory',['filter' => 'authFilter']);
     $routes->post('updatepermissions', 'User::updatePermissions',['filter' => 'authFilter']);

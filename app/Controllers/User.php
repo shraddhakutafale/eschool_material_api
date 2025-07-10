@@ -287,6 +287,58 @@ class User extends BaseController
             
     }
 
+    public function registerBusinessUser()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'name' => ['rules' => 'required|min_length[4]|max_length[255]'],
+            'businessName' => ['rules' => 'required|min_length[4]|max_length[255]'],
+            'businessCategoryId' => ['rules' => 'required|numeric'],
+            'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[user_mst.email]'],
+            'mobile' => ['rules' => 'required|min_length[10]|max_length[10]|is_unique[user_mst.mobileNo]'],
+            'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
+            'confirmPassword'  => [ 'label' => 'confirm password', 'rules' => 'matches[password]']
+        ];
+  
+        if($this->validate($rules)){
+            $model = new UserModel();
+            $businessModel = new BusinessModel();
+            $userBusinessModel = new UserBusiness();
+            $data = [
+                'name'     => $input->name,
+                'mobileNo' => $input->mobile,
+                'email'    => $input->email,
+                'emailVerified' => 0,
+                'isActive' => 0,
+                'password' => password_hash($input->password, PASSWORD_DEFAULT),
+                'roleId'   => 2
+            ];
+            $model->insert($data);
+            $businessData = [
+                'businessName' => $input->businessName,
+                'businessCategoryId' => $input->businessCategoryId
+            ];
+            $businessModel->insert($businessData);
+            $userBusinessData = [
+                'userId' => $model->getInsertID(),
+                'businessId' => $businessModel->getInsertID(),
+                'roleId' => 2, // Assuming roleId 2 is for business users
+            ];
+            $userBusinessModel->insert($userBusinessData);
+            
+            return $this->respond(["status" => true, 'message' => 'Registered Successfully'], 200);
+        }else{
+            $response = [
+                'status'=>false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response , 409);
+             
+        }
+            
+    }
+
 
     public function create()
     {

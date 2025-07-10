@@ -95,30 +95,40 @@ class User extends BaseController
         $menu = [];
 
         if($user['roleId'] == 1) {
-            $rights = $rightModel->where('isDeleted',0)->where('isActive',1)->where('parentRightId',0)->findAll();
-            foreach($rights as $key => $right){
-                $menuItem = [
-                    'route' => $right['route'],
-                    'name' => $right['route'],
-                    'icon' => $right['iconUrl'],
-                    'type' => 'sub', // Default to 'sub' in case it has children
-                    'children' => [] // Initialize children array
-                ];
-                $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
-                if (empty($subMenus)) {
-                    $menuItem['type'] = 'link'; // If no children, it's a simple link
-                } else {
-                    foreach ($subMenus as $subMenu) {
-                        $menuItem['children'][] = [
-                            'route' => $subMenu['route'],
-                            'name' => $subMenu['route'],
-                            'icon' => $subMenu['iconUrl'],
-                            'type' => 'link'
+            $rightBusinessCategories = $rightBusinessCategory->where('categoryId', 0)->findAll();
+                foreach($rightBusinessCategories as $key => $rightBusinessCategory){
+                    $right = $rightModel->where('rightId', $rightBusinessCategory['rightId'])->where('isDeleted',0)->where('isActive',1)->where('parentRightId',0)->first();
+                    
+                    if ($right) {
+                        // Store the parent menu details
+                        $menuItem = [
+                            'route' => $right['route'],
+                            'name' => $right['route'],
+                            'icon' => $right['iconUrl'],
+                            'type' => 'sub', // Default to 'sub' in case it has children
+                            'children' => [] // Initialize children array
                         ];
+                
+                        // Fetch the submenus (children) where parentRightId matches this rightId
+                        $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
+                
+                        if (empty($subMenus)) {
+                            $menuItem['type'] = 'link'; // If no children, it's a simple link
+                        } else {
+                            foreach ($subMenus as $subMenu) {
+                                $menuItem['children'][] = [
+                                    'route' => $subMenu['route'],
+                                    'name' => $subMenu['route'],
+                                    'icon' => $subMenu['iconUrl'],
+                                    'type' => 'link'
+                                ];
+                            }
+                        }
+                
+                        // Store in the menu array
+                        $menu[] = $menuItem;
                     }
                 }
-                $menu[] = $menuItem;
-            }
         }else{
             if(isset($decoded->businessCategoryId) && !empty($decoded->businessCategoryId)){
                 $rightBusinessCategories = $rightBusinessCategory->where('categoryId', $decoded->businessCategoryId)->findAll();

@@ -494,18 +494,41 @@ class Course extends BaseController
         }
     }
 
-    public function getAllCategory()
-    {
-        $input = $this->request->getJSON();
+  public function getAllCategory()
+{
+    $input = $this->request->getJSON();
 
-        // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new ItemCategory($db);
-        $itemCategories = $model->where('isDeleted', 0)->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
+    // 🔐 Decode JWT token to get businessId
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
     }
+
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    $businessId = $decoded->businessId;
+
+    // Connect to tenant DB
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $model = new ItemCategory($db);
+
+    // ✅ Restrict by businessId
+    $itemCategories = $model
+        ->where('isDeleted', 0)
+        ->where('businessId', $businessId)
+        ->findAll();
+
+    return $this->respond([
+        "status" => true,
+        "message" => "All Category Data Fetched",
+        "data" => $itemCategories
+    ], 200);
+}
+
 
     public function getAllFee()
     {

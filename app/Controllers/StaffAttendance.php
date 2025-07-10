@@ -113,12 +113,25 @@ class StaffAttendance extends BaseController
     
     //     return $this->respond($response, 200);
     // }
-    
-  public function getStaffPaging()
+public function getStaffPaging()
 {
     $input = $this->request->getJSON();
 
-    // Safe input extraction
+    // Decode JWT to extract businessId securely
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header)) {
+        if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+    }
+
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    $businessId = $decoded->businessId;
+
+    // Extract other inputs safely
     $page           = isset($input->page) ? (int)$input->page : 1;
     $perPage        = isset($input->perPage) ? (int)$input->perPage : 10;
     $sortFieldInput = isset($input->sortField) ? $input->sortField : 'staffId';
@@ -126,10 +139,9 @@ class StaffAttendance extends BaseController
     $search         = isset($input->search) ? $input->search : '';
     $filter         = isset($input->filter) ? (array)$input->filter : [];
 
-   
     $today = date('Y-m-d');
 
-    // Allowed sort fields
+    // Define allowed sort fields
     $allowedSortFields = [
         'staffId'         => 's.staffId',
         'empName'         => 's.empName',
@@ -143,10 +155,11 @@ class StaffAttendance extends BaseController
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-    // ✅ Ensure today's attendance exists for each staff
+    // ✅ Ensure today's attendance exists for each staff (within their business)
     $staffIds = $db->table('staff_mst')
         ->select('staffId')
         ->where('isDeleted', 0)
+        ->where('businessId', $businessId)
         ->get()
         ->getResultArray();
 
@@ -160,6 +173,7 @@ class StaffAttendance extends BaseController
             $db->table('staff_attendance')->insert([
                 'staffId'        => $staff['staffId'],
                 'attendanceDate' => $today,
+                'businessId'     => $businessId, // ✅ important
                 'present'        => 0,
                 'inTime'         => null,
                 'outTime'        => null,
@@ -169,13 +183,14 @@ class StaffAttendance extends BaseController
         }
     }
 
-    // Build main query
+    // ✅ Main query only for this businessId
     $builder = $db->table('staff_mst s')
         ->select('s.*, a.attendanceId, a.attendanceDate, a.present, a.inTime, a.outTime, a.status as attendanceStatus')
         ->join('staff_attendance a', 'a.staffId = s.staffId AND a.attendanceDate = ' . $db->escape($today), 'left')
-        ->where('s.isDeleted', 0);
+        ->where('s.isDeleted', 0)
+        ->where('s.businessId', $businessId);  // ✅ filter
 
-    // Filters
+    // Apply filters
     foreach ($filter as $key => $value) {
         if (in_array($key, ['empName', 'empCategory', 'empCode', 'empSal'])) {
             $builder->like("s.$key", $value);
@@ -208,7 +223,7 @@ class StaffAttendance extends BaseController
     // Sorting
     $builder->orderBy($sortField, $sortOrder);
 
-    // Total before pagination
+    // Get total count before limit
     $total = $builder->countAllResults(false);
 
     // Pagination
@@ -226,6 +241,7 @@ class StaffAttendance extends BaseController
         ]
     ], 200);
 }
+
 
 
 

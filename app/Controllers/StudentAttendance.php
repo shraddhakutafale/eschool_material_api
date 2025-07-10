@@ -127,6 +127,20 @@ public function getStudentsPaging()
     $search = isset($input->search) ? $input->search : '';
     $filter = $input->filter;
 
+    // 🔐 Extract businessId from token
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header)) {
+        if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+    }
+
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    $businessId = $decoded->businessId;
+
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
@@ -136,9 +150,12 @@ public function getStudentsPaging()
     // Join admission_details
     $query->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left');
 
-    // ✅ Join only today's attendance
+    // ✅ Join today's attendance filtered by businessId
     $today = date('Y-m-d');
-    $query->join("(SELECT * FROM attendance_mst WHERE attendanceDate = '$today') as attendance_mst", 'attendance_mst.studentId = student_mst.studentId', 'left');
+    $query->join("(SELECT * FROM attendance_mst WHERE attendanceDate = '$today' AND businessId = $businessId) as attendance_mst", 'attendance_mst.studentId = student_mst.studentId', 'left');
+
+    // ✅ Filter student_mst by businessId
+    $query->where('student_mst.businessId', $businessId);
 
     // Filters
     if (!empty($filter)) {
@@ -151,7 +168,7 @@ public function getStudentsPaging()
         foreach ($filter as $key => $value) {
             if (in_array($key, ['student_mst.studentCode', 'student_mst.generalRegisterNo', 'student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
                 $query->like($key, $value);
-            } else if ($key === 'student_mst.createdDate') {
+            } elseif ($key === 'student_mst.createdDate') {
                 $query->where($key, $value);
             }
         }
@@ -159,17 +176,15 @@ public function getStudentsPaging()
         // Date range filters
         if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
             $query->where('student_mst.createdDate >=', $filter['startDate'])
-                  ->where('student_mst.createdDate <=', $filter['endDate']);
+                ->where('student_mst.createdDate <=', $filter['endDate']);
         }
 
         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $last7DaysStart = date('Y-m-d', strtotime('-7 days'));
-            $query->where('student_mst.createdDate >=', $last7DaysStart);
+            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
         }
 
         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $last30DaysStart = date('Y-m-d', strtotime('-30 days'));
-            $query->where('student_mst.createdDate >=', $last30DaysStart);
+            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
         }
     }
 
@@ -180,9 +195,9 @@ public function getStudentsPaging()
         $query->orderBy($sortField, $sortOrder);
     }
 
-    // ✅ Include `present` field in selection
+    // ✅ Final Select
     $students = $query->select('student_mst.*, admission_details.academicYearId, attendance_mst.attendanceId, attendance_mst.status, attendance_mst.inTime, attendance_mst.outTime, attendance_mst.attendanceDate, attendance_mst.present')
-                      ->paginate($perPage, 'default', $page);
+        ->paginate($perPage, 'default', $page);
 
     $pager = $studentModel->pager;
 

@@ -12,7 +12,7 @@ class PaymentDetailModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['paymentId', 'admissionId', 'label', 'paidAmount', 'paymentMode', 'transactionNo', 'paymentDate', 'dueDate', 'status', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['paymentId', 'businessId', 'admissionId', 'label', 'paidAmount', 'paymentMode', 'transactionNo', 'paymentDate', 'dueDate', 'status', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

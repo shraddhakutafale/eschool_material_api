@@ -258,6 +258,29 @@ class Student extends BaseController
     ], 200);
 }
 
+public function assignShiftToStudent()
+{
+    $input = $this->request->getJSON();
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $builder = $db->table('admission_details');
+
+    if (isset($input->studentId) && isset($input->itemId) && isset($input->shiftId)) {
+        // Update admission_details to assign the shift
+        $builder->where('studentId', $input->studentId)
+                ->where('itemId', $input->itemId)
+                ->update(['shiftId' => $input->shiftId]);
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Shift assigned to student successfully'
+        ]);
+    } else {
+        return $this->failValidationErrors('studentId, itemId, and shiftId are required.');
+    }
+}
 
 
     public function getStudentsPaymentPaging()
@@ -383,115 +406,103 @@ class Student extends BaseController
 
         return $this->respond($response, 200);
     }
+public function create()
+{
+    $input = $this->request->getPost();
 
-    public function create()
-    {
-        $input = $this->request->getPost();
-        
-        // Validation rules for other fields
-        $rules = [
-            'firstName' => ['rules' => 'required'],
-            'lastName' => ['rules' => 'required'],
-        ];
+    // Validation rules
+    $rules = [
+        'firstName' => ['rules' => 'required'],
+        'lastName'  => ['rules' => 'required'],
+    ];
 
-        // Validate the incoming data
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
+    if ($this->validate($rules)) {
+        // 🔐 Decode JWT to get businessId
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
 
-            // Extract the token from the header
-            if (!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
+        if (!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
+        }
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $businessId = $decoded->businessId; // ✅ Get businessId from token
+
+        // Handle profilePic upload
+        $profilePic = $this->request->getFile('profilePic');
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/studentImages/';
+            if (!is_dir($profilePicPath)) {
+                mkdir($profilePicPath, 0777, true);
             }
 
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            $profilePicName = $profilePic->getRandomName();
+            $profilePic->move($profilePicPath, $profilePicName);
+            $input['profilePic'] = $decoded->tenantName . '/studentImages/' . $profilePicName;
+        }
 
-            // Handle image upload for the profile picture
-            $profilePic = $this->request->getFile('profilePic');
-            $profilePicName = null;
+        // ✅ Add businessId to student insert
+        $input['businessId'] = $businessId;
 
-            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/studentImages/';
-                if (!is_dir($profilePicPath)) {
-                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-                }
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-                $profilePicName = $profilePic->getRandomName();
-                $profilePic->move($profilePicPath, $profilePicName);
+        $studentModel    = new StudentModel($db);
+        $admissionModel  = new AdmissionModel($db);
+        $attendanceModel = new AttendanceModel($db);
 
-                $profilePicUrl = $decoded->tenantName . '/studentImages/' . $profilePicName;
-                $input['profilePic'] = $profilePicUrl;
-            }
+        $studentId = $studentModel->insert($input);
 
-            // Connect to the tenant's database
-            $tenantService = new TenantService();
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-            $model = new StudentModel($db);
-            $admissionModel = new AdmissionModel($db);
-            $attendanceModel = new AttendanceModel($db); // ✅ Added attendance model
-
-            // Insert student data
-            $studentId = $model->insert($input);
-            $courseDataArray = [];
-
-          $courseDataArray = [];
-
+        // Admission data
+        $courseDataArray = [];
         if (!empty($input['selectedCourses'])) {
-
             $courses = strpos($input['selectedCourses'], ',') !== false
                 ? explode(',', $input['selectedCourses'])
-                : [$input['selectedCourses']]; // single course fallback
+                : [$input['selectedCourses']];
 
             foreach ($courses as $course) {
-                $courseData = [
-                    'studentId' => $studentId,
-                    'itemId' => $course,
-                    'academicYearId' => $input['academicYearId'],
-                    'registeredDate' => date('Y-m-d H:i:s'),
+                $courseDataArray[] = [
+                    'studentId'       => $studentId,
+                    'itemId'          => $course,
+                    'academicYearId'  => $input['academicYearId'],
+                    'registeredDate'  => date('Y-m-d H:i:s'),
+                    'businessId'      => $businessId  // ✅ Optional but recommended
                 ];
-                $courseDataArray[] = $courseData;
             }
 
-            // Only insert if there's data
             if (!empty($courseDataArray)) {
                 $admissionModel->insertBatch($courseDataArray);
             }
         }
 
-            
+        // ✅ Add businessId in attendance data
+        $attendanceData = [
+            'studentId'      => $studentId,
+            'status'         => 'Absent',
+            'present'        => 0,
+            'attendanceDate' => date('Y-m-d'),
+            'businessId'     => $businessId  // ✅ required
+        ];
 
-            // ✅ Insert attendance data
-            $attendanceData = [
-                'studentId' => $studentId,
-                'status' => 'Absent', // or 'absent' as default
-                'date' => date('Y-m-d'), // today's date
-            ];
+        $attendanceModel->insert($attendanceData);
 
-            $attendanceModel->insert($attendanceData);
-
-            // Return success response
-            return $this->respond([
-                'status' => true,
-                'message' => 'Student, Admission & Attendance Details Added Successfully',
-                'data' => $studentId
-            ], 200);
-
-        } else {
-            // If validation fails, return errors
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Student, Admission & Attendance Details Added Successfully',
+            'data'    => $studentId
+        ], 200);
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
     }
+}
 
-    
 
       
     public function update()

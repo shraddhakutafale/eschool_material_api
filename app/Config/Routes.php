@@ -355,6 +355,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Student::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('addallpayment', 'Student::addAllPayment',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('addpayment', 'Student::addPayment',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('assignshifttostudent', 'Student::assignShiftToStudent', ['filter' => ['authFilter', 'tenantFilter']]);
+
 
   });
 

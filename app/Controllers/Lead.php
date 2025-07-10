@@ -80,7 +80,7 @@ class Lead extends BaseController
             }
         }
         
-        $query->where('isDeleted',0);
+        $query->where('isDeleted',0)->where('businessId', $input->businessId);
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);

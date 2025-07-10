@@ -197,107 +197,83 @@ class Staff extends BaseController
     
 
 
-    public function create()
-    {
-        // Retrieve the input data from the request
-        $input = $this->request->getPost();
-        
-        // Define validation rules for required fields
-        $rules = [
-            'empName' => ['rules' => 'required'],
-            'empCode' => ['rules' => 'required'],
-        ];
-    
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-           
-            // Handle image upload for the cover image
-            $profilePic = $this->request->getFile('profilePic');
-            $profilePicName = null;
-    
-            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                // Define the upload path for the cover image
-                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/staffImages/';
-                if (!is_dir($profilePicPath)) {
-                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-                }
-    
-                // Move the file to the desired directory with a unique name
-                $profilePicName = $profilePic->getRandomName();
-                $profilePic->move($profilePicPath, $profilePicName);
-    
-                // Get the URL of the uploaded cover image and remove the 'uploads/profilePics/' prefix
-                $profilePicUrl = 'uploads/staffImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/staffImages/', '', $profilePicUrl);
-    
-                // Add the cover image URL to the input data
-                // $input['profilePic'] = $profilePicUrl; 
-                $input['profilePic'] = $decoded->tenantName . '/staffImages/' .$profilePicUrl;
-            }
-    
-           
-    
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            // $model = new StaffModel($db);
-            // $model->insert($input);
-            //     // Start DB transaction
-                // $db->transStart();
+  public function create()
+{
+    $input = $this->request->getPost();
 
-                // Save staff
-                $staffModel = new StaffModel($db);
-                $staffModel->insert($input);
-                $staffId = $staffModel->getInsertID();
+    $rules = [
+        'empName' => ['rules' => 'required'],
+        'empCode' => ['rules' => 'required'],
+    ];
 
-                // Save attendance
-                $attendanceModel = new StaffAttendanceModel($db);
-                $attendanceData = [
-                    'staffId'        => $staffId,
-                    'attendanceDate' => date('Y-m-d'),
-                    'inTime'         => date('H:i:s'),
-                    'outTime'        => null,
-                    'deviceId'       => null,
-                    'status'         => '',
-                    'present' => 0
-                ];
-                $attendanceModel->insert($attendanceData);
+    if ($this->validate($rules)) {
+        // ✅ Decode JWT token
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
 
-                $db->transComplete();
-    
-            return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
-            ];
-            return $this->fail($response, 409);
+        if (!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
         }
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+        // ✅ Add businessId to input
+        $input['businessId'] = $decoded->businessId;
+
+        // ✅ Handle profilePic upload
+        $profilePic = $this->request->getFile('profilePic');
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/staffImages/';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $fileName = $profilePic->getRandomName();
+            $profilePic->move($uploadPath, $fileName);
+
+            $input['profilePic'] = $decoded->tenantName . '/staffImages/' . $fileName;
+        }
+
+        // ✅ Database setup
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $staffModel = new StaffModel($db);
+        $attendanceModel = new StaffAttendanceModel($db);
+
+        $db->transStart();
+
+        // ✅ Save staff with businessId
+        $staffModel->insert($input);
+        $staffId = $staffModel->getInsertID();
+
+        // ✅ Save today's attendance also with businessId
+        $attendanceModel->insert([
+            'staffId'        => $staffId,
+            'businessId'     => $decoded->businessId, // <-- ✅ Critical fix here
+            'attendanceDate' => date('Y-m-d'),
+            'inTime'         => date('H:i:s'),
+            'outTime'        => null,
+            'deviceId'       => null,
+            'status'         => '',
+            'present'        => 0
+        ]);
+
+        $db->transComplete();
+
+        return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
+    } else {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ], 409);
     }
+}
+
 
     //     public function create()
     // {

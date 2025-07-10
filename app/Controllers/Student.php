@@ -259,28 +259,45 @@ class Student extends BaseController
 }
 
 public function assignShiftToStudent()
-{
-    $input = $this->request->getJSON();
+    {
+        $input = $this->request->getJSON();
 
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        if (!isset($input->studentId) || !isset($input->shiftId)) {
+            return $this->failValidationErrors('studentId and shiftId are required.');
+        }
 
-    $builder = $db->table('admission_details');
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $builder = $db->table('admission_details');
 
-    if (isset($input->studentId) && isset($input->itemId) && isset($input->shiftId)) {
-        // Update admission_details to assign the shift
-        $builder->where('studentId', $input->studentId)
-                ->where('itemId', $input->itemId)
-                ->update(['shiftId' => $input->shiftId]);
+        // 🔍 Find latest admission record for student
+        $admission = $builder
+            ->select('itemId')
+            ->where('studentId', $input->studentId)
+            ->orderBy('admissionId', 'DESC')
+            ->get()
+            ->getRow();
 
-        return $this->respond([
-            'status' => true,
-            'message' => 'Shift assigned to student successfully'
-        ]);
-    } else {
-        return $this->failValidationErrors('studentId, itemId, and shiftId are required.');
+        if (!$admission || !isset($admission->itemId)) {
+            return $this->failNotFound('No admission record found for this student.');
+        }
+
+        // ✅ Update shiftId
+        $updated = $builder
+            ->where('studentId', $input->studentId)
+            ->where('itemId', $admission->itemId)
+            ->update(['shiftId' => $input->shiftId]);
+
+        if ($updated) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'Shift assigned to student successfully',
+            ]);
+        } else {
+            return $this->failServerError('Update failed.');
+        }
     }
-}
+
 
 public function getStudentsPaymentPaging()
 {
@@ -293,7 +310,6 @@ public function getStudentsPaymentPaging()
     $search = isset($input->search) ? $input->search : '';
     $filter = isset($input->filter) ? (array)$input->filter : [];
 
-    // 🔐 Decode JWT to get businessId
     $key = "Exiaa@11";
     $header = $this->request->getHeader("Authorization");
     $token = null;

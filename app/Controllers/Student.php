@@ -533,6 +533,8 @@ class Student extends BaseController
                 'nationality' => $input['nationality'],
                 'religion' => $input['religion'],
                 'category' => $input['category'],
+                'registeredDate' => $input['registeredDate'],
+
                 'cast' => $input['cast'],
                 'subCast' => $input['subCast'],
                 'motherTongue' => $input['motherTongue'],

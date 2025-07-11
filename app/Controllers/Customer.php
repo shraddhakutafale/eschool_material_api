@@ -35,7 +35,6 @@ class Customer extends BaseController
         $sortField = isset($input->sortField) ? $input->sortField : 'customerId';
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
     
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));

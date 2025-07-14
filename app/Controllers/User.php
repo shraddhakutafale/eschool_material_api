@@ -23,12 +23,21 @@ class User extends BaseController
 {
     use ResponseTrait;
      
-    public function index()
-    {
-        $users = new UserModel;
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $users->findAll()], 200);
-    }
-    
+   public function index()
+{
+    $users = new UserModel();
+
+    $filteredUsers = $users
+        ->where('roleId', 3)
+        ->findAll();
+
+    return $this->respond([
+        "status" => true,
+        "message" => "Filtered Users Fetched",
+        "data" => $filteredUsers
+    ], 200);
+}
+
     public function profile()
     {
         $key = "Exiaa@11";
@@ -350,38 +359,56 @@ class User extends BaseController
     }
 
 
-    public function create()
-    {
-        $input = $this->request->getJSON();
-        $rules = [
-            'name' => ['rules' => 'required|min_length[4]|max_length[255]'],
-            'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[user_mst.email]'],
-            'mobileNo' => ['rules' => 'required|min_length[10]|max_length[10]|is_unique[user_mst.mobileNo]'],
-            'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
+public function create()
+{
+    $input = $this->request->getJSON();
+    $rules = [
+        'name' => ['rules' => 'required|min_length[4]|max_length[255]'],
+        'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[user_mst.email]'],
+        'mobileNo' => ['rules' => 'required|min_length[10]|max_length[10]|is_unique[user_mst.mobileNo]'],
+        'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
+    ];
+
+    if ($this->validate($rules)) {
+        $userModel = new \App\Models\UserModel();
+        $userBusiness = new \App\Models\UserBusiness(); // Make sure this model exists
+
+        // Step 1: Insert into user_mst
+        $userData = [
+            'name'     => $input->name,
+            'mobileNo' => $input->mobileNo,
+            'email'    => $input->email,
+            'password' => password_hash($input->password, PASSWORD_DEFAULT),
+            'roleId'   => 3 // Optionally store role here
         ];
-  
-        if($this->validate($rules)){
-            $model = new UserModel();
-            $data = [
-                'name'     => $input->name,
-                'mobileNo' => $input->mobileNo,
-                'email'    => $input->email,
-                'password' => password_hash($input->password, PASSWORD_DEFAULT)
-            ];
-            $model->insert($data);
-             
-            return $this->respond(["status" => true, 'message' => 'Created Successfully'], 200);
-        }else{
-            $response = [
-                'status'=>false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response , 409);
-             
-        }
-            
+
+        $userModel->insert($userData);
+        $userId = $userModel->getInsertID(); // Step 2: get the inserted userId
+
+        // Step 3: Insert into user_business
+        $userBusinessData = [
+            'userId'     => $userId,
+            'roleId'     => 3,
+            'businessId' => 4,
+            'isActive'   => 1,
+            'isDeleted'  => 0
+        ];
+
+        $userBusiness->insert($userBusinessData);
+
+        return $this->respond([
+            "status"  => true,
+            "message" => "User and mapping created successfully"
+        ], 200);
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
     }
+}
+
 
     public function update()
     {

@@ -232,17 +232,38 @@ class Student extends BaseController
             $paymentStatus = 'Unpaid';
         }
 
-        $finalData[] = [
-            'studentId' => $student['studentId'],
-            'firstName' => $student['firstName'],
-            'lastName' => $student['lastName'],
-            'mobileNo' => $student['mobileNo'],
-            'admissionId' => $student['admissionId'],
-            'itemId' => $student['itemId'],
-            'fees' => $fees,
-            'totalFee' => $totalFee,
-            'paymentStatus' => $paymentStatus,
-        ];
+      $finalData[] = [
+    'studentId' => $student['studentId'],
+    'studentCode' => $student['studentCode'],
+    'firstName' => $student['firstName'],
+    'middleName' => $student['middleName'],
+    'lastName' => $student['lastName'],
+    'mobileNo' => $student['mobileNo'],
+    'motherName' => $student['motherName'],
+    'gender' => $student['gender'],
+    'birthDate' => $student['birthDate'],
+    'birthPlace' => $student['birthPlace'],
+    'nationality' => $student['nationality'],
+    'religion' => $student['religion'],
+    'cast' => $student['cast'],
+    'subCast' => $student['subCast'],
+    'motherTongue' => $student['motherTongue'],
+    'category' => $student['category'],
+    'bloodGroup' => $student['bloodGroup'],
+    'aadharNo' => $student['aadharNo'],
+    'medium' => $student['medium'],
+    'physicallyHandicapped' => $student['physicallyHandicapped'],
+    'educationalGap' => $student['educationalGap'],
+    'selectedCourses' => $student['selectedCourses'],
+    'registeredDate' => $student['registeredDate'],
+    'dueDate' => $student['dueDate'],
+    'generalRegisterNo' => $student['generalRegisterNo'],
+    'admissionId' => $student['admissionId'],
+    'itemId' => $student['itemId'],
+    'fees' => $fees,
+    'totalFee' => $totalFee,
+    'paymentStatus' => $paymentStatus,
+    ];
     }
 
     return $this->respond([
@@ -427,6 +448,8 @@ public function create()
     $rules = [
         'firstName' => ['rules' => 'required'],
         'lastName'  => ['rules' => 'required'],
+            'generalRegisterNo' => []  // 👈 Add this line
+
     ];
 
     if ($this->validate($rules)) {

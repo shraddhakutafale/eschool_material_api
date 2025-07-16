@@ -257,7 +257,9 @@ class Po extends BaseController
             'emailFor' => $input->emailFor,
             'PanCardFor' => $input->PanCardFor,     
             'total'=> $input->total,
-            'totalItem'=> $input->totalItems,
+            'quantity'=> $input->quantity,
+            'poAmount'=> $input->poAmount,
+            // 'totalItem'=> $input->totalItems,
             'totalPrice'=> $input->totalPrice,              
         ];
 

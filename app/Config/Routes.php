@@ -162,6 +162,19 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     
   });
 
+    $routes->group('form', function ($routes) {
+    //Routes for member
+    $routes->get('getall', 'Form::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Form::getFormsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Form::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Form::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Form::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Form::getFormsWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
+    $routes->post('delete', 'Form::delete',['filter' => ['authFilter','tenantFilter']]); 
+    $routes->post('createweb', 'Form::createWeb',['filter' => 'tenantFilter']);
+    
+  });
+
   $routes->post('donate/createweb', 'Donation::createWeb',['filter' => 'tenantFilter']);
   $routes->group('donation', function ($routes) {
     //Routes for Donation

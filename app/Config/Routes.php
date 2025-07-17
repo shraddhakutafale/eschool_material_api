@@ -48,6 +48,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('usermenu', 'User::menu',['filter' => 'authFilter']);
     $routes->post('register', 'User::register');
     $routes->post('registerbusinessuser', 'User::registerBusinessUser');
+    $routes->post('businessuserregister', 'User::businessUserRegister');
+
 
     $routes->get('getallrole', 'User::getAllRole',['filter' => 'authFilter']); 
     $routes->post('createrole', 'User::createRole',['filter' => 'authFilter']); 

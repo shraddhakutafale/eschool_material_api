@@ -23,20 +23,49 @@ class User extends BaseController
 {
     use ResponseTrait;
      
-   public function index()
+    public function index()
+    {
+        $users = new UserModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $users->findAll()], 200);
+    }
+    
+
+
+public function businessUserRegister()
 {
-    $users = new UserModel();
+    $input = $this->request->getJSON();
 
-    $filteredUsers = $users
-        ->where('roleId', 3)
-        ->findAll();
+    $rules = [
+        'name' => 'required|min_length[3]',
+        'email' => 'required|valid_email|is_unique[user_mst.email]',
+        'mobileNo' => 'required|numeric|min_length[10]|max_length[10]',
+        'password' => 'required|min_length[6]'
+    ];
 
-    return $this->respond([
-        "status" => true,
-        "message" => "Filtered Users Fetched",
-        "data" => $filteredUsers
-    ], 200);
+    if (!$this->validate($rules)) {
+        return $this->failValidationErrors($this->validator->getErrors());
+    }
+
+    $userModel = new \App\Models\UserModel();
+
+    $data = [
+        'name' => $input->name,
+        'email' => $input->email,
+        'mobileNo' => $input->mobileNo,
+        'password' => password_hash($input->password, PASSWORD_DEFAULT),
+        'roleId' => 3 // 👈 Business user role
+    ];
+
+    if ($userModel->insert($data)) {
+        return $this->respond([
+            'status' => true,
+            'message' => 'Business user registered successfully'
+        ]);
+    }
+
+    return $this->failServerError('Could not register business user');
 }
+
 
     public function profile()
     {

@@ -34,120 +34,138 @@ class Course extends BaseController
         return $this->respond(['status' => true, 'message' => 'All items fetched successfully', 'data' => $items], 200);
     }
 
-    public function getAllPaging()
-    {
-        $input = $this->request->getJSON();
+  public function getAllPaging()
+{
+    $input = $this->request->getJSON();
 
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'itemId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
+    // 🔒 Validate JSON input
+    if (!$input || !isset($input->itemTypeId) || !isset($input->businessId)) {
+        return $this->respond([
+            "status" => false,
+            "message" => "Invalid or missing input. 'itemTypeId' and 'businessId' are required.",
+            "data" => []
+        ], 422);
+    }
 
-        $tenantService = new TenantService();
-        
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load StaffModel with the tenant database connection
-        $itemModel = new ItemModel($db);
-        $itemFeeMapModel = new ItemFeeMapModel($db);
-        $feeModel = new FeeModel($db);
-        $itemShiftMapModel = new ItemShiftMapModel($db);
-        $shiftModel = new ShiftModel($db);
-        $itemSubjectMapModel = new ItemSubjectMapModel($db);
-        $subjectModel = new SubjectModel($db);
+    // ✅ Default values
+    $page = isset($input->page) ? $input->page : 1;
+    $perPage = isset($input->perPage) ? $input->perPage : 10;
+    $sortField = isset($input->sortField) ? $input->sortField : 'itemId';
+    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    $search = isset($input->search) ? $input->search : '';
+    $filter = isset($input->filter) ? $input->filter : null;
 
-        // Initialize query with 'isDeleted' condition
-        $query = $itemModel->where('isDeleted', 0)->where('itemTypeId', $input->itemTypeId)->where('businessId', $input->businessId); // Apply the deleted check at the beginning
+    // ✅ Tenant-aware DB loading
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        // Apply search filter for itemName and mrp
-        if (!empty($search)) {
-            $query->like('itemName', $search)
-                ->orLike('mrp', $search);
-        }
+    // ✅ Models
+    $itemModel = new ItemModel($db);
+    $itemFeeMapModel = new ItemFeeMapModel($db);
+    $feeModel = new FeeModel($db);
+    $itemShiftMapModel = new ItemShiftMapModel($db);
+    $shiftModel = new ShiftModel($db);
+    $itemSubjectMapModel = new ItemSubjectMapModel($db);
+    $subjectModel = new SubjectModel($db);
 
-        // Apply additional filters if provided
-        if (!empty($filter)) {
-            $filter = json_decode(json_encode($filter), true);
-            
-            foreach ($filter as $key => $value) {
-                if (in_array($key, ['itemName', 'mrp', 'sku'])) {
-                    $query->like($key, $value); // LIKE filter for specific fields
-                } else if ($key === 'createdDate') {
-                    $query->where($key, $value); // Exact match filter for createdDate
-                }
-            }
+    // ✅ Base query
+    $query = $itemModel->where('isDeleted', 0)
+        ->where('itemTypeId', $input->itemTypeId)
+        ->where('businessId', $input->businessId);
 
-            // Apply Date Range Filter (startDate and endDate)
-            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                $query->where('createdDate >=', $filter['startDate'])
-                    ->where('createdDate <=', $filter['endDate']);
-            }
+    // 🔍 Search
+    if (!empty($search)) {
+        $query->groupStart()
+              ->like('itemName', $search)
+              ->orLike('mrp', $search)
+              ->groupEnd();
+    }
 
-            // Apply Last 7 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-                $query->where('createdDate >=', $last7DaysStart);
-            }
+    // 🔍 Filters
+    if (!empty($filter)) {
+        $filter = json_decode(json_encode($filter), true); // Ensure it's an array
 
-            // Apply Last 30 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-                $query->where('createdDate >=', $last30DaysStart);
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['itemName', 'mrp', 'sku'])) {
+                $query->like($key, $value);
+            } else if ($key === 'createdDate') {
+                $query->where($key, $value);
             }
         }
 
-        // Apply sorting
-        $query->orderBy('itemId', 'desc');
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+            $query->where('createdDate >=', $filter['startDate'])
+                  ->where('createdDate <=', $filter['endDate']);
+        }
 
-        // Execute the query with pagination
-        $item = $query->paginate($perPage, 'default', $page);
-        foreach ($item as $key => $value) {
-            $itemFeeMapArray = $itemFeeMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
-            $fees = [];
-            foreach ($itemFeeMapArray as $fee) {
-                $feeArray = $feeModel->where('feeId', $fee['feeId'])->where('isDeleted', 0)->first();
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+            $query->where('createdDate >=', date('Y-m-d', strtotime('-7 days')));
+        }
+
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+            $query->where('createdDate >=', date('Y-m-d', strtotime('-30 days')));
+        }
+    }
+
+    // 📦 Sorting
+    $query->orderBy($sortField, $sortOrder);
+
+    // ✅ Pagination + fetching
+    $item = $query->paginate($perPage, 'default', $page);
+
+    // 🔄 Process fees, shifts, subjects
+    foreach ($item as $key => $value) {
+        // Fees
+        $itemFeeMapArray = $itemFeeMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
+        $fees = [];
+        foreach ($itemFeeMapArray as $fee) {
+            $feeArray = $feeModel->where('feeId', $fee['feeId'])->where('isDeleted', 0)->first();
+            if ($feeArray) {
                 $fees[] = $feeArray['amount'];
             }
-            $item[$key]['fees'] = $fees;
-            
-            $itemShiftMapArray = $itemShiftMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
-            $shifts = [];
-            foreach ($itemShiftMapArray as $shift) {
-                $shiftArray = $shiftModel->where('shiftId', $shift['shiftId'])->where('isDeleted', 0)->first();
-                $shifts[] = $shiftArray['startTime'].'-'.$shiftArray['endTime'];
+        }
+        $item[$key]['fees'] = $fees;
+
+        // Shifts
+        $itemShiftMapArray = $itemShiftMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
+        $shifts = [];
+        foreach ($itemShiftMapArray as $shift) {
+            $shiftArray = $shiftModel->where('shiftId', $shift['shiftId'])->where('isDeleted', 0)->first();
+            if ($shiftArray) {
+                $shifts[] = $shiftArray['startTime'] . '-' . $shiftArray['endTime'];
             }
-            $item[$key]['shifts'] = $shifts;
-            
-            $itemSubjectMapArray = $itemSubjectMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
-            $subjects = [];
-            foreach ($itemSubjectMapArray as $subject) {
-                $subjectArray = $subjectModel->where('subjectId', $subject['subjectId'])->where('isDeleted', 0)->first();
+        }
+        $item[$key]['shifts'] = $shifts;
+
+        // Subjects
+        $itemSubjectMapArray = $itemSubjectMapModel->where('itemId', $value['itemId'])->where('isDeleted', 0)->findAll();
+        $subjects = [];
+        foreach ($itemSubjectMapArray as $subject) {
+            $subjectArray = $subjectModel->where('subjectId', $subject['subjectId'])->where('isDeleted', 0)->first();
+            if ($subjectArray) {
                 $subjects[] = $subjectArray['subjectName'];
             }
-            $item[$key]['subjects'] = $subjects;
-        }   
-
-        // Get pagination data
-        $pager = $itemModel->pager;
-        
-
-        // Prepare the response
-        $response = [
-            "status" => true,
-            "message" => "All item Data Fetched",
-            "data" => $item,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-
-        return $this->respond($response, 200);
+        }
+        $item[$key]['subjects'] = $subjects;
     }
+
+    // 📊 Pagination info
+    $pager = $itemModel->pager;
+
+    // ✅ Response
+    return $this->respond([
+        "status" => true,
+        "message" => "All item data fetched",
+        "data" => $item,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ], 200);
+}
+
 
     public function create()
     {

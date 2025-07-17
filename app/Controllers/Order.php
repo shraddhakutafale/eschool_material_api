@@ -40,7 +40,7 @@ public function getOrdersPaging()
     $sortField = isset($input->sortField) ? $input->sortField : 'orderId';
     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
     $search = isset($input->search) ? $input->search : '';
-    $filter = $input->filter;
+    // $filter = $input->filter;
 
     $tenantService = new TenantService();
     
@@ -158,12 +158,13 @@ public function getOrdersPaging()
             'orderNo' => $input->orderNo,
             'orderDate' => $input->orderDate,
             'businessNameFor' => $input->businessNameFor,
-            'email' => $input->email,
-            'mobileNo' => $input->mobileNo,
-            'address'=> $input->address,
-            'total'=> $input->total,
-            'totalItem'=> $input->totalItem ??  0,
-            'totalPrice'=> $input->totalPrice,
+            'itemName' => $input->itemName,
+            'phoneFor' => $input->phoneFor,
+            'totalItem' => $input->totalItem,
+            'rate' => $input->rate,
+            'finalAmount' => $input->finalAmount,
+            'taxInvoiceNumber' => $input->taxInvoiceNumber,
+            
 
         ];
 
@@ -175,20 +176,7 @@ public function getOrdersPaging()
 
             $itemDetailsModel = new OrderDetailModel($db); // Assuming you have this model for the item details
 
-            // Iterate through each item in the input and insert into item_details
-            foreach ($input->items as $item) {
-                $itemData = [
-                    'orderId' => $orderId,  // Foreign key linking to the quotation
-                    'itemId' => $item->itemId,
-                    'quantity' => $item->quantity,
-                    'rate' => $item->rate,
-                    'amount' => $item->amount
-                ];
-                
-                // Insert the item into the item_details table
-                 $itemDetailsModel->insert($itemData);  // Assuming insert() method returns the inserted item ID
-                 
-            }
+           
 
             return $this->respond(['status' => true, 'message' => 'Order and items added successfully'], 200);
         } else {

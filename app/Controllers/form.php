@@ -125,7 +125,6 @@ public function getFormsPaging()
     }
 
   
-   
    public function create()
 {
     $input = $this->request->getPost();
@@ -174,6 +173,44 @@ public function getFormsPaging()
     }
 }
 
+
+ public function delete()
+{
+    $input = $this->request->getJSON();
+
+    $rules = [
+        'formId' => ['rules' => 'required|integer']
+    ];
+
+    if ($this->validate($rules)) {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $model = new FormModel($db);
+
+        $formId = $input->formId;
+        $form = $model->find($formId);
+
+        if (!$form) {
+            return $this->fail(['status' => false, 'message' => 'Form not found'], 404);
+        }
+
+        // Soft delete by setting isDeleted = 1
+        $updated = $model->update($formId, ['isDeleted' => 1]);
+
+        if ($updated) {
+            return $this->respond(['status' => true, 'message' => 'Form deleted successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to delete form'], 500);
+        }
+    } else {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+}
 
 
 }

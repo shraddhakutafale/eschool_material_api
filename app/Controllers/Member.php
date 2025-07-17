@@ -116,92 +116,93 @@ class Member extends BaseController
     // }
 
     public function getMembersPaging()
-{
-    $input = $this->request->getJSON();
+    {
+        $input = $this->request->getJSON();
 
-    // Get the page number from the input, default to 1 if not provided
-    $page = isset($input->page) ? $input->page : 1;
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'memberId';
-    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    $search = isset($input->search) ? $input->search : '';
-    $filter = isset($input->filter) ? $input->filter : null;
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'memberId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = isset($input->filter) ? $input->filter : null;
 
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-    // Load models with the tenant database connection
-    $memberModel = new MemberModel($db);
-    $transactionModel = new TransactionModel($db);
+        // Load models with the tenant database connection
+        $memberModel = new MemberModel($db);
+        $transactionModel = new TransactionModel($db);
 
-    // Start building the query for members
-    $query = $memberModel
-        ->join('transaction_mst', 'transaction_mst.memberId = member_mst.memberId', 'left')
-        ->select('member_mst.*, transaction_mst.transactionId, transaction_mst.transactionFor, transaction_mst.transactionNo, 
-                  transaction_mst.paymentMode, transaction_mst.amount, transaction_mst.status, transaction_mst.razorpayNo, 
-                  transaction_mst.transactionDate')
-        ->where('transaction_mst.transactionFor !=', 'donation')
-        ->where('member_mst.isDeleted', 0)
-        ->orderBy($sortField, $sortOrder);
+        // Start building the query for members
+        $query = $memberModel
+            ->join('transaction_mst', 'transaction_mst.memberId = member_mst.memberId', 'left')
+            ->select('member_mst.*, transaction_mst.transactionId, transaction_mst.transactionFor, transaction_mst.transactionNo, 
+                    transaction_mst.paymentMode, transaction_mst.amount, transaction_mst.status, transaction_mst.razorpayNo, 
+                    transaction_mst.transactionDate')
+            ->where('transaction_mst.transactionFor !=', 'donation')
+            ->where('member_mst.isDeleted', 0)
+            ->where('member_mst.businessId', $input->businessId)
+            ->orderBy($sortField, $sortOrder);
 
-    // Apply search filter
-    if ($search) {
-        $query->groupStart()
-            ->like('member_mst.name', $search)
-            ->orLike('member_mst.mobileNo', $search)
-            ->groupEnd();
-    }
+        // Apply search filter
+        if ($search) {
+            $query->groupStart()
+                ->like('member_mst.name', $search)
+                ->orLike('member_mst.mobileNo', $search)
+                ->groupEnd();
+        }
 
-    // Apply additional filters
-    if ($filter) {
-        $filter = json_decode(json_encode($filter), true);
-        foreach ($filter as $key => $value) {
-            if (in_array($key, ['name', 'mobileNo', 'fees', 'type'])) {
-                $query->like('member_mst.' . $key, $value);
-            } elseif ($key === 'createdDate') {
-                $query->where('member_mst.' . $key, $value);
+        // Apply additional filters
+        if ($filter) {
+            $filter = json_decode(json_encode($filter), true);
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['name', 'mobileNo', 'fees', 'type'])) {
+                    $query->like('member_mst.' . $key, $value);
+                } elseif ($key === 'createdDate') {
+                    $query->where('member_mst.' . $key, $value);
+                }
+            }
+
+            // Apply Date Range Filter (startDate and endDate)
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('member_mst.createdDate >=', $filter['startDate'])
+                    ->where('member_mst.createdDate <=', $filter['endDate']);
+            }
+
+            // Apply Last 7 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));
+                $query->where('member_mst.createdDate >=', $last7DaysStart);
+            }
+
+            // Apply Last 30 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));
+                $query->where('member_mst.createdDate >=', $last30DaysStart);
             }
         }
 
-        // Apply Date Range Filter (startDate and endDate)
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('member_mst.createdDate >=', $filter['startDate'])
-                  ->where('member_mst.createdDate <=', $filter['endDate']);
-        }
+        // Apply pagination
+        $members = $query->paginate($perPage, 'default', $page);
 
-        // Apply Last 7 Days Filter if requested
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $last7DaysStart = date('Y-m-d', strtotime('-7 days'));
-            $query->where('member_mst.createdDate >=', $last7DaysStart);
-        }
+        // Get pagination details
+        $pager = $memberModel->pager;
 
-        // Apply Last 30 Days Filter if requested
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $last30DaysStart = date('Y-m-d', strtotime('-30 days'));
-            $query->where('member_mst.createdDate >=', $last30DaysStart);
-        }
+        $response = [
+            "status" => true,
+            "message" => "All Member Data Fetched",
+            "data" => $members,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+
+        return $this->respond($response, 200);
     }
-
-    // Apply pagination
-    $members = $query->paginate($perPage, 'default', $page);
-
-    // Get pagination details
-    $pager = $memberModel->pager;
-
-    $response = [
-        "status" => true,
-        "message" => "All Member Data Fetched",
-        "data" => $members,
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ];
-
-    return $this->respond($response, 200);
-}
 
     
 

@@ -28,43 +28,77 @@ class User extends BaseController
         $users = new UserModel;
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $users->findAll()], 200);
     }
-    
 
+    public function getAllBusinessUser()
+    {
+        $input = $this->request->getJSON();
 
-public function businessUserRegister()
-{
-    $input = $this->request->getJSON();
+        $userModel = new UserModel();
+        $userBusinessModel = new UserBusiness();
 
-    $rules = [
-        'name' => 'required|min_length[3]',
-        'email' => 'required|valid_email|is_unique[user_mst.email]',
-        'mobileNo' => 'required|numeric|min_length[10]|max_length[10]',
-        'password' => 'required|min_length[6]'
-    ];
+        $userBusinesses = $userBusinessModel->where('businessId', $input->businessId)->findAll();
 
-    if (!$this->validate($rules)) {
-        return $this->failValidationErrors($this->validator->getErrors());
+        $users = [];
+        foreach ($userBusinesses as $userBusiness) {
+            $user = $userModel->where('userId', $userBusiness['userId'])->first();
+            $users[] = $user;
+        }
+
+        if (empty($users)) {
+            return $this->respond(['status' => false, 'data'=>[], 'message' => 'No business users found'], 200);
+        }
+
+        return $this->respond(['status' => true, 'data' => $users], 200);
     }
+    
+    public function businessUserRegister()
+    {
+        $input = $this->request->getJSON();
 
-    $userModel = new \App\Models\UserModel();
+        $rules = [
+            'name' => 'required|min_length[3]',
+            'email' => 'required|valid_email|is_unique[user_mst.email]',
+            'mobileNo' => 'required|numeric|min_length[10]|max_length[10]',
+            'password' => 'required|min_length[6]',
+            'businessId' => 'required|numeric',
+        ];
 
-    $data = [
-        'name' => $input->name,
-        'email' => $input->email,
-        'mobileNo' => $input->mobileNo,
-        'password' => password_hash($input->password, PASSWORD_DEFAULT),
-        'roleId' => 3 // 👈 Business user role
-    ];
+        if (!$this->validate($rules)) {
+            return $this->failValidationErrors($this->validator->getErrors());
+        }
 
-    if ($userModel->insert($data)) {
-        return $this->respond([
-            'status' => true,
-            'message' => 'Business user registered successfully'
+        $userModel = new \App\Models\UserModel();
+
+        $data = [
+            'name' => $input->name,
+            'email' => $input->email,
+            'mobileNo' => $input->mobileNo,
+            'password' => password_hash($input->password, PASSWORD_DEFAULT),
+            'roleId' => 3 // 👈 Business user role
+        ];
+        $userModel->insert($data);
+        $userId = $userModel->getInsertID();
+        $userBusinessModel = new UserBusiness();
+        $userBusinessData = [
+            'userId' => $userId,
+            'businessId' => $input->businessId,
+            'roleId' => 3, // Assuming roleId 3 is for business users
+            'isActive' => 1,
+            'isDeleted' => 0
+        ];
+
+        if ($userBusinessModel->insert($userBusinessData)) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'Business user registered successfully'
+            ]);
+        }
+
+        return $this->response([
+            'status' => false,
+            'message' => 'Failed to register business user'
         ]);
     }
-
-    return $this->failServerError('Could not register business user');
-}
 
 
     public function profile()

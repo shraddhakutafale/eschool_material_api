@@ -38,7 +38,8 @@ $routes->options('(:any)', function () use ($allowed_origins){
 $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
   $routes->group('user', function ($routes) {
-    $routes->get('getall', 'User::index',['filter' => 'authFilter']); 
+    $routes->get('getall', 'User::index',['filter' => 'authFilter']);
+    $routes->post('getallbusinessuser', 'User::getAllBusinessUser',['filter' => 'authFilter']);
     $routes->get('view/(:segment)', 'User::show/$1',['filter' => 'authFilter']); 
     $routes->post('create', 'User::create',['filter' => 'authFilter']); 
     $routes->post('update', 'User::update/$1',['filter' => 'authFilter']); 
@@ -162,7 +163,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     
   });
 
-    $routes->group('form', function ($routes) {
+  $routes->group('form', function ($routes) {
     //Routes for member
     $routes->get('getall', 'Form::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Form::getFormsPaging',['filter' => ['authFilter', 'tenantFilter']]);

@@ -312,8 +312,8 @@ class Member extends BaseController
                 'pincode' => $input['pincode'],
                 'fees' => $input['fees'],
                 'receiptNo' => $newReceiptNo,  // This will be updated later
-                'profileImage' => isset($input['profileImage']) ? $input['profileImage'] : null  // Save the profile image URL to the database
-
+                'profileImage' => isset($input['profileImage']) ? $input['profileImage'] : null ,
+                'businessId' => $decoded->businessId ?? $input['businessId'] ?? null,
             ];
     
             $memberId = $model->insert($member);
@@ -328,7 +328,8 @@ class Member extends BaseController
                 'amount' => $input['fees'],
                 'status' => 'success',
                 'paymentMode' => $input['paymentMode'],
-                'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
+                'receiptNo' => $newReceiptNo ,
+                'businessId' => $decoded->businessId ?? $input['businessId'] ?? null
             ];
     
             // Insert the transaction with the new receipt number

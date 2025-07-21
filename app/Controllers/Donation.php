@@ -229,7 +229,8 @@ class Donation extends BaseController
                 'address' => $input->address,
                 'financialYear' => $input->financialYear,
                 'amount' => $input->amount,
-                'receiptNo' => $newReceiptNo, // Use the newly generated receipt number
+                'receiptNo' => $newReceiptNo,
+                'businessId' => $input->businessId ?? null, // Use businessId from input if available
             ];
     
             // Insert the donation record into the database
@@ -245,8 +246,8 @@ class Donation extends BaseController
                 'amount' => $input->amount,
                 'status' => 'success',
                 'paymentMode' => $input->paymentMode,
-                'receiptNo' => $newReceiptNo // Store the new receipt number in the transaction
-
+                'receiptNo' => $newReceiptNo, // Store the new receipt number in the transaction
+                'businessId' => $input->businessId ?? null // Use businessId from input if available
             ];
     
             // Insert the transaction record into the database

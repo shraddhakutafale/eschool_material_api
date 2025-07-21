@@ -17,6 +17,7 @@ class CorsFilter implements FilterInterface
             'https://admin.exiaa.com',
             'http://localhost:4200',
             'http://localhost:8100',
+            'https://localhost',
             'https://shritej.in',
             'https://www.shritej.in',
             'http://shritej.in',

@@ -959,7 +959,6 @@ class Course extends BaseController
             'shiftName' => ['rules' => 'required'],
             'startTime' => ['rules' => 'required'],
             'endTime' => ['rules' => 'required'],
-            'emailTime' => ['rules' => 'required']
 
         ];
     
@@ -1258,7 +1257,6 @@ class Course extends BaseController
         // Define validation rules for required fields
         $rules = [
             'subjectName' => ['rules' => 'required'],
-            'subjectDesc' => ['rules' => 'required']
           
 
         ];

@@ -12,7 +12,7 @@ class FormModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['formId', 'formHeader', 'formStructureJson', 'formDescripton','businessId', 'formUrl', 'coverImageUrl', 'bannerImageUrl', 'isDefault', 'formType', 'buttontextColor', 'formSetingData', 'isAdvancedForm', 'buttonColor', 'bagroundColor', 'userId', 'updDatetime', 'createdDate', 'modifiedDate', 'active', 'isDeleted', 'logoImageUrl', 'isHeaderHidden', 'isLogoHidden'];
+    protected $allowedFields    = ['formId', 'formHeader', 'formStructureJson', 'formDescripton','businessId', 'formUrl', 'coverImageUrl',  'isDefault', 'formType',  'formSetingData', 'isAdvancedForm', 'buttonColor', 'bagroundColor', 'userId', 'updDatetime', 'createdDate', 'modifiedDate', 'active', 'isDeleted', 'logoImageUrl', 'isHeaderHidden', 'isLogoHidden'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

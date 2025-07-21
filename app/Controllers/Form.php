@@ -125,11 +125,61 @@ class Form extends BaseController
     }
 
   
-   public function create()
-{
-    $input = $this->request->getPost();
+//    public function create()
+// {
+//     $input = $this->request->getPost();
 
-    // Define validation rules
+//     // Define validation rules
+//     $rules = [
+//         'formHeader'        => ['rules' => 'required'],
+//         'formStructureJson' => ['rules' => 'required'],
+//         'formDescripton'    => ['rules' => 'required'],
+//         'businessId'        => ['rules' => 'required|integer'],
+//     ];
+
+//     if ($this->validate($rules)) {
+//         $key = "Exiaa@11";
+//         $header = $this->request->getHeader("Authorization");
+//         $token = null;
+
+//         // Extract token
+//         if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
+//             $token = $matches[1];
+//         }
+
+//         if ($token) {
+//             try {
+//                 $decoded = JWT::decode($token, new Key($key, 'HS256'));
+//                 $input['businessId'] = $decoded->businessId ?? $input['businessId'] ?? null;
+//             } catch (\Exception $e) {
+//                 return $this->failUnauthorized('Invalid or expired token');
+//             }
+//         }
+
+//         // Connect to tenant DB
+//         $tenantService = new TenantService();
+//         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+//         $model = new FormModel($db);
+//         $model->insert($input);
+
+//         return $this->respond(['status' => true, 'message' => 'Form Added Successfully'], 200);
+//     } else {
+//         return $this->fail([
+//             'status' => false,
+//             'errors' => $this->validator->getErrors(),
+//             'message' => 'Invalid Inputs',
+//         ], 409);
+//     }
+// }
+
+
+
+public function create()
+{
+    $input = $this->request->getJSON(true); // Get JSON input as assoc array
+
+    // Validation (formUrl not required)
     $rules = [
         'formHeader'        => ['rules' => 'required'],
         'formStructureJson' => ['rules' => 'required'],
@@ -138,11 +188,11 @@ class Form extends BaseController
     ];
 
     if ($this->validate($rules)) {
+        // Decode token
         $key = "Exiaa@11";
         $header = $this->request->getHeader("Authorization");
         $token = null;
 
-        // Extract token
         if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
             $token = $matches[1];
         }
@@ -159,11 +209,23 @@ class Form extends BaseController
         // Connect to tenant DB
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
         $model = new FormModel($db);
+
+        // Generate a unique 15-character alphanumeric formUrl
+        do {
+            $randomUrl = substr(bin2hex(random_bytes(10)), 0, 15); // 15 chars
+        } while ($model->where('formUrl', $randomUrl)->first());
+
+        $input['formUrl'] = $randomUrl;
+
+        // Insert into database
         $model->insert($input);
 
-        return $this->respond(['status' => true, 'message' => 'Form Added Successfully'], 200);
+        return $this->respond([
+            'status' => true,
+            'message' => 'Form Added Successfully',
+            'formUrl' => $randomUrl
+        ], 200);
     } else {
         return $this->fail([
             'status' => false,

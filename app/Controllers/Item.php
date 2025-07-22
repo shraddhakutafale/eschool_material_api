@@ -907,18 +907,26 @@ class Item extends BaseController
  
 
     
-    public function getAllCategoryWeb()
-    {
-        $input = $this->request->getJSON();
+    // public function getAllCategoryWeb()
+    // {
+    //     $input = $this->request->getJSON();
 
-         // Insert the product data into the database
-         $tenantService = new TenantService();
-         // Connect to the tenant's database
-         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new ItemCategory($db);
-        $itemCategories = $model->findAll();
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
-    }
+    //      // Insert the product data into the database
+    //      $tenantService = new TenantService();
+    //      // Connect to the tenant's database
+    //      $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     $model = new ItemCategory($db);
+    //     $itemCategories = $model->findAll();
+    //     return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
+    // }
+public function getAllCategoryWeb()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ItemCategory($db);
+    $itemCategories = $model->findAll();
+    return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $itemCategories], 200);
+}
 
     public function getAllItemByCategoryWeb()
     {

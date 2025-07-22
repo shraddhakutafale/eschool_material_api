@@ -199,6 +199,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     
     $routes->post('delete', 'Item::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]);
+$routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilter','tenantFilter']]);
+
     $routes->post('getallsubcategory', 'Item::getAllItemSubCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallsubcategorybycategory', 'Item::getAllItemSubCategoryByCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallitemgroup', 'Item::getAllItemGroup',['filter' => ['authFilter','tenantFilter']]);
@@ -250,6 +252,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     //Routes for Purchase Order (PO)
     $routes->get('getall', 'Po::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Po::getPosPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Item::getItemsPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+
     $routes->get('view/(:segment)', 'Po::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Po::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Po::update',['filter' => ['authFilter','tenantFilter']]);

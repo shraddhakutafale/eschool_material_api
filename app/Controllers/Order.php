@@ -135,63 +135,64 @@ public function getOrdersPaging()
 
  
 
-    public function create()
+public function create()
 {
     $input = $this->request->getJSON();
 
-    // Validation rules for order
     $rules = [
         'orderNo' => ['rules' => 'required'],
         'orderDate' => ['rules' => 'required'],
     ];
 
-    // Validate form data
     if ($this->validate($rules)) {
-       
         $tenantService = new TenantService();
-        // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new OrderModel($db);
 
-        // Insert the order into the 'order' table
         $orderData = [
             'orderNo' => $input->orderNo,
             'orderDate' => $input->orderDate,
             'businessNameFor' => $input->businessNameFor,
-            'itemName' => $input->itemName,
             'phoneFor' => $input->phoneFor,
             'totalItem' => $input->totalItem,
             'rate' => $input->rate,
             'finalAmount' => $input->finalAmount,
             'taxInvoiceNumber' => $input->taxInvoiceNumber,
-            
-
         ];
 
-        // Insert the order and retrieve the generated orderId
-        $orderId= $model->insert($orderData);
+        $orderId = $model->insert($orderData);
 
         if ($orderId) {
-            // Now insert the items into the item_details table using the orderId
+            $itemDetailsModel = new OrderDetailModel($db);
 
-            $itemDetailsModel = new OrderDetailModel($db); // Assuming you have this model for the item details
+            // Prepare bulk item data array for insertion
+            $itemsData = [];
+            foreach ($input->items as $item) {
+                $itemsData[] = [
+                    'orderId' => $orderId,
+                    'itemId' => $item->itemId,
+                    'quantity' => $item->quantity,
+                    'rate' => $item->rate,
+                    'amount' => $item->amount
+                ];
+            }
 
-           
+            // Insert all items at once
+            $itemDetailsModel->insertBatch($itemsData);
 
             return $this->respond(['status' => true, 'message' => 'Order and items added successfully'], 200);
         } else {
             return $this->respond(['status' => false, 'message' => 'Failed to create the Order'], 500);
         }
     } else {
-        // Return validation errors
-        $response = [
+        return $this->fail([
             'status' => false,
             'errors' => $this->validator->getErrors(),
             'message' => 'Invalid Inputs'
-        ];
-        return $this->fail($response, 409);
+        ], 409);
     }
 }
+
 
 
     // public function update()

@@ -174,7 +174,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->get('getallwebsite', 'Form::getFormsWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
     $routes->post('delete', 'Form::delete',['filter' => ['authFilter','tenantFilter']]); 
     $routes->post('createweb', 'Form::createWeb',['filter' => 'tenantFilter']);
-    
+    $routes->post('addformdata', 'Form::addFormData',['filter' => ['authFilter','tenantFilter']]);
+
   });
 
   $routes->post('donate/createweb', 'Donation::createWeb',['filter' => 'tenantFilter']);

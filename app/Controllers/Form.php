@@ -14,6 +14,7 @@ use \Firebase\JWT\Key;
 class Form extends BaseController
 {
     use ResponseTrait;
+  
 
     public function index()
     {
@@ -30,8 +31,7 @@ class Form extends BaseController
         ];
         return $this->respond($response, 200);
     }
-
-
+  
   
     public function getFormsPaging()
     {
@@ -109,7 +109,7 @@ class Form extends BaseController
         return $this->respond($response, 200);
     }
 
-    
+ 
 
     public function getFormsWebsite()
     {
@@ -234,6 +234,67 @@ public function create()
         ], 409);
     }
 }
+
+public function addFormData()
+{
+    $input = $this->request->getJSON(true); // Get JSON input as assoc array
+
+    $rules = [
+        'formId'        => ['rules' => 'required|integer'],
+        'formDataJson'  => ['rules' => 'required'],
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Validation Failed',
+            'errors' => $this->validator->getErrors()
+        ]);
+    }
+
+    // Get userId from token
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
+        $token = $matches[1];
+    }
+
+    $userId = null;
+    if ($token) {
+        try {
+            $decoded = JWT::decode($token, new \Firebase\JWT\Key($key, 'HS256'));
+            $userId = $decoded->userId ?? null;
+        } catch (\Exception $e) {
+            return $this->failUnauthorized('Invalid or expired token');
+        }
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $formDataModel = new \App\Models\FormDataModel($db);
+
+    $saveData = [
+        'formId'        => $input['formId'],
+        'formDataJson'  => json_encode($input['formDataJson']), // array of form field structure
+        'userId'        => $userId,
+        'isActive'      => 1,
+        'isDeleted'     => 0,
+        'createdDate'   => date('Y-m-d H:i:s')
+    ];
+
+    if ($formDataModel->insert($saveData)) {
+        return $this->respond([
+            'status' => true,
+            'message' => 'Form structure saved successfully'
+        ]);
+    } else {
+        return $this->failServerError('Failed to save form structure');
+    }
+}
+
+
 
 
  public function delete()

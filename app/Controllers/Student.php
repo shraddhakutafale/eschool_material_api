@@ -128,7 +128,7 @@ class Student extends BaseController
 }
 
 
-   public function getStudentsAdmissionPaging()
+public function getStudentsAdmissionPaging()
 {
     $input = $this->request->getJSON();
 
@@ -148,8 +148,9 @@ class Student extends BaseController
     $feeModel = new FeeModel($db);
     $paymentDetailModel = new PaymentDetailModel($db);
 
-    $query = $studentModel->select('student_mst.*, admission_details.admissionId, admission_details.itemId')
+    $query = $studentModel->select('student_mst.*, admission_details.admissionId, admission_details.itemId, shift_mst.startTime, shift_mst.endTime')
         ->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left')
+        ->join('shift_mst','shift_mst.shiftId = admission_details.shiftId', 'left')
         ->where('student_mst.isDeleted', 0)
         ->where('student_mst.businessId', $input->businessId);
 
@@ -232,38 +233,43 @@ class Student extends BaseController
             $paymentStatus = 'Unpaid';
         }
 
-      $finalData[] = [
-    'studentId' => $student['studentId'],
-    'studentCode' => $student['studentCode'],
-    'firstName' => $student['firstName'],
-    'middleName' => $student['middleName'],
-    'lastName' => $student['lastName'],
-    'mobileNo' => $student['mobileNo'],
-    'motherName' => $student['motherName'],
-    'gender' => $student['gender'],
-    'birthDate' => $student['birthDate'],
-    'birthPlace' => $student['birthPlace'],
-    'nationality' => $student['nationality'],
-    'religion' => $student['religion'],
-    'cast' => $student['cast'],
-    'subCast' => $student['subCast'],
-    'motherTongue' => $student['motherTongue'],
-    'category' => $student['category'],
-    'bloodGroup' => $student['bloodGroup'],
-    'aadharNo' => $student['aadharNo'],
-    'medium' => $student['medium'],
-    'physicallyHandicapped' => $student['physicallyHandicapped'],
-    'educationalGap' => $student['educationalGap'],
-    'selectedCourses' => $student['selectedCourses'],
-    'registeredDate' => $student['registeredDate'],
-    'dueDate' => $student['dueDate'],
-    'generalRegisterNo' => $student['generalRegisterNo'],
-    'admissionId' => $student['admissionId'],
-    'itemId' => $student['itemId'],
-    'fees' => $fees,
-    'totalFee' => $totalFee,
-    'paymentStatus' => $paymentStatus,
-    ];
+        $shiftTime = ($student['startTime'] && $student['endTime']) 
+            ? $student['startTime'] . '-' . $student['endTime'] 
+            : null;
+
+        $finalData[] = [
+            'studentId' => $student['studentId'],
+            'studentCode' => $student['studentCode'],
+            'firstName' => $student['firstName'],
+            'middleName' => $student['middleName'],
+            'lastName' => $student['lastName'],
+            'mobileNo' => $student['mobileNo'],
+            'motherName' => $student['motherName'],
+            'gender' => $student['gender'],
+            'birthDate' => $student['birthDate'],
+            'birthPlace' => $student['birthPlace'],
+            'nationality' => $student['nationality'],
+            'religion' => $student['religion'],
+            'cast' => $student['cast'],
+            'subCast' => $student['subCast'],
+            'motherTongue' => $student['motherTongue'],
+            'category' => $student['category'],
+            'bloodGroup' => $student['bloodGroup'],
+            'aadharNo' => $student['aadharNo'],
+            'medium' => $student['medium'],
+            'physicallyHandicapped' => $student['physicallyHandicapped'],
+            'educationalGap' => $student['educationalGap'],
+            'selectedCourses' => $student['selectedCourses'],
+            'registeredDate' => $student['registeredDate'],
+            'dueDate' => $student['dueDate'],
+            'generalRegisterNo' => $student['generalRegisterNo'],
+            'admissionId' => $student['admissionId'],
+            'itemId' => $student['itemId'],
+            'fees' => $fees,
+            'shiftTime' => $shiftTime,
+            'totalFee' => $totalFee,
+            'paymentStatus' => $paymentStatus,
+        ];
     }
 
     return $this->respond([
@@ -278,6 +284,7 @@ class Student extends BaseController
         ]
     ], 200);
 }
+
 
 public function assignShiftToStudent()
     {

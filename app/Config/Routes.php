@@ -250,7 +250,12 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
 
   $routes->group('po', function ($routes) {
     //Routes for Purchase Order (PO)
-    $routes->get('getall', 'Po::index',['filter' => ['authFilter', 'tenantFilter']]);
+    // $routes->get('getall', 'Po::index',['filter' => ['authFilter', 'tenantFilter']]);
+    // $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilter']]);
+
+$routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilter']]);
+
+
     $routes->post('getallpaging', 'Po::getPosPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Item::getItemsPaging', ['filter' => ['authFilter', 'tenantFilter']]);
 

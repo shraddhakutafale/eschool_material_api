@@ -1089,15 +1089,22 @@ public function getAllCategoryWeb()
 
     }
 
-    public function getall()
-    {
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $slideModel = new SlideModel($db);
-        
-        $slides = $slideModel->findAll();
-        return $this->respond(["status" => true, "message" => "All Slides Fetched", "data" => $slides], 200);
-    }
+   public function getall()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    // Use the correct model for fetching products/items
+    $itemModel = new ItemModel($db);  // <-- Change to your actual model
+
+    $items = $itemModel->findAll();
+    return $this->respond([
+        "status" => true,
+        "message" => "All Items Fetched",
+        "data" => $items
+    ], 200);
+}
+
 
     public function deleteItem($id)
     {

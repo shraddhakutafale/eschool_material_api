@@ -148,9 +148,10 @@ public function getStudentsAdmissionPaging()
     $feeModel = new FeeModel($db);
     $paymentDetailModel = new PaymentDetailModel($db);
 
-    $query = $studentModel->select('student_mst.*, admission_details.admissionId, admission_details.itemId, shift_mst.startTime, shift_mst.endTime')
+    $query = $studentModel
+        ->select('student_mst.*, admission_details.admissionId, admission_details.itemId')
         ->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left')
-        ->join('shift_mst','shift_mst.shiftId = admission_details.shiftId', 'left')
+        // 🔴 Removed shift_mst join here to prevent collapsing multiple shifts
         ->where('student_mst.isDeleted', 0)
         ->where('student_mst.businessId', $input->businessId);
 
@@ -198,7 +199,7 @@ public function getStudentsAdmissionPaging()
         $fees = [];
         $totalFee = 0;
 
-        // Get fees for this itemId (i.e. course)
+        // Get item fees
         $itemFeeMapArray = $itemFeeMapModel
             ->where('itemId', $student['itemId'])
             ->where('isDeleted', 0)
@@ -215,7 +216,7 @@ public function getStudentsAdmissionPaging()
             }
         }
 
-        // Get payments for this admission and course
+        // Get payments
         $payments = $paymentDetailModel
             ->where('admissionId', $student['admissionId'])
             ->where('isDeleted', 0)
@@ -233,9 +234,20 @@ public function getStudentsAdmissionPaging()
             $paymentStatus = 'Unpaid';
         }
 
-        $shiftTime = ($student['startTime'] && $student['endTime']) 
-            ? $student['startTime'] . '-' . $student['endTime'] 
-            : null;
+        // ✅ Get all shift timings for this student
+        $admissions = $admissionModel
+            ->select('shift_mst.startTime, shift_mst.endTime')
+            ->join('shift_mst', 'shift_mst.shiftId = admission_details.shiftId', 'left')
+            ->where('admission_details.studentId', $student['studentId'])
+            ->findAll();
+
+        $shifts = [];
+
+        foreach ($admissions as $admission) {
+            if (!empty($admission['startTime']) && !empty($admission['endTime'])) {
+                $shifts[] = $admission['startTime'] . '-' . $admission['endTime'];
+            }
+        }
 
         $finalData[] = [
             'studentId' => $student['studentId'],
@@ -266,9 +278,9 @@ public function getStudentsAdmissionPaging()
             'admissionId' => $student['admissionId'],
             'itemId' => $student['itemId'],
             'fees' => $fees,
-            'shiftTime' => $shiftTime,
             'totalFee' => $totalFee,
             'paymentStatus' => $paymentStatus,
+            'shifts' => $shifts, // ✅ multiple shifts
         ];
     }
 
@@ -284,6 +296,7 @@ public function getStudentsAdmissionPaging()
         ]
     ], 200);
 }
+
 
 
 public function assignShiftToStudent()

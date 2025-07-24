@@ -188,6 +188,56 @@ class Opening extends BaseController
         }
     }
 
+public function updateQuantity()
+{
+    $input = $this->request->getPost();
+
+    // Validate the input
+    $rules = [
+        'openingId' => 'required|numeric',
+        'quantity'  => 'required|numeric'
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $model = new OpeningModel($db);
+    $openingId = $input['openingId'];
+
+    $opening = $model->find($openingId);
+    if (!$opening) {
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Opening not found'
+        ], 404);
+    }
+
+    $updateData = [
+        'quantity'      => $input['quantity'],
+        'modifiedBy'    => $this->request->user->id ?? 0,
+        'modifiedDate'  => date('Y-m-d H:i:s')
+    ];
+
+    if ($model->update($openingId, $updateData)) {
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Quantity updated successfully'
+        ], 200);
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Failed to update quantity'
+        ], 500);
+    }
+}
 
     public function delete()
     {

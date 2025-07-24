@@ -149,18 +149,21 @@ public function create()
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new OrderModel($db);
 
-        $orderData = [
-            'orderNo' => $input->orderNo,
-            'orderDate' => $input->orderDate,
-            'mobileNo' => $input->mobileNo,
-            'email' => $input->email,
-            'address' => $input->address,
-            'discount' => $input->discount,
-            'totalTax' => $input->gstTax,
-            'totalItem' => $input->totalItems,
-            'totalPrice' => $input->totalPrice,
-            'businessId' => $input->businessId,
-        ];
+    $orderData = [
+    'orderNo'    => $input->orderNo ?? '',
+    'orderDate'  => date('Y-m-d H:i:s', strtotime((string) $input->orderDate ?? 'now')),
+    'mobileNo'   => $input->mobileNo ?? '',
+    'email'      => $input->email ?? '',
+    'address'    => $input->address ?? '',
+    'discount'   => $input->discount ?? 0,
+    'totalTax'   => $input->gstTax ?? 0,
+    'totalItem'  => $input->totalItem ?? 0,
+    'totalPrice' => $input->totalPrice ?? 0,
+    'businessId' => $input->businessId ?? 1,
+    
+];
+
+
 
         $orderId = $model->insert($orderData);
 

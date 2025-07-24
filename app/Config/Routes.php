@@ -421,6 +421,8 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->post('update', 'Opening::update',['filter' => ['tenantFilter']]);
     $routes->get('getallwebsite', 'Opening::getOpeningsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Opening::delete',['filter' => ['tenantFilter']]);
+    $routes->post('update-quantity', 'Opening::updateQuantity', ['filter' => ['tenantFilter']]);
+
   });
 
   $routes->group('link', function ($routes) {

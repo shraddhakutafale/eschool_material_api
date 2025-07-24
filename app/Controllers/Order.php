@@ -152,12 +152,14 @@ public function create()
         $orderData = [
             'orderNo' => $input->orderNo,
             'orderDate' => $input->orderDate,
-            'businessNameFor' => $input->businessNameFor,
-            'phoneFor' => $input->phoneFor,
-            'totalItem' => $input->totalItem,
-            'rate' => $input->rate,
-            'finalAmount' => $input->finalAmount,
-            'taxInvoiceNumber' => $input->taxInvoiceNumber,
+            'mobileNo' => $input->mobileNo,
+            'email' => $input->email,
+            'address' => $input->address,
+            'discount' => $input->discount,
+            'totalTax' => $input->gstTax,
+            'totalItem' => $input->totalItems,
+            'totalPrice' => $input->totalPrice,
+            'businessId' => $input->businessId,
         ];
 
         $orderId = $model->insert($orderData);

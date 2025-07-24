@@ -12,7 +12,7 @@ class OrderDetailModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['orderDetailId', 'orderId', 'orderNo', 'itemId','quoteId' ,'quantity', 'rate','amount', 'subtotal', 'discount', 'taxAmount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['orderDetailId', 'orderId', 'itemName', 'itemId', 'itemCode', 'unitName', 'quantity', 'rate', 'amount', 'discount', 'discountType', 'taxAmount', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

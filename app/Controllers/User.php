@@ -398,7 +398,8 @@ class User extends BaseController
             $model->insert($data);
             $businessData = [
                 'businessName' => $input->businessName,
-                'businessCategoryId' => $input->businessCategoryId
+                'businessCategoryId' => $input->businessCategoryId,
+                'businessSubCategoryId' => $input->businessSubCategoryId ?? null,
             ];
             $businessModel->insert($businessData);
             $userBusinessData = [

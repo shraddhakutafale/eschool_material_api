@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CustomerModel extends Model
+class BusinessSubCategoryModel extends Model
 {
-    protected $table            = 'customer_mst';
-    protected $primaryKey       = 'customerId';
+    protected $table            = 'business_sub_category';
+    protected $primaryKey       = 'subCategoryId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['customerId', 'customerCode', 'profilePic','customerType', 'name', 'websiteUrl', 'contactPerson', 'gender', 'mobileNo', 'alternateMobileNo', 'dateOfBirth', 'emailId','businessId', 'modifiedBy', 'modifiedDate', 'createdBy', 'createdDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['subCategoryId', 'subCategoryName', 'categoryId', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -48,4 +48,3 @@ class CustomerModel extends Model
         return $data;
     }
 }
- 

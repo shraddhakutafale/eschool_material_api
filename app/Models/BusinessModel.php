@@ -13,7 +13,7 @@ class BusinessModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
 
-    protected $allowedFields    = ['businessId', 'businessName', 'businessDesc', 'tenantName', 'timings', 'aboutUs', 'address', 'tags', 'businessCategoryId', 'photoUrl', 'photoBase64Url', 'logoUrl', 'themeColor', 'primaryContactNo', 'secondaryContactNo', 'pageUrl', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['businessId', 'businessName', 'businessDesc', 'tenantName', 'timings', 'aboutUs', 'address', 'tags', 'businessCategoryId','businessSubCategoryId', 'photoUrl', 'photoBase64Url', 'logoUrl', 'themeColor', 'primaryContactNo', 'secondaryContactNo', 'pageUrl', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -22,26 +22,30 @@ class BusinessModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'createdDate';
     protected $updatedField  = 'modifiedDate';
-    protected $deletedField  = 'deletedDate';
-
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
-
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $beforeInsert = ['addCreatedBy'];
+    protected $beforeUpdate = ['addModifiedBy'];
+ 
+    protected function addCreatedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['createdBy'] = $userId;
+        }
+        return $data;
+    }
+ 
+    protected function addModifiedBy(array $data)
+    {
+        helper('jwt_helper'); // Ensure the JWT helper is loaded
+        $userId = getUserIdFromToken();
+        if ($userId) {
+            $data['data']['modifiedBy'] = $userId;
+        }
+        return $data;
+    }
 }

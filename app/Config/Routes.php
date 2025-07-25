@@ -127,6 +127,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
      $routes->post('update', 'Business::update',['filter' => ['authFilter','tenantFilter']]);
      $routes->get('getallwebsite', 'Business::getBusinessesWebsite',['filter' => ['tenantFilter']]); // Get all customer for website
      $routes->post('delete', 'Business::delete',['filter' => ['authFilter','tenantFilter']]); 
+
+    $routes->post('getallbusinesscategory', 'Business::getAllBusinessCategory');
+    $routes->post('getallbusinesssubcategory', 'Business::getAllBusinessSubCategory');
   });
   
   $routes->group('event', function ($routes) {

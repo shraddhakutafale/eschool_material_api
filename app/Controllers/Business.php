@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BusinessModel;
 use App\Models\BusinessCategoryModel;
+use App\Models\BusinessSubCategoryModel;
 use App\Models\UserBusiness;
 
 use \Firebase\JWT\JWT;
@@ -227,6 +228,25 @@ class Business extends BaseController
         }
         return $this->respond(['status' => true, 'message' => 'All Business Fetched', 'data' => $businesses], 200);
 
+    }
+
+    public function getAllBusinessCategory()
+    {
+        $categories = new BusinessCategoryModel;
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $categories->findAll()], 200);
+    }
+
+    public function getAllBusinessSubCategory()
+    {
+        $input = $this->request->getJSON();
+        $subCategories = new BusinessSubCategoryModel;
+        if (isset($input->businessCategoryId)) {
+            $subCategories = $subCategories->where('categoryId', $input->businessCategoryId);
+            return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $subCategories->findAll()], 200);
+        }else {
+            return $this->respond(["status" => true, "message" => "Category ID is required", "data"=> []], 200);
+        }
+        
     }
     
 }

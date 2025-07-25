@@ -241,6 +241,19 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('delete', 'Gallery::delete',['filter' => ['authFilter','tenantFilter']]);
   });
 
+
+    
+  $routes->group('naac', function ($routes) {
+    //Routes for naac
+    $routes->get('getall', '::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Naac::getNaacsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Naac::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Naac::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Naac::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Naac::getNaacsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Naac::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
   $routes->group('quotation', function ($routes) {
     //Routes for quotation
     $routes->get('getall', 'Quotation::index',['filter' => ['authFilter', 'tenantFilter']]);

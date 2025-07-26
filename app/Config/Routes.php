@@ -385,6 +385,15 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['authFilter','tenantFilter']]);
   });
 
+  $routes->group('orderDetail', function ($routes) {
+    // Routes for order details
+    $routes->get('getall', 'OrderDetail::index', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'OrderDetail::getOrderDetailsPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('create', 'OrderDetail::create', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('update', 'OrderDetail::update', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('delete', 'OrderDetail::delete', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('getbyorder/(:num)', 'OrderDetail::getByOrder/$1', ['filter' => ['authFilter', 'tenantFilter']]); 
+});
 
   $routes->group('student' , function ($routes) {
     $routes->get('getall', 'Student::index',['filter' => ['authFilter', 'tenantFilter']]);

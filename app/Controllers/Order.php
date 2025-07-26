@@ -16,16 +16,32 @@ class Order extends BaseController
     use ResponseTrait;
 
     public function index()
-    {
-        $tenantService = new TenantService();
+{
+    $tenantService = new TenantService();
 
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    // Connect to the tenant's database
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        // Load UserModel with the tenant database connection
-        $OrderModel = new OrderModel($db);
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $OrderModel->findAll()], 200);
+    // Load models
+    $OrderModel = new OrderModel($db);
+    $OrderDetailModel = new OrderDetailModel($db);
+
+    // Fetch all orders (only active & not deleted)
+    $orders = $OrderModel->where('isDeleted', 0)->findAll();
+
+    // Fetch and attach details for each order
+    foreach ($orders as &$order) {
+        $details = $OrderDetailModel->where('orderId', $order['orderId'])->findAll();
+        $order['details'] = $details ?: []; // Attach details array
     }
+
+    return $this->respond([
+        "status"  => true,
+        "message" => "All Orders with Details Fetched",
+        "data"    => $orders
+    ], 200);
+}
+
 
 
 
@@ -330,7 +346,9 @@ public function create()
                     'itemId' => $item->itemId,  // Use the provided itemId
                     'quantity' => $item->quantity,  // Quantity
                     'rate' => $item->rate,  // Rate
-                    'amount' => $item->amount,  // Amount = quantity * rate
+                    'amount' => $item->amount, 
+                    'itemName' => $item->itemName,  // Amount = quantity * rate
+                     // Amount = quantity * rate
                     // You can add more fields as needed
                 ];
 

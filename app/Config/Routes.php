@@ -381,6 +381,8 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->post('getallpaging', 'Order::getOrdersPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('create', 'Order::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Order::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updateStatus', 'Order::updateStatus', ['filter' => ['authFilter', 'tenantFilter']]);
+
     $routes->post('delete', 'Order::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['authFilter','tenantFilter']]);
   });

@@ -165,22 +165,23 @@ public function create()
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new OrderModel($db);
 
-    $orderData = [
-    'orderNo'    => $input->orderNo ?? '',
-    'orderDate'  => date('Y-m-d H:i:s', strtotime((string) $input->orderDate ?? 'now')),
-    'mobileNo'   => $input->mobileNo ?? '',
-    'email'      => $input->email ?? '',
-    'address'    => $input->address ?? '',
-    'discount'   => $input->discount ?? 0,
-    'totalTax'   => $input->gstTax ?? 0,
-    'totalItem'  => $input->totalItem ?? 0,
-    'totalPrice' => $input->totalPrice ?? 0,
-    'businessId' => $input->businessId ?? 1,
-    
-];
+        // Prepare order data
+        $orderData = [
+            'orderNo'    => $input->orderNo ?? '',
+            'orderDate'  => date('Y-m-d H:i:s', strtotime((string) $input->orderDate ?? 'now')),
+            'mobileNo'   => $input->mobileNo ?? '',
+            'email'      => $input->email ?? '',
+            'address'    => $input->address ?? '',
+            'discount'   => $input->discount ?? 0,
+            'totalTax'   => $input->gstTax ?? 0,
+            'totalItem'  => $input->totalItem ?? 0,
+            'totalPrice' => $input->totalPrice ?? 0,
+            'status'     => $input->status ?? 'Pending',
+            'message'    => $input->message ?? '',
+            'businessId' => $input->businessId ?? 1,
+        ];
 
-
-
+        // Insert order and get orderId
         $orderId = $model->insert($orderData);
 
         if ($orderId) {
@@ -190,29 +191,39 @@ public function create()
             $itemsData = [];
             foreach ($input->items as $item) {
                 $itemsData[] = [
-                    'orderId' => $orderId,
-                    'itemId' => $item->itemId,
+                    'orderId'  => $orderId,
+                    'itemId'   => $item->itemId,
+                    'itemName' => $item->itemName ?? '',
                     'quantity' => $item->quantity,
-                    'rate' => $item->rate,
-                    'amount' => $item->amount
+                    'rate'     => $item->rate,
+                    'amount'   => $item->amount
                 ];
             }
 
             // Insert all items at once
             $itemDetailsModel->insertBatch($itemsData);
 
-            return $this->respond(['status' => true, 'message' => 'Order and items added successfully'], 200);
+            // ✅ Return response with orderId
+            return $this->respond([
+                'status'  => true,
+                'message' => 'Order and items added successfully',
+                'orderId' => $orderId
+            ], 200);
         } else {
-            return $this->respond(['status' => false, 'message' => 'Failed to create the Order'], 500);
+            return $this->respond([
+                'status'  => false,
+                'message' => 'Failed to create the Order'
+            ], 500);
         }
     } else {
         return $this->fail([
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
             'message' => 'Invalid Inputs'
         ], 409);
     }
 }
+
 
 
 
@@ -270,128 +281,157 @@ public function create()
     //         return $this->fail($response, 409);
     //     }
     // }
-    public function update()
+   public function update()
     {
-        // Get input data from the request body
-        $input = $this->request->getJSON();
+    // Get input data from the request body
+    $input = $this->request->getJSON();
 
-        // Validation rules for the order and Quotation Details
-        $rules = [
-            'orderId' => ['rules' => 'required|numeric'], // Ensure orderId is provided and is numeric
+    // Validation rules for the order and Quotation Details
+    $rules = [
+        'orderId' => ['rules' => 'required|numeric'], // Ensure orderId is provided and is numeric
+    ];
+
+    // Validate the input
+    if (!$this->validate($rules)) {
+        // Validation failed
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
         ];
+        return $this->fail($response, 409);
+    }
 
-        // Validate the input
-        if (!$this->validate($rules)) {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
+    // Get tenant database configuration
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    // Start a database transaction
+    $db->transBegin();
+
+    // Instantiate the models
+    $OrderModel = new OrderModel($db);
+    $OrderDetailModel = new OrderDetailModel($db);
+
+    // Retrieve the order by orderId
+    $orderId = $input->orderId;
+    $order = $OrderModel->find($orderId); // Assuming find method retrieves the order by orderId
+
+    if (!$order) {
+        $db->transRollback();
+        return $this->fail(['status' => false, 'message' => 'order not found'], 404);
+    }
+
+    // Prepare the data to be updated for the OrderModel
+    $updateData = [
+        'orderNo'          => $input->orderNo,
+        'orderDate'        => $input->orderDate,
+        'businessNameFor'  => $input->businessNameFor,
+        'phoneFor'         => $input->mobileNo,
+        'total'            => $input->total,
+        'totalItem'        => $input->totalItems,
+        'totalPrice'       => $input->totalPrice,
+         'status'           => $input->status ?? $order['status'] ?? 'Pending',
+    'message'          => $input->message ?? $order['message'] ?? '',     // Add message (fallback to old value)
+        // Keep rest unchanged
+    ];
+
+    // Update the order in the OrderModel
+    $updated = $OrderModel->update($orderId, $updateData);
+
+    if (!$updated) {
+        $db->transRollback();
+        return $this->fail(['status' => false, 'message' => 'Failed to update order'], 500);
+    }
+
+    // Handle quotation details (multiple items)
+    if (isset($input->items) && is_array($input->items)) {
+        foreach ($input->items as $item) {
+            // Ensure itemId is provided and valid
+            if (empty($item->itemId)) {
+                $db->transRollback();
+                return $this->fail(['status' => false, 'message' => 'itemId is required and cannot be null for all items'], 400);
+            }
+
+            // Prepare the detail data for update or insert
+            $detailData = [
+                'orderId'   => $orderId,
+                'itemId'    => $item->itemId,
+                'quantity'  => $item->quantity,
+                'rate'      => $item->rate,
+                'amount'    => $item->amount,
+                'itemName'  => $item->itemName,
             ];
-            return $this->fail($response, 409);
-        }
 
-        // Get tenant database configuration
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        // Start a database transaction
-        $db->transBegin();
-
-        // Instantiate the models
-        $OrderModel = new OrderModel($db);
-        $OrderDetailModel = new OrderDetailModel($db);
-
-        // Retrieve the order by orderId
-        $orderId = $input->orderId;
-        $order = $OrderModel->find($orderId); // Assuming find method retrieves the order by orderId
-
-        if (!$order) {
-            $db->transRollback();
-            return $this->fail(['status' => false, 'message' => 'order not found'], 404);
-        }
-
-        // Prepare the data to be updated for the OrderModel
-        $updateData = [
-            'orderNo' => $input->orderNo,
-            'orderDate' => $input->orderDate,
-            'businessNameFor' => $input->businessNameFor,
-            'phoneFor' => $input->mobileNo,
-            'total'=> $input->total,
-            'totalItem'=> $input->totalItems,
-            'totalPrice'=> $input->totalPrice,
-            // You can add other fields here as necessary
-        ];
-
-        // Update the order in the OrderModel
-        $updated = $OrderModel->update($orderId, $updateData);
-
-        if (!$updated) {
-            $db->transRollback();
-            return $this->fail(['status' => false, 'message' => 'Failed to update order'], 500);
-        }
-
-        // Handle quotation details (multiple items)
-        if (isset($input->items) && is_array($input->items)) {
-            foreach ($input->items as $item) {
-                // Ensure itemId is provided and valid
-                if (empty($item->itemId)) {
+            // Check if orderDetailId exists to update or if we need to insert it
+            if (isset($item->orderDetailId) && $item->orderDetailId) {
+                $updatedDetail = $OrderDetailModel->update($item->orderDetailId, $detailData);
+                if (!$updatedDetail) {
                     $db->transRollback();
-                    return $this->fail(['status' => false, 'message' => 'itemId is required and cannot be null for all items'], 400);
+                    return $this->fail(['status' => false, 'message' => 'Failed to update order Detail for orderDetailId ' . $item->orderDetailId], 500);
                 }
+            } else {
+                // Check if the item already exists in the order details before inserting
+                $existingItem = $OrderDetailModel->where('orderId', $orderId)
+                                                 ->where('itemId', $item->itemId)
+                                                 ->first();
 
-                // Prepare the detail data for update or insert
-                $detailData = [
-                    'orderId' => $orderId,  // Ensure the orderId is linked to the detail
-                    'itemId' => $item->itemId,  // Use the provided itemId
-                    'quantity' => $item->quantity,  // Quantity
-                    'rate' => $item->rate,  // Rate
-                    'amount' => $item->amount, 
-                    'itemName' => $item->itemName,  // Amount = quantity * rate
-                     // Amount = quantity * rate
-                    // You can add more fields as needed
-                ];
-
-                // Check if orderDetailId  exists to update or if we need to insert it
-                if (isset($item->orderDetailId ) && $item->orderDetailId ) {
-                    // Update the existing order detail using orderDetailId 
-                    $updatedDetail = $OrderDetailModel->update($item->orderDetailId , $detailData);
+                if ($existingItem) {
+                    // If item exists, update it instead of inserting
+                    $detailData['orderDetailId'] = $existingItem['orderDetailId'];
+                    $updatedDetail = $OrderDetailModel->update($existingItem['orderDetailId'], $detailData);
                     if (!$updatedDetail) {
                         $db->transRollback();
-                        return $this->fail(['status' => false, 'message' => 'Failed to update order Detail for orderDetailId  ' . $item->orderDetailId ], 500);
+                        return $this->fail(['status' => false, 'message' => 'Failed to update existing order Detail'], 500);
                     }
                 } else {
-                    // Check if the item already exists in the order details before inserting
-                    $existingItem = $OrderDetailModel->where('orderId', $orderId)
-                                                        ->where('itemId', $item->itemId)
-                                                        ->first();
-
-                    if ($existingItem) {
-                        // If item exists, update it instead of inserting
-                        $detailData['orderDetailId'] = $existingItem['orderDetailId'];
-                        $updatedDetail = $OrderDetailModel->update($existingItem['orderDetailId'], $detailData);
-                        if (!$updatedDetail) {
-                            $db->transRollback();
-                            return $this->fail(['status' => false, 'message' => 'Failed to update existing order Detail'], 500);
-                        }
-                    } else {
-                        // Insert a new detail if no orderDetailId  is provided and it's not already in the order
-                        $insertedDetail = $OrderDetailModel->insert($detailData);
-                        if (!$insertedDetail) {
-                            $db->transRollback();
-                            return $this->fail(['status' => false, 'message' => 'Failed to insert new order Detail'], 500);
-                        }
+                    // Insert a new detail if no orderDetailId is provided and it's not already in the order
+                    $insertedDetail = $OrderDetailModel->insert($detailData);
+                    if (!$insertedDetail) {
+                        $db->transRollback();
+                        return $this->fail(['status' => false, 'message' => 'Failed to insert new order Detail'], 500);
                     }
                 }
             }
         }
-
-        // Commit the transaction if everything is successful
-        $db->transCommit();
-
-        // Return success message if both order and details are updated successfully
-        return $this->respond(['status' => true, 'message' => 'order and Details Updated Successfully'], 200);
     }
+
+    // Commit the transaction if everything is successful
+    $db->transCommit();
+
+    // Return success message if both order and details are updated successfully
+    return $this->respond(['status' => true, 'message' => 'order and Details Updated Successfully'], 200);
+}
+
+public function updateStatus()
+{
+    $input = $this->request->getJSON();
+
+    if (empty($input->orderId) || !is_numeric($input->orderId)) {
+        return $this->fail(['status' => false, 'message' => 'Invalid orderId'], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $OrderModel = new OrderModel($db);
+
+    $order = $OrderModel->find($input->orderId);
+    if (!$order) {
+        return $this->fail(['status' => false, 'message' => 'Order not found'], 404);
+    }
+
+    $updateData = [
+        'status'  => $input->status ?? $order['status'] ?? 'Pending',
+        'message' => $input->message ?? '',
+    ];
+
+    if (!$OrderModel->update($input->orderId, $updateData)) {
+        return $this->fail(['status' => false, 'message' => 'Failed to update status'], 500);
+    }
+
+    return $this->respond(['status' => true, 'message' => 'Status updated successfully'], 200);
+}
+
 
 
     public function delete()

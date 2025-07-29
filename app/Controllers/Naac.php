@@ -108,10 +108,13 @@ public function create()
     $input = $this->request->getPost();
 
     $rules = [
-        'name' => ['rules' => 'required'],
-        'type' => ['rules' => 'required'],
-        'file' => ['rules' => 'uploaded[file]|max_size[file,10240]|is_image[file]'], // Validations for the file
+    'name' => ['rules' => 'required'],
+    'type' => ['rules' => 'required'],
+    'file' => [
+        'rules' => 'uploaded[file]|max_size[file,10240]|mime_in[file,image/jpeg,image/jpg,image/png,application/pdf]'
+    ],
     ];
+
 
     if ($this->validate($rules)) {
         $tenantService = new \App\Libraries\TenantService();
@@ -141,6 +144,58 @@ public function create()
             'message' => 'Document Created Successfully',
             'url' => $fileUrl ?? ''
         ], 200);
+    } else {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+}
+
+
+public function delete()
+{
+    $input = $this->request->getJSON();
+
+    // Validation rule
+    $rules = [
+        'documentId' => ['rules' => 'required|numeric'], // Assuming primary key column is `id`
+    ];
+
+    if ($this->validate($rules)) {
+        $tenantService = new \App\Libraries\TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $model = new \App\Models\NaacModel($db);
+
+        $documentId = $input->documentId;
+        $document = $model->find($documentId);
+
+        if (!$document) {
+            return $this->fail(['status' => false, 'message' => 'Document not found'], 404);
+        }
+
+        // Optionally delete the file from the server
+        if (!empty($document['url'])) {
+            $filePath = WRITEPATH . 'uploads/naac/' . basename($document['url']);
+            if (file_exists($filePath)) {
+                unlink($filePath); // Delete the file
+            }
+        }
+
+        // Delete DB record
+        if ($model->delete($documentId)) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'Document deleted successfully'
+            ], 200);
+        } else {
+            return $this->fail([
+                'status' => false,
+                'message' => 'Failed to delete document'
+            ], 500);
+        }
     } else {
         return $this->fail([
             'status' => false,

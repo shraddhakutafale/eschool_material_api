@@ -1280,64 +1280,54 @@ class Course extends BaseController
             return $this->fail($response, 409);
         }
     }
+public function updateSubject()
+{
+    $input = $this->request->getJSON();
 
-    public function updateSubject()
-    {
-        $input = $this->request->getJSON();
-        
-        // Validation rules for the vendor
-        $rules = [
-            'subjectId' => ['rules' => 'required|numeric'], // Ensure vendorId is provided and is numeric
-        ];
+    $rules = [
+        'subjectId' => ['rules' => 'required|numeric'],
+    ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-        // Connect to the tenant's database
+    if ($this->validate($rules)) {
+        $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
         $model = new SubjectModel($db);
+        $subjectId = $input->subjectId;
 
-            // Retrieve the vendor by vendorId
-            // $feeId = $input ->$feeId;
-            // $fee = $model->find($feeId); 
-
-            $subject = $model->find($input->subjectId);
-
-
-
-
+        $subject = $model->find($subjectId);
         if (!$subject) {
             return $this->fail(['status' => false, 'message' => 'Subject not found'], 404);
-         }
-
-            
-         $updateData = [
-            'subjectName' => $input -> subjectName,  
-            'subjectDesc' => $input -> subjectDesc 
-           
-        ];     
-
-            // Update the vendor with new data
-         $updated = $model->update($subject, $updateData);
-
-
-         if ($updated) {
-             return $this->respond(['status' => true, 'message' => 'Subject Updated Successfully'], 200);
-        } else {
-            return $this->fail(['status' => false, 'message' => 'Failed to update Subject'], 500);
         }
 
+        $updateData = [
+            'subjectName' => $input->subjectName,
+            'subjectDesc' => $input->subjectDesc
+        ];
 
+        // ✅ Pass the subjectId, not the full object
+        $updated = $model->update($subjectId, $updateData);
+
+        if ($updated) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'Subject Updated Successfully'
+            ], 200);
         } else {
-            // Validation failed
-            $response = [
+            return $this->fail([
                 'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+                'message' => 'Failed to update Subject'
+            ], 500);
         }
+
+    } else {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
     }
+}
 
 
     public function deleteSubject()

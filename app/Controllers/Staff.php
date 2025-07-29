@@ -194,10 +194,12 @@ class Staff extends BaseController
     
     //     return $this->respond($response, 200);
     // }
+
+    
     
 
 
-  public function create()
+public function create()
 {
     $input = $this->request->getPost();
 
@@ -237,6 +239,21 @@ class Staff extends BaseController
             $input['profilePic'] = $decoded->tenantName . '/staffImages/' . $fileName;
         }
 
+        // ✅ Handle resume file upload
+        $resume = $this->request->getFile('resumeFile');
+        if ($resume && $resume->isValid() && !$resume->hasMoved()) {
+            $resumeUploadPath = FCPATH . 'writable/uploads/' . $decoded->tenantName . '/resume/';
+            if (!is_dir($resumeUploadPath)) {
+                mkdir($resumeUploadPath, 0777, true);
+            }
+
+            $resumeName = $resume->getRandomName();
+            $resume->move($resumeUploadPath, $resumeName);
+
+            // Store full URL path
+            $input['resumeUrl'] = base_url('writable/uploads/' . $decoded->tenantName . '/resume/' . $resumeName);
+        }
+
         // ✅ Database setup
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
@@ -253,7 +270,7 @@ class Staff extends BaseController
         // ✅ Save today's attendance also with businessId
         $attendanceModel->insert([
             'staffId'        => $staffId,
-            'businessId'     => $decoded->businessId, // <-- ✅ Critical fix here
+            'businessId'     => $decoded->businessId,
             'attendanceDate' => date('Y-m-d'),
             'inTime'         => date('H:i:s'),
             'outTime'        => null,
@@ -273,6 +290,7 @@ class Staff extends BaseController
         ], 409);
     }
 }
+
 
 
     //     public function create()

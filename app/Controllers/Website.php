@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\WebsiteModel;
+use App\Models\ContentModel;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -15,7 +16,6 @@ class Website extends BaseController
 {
     use ResponseTrait;
 
-    // Get all leads
     public function index()
     {
            // Insert the product data into the database
@@ -101,6 +101,7 @@ class Website extends BaseController
 
         return $this->respond($response, 200);
     }
+
 public function create()
 {
     $input = $this->request->getPost();
@@ -133,21 +134,10 @@ public function create()
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model = new \App\Models\WebsiteModel($db);
 
-    // 🧠 Check if a menu with same name exists → set as parent
-    $parentMenuId = 0;
-    $existingMenu = $model->where([
-        'menuName' => $input['menuName'],
-        'businessId' => $input['businessId'],
-        'isDeleted' => 0
-    ])->first();
+    // ✅ Use parentMenu passed from form
+    $parentMenuId = !empty($input['parentMenu']) ? (int)$input['parentMenu'] : 0;
 
-    if ($existingMenu && isset($existingMenu['menuId'])) {
-        $parentMenuId = $existingMenu['menuId'];
-    } elseif (!empty($input['parentMenuId'])) {
-        $parentMenuId = (int) $input['parentMenuId'];
-    }
-
-    // 🎯 Prepare data
+    // ✅ Prepare data for insert
     $data = [
         'menuName' => $input['menuName'],
         'menuType' => $input['menuType'],
@@ -155,13 +145,13 @@ public function create()
         'parentMenuId' => $parentMenuId,
         'isActive' => 1,
         'isDeleted' => 0,
-        'createdBy' => 9, // use current user ID if available
+        'createdBy' => 9, // you can replace with actual user ID
         'modifiedBy' => 0,
         'createdDate' => date('Y-m-d H:i:s'),
         'modifiedDate' => date('Y-m-d H:i:s'),
     ];
 
-    // 🧩 Set value field
+    // ✅ Set the value field based on menuType
     if ($input['menuType'] === 'URL' || $input['menuType'] === 'Link') {
         $data['value'] = $input['linkValue'];
     } elseif ($input['menuType'] === 'File' && $file && $file->isValid() && !$file->hasMoved()) {
@@ -174,7 +164,7 @@ public function create()
         $data['value'] = base_url('writable/uploads/website/' . $newFileName);
     }
 
-    // 🧾 Insert menu
+    // ✅ Insert menu
     $model->insert($data);
 
     return $this->respond([

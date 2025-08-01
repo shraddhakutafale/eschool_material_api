@@ -145,7 +145,7 @@ public function create()
         'parentMenuId' => $parentMenuId,
         'isActive' => 1,
         'isDeleted' => 0,
-        'createdBy' => 9, // you can replace with actual user ID
+        'createdBy' => 9,
         'modifiedBy' => 0,
         'createdDate' => date('Y-m-d H:i:s'),
         'modifiedDate' => date('Y-m-d H:i:s'),
@@ -166,11 +166,92 @@ public function create()
 
     // ✅ Insert menu
     $model->insert($data);
+    $menuId = $model->insertID(); // Get newly inserted menu ID
+
+    // ✅ If menuType is URL, insert into content_menu
+    if ($input['menuType'] === 'URL') {
+        $contentModel = new \App\Models\ContentModel($db);
+
+        $contentData = [
+            'menuId' => $menuId,
+            'businessId' => $input['businessId'] ?? null,
+            'title' => '',
+            'content' => '',
+            'createdBy' => 9,
+            'createdDate' => date('Y-m-d H:i:s'),
+            'modifiedBy' => 0,
+            'modifiedDate' => date('Y-m-d H:i:s'),
+            'isActive' => 1,
+            'isDeleted' => 0,
+        ];
+
+        $contentModel->insert($contentData);
+    }
 
     return $this->respond([
         'status' => true,
         'message' => 'Menu created successfully.',
         'data' => $data
+    ], 200);
+}
+
+
+public function createContent()
+{
+    $input = $this->request->getJSON(true);
+
+    $rules = [
+        'title' => 'required|string',
+        'content' => 'required|string',
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    $tenantService = new \App\Libraries\TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $menuModel = new \App\Models\WebsiteModel($db);
+    $contentModel = new \App\Models\ContentModel($db);
+
+    // Find all URL-type menus with blank content/title (in content table)
+    $query = $db->table('content_menu AS c')
+        ->join('website_menus AS m', 'm.menuId = c.menuId')
+        ->where('m.menuType', 'URL')
+        ->where('c.isDeleted', 0)
+        ->groupStart()
+            ->where('c.title', '')
+            ->orWhere('c.content', '')
+        ->groupEnd()
+        ->select('c.contentId')
+        ->get();
+
+    $results = $query->getResultArray();
+
+    if (empty($results)) {
+        return $this->respond([
+            'status' => false,
+            'message' => 'No empty URL content entries found.'
+        ], 200);
+    }
+
+    foreach ($results as $row) {
+        $contentModel->update($row['contentId'], [
+            'title' => $input['title'],
+            'content' => $input['content'],
+            'modifiedBy' => 9,
+            'modifiedDate' => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Content updated successfully for all matching URL menus.',
     ], 200);
 }
 

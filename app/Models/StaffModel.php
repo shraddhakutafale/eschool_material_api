@@ -12,7 +12,7 @@ class StaffModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['staffId', 'empName', 'faculty', 'empCategory', 'empCode', 'aadharNumber', 'profilePic', 'photoUrl', 'resumeUrl', 'linkedinUrl', 'virtualCardUrl', 'panNumber', 'uanNumber', 'ipNumber', 'fatherName', 'empSal', 'empDoj', 'empDol', 'businessId','isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['staffId', 'empName', 'type','department', 'empCategory', 'empCode', 'aadharNumber', 'profilePic', 'photoUrl', 'resumeUrl', 'linkedinUrl', 'virtualCardUrl', 'panNumber', 'uanNumber', 'ipNumber', 'fatherName', 'empSal', 'empDoj', 'empDol', 'businessId','isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

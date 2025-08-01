@@ -346,6 +346,16 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->post('getsubjectsbyexam', 'Exam::getSubjectsByExam',['filter' => ['authFilter','tenantFilter']]);
   });
 
+    $routes->group('contact', function ($routes) {
+  
+    $routes->get('getall', 'Contact::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Contact::getContactsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Contact::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Contact::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Contact::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('delete', 'Contact::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('addallcontacttimetable', 'Contact::addAllContactTimetable',['filter' => ['authFilter','tenantFilter']]);
+  });
 
 
    

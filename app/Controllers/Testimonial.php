@@ -37,6 +37,7 @@ class Testimonial extends BaseController
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
+        $businessId = isset($input->businessId) ? $input->businessId : 0;
     
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
@@ -55,24 +56,25 @@ class Testimonial extends BaseController
     
        // Apply filtering
         if (!empty($filter)) {
-         $filter = json_decode(json_encode($filter), true);
+            $filter = json_decode(json_encode($filter), true);
 
-        foreach ($filter as $key => $value) {
-        if (in_array($key, ['name', 'mobileNo', 'email', 'designation'])) {
-            $query->like($key, $value);
-        } else if ($key === 'createdDate' && !empty($value)) {
-            $query->where($key, $value);
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['name', 'mobileNo', 'email', 'designation'])) {
+                    $query->like($key, $value);
+                } else if ($key === 'createdDate' && !empty($value)) {
+                    $query->where($key, $value);
+                }
+            }
+
+            // Apply Date Range Filter using startDate and endDate
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                ->where('createdDate <=', $filter['endDate']);
+            }
         }
-    }
-
-        // Apply Date Range Filter using startDate and endDate
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-        $query->where('createdDate >=', $filter['startDate'])
-        ->where('createdDate <=', $filter['endDate']);
-    }
-    }
 
         $query->where('isDeleted',0);
+        $query->where('businessId', $businessId);
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
             $query->orderBy($sortField, $sortOrder);

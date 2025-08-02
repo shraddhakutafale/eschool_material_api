@@ -24,86 +24,96 @@ class Event extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $EventModel->findAll()], 200);
     }
 
-   public function getEventsPaging()
-{
-    $input = $this->request->getJSON();
+    public function getEventsPaging()
+    {
+        $input = $this->request->getJSON();
 
-    $page = isset($input->page) ? $input->page : 1;
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'eventId';
-    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    $search = isset($input->search) ? $input->search : '';
-    $filter = $input->filter;
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'eventId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
 
-    $key = "Exiaa@11";
-    $header = $this->request->getHeader("Authorization");
-    $token = null;
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
 
-    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
-    }
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
 
-    $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    $businessId = $decoded->businessId;
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $businessId = $decoded->businessId;
 
-    // Connect to tenant DB
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $eventModel = new EventModel($db);
+        // Connect to tenant DB
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $eventModel = new EventModel($db);
 
-    $query = $eventModel;
+        $query = $eventModel;
 
-    if (!empty($filter)) {
-        $filter = json_decode(json_encode($filter), true);
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
 
-        foreach ($filter as $key => $value) {
-            if (in_array($key, ['eventName', 'eventDesc', 'venue'])) {
-                $query->like($key, $value);
-            } elseif ($key === 'createdDate') {
-                $query->where($key, $value);
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['eventName', 'eventDesc', 'venue'])) {
+                    $query->like($key, $value);
+                } elseif ($key === 'createdDate') {
+                    $query->where($key, $value);
+                }
+            }
+
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate']);
+                $query->where('createdDate <=', $filter['endDate']);
+            }
+
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $query->where('createdDate >=', date('Y-m-d', strtotime('-7 days')));
+            }
+
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $query->where('createdDate >=', date('Y-m-d', strtotime('-30 days')));
             }
         }
 
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('createdDate >=', $filter['startDate']);
-            $query->where('createdDate <=', $filter['endDate']);
+        $query->where('businessId', $businessId);
+        $query->where('isDeleted', 0);
+
+        // Sorting
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
         }
 
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $query->where('createdDate >=', date('Y-m-d', strtotime('-7 days')));
-        }
+        $events = $query->paginate($perPage, 'default', $page);
+        $pager = $eventModel->pager;
 
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $query->where('createdDate >=', date('Y-m-d', strtotime('-30 days')));
-        }
+        $response = [
+            "status" => true,
+            "message" => "All Event Data Fetched",
+            "data" => $events,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+
+        return $this->respond($response, 200);
     }
 
-    $query->where('businessId', $businessId);
-    $query->where('isDeleted', 0);
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Fetches all active and non-deleted events from the database, ordered by creation date in descending order.
+ * Connects to the tenant's database using configuration from the request header.
+ * Returns a JSON response containing event data.
+ *
+ * @return \CodeIgniter\HTTP\Response
+ */
 
-    // Sorting
-    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-        $query->orderBy($sortField, $sortOrder);
-    }
-
-    $events = $query->paginate($perPage, 'default', $page);
-    $pager = $eventModel->pager;
-
-    $response = [
-        "status" => true,
-        "message" => "All Event Data Fetched",
-        "data" => $events,
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ];
-
-    return $this->respond($response, 200);
-}
-
+/*******  996a8854-7f44-44fa-98a5-117dfff1bae2  *******/
     public function getEventsWebsite()
     {// Insert the product data into the database
         $tenantService = new TenantService();

@@ -35,6 +35,7 @@ class Blog extends BaseController
         $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
         $search = isset($input->search) ? $input->search : '';
         $filter = $input->filter;
+        $businessId = isset($input->businessId) ? $input->businessId : 0;
     
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
@@ -75,6 +76,7 @@ class Blog extends BaseController
     
         // Ensure that the "deleted" status is 0 (active records)
         $query->where('isDeleted', 0);
+        $query->where('businessId', $businessId);
     
         // Apply Sorting
         if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {

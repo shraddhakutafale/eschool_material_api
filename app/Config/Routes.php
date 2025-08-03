@@ -136,6 +136,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     //Routes for event
     $routes->get('getall', 'Event::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Event::getEventsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getalleventbybusiness', 'Event::getAllEventByBusiness',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('view/(:segment)', 'Event::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Event::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('update', 'Event::update',['filter' => ['authFilter','tenantFilter']]);
@@ -170,6 +171,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
   $routes->group('form', function ($routes) {
     //Routes for member
     $routes->get('getall', 'Form::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallbybusiness', 'Form::getAllFormByBusiness',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Form::getFormsPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->get('view/(:segment)', 'Form::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Form::create',['filter' => ['authFilter','tenantFilter']]);

@@ -24,6 +24,30 @@ class Event extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $EventModel->findAll()], 200);
     }
 
+    public function getAllEventByBusiness()
+    {
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $businessId = $decoded->businessId;
+
+        // Connect to tenant DB
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $eventModel = new EventModel($db);
+
+        // Fetch events for the business
+        $events = $eventModel->where('businessId', $businessId)->where('isDeleted', 0)->findAll();
+
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $events], 200);
+    }
+
     public function getEventsPaging()
     {
         $input = $this->request->getJSON();

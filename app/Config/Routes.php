@@ -271,6 +271,18 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
    
   });
 
+    $routes->group('settings', function ($routes) {
+    $routes->get('getall', 'Settings::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Settings::getSettingsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Settings::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Settings::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Settings::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Settings::getSettingsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Settings::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
+
+
+
 
   $routes->group('quotation', function ($routes) {
     //Routes for quotation

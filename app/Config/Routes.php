@@ -181,6 +181,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('delete', 'Form::delete',['filter' => ['authFilter','tenantFilter']]); 
     $routes->post('createweb', 'Form::createWeb',['filter' => 'tenantFilter']);
     $routes->post('addformdata', 'Form::addFormData',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getassignedbusinessusers', 'Form::getAssignedBusinessUsers',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('assignuser', 'Form::assignUser',['filter' => ['authFilter','tenantFilter']]);
 
   });
 

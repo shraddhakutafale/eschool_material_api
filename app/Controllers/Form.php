@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\FormModel;
 use App\Models\FormDataModel;
+use App\Models\UserFormMapModel;
+use App\Models\UserModel;
 use App\Models\TransactionModel;
 use App\Libraries\TenantService;
 use Config\Database;
@@ -204,6 +206,46 @@ class Form extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $forms], 200);
     }
 
+    public function getAssignedBusinessUsers()
+    {
+        $input = $this->request->getJSON();
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+
+        // Load UserModel with the tenant database connection
+        $UserFormMapModel = new UserFormMapModel($db);
+        $UserModel = new UserModel();
+        $userFormMaps = $UserFormMapModel->where('formId', $input->formId)->where('isActive', 1)->where('isDeleted', 0)->findAll();
+        $users = [];
+        foreach ($userFormMaps as $userFormMap) {
+            $user = $UserModel->find($userFormMap->userId);
+            if ($user) {
+                $users[] = $user;
+            }
+        }
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $users], 200);
+    }
+
+    public function assignusers()
+    {
+        $input = $this->request->getJSON();
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load UserFormMapModel with the tenant database connection
+        $UserFormMapModel = new UserFormMapModel($db);
+        if(is_array($input)){
+            foreach($input as $userFormMap){
+                if($userFormMap->userFormMapId == 0 || $userFormMap->userFormMapId == null || $userFormMap->userFormMapId == ''){
+                    $model->insert(['formId' => $userFormMap->formId, 'userId' => $userFormMap->userId]);
+                } else {
+                    $model->update($userFormMap->itemFeeMapId, ['formId' => $userFormMap->formId, 'userId' => $userFormMap->userId, 'isDeleted' => $userFormMap->isDeleted]);
+                }
+            }
+        }
+        return $this->respond(['status' => true, 'message' => 'Users Assigned Successfully'], 200);
+    }
  
 
     public function getFormsWebsite()

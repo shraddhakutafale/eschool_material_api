@@ -36,7 +36,7 @@ class User extends BaseController
         $userModel = new UserModel();
         $userBusinessModel = new UserBusiness();
 
-        $userBusinesses = $userBusinessModel->where('businessId', $input->businessId)->findAll();
+        $userBusinesses = $userBusinessModel->where('businessId', $input->businessId)->where('roleId', 3)->where('isActive', 1)->where('isDeleted', 0)->findAll();
 
         $users = [];
         foreach ($userBusinesses as $userBusiness) {

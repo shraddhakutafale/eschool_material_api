@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\FormModel;
+use App\Models\FormDataModel;
 use App\Models\TransactionModel;
 use App\Libraries\TenantService;
 use Config\Database;
@@ -32,6 +33,70 @@ class Form extends BaseController
         return $this->respond($response, 200);
     }
   
+    public function getAllFormDataPaging()
+    {
+        $input = $this->request->getJSON();
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'formId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+        $formId = isset($input->formId) ? $input->formId : null;
+        
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load FormDataModel with the tenant database connection
+        $formDataModel = new FormDataModel($db);
+        $query = $formDataModel;
+
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['formId', 'userId'])) {
+                    $query->where($key, $value); // Exact match filter for specific fields
+                } else if ($key === 'createdDate') {
+                    $query->where($key, $value); // Exact match filter for createdDate
+                }
+            }
+            // Apply Date Range Filter (startDate and endDate)
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                      ->where('createdDate <=', $filter['endDate']);
+            }
+        }
+
+        if (!empty($search)) {
+            $query->groupStart()
+                  ->like('formDataJson', $search)
+                  ->orLike('userId', $search)
+                  ->groupEnd();
+        }
+
+        $query->orderBy($sortField, $sortOrder);
+        $query->limit($perPage, ($page - 1) * $perPage);
+        $query->where('isDeleted', 0);
+        if ($formId) {
+            $query->where('formId', $formId); // Filter by formId if provided
+        }
+
+        $formData = $query->get()->getResultArray();
+        $totalRows = $query->countAllResults();
+        $pager = [
+            'currentPage' => $page,
+            'totalPages' => ceil($totalRows / $perPage),
+            'totalItems' => $totalRows,
+            'perPage' => $perPage
+        ];
+        $response = [
+            "status" => true,
+            "message" => "All Form Data Fetched",
+            "data" => $formData,
+            "pagination" => $pager
+        ];
+        return $this->respond($response, 200);    
+    }
+
   
     public function getFormsPaging()
     {

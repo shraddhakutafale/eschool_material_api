@@ -12,7 +12,7 @@ class RightModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['rightId', 'rightName', 'rightLabel', 'iconUrl', 'route', 'color', 'value', 'parentRightId', 'priority', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['rightId', 'rightName', 'rightLabel', 'iconUrl', 'route', 'color', 'value', 'parentRightId', 'priority','isCommonRight', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

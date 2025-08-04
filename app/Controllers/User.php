@@ -202,6 +202,38 @@ class User extends BaseController
                     }
                 }
         }else{
+            $rights = $rightModel->where('isCommonRight', 1)->orderBy('priority', 'ASC')->findAll();
+            foreach($rights as $key => $right) {
+                if ($right) {
+                    // Store the parent menu details
+                    $menuItem = [
+                        'route' => $right['route'],
+                        'name' => $right['route'],
+                        'icon' => $right['iconUrl'],
+                        'type' => 'sub', // Default to 'sub' in case it has children
+                        'children' => [] // Initialize children array
+                    ];
+            
+                    // Fetch the submenus (children) where parentRightId matches this rightId
+                    $subMenus = $rightModel->where('parentRightId', $right['rightId'])->findAll();
+            
+                    if (empty($subMenus)) {
+                        $menuItem['type'] = 'link'; // If no children, it's a simple link
+                    } else {
+                        foreach ($subMenus as $subMenu) {
+                            $menuItem['children'][] = [
+                                'route' => $subMenu['route'],
+                                'name' => $subMenu['route'],
+                                'icon' => $subMenu['iconUrl'],
+                                'type' => 'link'
+                            ];
+                        }
+                    }
+            
+                    // Store in the menu array
+                    $menu[] = $menuItem;
+                }
+            }
             if(isset($decoded->businessCategoryId) && !empty($decoded->businessCategoryId)){
                 $rightBusinessCategories = $rightBusinessCategory->where('categoryId', $decoded->businessCategoryId)->findAll();
                 foreach($rightBusinessCategories as $key => $rightBusinessCategory){

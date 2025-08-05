@@ -7,6 +7,8 @@ use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\WebsiteModel;
 use App\Models\ContentModel;
+use App\Models\LogoBannerModel;
+
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -254,6 +256,96 @@ public function createContent()
         'message' => 'Content updated successfully for all matching URL menus.',
     ], 200);
 }
+public function createLogoBanner()
+{
+    // Get files    
+     $input = $this->request->getPost();
+
+    $logo   = $this->request->getFile('logo');
+    $banner = $this->request->getFile('banner');
+
+    // Get businessId from POST
+    $businessId = $input['businessId'] ?? null;
+
+    if (!$businessId) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Business ID is required.'
+        ], 409);
+    }
+
+    // Validate files
+    if (!$logo || !$logo->isValid() || !$banner || !$banner->isValid()) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => [
+                'logo'   => $logo ? $logo->getErrorString() : 'Logo file missing',
+                'banner' => $banner ? $banner->getErrorString() : 'Banner file missing',
+            ],
+            'message' => 'Invalid file upload'
+        ], 409);
+    }
+
+    // Generate random file names
+    $logoName   = $logo->getRandomName();
+    $bannerName = $banner->getRandomName();
+
+    // Define upload path
+    $uploadPath = ROOTPATH . 'writable/uploads/';
+    if (!is_dir($uploadPath)) {
+        mkdir($uploadPath, 0777, true);
+    }
+
+    // Move files
+    $logo->move($uploadPath, $logoName);
+    $banner->move($uploadPath, $bannerName);
+
+    // Load tenant-specific DB
+    $tenantService = new \App\Libraries\TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    // Load model
+    $logoModel = new \App\Models\LogoBannerModel($db);
+
+    // Check if record exists
+    $existing = $logoModel
+        ->where('isDeleted', 0)
+        ->where('businessId', $businessId)
+        ->get()
+        ->getRowArray();
+
+    // Prepare data
+    $data = [
+        'logo'         => '/uploads/' . $logoName,
+        'banner'       => '/uploads/' . $bannerName,
+        'businessId'   => $businessId,
+        'modifiedBy'   => 9,
+        'modifiedDate' => date('Y-m-d H:i:s')
+    ];
+
+    // Update or insert
+    if (is_array($existing) && isset($existing['id'])) {
+        $logoModel->update($existing['id'], $data);
+    } else {
+        $data['createdBy']   = 9;
+        $data['createdDate'] = date('Y-m-d H:i:s');
+        $logoModel->insert($data);
+    }
+
+    // Response
+    return $this->respond([
+        'status'  => true,
+        'message' => 'Logo and banner saved successfully.'
+    ]);
+}
+
+
+
+
+
+
+
+
 
 
 

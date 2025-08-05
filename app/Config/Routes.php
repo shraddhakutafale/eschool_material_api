@@ -267,6 +267,8 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->get('view/(:segment)', 'Website::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Website::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createcontent', 'Website::createContent',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['authFilter','tenantFilter']]);
+
 
    
   });
@@ -279,6 +281,15 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('update', 'Settings::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallwebsite', 'Settings::getSettingsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Settings::delete',['filter' => ['authFilter','tenantFilter']]);
+
+
+
+
+    $routes->post('getallpaginglink', 'Settings::getLinksPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Settings::show/$1',['filter' => 'authFilter']);
+    $routes->post('createlink', 'Settings::createLink',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updatelink', 'Settings::updateLink',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletelink', 'Settings::deleteLink',['filter' => ['authFilter','tenantFilter']]);
   });
 
 

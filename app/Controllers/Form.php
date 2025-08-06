@@ -223,15 +223,20 @@ public function getAssignedBusinessUsers()
         $UserFormMapModel = new UserFormMapModel($db);
         $UserModel = new UserModel($db);
 
-        // Step 1: Get all users
-        $allUsers = $UserModel->where('isActive', 1)->where('isDeleted', 0)->findAll();
-
-        // Step 2: Get already assigned users for the form
+        // Step 1: Get already assigned users for the form
         $assignedUserMaps = $UserFormMapModel
             ->where('formId', $input->formId)
             ->where('isActive', 1)
             ->where('isDeleted', 0)
             ->findAll();
+
+        if (empty($assignedUserMaps)) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'No assigned users',
+                'data' => []
+            ], 200);
+        }
 
         $assignedUserIds = array_column($assignedUserMaps, 'userId');
         $assignedUserMapById = [];
@@ -239,18 +244,25 @@ public function getAssignedBusinessUsers()
             $assignedUserMapById[$map['userId']] = $map['userFormMapId'];
         }
 
+        // Step 2: Get only assigned users
+        $assignedUsers = $UserModel
+            ->whereIn('userId', $assignedUserIds)
+            ->where('isActive', 1)
+            ->where('isDeleted', 0)
+            ->findAll();
+
         $result = [];
 
-        foreach ($allUsers as $user) {
+        foreach ($assignedUsers as $user) {
             $userData = $user;
-            $userData['isAssigned'] = in_array($user['userId'], $assignedUserIds);
+            $userData['isAssigned'] = true;
             $userData['userFormMapId'] = $assignedUserMapById[$user['userId']] ?? null;
             $result[] = $userData;
         }
 
         return $this->respond([
             'status' => true,
-            'message' => 'User list with assignment status',
+            'message' => 'Only assigned users',
             'data' => $result
         ], 200);
 
@@ -262,6 +274,64 @@ public function getAssignedBusinessUsers()
     }
 }
 
+public function getAssignedFormsToUser()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $input = $this->request->getJSON();
+    
+    // Decode JWT token to get userId and businessId
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
+        $token = $matches[1];
+    }
+    $decoded = null;
+    if ($token) {
+        try {
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        } catch (\Exception $e) {
+            return $this->failUnauthorized('Invalid or expired token');
+        }
+    }
+
+    $userId = $decoded->userId ?? null;
+    $businessId = $decoded->businessId ?? null;
+
+    if (!$userId || !$businessId) {
+        return $this->fail('Missing user or business ID');
+    }
+
+    $formModel = new FormModel($db);
+    $userFormMapModel = new UserFormMapModel($db);
+
+    // Get all assigned form IDs for this user
+    $assignedForms = $userFormMapModel
+        ->select('formId')
+        ->where('userId', $userId)
+        ->where('isDeleted', 0)
+        ->where('isActive', 1)
+        ->findAll();
+
+    $formIds = array_column($assignedForms, 'formId');
+
+    if (empty($formIds)) {
+        return $this->respond(["status" => true, "message" => "No assigned forms", "data" => []], 200);
+    }
+
+    // Get the actual forms
+    $forms = $formModel
+        ->whereIn('formId', $formIds)
+        ->where('businessId', $businessId)
+        ->where('isDeleted', 0)
+        ->where('active', 1)
+        ->orderBy('createdDate', 'DESC')
+        ->findAll();
+
+    return $this->respond(["status" => true, "message" => "Assigned Forms Fetched", "data" => $forms], 200);
+}
 
 public function assignUser()
 {

@@ -183,6 +183,10 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('addformdata', 'Form::addFormData',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getassignedbusinessusers', 'Form::getAssignedBusinessUsers',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('assignuser', 'Form::assignUser',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getassignedbusinessusers', 'Form::getAssignedBusinessUsers',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getassignedformstouser', 'Form::getAssignedFormsToUser', ['filter' => ['authFilter', 'tenantFilter']]);
+
+
 
   });
 
@@ -605,6 +609,8 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('update', 'TenantUser::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('create', 'Customer::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('add-address', 'CustomerAddress::addAddress', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('user/login', 'User::login');
+
   });
 
    $routes->group('iotdevice', function ($routes) {

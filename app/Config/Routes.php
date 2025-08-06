@@ -267,6 +267,8 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->get('view/(:segment)', 'Website::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Website::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createcontent', 'Website::createContent',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getallpagingcontent', 'Website::getContentPaging',['filter' => ['authFilter', 'tenantFilter']]);
+
     $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['authFilter','tenantFilter']]);
 
 

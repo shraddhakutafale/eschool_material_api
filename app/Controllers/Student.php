@@ -299,164 +299,207 @@ public function getStudentsAdmissionPaging()
 
 
 
-public function assignShiftToStudent()
-    {
-        $input = $this->request->getJSON();
-
-        if (!isset($input->studentId) || !isset($input->shiftId)) {
-            return $this->failValidationErrors('studentId and shiftId are required.');
-        }
-
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $builder = $db->table('admission_details');
-
-        // 🔍 Find latest admission record for student
-        $admission = $builder
-            ->select('itemId')
-            ->where('studentId', $input->studentId)
-            ->orderBy('admissionId', 'DESC')
-            ->get()
-            ->getRow();
-
-        if (!$admission || !isset($admission->itemId)) {
-            return $this->failNotFound('No admission record found for this student.');
-        }
-
-        // ✅ Update shiftId
-        $updated = $builder
-            ->where('studentId', $input->studentId)
-            ->where('itemId', $admission->itemId)
-            ->update(['shiftId' => $input->shiftId]);
-
-        if ($updated) {
-            return $this->respond([
-                'status' => true,
-                'message' => 'Shift assigned to student successfully',
-            ]);
-        } else {
-            return $this->failServerError('Update failed.');
-        }
-    }
-
-
-public function getStudentsPaymentPaging()
+ public function assignShiftToStudent()
 {
     $input = $this->request->getJSON();
 
-    $page = isset($input->page) ? $input->page : 1;
-    $perPage = isset($input->perPage) ? $input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'paymentId';
-    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'desc';
-    $search = isset($input->search) ? $input->search : '';
-    $filter = isset($input->filter) ? (array)$input->filter : [];
-
-    $key = "Exiaa@11";
-    $header = $this->request->getHeader("Authorization");
-    $token = null;
-    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
+    if (!isset($input->studentId) || !isset($input->shiftId)) {
+        return $this->failValidationErrors('studentId and shiftId are required.');
     }
-    $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    $businessId = $decoded->businessId;
 
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-    $studentModel = new StudentModel($db);
-    $admissionModel = new AdmissionModel($db);
-    $paymentDetailModel = new PaymentDetailModel($db);
-    $feeModel = new FeeModel($db);
-    $itemFeeMapModel = new ItemFeeMapModel($db);
+    $admissionBuilder = $db->table('admission_details');
 
-    $query = $paymentDetailModel;
+    // 🔍 Get latest admission for the student
+    $admission = $admissionBuilder
+        ->select('itemId')
+        ->where('studentId', $input->studentId)
+        ->orderBy('admissionId', 'DESC')
+        ->get()
+        ->getRow();
 
-    // Join admission & student
-    $query->join('admission_details', 'admission_details.admissionId = payment_details.admissionId', 'left');
-    $query->join('student_mst', 'student_mst.studentId = admission_details.studentId', 'left');
-
-    // ✅ Restrict by tenant's businessId
-    $query->where('student_mst.businessId', $businessId);
-
-    // 🔍 Filters
-    if (!empty($filter)) {
-        if (!empty($filter['academicYear'])) {
-            $query->where('admission_details.academicYearId', $filter['academicYear']);
-        }
-
-        foreach ($filter as $key => $value) {
-            if (in_array($key, ['student_mst.studentCode','student_mst.generalRegisterNo','student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
-                $query->like($key, $value);
-            } elseif ($key === 'student_mst.createdDate') {
-                $query->where($key, $value);
-            }
-        }
-
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('student_mst.createdDate >=', $filter['startDate']);
-            $query->where('student_mst.createdDate <=', $filter['endDate']);
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
-        }
-
-        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-            $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
-        }
+    if (!$admission || !isset($admission->itemId)) {
+        return $this->failNotFound('No admission record found for this student.');
     }
 
-    // Sort
-    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-        $query->orderBy($sortField, $sortOrder);
+    $updated = $admissionBuilder
+        ->where('studentId', $input->studentId)
+        ->where('itemId', $admission->itemId)
+        ->update(['shiftId' => $input->shiftId]);
+
+    if (!$updated) {
+        return $this->failServerError('Shift update failed.');
     }
 
-    // Paginate results
-    $payments = $query->paginate($perPage, 'default', $page);
-    $pager = $paymentDetailModel->pager;
+    // 🔍 Get shift timings from shift_mst
+    $shift = $db->table('shift_mst')
+        ->select('startTime, endTime')
+        ->where('shiftId', $input->shiftId)
+        ->get()
+        ->getRow();
 
-    // 💰 Attach fee breakdown
-    foreach ($payments as $key => $payment) {
-        $totalFee = 0;
-        $fees = [];
-        $selectedCourseArray = explode(',', $payment['selectedCourses'] ?? '');
+    if (!$shift) {
+        return $this->failNotFound('Shift not found in shift_mst.');
+    }
 
-        foreach ($selectedCourseArray as $itemId) {
-            $itemFeeMapArray = $itemFeeMapModel
-                ->where('itemId', $itemId)
-                ->where('isDeleted', 0)
-                ->findAll();
+    $today = date('Y-m-d');
 
-            foreach ($itemFeeMapArray as $feeMap) {
-                $fee = $feeModel
-                    ->where('feeId', $feeMap['feeId'])
-                    ->where('isDeleted', 0)
-                    ->first();
+    // 🔄 Update or Insert in attendance_mst
+    $attendanceBuilder = $db->table('attendance_mst');
 
-                if ($fee && isset($fee['amount'])) {
-                    $fees[] = $fee['amount'];
-                    $totalFee += (float)$fee['amount'];
-                }
-            }
-        }
+    // Check if attendance record exists
+    $existingAttendance = $attendanceBuilder
+        ->where('studentId', $input->studentId)
+        ->where('attendanceDate', $today)
+        ->get()
+        ->getRow();
 
-        $payments[$key]['fees'] = $fees;
-        $payments[$key]['totalFee'] = $totalFee;
-        $payments[$key]['isPaid'] = (isset($payment['status']) && $payment['status'] === 'paid');
+    $attendanceData = [
+        'inTime' => $shift->startTime,
+        'outTime' => $shift->endTime,
+    ];
+
+    if ($existingAttendance) {
+        // Update existing attendance
+        $attendanceBuilder
+            ->where('studentId', $input->studentId)
+            ->where('attendanceDate', $today)
+            ->update($attendanceData);
+    } else {
+        // Insert new attendance entry
+        $attendanceData['studentId'] = $input->studentId;
+        $attendanceData['attendanceDate'] = $today;
+        $attendanceBuilder->insert($attendanceData);
     }
 
     return $this->respond([
-        "status" => true,
-        "message" => "All Student Payment Data Fetched",
-        "data" => $payments,
-        "pagination" => [
-            "currentPage" => $pager->getCurrentPage(),
-            "totalPages" => $pager->getPageCount(),
-            "totalItems" => $pager->getTotal(),
-            "perPage" => $perPage
-        ]
-    ], 200);
+        'status' => true,
+        'message' => 'Shift assigned and attendance updated successfully',
+        'inTime' => $shift->startTime,
+        'outTime' => $shift->endTime,
+    ]);
 }
+
+
+    public function getStudentsPaymentPaging()
+    {
+        $input = $this->request->getJSON();
+
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'paymentId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'desc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = isset($input->filter) ? (array)$input->filter : [];
+
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $businessId = $decoded->businessId;
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $studentModel = new StudentModel($db);
+        $admissionModel = new AdmissionModel($db);
+        $paymentDetailModel = new PaymentDetailModel($db);
+        $feeModel = new FeeModel($db);
+        $itemFeeMapModel = new ItemFeeMapModel($db);
+
+        $query = $paymentDetailModel;
+
+        // Join admission & student
+        $query->join('admission_details', 'admission_details.admissionId = payment_details.admissionId', 'left');
+        $query->join('student_mst', 'student_mst.studentId = admission_details.studentId', 'left');
+
+        // ✅ Restrict by tenant's businessId
+        $query->where('student_mst.businessId', $businessId);
+
+        // 🔍 Filters
+        if (!empty($filter)) {
+            if (!empty($filter['academicYear'])) {
+                $query->where('admission_details.academicYearId', $filter['academicYear']);
+            }
+
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['student_mst.studentCode','student_mst.generalRegisterNo','student_mst.firstName', 'student_mst.lastName', 'student_mst.medium', 'student_mst.registeredDate'])) {
+                    $query->like($key, $value);
+                } elseif ($key === 'student_mst.createdDate') {
+                    $query->where($key, $value);
+                }
+            }
+
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('student_mst.createdDate >=', $filter['startDate']);
+                $query->where('student_mst.createdDate <=', $filter['endDate']);
+            }
+
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-7 days')));
+            }
+
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $query->where('student_mst.createdDate >=', date('Y-m-d', strtotime('-30 days')));
+            }
+        }
+
+        // Sort
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+
+        // Paginate results
+        $payments = $query->paginate($perPage, 'default', $page);
+        $pager = $paymentDetailModel->pager;
+
+        // 💰 Attach fee breakdown
+        foreach ($payments as $key => $payment) {
+            $totalFee = 0;
+            $fees = [];
+            $selectedCourseArray = explode(',', $payment['selectedCourses'] ?? '');
+
+            foreach ($selectedCourseArray as $itemId) {
+                $itemFeeMapArray = $itemFeeMapModel
+                    ->where('itemId', $itemId)
+                    ->where('isDeleted', 0)
+                    ->findAll();
+
+                foreach ($itemFeeMapArray as $feeMap) {
+                    $fee = $feeModel
+                        ->where('feeId', $feeMap['feeId'])
+                        ->where('isDeleted', 0)
+                        ->first();
+
+                    if ($fee && isset($fee['amount'])) {
+                        $fees[] = $fee['amount'];
+                        $totalFee += (float)$fee['amount'];
+                    }
+                }
+            }
+
+            $payments[$key]['fees'] = $fees;
+            $payments[$key]['totalFee'] = $totalFee;
+            $payments[$key]['isPaid'] = (isset($payment['status']) && $payment['status'] === 'paid');
+        }
+
+        return $this->respond([
+            "status" => true,
+            "message" => "All Student Payment Data Fetched",
+            "data" => $payments,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ], 200);
+    }
 
 
 

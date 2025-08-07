@@ -347,6 +347,9 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->post('update', 'Staff::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallwebsite', 'Staff::getStaffsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Staff::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getalltype', 'Staff::getAllType',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('createtype', 'Staff::createType',['filter' => ['authFilter','tenantFilter']]);
+
   });
 
   $routes->group('portfolio', function ($routes) {

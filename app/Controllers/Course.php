@@ -387,7 +387,7 @@ class Course extends BaseController
             'itemTypeId' => $input['itemTypeId'],  // Corrected here
             'sku' => $input['sku'], 
             'hsnCode' => $input['hsnCode'],
-            'feature' =>$input['feature']
+            
 
         ];              
     
@@ -464,7 +464,7 @@ class Course extends BaseController
             return $this->fail($response, 409);
         }
     }
-    
+ 
     public function delete()
     {
         $input = $this->request->getJSON();

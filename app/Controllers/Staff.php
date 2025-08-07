@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\StaffModel;
+use App\Models\TypeModel;
 use App\Models\StaffAttendanceModel;
 use Config\Database;
 use App\Libraries\TenantService;
@@ -474,5 +475,51 @@ public function create()
             return $this->fail($response, 409);
         }
     }
+
+
+      public function getAllType()
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $typeModel = new TypeModel($db);
+        $types = $typeModel->where('isDeleted', 0)->findAll();
+        return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $types], 200);
+    }
+
+
+
+      public function createType()
+    {
+        $input = $this->request->getJSON();
+        $rules = [
+            'title' => ['rules' => 'required'],
+
+        ];
+
+        if ($this->validate($rules)) {
+            // Insert the product data into the database
+            $tenantService = new TenantService();
+            // Connect to the tenant's database
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+            $model = new TypeModel($db);
+
+            // Insert the lead data into the database
+            $model->insert($input);
+
+            // Return a success response
+            return $this->respond(['status' => true, 'message' => 'Type Created Successfully'], 200);
+        } else {
+            // Return validation errors if the rules are not satisfied
+            $response = [
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ];
+            return $this->fail($response, 409);
+        }
+    }
+
+
+
     
 }

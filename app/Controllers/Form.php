@@ -567,5 +567,68 @@ public function assignUser()
         }
     }
 
+public function updateStatus()
+{
+    $input = $this->request->getJSON(true); // ✅ Get JSON input
 
+    log_message('error', 'updateStatus INPUT: ' . json_encode($input)); // ✅ Debug line
+
+    // ✅ Validation
+    $rules = [
+        'formDataId' => ['rules' => 'required|numeric'],
+        'status'     => ['rules' => 'required']
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->failValidationErrors($this->validator->getErrors());
+    }
+
+    $formDataId = $input['formDataId'];
+    $status = $input['status'];
+
+    // ✅ Get userId from token
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
+        $token = $matches[1];
+    }
+
+    $userId = null;
+    if ($token) {
+        try {
+            $decoded = JWT::decode($token, new \Firebase\JWT\Key($key, 'HS256'));
+            $userId = $decoded->userId ?? null;
+        } catch (\Exception $e) {
+            return $this->failUnauthorized('Invalid or expired token');
+        }
+    }
+
+    // ✅ Get DB connection
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    try {
+        $updated = $db->table('form_data')
+            ->where('formDataId', $formDataId)
+            ->update([
+                'status'       => $status,
+                'modifiedDate' => date('Y-m-d H:i:s'),
+                'modifiedBy'   => $userId,
+            ]);
+
+        if ($updated) {
+            return $this->respond([
+                'status' => 'success',
+                'message' => 'Status updated successfully'
+            ]);
+        } else {
+            return $this->fail('Failed to update status or no changes made.');
+        }
+    } catch (\Exception $e) {
+        log_message('error', 'Status Update Error: ' . $e->getMessage());
+        return $this->failServerError('Something went wrong while updating the status.');
+    }
+}
 }

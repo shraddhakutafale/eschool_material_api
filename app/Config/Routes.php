@@ -185,6 +185,10 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('assignuser', 'Form::assignUser',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getassignedbusinessusers', 'Form::getAssignedBusinessUsers',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getassignedformstouser', 'Form::getAssignedFormsToUser', ['filter' => ['authFilter', 'tenantFilter']]);
+  $routes->post('updatestatus', 'Form::updateStatus', ['filter' => ['authFilter', 'tenantFilter']]);
+
+
+
 
 
 

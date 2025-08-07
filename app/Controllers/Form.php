@@ -216,14 +216,17 @@ public function getAssignedBusinessUsers()
         $input = $this->request->getJSON();
         $tenantService = new TenantService();
 
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Get tenant DB for user-form mappings
+        $tenantDb = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        // Models with tenant DB
-        $UserFormMapModel = new UserFormMapModel($db);
-        $UserModel = new UserModel($db);
+        // Use EXIAA main DB (default DB group in CodeIgniter)
+        $mainDb = \Config\Database::connect(); // this connects to default DB, i.e., `exiaa_db`
 
-        // Step 1: Get already assigned users for the form
+        // Models
+        $UserFormMapModel = new UserFormMapModel($tenantDb);
+        $UserModel = new UserModel($mainDb); // fetch from central DB (`user_mst`)
+
+        // Step 1: Get assigned users for the form
         $assignedUserMaps = $UserFormMapModel
             ->where('formId', $input->formId)
             ->where('isActive', 1)
@@ -238,21 +241,24 @@ public function getAssignedBusinessUsers()
             ], 200);
         }
 
+        // Step 2: Extract user IDs from map
         $assignedUserIds = array_column($assignedUserMaps, 'userId');
+
+        // Maintain mapping of userId -> userFormMapId
         $assignedUserMapById = [];
         foreach ($assignedUserMaps as $map) {
             $assignedUserMapById[$map['userId']] = $map['userFormMapId'];
         }
 
-        // Step 2: Get only assigned users
+        // Step 3: Fetch users from exiaa_db
         $assignedUsers = $UserModel
             ->whereIn('userId', $assignedUserIds)
             ->where('isActive', 1)
             ->where('isDeleted', 0)
             ->findAll();
 
+        // Step 4: Add assignment metadata
         $result = [];
-
         foreach ($assignedUsers as $user) {
             $userData = $user;
             $userData['isAssigned'] = true;
@@ -273,6 +279,7 @@ public function getAssignedBusinessUsers()
         ], 500);
     }
 }
+
 
 public function getAssignedFormsToUser()
 {

@@ -51,6 +51,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('register', 'User::register');
     $routes->post('registerbusinessuser', 'User::registerBusinessUser');
     $routes->post('businessuserregister', 'User::businessUserRegister');
+    $routes->post('changePassword', 'User::changePassword');
+
 
 
     $routes->get('getallrole', 'User::getAllRole',['filter' => 'authFilter']); 

@@ -454,6 +454,51 @@ class User extends BaseController
             
     }
 
+        public function changePassword()
+    {
+        $input = $this->request->getJSON();
+
+        // Validate inputs
+        $rules = [
+            'userId' => ['rules' => 'required|numeric'],
+            'changePassword' => ['rules' => 'required|min_length[8]|max_length[255]'],
+            'confirmChangePassword' => [
+                'label' => 'Confirm Password',
+                'rules' => 'required|matches[changePassword]'
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->fail([
+                'status' => false,
+                'errors' => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
+        }
+
+        $userId = $input->userId;
+        $newPassword = password_hash($input->changePassword, PASSWORD_DEFAULT);
+
+        $userModel = new \App\Models\UserModel();
+
+        // Check if user exists
+        $existingUser = $userModel->find($userId);
+        if (!$existingUser) {
+            return $this->failNotFound('User not found.');
+        }
+
+        // Update password
+        $userModel->update($userId, ['password' => $newPassword]);
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Password updated successfully'
+        ], 200);
+    }
+
+
+
+   
 
 public function create()
 {

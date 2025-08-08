@@ -148,12 +148,17 @@ public function getStudentsAdmissionPaging()
     $feeModel = new FeeModel($db);
     $paymentDetailModel = new PaymentDetailModel($db);
 
-    $query = $studentModel
-        ->select('student_mst.*, admission_details.admissionId, admission_details.itemId')
-        ->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left')
-        // 🔴 Removed shift_mst join here to prevent collapsing multiple shifts
-        ->where('student_mst.isDeleted', 0)
-        ->where('student_mst.businessId', $input->businessId);
+   $query = $studentModel
+    ->select('
+        student_mst.*,
+        admission_details.admissionId,
+        admission_details.itemId,
+        item_mst.itemName
+    ')
+    ->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left')
+    ->join('item_mst', 'item_mst.itemId = admission_details.itemId', 'left') // ✅ course name ke liye join
+    ->where('student_mst.isDeleted', 0)
+    ->where('student_mst.businessId', $input->businessId);
 
     // Apply filters
     if (!empty($filter['academicYear'])) {
@@ -277,6 +282,9 @@ public function getStudentsAdmissionPaging()
             'generalRegisterNo' => $student['generalRegisterNo'],
             'admissionId' => $student['admissionId'],
             'itemId' => $student['itemId'],
+                        'itemName' => $student['itemName'],
+
+
             'fees' => $fees,
             'totalFee' => $totalFee,
             'paymentStatus' => $paymentStatus,

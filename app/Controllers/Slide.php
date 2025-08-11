@@ -53,6 +53,7 @@ class Slide extends BaseController
             }
             
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            $input['businessId'] = $decoded->businessId;
             
             // Handle image upload for the slide image
             $profilePic = $this->request->getFile('profilePic');

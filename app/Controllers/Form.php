@@ -179,6 +179,77 @@ class Form extends BaseController
 
     return $this->respond($response, 200);
 }
+public function update()
+{
+    $input = $this->request->getJSON(true);
+
+    // Validation rules
+    $rules = [
+        'formId' => ['rules' => 'required|numeric'],
+        'formHeader' => ['rules' => 'required|string|max_length[255]'],
+        'formStructureJson' => ['rules' => 'required|string'],
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->failValidationErrors($this->validator->getErrors());
+    }
+
+    // Get tenant db connection
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $FormModel = new \App\Models\FormModel($db);
+
+    $formId = $input['formId'];
+    $existingForm = $FormModel->find($formId);
+    if (!$existingForm) {
+        return $this->failNotFound('Form not found');
+    }
+
+    $updateData = [
+        'formHeader' => $input['formHeader'],
+        'formDescripton' => $input['formDescripton'] ?? $existingForm['formDescripton'],
+        'footerMessage' => $input['footerMessage'] ?? $existingForm['footerMessage'],
+        'businessId' => $input['businessId'] ?? $existingForm['businessId'],
+        'formStructureJson' => $input['formStructureJson'], // This is your full JSON string with all fields
+        'modifiedDate' => date('Y-m-d H:i:s'),
+    ];
+
+    if (!$FormModel->update($formId, $updateData)) {
+        return $this->failServerError('Failed to update form');
+    }
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Form updated successfully',
+        'formId' => $formId,
+    ]);
+}
+
+
+public function view($formId)
+{
+    // Validate $formId as needed (integer check etc.)
+    if (!is_numeric($formId)) {
+        return $this->failValidationErrors('Invalid form ID');
+    }
+
+    // Get tenant config (if multi-tenant)
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new FormModel($db);
+
+    $form = $model->find($formId);
+
+    if (!$form) {
+        return $this->failNotFound('Form not found');
+    }
+
+    return $this->respond([
+        'status' => true,
+        'data' => $form,
+    ]);
+}
 
 
     public function getAllFormByBusiness()
@@ -638,4 +709,5 @@ public function updateStatus()
         return $this->failServerError('Something went wrong while updating the status.');
     }
 }
+
 }

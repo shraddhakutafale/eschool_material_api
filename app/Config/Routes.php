@@ -194,6 +194,9 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
 
 
+
+
+
   });
 
   $routes->post('donate/createweb', 'Donation::createWeb',['filter' => 'tenantFilter']);
@@ -278,11 +281,10 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('create', 'Website::create',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createcontent', 'Website::createContent',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallpagingcontent', 'Website::getContentPaging',['filter' => ['authFilter', 'tenantFilter']]);
-
     $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['tenantFilter']]);
+    $routes->post('getallpagingcontent', 'Website::getContentPaging', ['filter' => ['tenantFilter']]);
 
-
-   
   });
 
     $routes->group('settings', function ($routes) {

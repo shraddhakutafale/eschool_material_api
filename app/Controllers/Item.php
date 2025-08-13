@@ -294,6 +294,7 @@ class Item extends BaseController
         'hsnCode' => $input['hsnCode'],
         'feature' => $input['feature'],
         'unitName' => $input['unitName'],
+        'termsCondition'  => isset($input['termsCondition']) ? $input['termsCondition'] : ($item['termsCondition'] ?? null),
     ];
 
     // ✅ Handle cover image update

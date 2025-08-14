@@ -424,62 +424,112 @@ public function createLogoBanner()
 
 
 
+public function getAllMenu()
+{
+    try {
+        // ✅ Get tenant DB
+        $tenantService = new \App\Libraries\TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        // ✅ Get businessId from GET or POST
+        $businessId = $this->request->getVar('businessId'); // works for both GET & POST
+
+        if (!$businessId) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'Business ID is required.'
+            ], 400);
+        }
+
+        // ✅ Load model
+        $model = new \App\Models\WebsiteModel($db);
+
+        $menus = $model->where('businessId', $businessId)
+                       ->where('isActive', 1)
+                       ->where('isDeleted', 0)
+                       ->orderBy('parentMenuId ASC, menuId ASC')
+                       ->findAll();
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Menus fetched successfully.',
+            'data' => $menus
+        ], 200);
+
+    } catch (\Exception $e) {
+        return $this->respond([
+            'status' => false,
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+    
+  public function getLogoBanner()
+    {
+        // Get POST or JSON input
+        $input = $this->request->getPost();
+        if (empty($input)) {
+            $input = $this->request->getJSON(true);
+        }
+
+        $businessId = $input['businessId'] ?? null;
+
+        if (!$businessId) {
+            return $this->fail([
+                'status' => false,
+                'message' => 'Business ID is required.'
+            ], 409);
+        }
+
+        // Get tenant DB connection
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        // Model
+        $logoModel = new LogoBannerModel($db);
+
+        $records = $logoModel
+            ->where('isDeleted', 0)
+            ->where('businessId', $businessId)
+            ->findAll();
+
+        if (empty($records)) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'No logo/banner found.'
+            ], 404);
+        }
+
+        // Full URL path
+        $baseUrl = base_url(); // Example: http://localhost:8080/
+
+        foreach ($records as &$record) {
+            if (!empty($record['logo'])) {
+                $record['logo'] = $baseUrl . 'uploads/' . basename($record['logo']);
+            }
+            if (!empty($record['banner'])) {
+                $record['banner'] = $baseUrl . 'uploads/' . basename($record['banner']);
+            }
+        }
+
+        return $this->respond([
+            'status' => true,
+            'data' => $records
+        ]);
+    }
 
 
 
 
 
 
-// public function delete()
-// {
-//     $input = $this->request->getJSON();
 
-//     // Validation rule
-//     $rules = [
-//         'documentId' => ['rules' => 'required|numeric'], // Assuming primary key column is `id`
-//     ];
 
-//     if ($this->validate($rules)) {
-//         $tenantService = new \App\Libraries\TenantService();
-//         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-//         $model = new \App\Models\NaacModel($db);
 
-//         $documentId = $input->documentId;
-//         $document = $model->find($documentId);
 
-//         if (!$document) {
-//             return $this->fail(['status' => false, 'message' => 'Document not found'], 404);
-//         }
-
-//         // Optionally delete the file from the server
-//         if (!empty($document['url'])) {
-//             $filePath = WRITEPATH . 'uploads/naac/' . basename($document['url']);
-//             if (file_exists($filePath)) {
-//                 unlink($filePath); // Delete the file
-//             }
-//         }
-
-//         // Delete DB record
-//         if ($model->delete($documentId)) {
-//             return $this->respond([
-//                 'status' => true,
-//                 'message' => 'Document deleted successfully'
-//             ], 200);
-//         } else {
-//             return $this->fail([
-//                 'status' => false,
-//                 'message' => 'Failed to delete document'
-//             ], 500);
-//         }
-//     } else {
-//         return $this->fail([
-//             'status' => false,
-//             'errors' => $this->validator->getErrors(),
-//             'message' => 'Invalid Inputs'
-//         ], 409);
-//     }
-// }
 
 
 }

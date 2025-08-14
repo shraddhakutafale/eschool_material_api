@@ -282,9 +282,7 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('createcontent', 'Website::createContent',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallpagingcontent', 'Website::getContentPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['tenantFilter']]);
-    $routes->post('getallpagingcontent', 'Website::getContentPaging', ['filter' => ['tenantFilter']]);
-
+   
   });
 
     $routes->group('settings', function ($routes) {
@@ -632,6 +630,15 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   $routes->group('staff', function ($routes) {
     $routes->get('getall', 'Staff::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Staff::getStaffPaging',['filter' => ['tenantFilter']]);
+  });
+
+
+
+  $routes->group('website', function ($routes) {
+    $routes->post('getalllogobanner', 'Website::getLogoBanner', ['filter' => ['tenantFilter']]);
+    $routes->post('getalllmenu', 'Website::getAllMenu', ['filter' => ['tenantFilter']]);
+
+
   });
 
   $routes->group('customer', function ($routes) {

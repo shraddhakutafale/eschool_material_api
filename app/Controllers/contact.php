@@ -84,12 +84,10 @@ class Contact extends BaseController
         ], 200);
     }
     
-    
-      public function create()
+public function create()
 {
     $input = $this->request->getJSON(true);
 
-    // Required validation
     $rules = [
         'contactType' => 'required',
         'title'       => 'required'
@@ -97,8 +95,8 @@ class Contact extends BaseController
 
     if (!$this->validate($rules)) {
         return $this->fail([
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
             'message' => 'Invalid Inputs',
         ], 409);
     }
@@ -107,14 +105,26 @@ class Contact extends BaseController
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model = new ContactModel($db);
 
-    // Insert dynamic fields safely using allowedFields
-    $model->insert($input);
+    // Use frontend data directly
+    $insertData = [
+        'contactType' => $input['contactType'],
+        'title'       => trim($input['title']),
+        'data'        => $input['data'],       // <-- formatted string
+        'isActive'    => 1,
+        'isDeleted'   => 0,
+        'createdBy'   => $input['createdBy'] ?? null,
+        'createdDate' => date('Y-m-d H:i:s')
+    ];
+
+    $model->insert($insertData);
 
     return $this->respond([
-        'status' => true,
-        'message' => 'Contact Added Successfully'
+        'status'  => true,
+        'message' => 'Contact Added Successfully',
+        'data'    => $insertData
     ], 200);
 }
+
 
 
 
@@ -207,6 +217,46 @@ class Contact extends BaseController
         ], 409);
     }
 }
+
+
+
+
+public function getContactPaging()
+{
+    // Get tenant DB connection
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ContactModel($db);
+
+    // Optional: Pagination params
+    $page  = $this->request->getVar('page') ?? 1;
+    $limit = $this->request->getVar('limit') ?? 10;
+    $offset = ($page - 1) * $limit;
+
+    // Fetch contacts
+    $contacts = $model
+        ->where('isDeleted', 0)
+        ->orderBy('createdDate', 'DESC')
+        ->findAll($limit, $offset);
+
+    // Count total records for pagination
+    $total = $model->where('isDeleted', 0)->countAllResults();
+
+    // Response
+    return $this->respond([
+        'status'  => true,
+        'message' => 'Contacts fetched successfully',
+        'data'    => $contacts,
+        'meta'    => [
+            'page'       => (int)$page,
+            'limit'      => (int)$limit,
+            'total'      => $total,
+            'totalPages' => ceil($total / $limit)
+        ]
+    ], 200);
+}
+
+
 
 
     public function addAllExamTimetable(){

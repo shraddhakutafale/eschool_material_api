@@ -632,6 +632,11 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallpaging', 'Staff::getStaffPaging',['filter' => ['tenantFilter']]);
   });
 
+  $routes->group('contact', function ($routes) {
+    $routes->get('getall', 'Contact::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallcontactpaging', 'Contact::getContactPaging',['filter' => ['tenantFilter']]);
+  });
+
 
 
   $routes->group('website', function ($routes) {

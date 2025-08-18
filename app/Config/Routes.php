@@ -295,13 +295,15 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('delete', 'Settings::delete',['filter' => ['authFilter','tenantFilter']]);
 
 
-
-
     $routes->post('getallpaginglink', 'Settings::getLinksPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->get('view/(:segment)', 'Settings::show/$1',['filter' => 'authFilter']);
     $routes->post('createlink', 'Settings::createLink',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('updatelink', 'Settings::updateLink',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('deletelink', 'Settings::deleteLink',['filter' => ['authFilter','tenantFilter']]);
+
+    $routes->get('getallfooter', 'Settings::getAllFooter',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpagingfooter', 'Settings::getFooterPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createfooter', 'Settings::createFooter',['filter' => ['authFilter','tenantFilter']]);
   });
 
 
@@ -643,6 +645,15 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getalllogobanner', 'Website::getLogoBanner', ['filter' => ['tenantFilter']]);
     $routes->post('getalllmenu', 'Website::getAllMenu', ['filter' => ['tenantFilter']]);
 
+
+  });
+
+
+  
+  $routes->group('settings', function ($routes) {
+    $routes->post('getallfooter', 'Settings::getFooter', ['filter' => ['tenantFilter']]);
+    $routes->post('getalllsettingfooter', 'Settings::getAllSettingFooter', ['filter' => ['tenantFilter']]);
+    $routes->post('getalllink', 'Settings::getAllLink', ['filter' => ['tenantFilter']]);
 
   });
 

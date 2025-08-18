@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\SettingsModel;
+use App\Models\FooterModel;
+
 use App\Models\LinkModel;
 
 use Config\Database;
@@ -477,87 +479,72 @@ class Settings extends BaseController
     }
 
 
-    
-    public function createLink()
-    {
-        // Retrieve the input data from the request
-        $input = $this->request->getPost();
-        
-        // Define validation rules for required fields
-        $rules = [
-            'labelName'  => ['rules' => 'required'],
+public function createLink()
+{
+    $input = $this->request->getPost();
 
+    // Validation
+    $rules = [
+        'labelName' => ['rules' => 'required'],
+    ];
 
-        ];
-    
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-           
-            // Handle image upload for the cover image
-            $profilePic= $this->request->getFile('profilePic');
-            $profilePicName = null;
-    
-            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                // Define the upload path for the cover image
-                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/linkImages/';
-                if (!is_dir($profilePicPath)) {
-                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-                }
-    
-                // Move the file to the desired directory with a unique name
-                $profilePicName = $profilePic->getRandomName();
-                $profilePic->move($profilePicPath, $profilePicName);
-    
-                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $profilePicUrl = 'uploads/linkImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/linkImages/', '', $profilePicUrl);
-    
-                // Add the cover image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/linkImages/' .$profilePicUrl; 
-            }
-    
-           
-    
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new LinkModel($db);
-            $model->insert($input);
-    
-            return $this->respond(['status' => true, 'message' => 'Link Added Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
-            ];
-            return $this->fail($response, 409);
-        }
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ], 409);
     }
-    
+
+    try {
+        // 🔑 Decode JWT
+        $key    = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token  = null;
+
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+        // ✅ Handle profilePic upload
+        $profilePic = $this->request->getFile('profilePic');
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            
+            // 👉 Always save inside public/
+            $uploadPath = FCPATH . 'exEducationTraining/linkImages/'; 
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $newName = $profilePic->getRandomName();
+            $profilePic->move($uploadPath, $newName);
+
+            // 👉 Save only relative path in DB (e.g. "exEducationTraining/linkImages/abc.png")
+            $input['profilePic'] = 'exEducationTraining/linkImages/' . $newName;
+        }
+
+        // 🔗 DB insert
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new LinkModel($db);
+        $model->insert($input);
+
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Link Added Successfully'
+        ], 200);
+
+    } catch (\Exception $e) {
+        return $this->respond([
+            'status'  => false,
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
     public function updateLink()
     {
         $input = $this->request->getPost();
@@ -671,4 +658,256 @@ class Settings extends BaseController
     }
 
     
+
+
+    
+       public function getFooterPaging()
+    {
+        $input = $this->request->getJSON();
+    
+        // Get the page number from the input, default to 1 if not provided
+        $page = isset($input->page) ? $input->page : 1;
+        $perPage = isset($input->perPage) ? $input->perPage : 10;
+        $sortField = isset($input->sortField) ? $input->sortField : 'footerId';
+        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+        $search = isset($input->search) ? $input->search : '';
+        $filter = $input->filter;
+    
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        // Load EventModel with the tenant database connection
+        $footerModel = new FooterModel($db);
+    
+        $query = $footerModel;
+    
+        if (!empty($filter)) {
+            $filter = json_decode(json_encode($filter), true);
+    
+            foreach ($filter as $key => $value) {
+                if (in_array($key, ['labelName', 'link'])) {
+                    $query->like($key, $value); // LIKE filter for specific fields
+                } else if ($key === 'createdDate') {
+                    $query->where($key, $value); // Exact match filter for createdDate
+                }
+            }
+    
+            // Apply Date Range Filter (startDate and endDate)
+            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+                $query->where('createdDate >=', $filter['startDate'])
+                      ->where('createdDate <=', $filter['endDate']);
+            }
+    
+            // Apply Last 7 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+                $query->where('createdDate >=', $last7DaysStart);
+            }
+    
+            // Apply Last 30 Days Filter if requested
+            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+                $query->where('createdDate >=', $last30DaysStart);
+            }
+        }
+    
+        // Ensure that the "deleted" status is 0 (active records)
+        $query->where('isDeleted', 0);
+    
+        // Apply Sorting
+        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+    
+        // Get Paginated Results
+        $footers = $query->paginate($perPage, 'default', $page);
+        $pager = $footerModel->pager;
+    
+        $response = [
+            "status" => true,
+            "message" => "All Event Data Fetched",
+            "data" => $footers,
+            "pagination" => [
+                "currentPage" => $pager->getCurrentPage(),
+                "totalPages" => $pager->getPageCount(),
+                "totalItems" => $pager->getTotal(),
+                "perPage" => $perPage
+            ]
+        ];
+    
+        return $this->respond($response, 200);
+    }
+
+
+ public function createFooter()
+{
+$input = $this->request->getJSON(true); // true = returns array
+    $file = $this->request->getFile('file');
+
+    // ✅ Get tenant DB
+    $tenantService = new \App\Libraries\TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new \App\Models\FooterModel($db);
+
+    // ✅ Common fields
+    $data = [
+        'businessId'     => isset($input['businessId']) ? (int)$input['businessId'] : 0,
+        'parentFooterId' => isset($input['parentFooterId']) ? (int)$input['parentFooterId'] : 0,
+        'isActive'       => 1,
+        'isDeleted'      => 0,
+        'modifiedBy'     => session()->get('userId') ?? 0,
+        'modifiedDate'   => date('Y-m-d H:i:s'),
+    ];
+
+    // ✅ Add title only if provided
+    if (!empty($input['title'])) {
+        $data['title'] = trim($input['title']);
+    }
+
+    // ✅ Add URL only if provided
+    if (!empty($input['url'])) {
+        $data['url'] = trim($input['url']);
+    }
+
+    // ✅ Handle file upload if exists
+    if ($file && $file->isValid() && !$file->hasMoved()) {
+        $uploadPath = WRITEPATH . 'uploads/footer/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+        $newFileName = $file->getRandomName();
+        $file->move($uploadPath, $newFileName);
+        $data['file'] = base_url('writable/uploads/footer/' . $newFileName);
+    }
+
+    try {
+        // ✅ Update if footerId exists, otherwise insert
+        if (!empty($input['footerId'])) {
+            $footerId = (int)$input['footerId'];
+            $model->update($footerId, $data);
+            $message = 'Footer updated successfully.';
+        } else {
+            $data['createdBy']   = session()->get('userId') ?? 0;
+            $data['createdDate'] = date('Y-m-d H:i:s');
+            $model->insert($data);
+            $footerId = $model->insertID();
+            $message = 'Footer created successfully.';
+        }
+
+        return $this->respond([
+            'status'   => true,
+            'message'  => $message,
+            'footerId' => $footerId
+        ], 200);
+
+    } catch (\Exception $e) {
+        return $this->respond([
+            'status'  => false,
+            'message' => 'Failed to save footer.',
+            'error'   => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+  public function getAllFooter()
+    {
+           // Insert the product data into the database
+           $tenantService = new TenantService();
+           // Connect to the tenant's database
+           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+        $footerModel = new FooterModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $footerModel->findAll()], 200);
+    }
+
+
+
+    public function getFooter()
+{
+    $tenantService = new \App\Libraries\TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new \App\Models\FooterModel($db);
+
+    // Get all active + non-deleted footers
+    $footers = $model->where('isActive', 1)
+                    ->where('isDeleted', 0)
+                    ->orderBy('parentFooterId ASC, footerId ASC')
+                    ->findAll();
+
+    $result = [];
+
+    // Step 1: collect parents
+    foreach ($footers as $footer) {
+        if ($footer['parentFooterId'] == 0) {
+            $result[$footer['footerId']] = [
+                'footerId' => $footer['footerId'],
+                'title'    => $footer['title'],
+                'children' => []
+            ];
+        }
+    }
+
+    // Step 2: attach children to their parents
+    foreach ($footers as $footer) {
+        if ($footer['parentFooterId'] != 0) {
+            if (isset($result[$footer['parentFooterId']])) {
+                $result[$footer['parentFooterId']]['children'][] = [
+                    'footerId' => $footer['footerId'],
+                    'title'    => $footer['title'],
+                    'url'      => $footer['url']
+                ];
+            }
+        }
+    }
+
+    // Step 3: return only values (reset keys)
+    return $this->respond(array_values($result));
+}
+
+
+public function getAllLink()
+{
+    try {
+        $tenantService = new \App\Libraries\TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $businessId = $this->request->getVar('businessId');
+
+        if (!$businessId) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'Business ID is required.'
+            ], 400);
+        }
+
+        $model = new \App\Models\LinkModel($db);
+
+        $links = $model->where('businessId', $businessId)
+                       ->where('isActive', 1)
+                       ->where('isDeleted', 0)
+                       ->orderBy('linkId ASC')
+                       ->findAll();
+
+        // ✅ prepend base URL to profilePic
+        $baseUrl = base_url(); // gives you domain + project base
+        foreach ($links as &$link) {
+            if (!empty($link['profilePic'])) {
+                $link['profilePic'] = $baseUrl . $link['profilePic'];
+            }
+        }
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Links fetched successfully.',
+            'data'    => $links
+        ], 200);
+
+    } catch (\Exception $e) {
+        return $this->respond([
+            'status' => false,
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
 }

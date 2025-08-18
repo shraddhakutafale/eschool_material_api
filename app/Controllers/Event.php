@@ -49,84 +49,71 @@ class Event extends BaseController
     }
 
     public function getEventsPaging()
-    {
-        $input = $this->request->getJSON();
+{
+    $input = $this->request->getJSON();
 
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'eventId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
+    $page = $input->page ?? 1;
+    $perPage = $input->perPage ?? 10;
+    $sortField = $input->sortField ?? 'eventId';
+    $sortOrder = $input->sortOrder ?? 'asc';
+    $filter = $input->filter ?? [];
 
-        $key = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token = null;
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-            $token = $matches[1];
-        }
+    $eventModel = new EventModel($db);
+    $query = $eventModel;
 
-        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-        $businessId = $decoded->businessId;
+    if (!empty($filter)) {
+        $filter = json_decode(json_encode($filter), true);
 
-        // Connect to tenant DB
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $eventModel = new EventModel($db);
-
-        $query = $eventModel;
-
-        if (!empty($filter)) {
-            $filter = json_decode(json_encode($filter), true);
-
-            foreach ($filter as $key => $value) {
-                if (in_array($key, ['eventName', 'eventDesc', 'venue'])) {
-                    $query->like($key, $value);
-                } elseif ($key === 'createdDate') {
-                    $query->where($key, $value);
-                }
-            }
-
-            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                $query->where('createdDate >=', $filter['startDate']);
-                $query->where('createdDate <=', $filter['endDate']);
-            }
-
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-                $query->where('createdDate >=', date('Y-m-d', strtotime('-7 days')));
-            }
-
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-                $query->where('createdDate >=', date('Y-m-d', strtotime('-30 days')));
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['eventName', 'location'])) {
+                $query->like($key, $value); 
+            } else if ($key === 'eventDate') {
+                $query->where($key, $value);
             }
         }
 
-        $query->where('businessId', $businessId);
-        $query->where('isDeleted', 0);
-
-        // Sorting
-        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-            $query->orderBy($sortField, $sortOrder);
+        // ✅ Date range filters
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+            $query->where('eventDate >=', $filter['startDate'])
+                  ->where('eventDate <=', $filter['endDate']);
         }
 
-        $events = $query->paginate($perPage, 'default', $page);
-        $pager = $eventModel->pager;
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+            $query->where('eventDate >=', date('Y-m-d', strtotime('-7 days')));
+        }
 
-        $response = [
-            "status" => true,
-            "message" => "All Event Data Fetched",
-            "data" => $events,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-
-        return $this->respond($response, 200);
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+            $query->where('eventDate >=', date('Y-m-d', strtotime('-30 days')));
+        }
     }
+
+    $query->where('isDeleted', 0);
+
+    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+        $query->orderBy($sortField, $sortOrder);
+    }
+
+    $events = $query->paginate($perPage, 'default', $page);
+    $pager = $eventModel->pager;
+
+    $response = [
+        "status" => true,
+        "message" => "All Event Data Fetched",
+        "data" => $events,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ];
+
+    return $this->respond($response, 200);
+}
+
 
 /*************  ✨ Windsurf Command ⭐  *************/
 /**

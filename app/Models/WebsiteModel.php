@@ -12,7 +12,7 @@ class WebsiteModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['menuId', 'businessId', 'menuName', 'menuType', 'parentMenuId', 'value', 'target', 'updDatetime', 'updUserId','createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive','isDeleted'];
+    protected $allowedFields    = ['menuId', 'businessId', 'menuName', 'menuType', 'parentMenuId', 'value','originalName', 'target', 'updDatetime', 'updUserId','createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive','isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -184,11 +184,10 @@ class Website extends BaseController
 
         return $this->respond($response, 200);
     }
-
 public function create()
 {
     $input = $this->request->getPost();
-    $file = $this->request->getFile('file');
+    $file  = $this->request->getFile('file');
 
     $rules = [
         'menuName' => [],
@@ -206,75 +205,81 @@ public function create()
 
     if (!$this->validate($rules)) {
         return $this->fail([
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
             'message' => 'Invalid Inputs'
         ], 409);
     }
 
     // ✅ Get tenant DB
     $tenantService = new \App\Libraries\TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new \App\Models\WebsiteModel($db);
+    $db            = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model         = new \App\Models\WebsiteModel($db);
 
     // ✅ Use parentMenu passed from form
-    $parentMenuId = !empty($input['parentMenu']) ? (int)$input['parentMenu'] : 0;
+    $parentMenuId = !empty($input['parentMenu']) ? (int) $input['parentMenu'] : 0;
 
     // ✅ Prepare data for insert
     $data = [
-        'menuName' => $input['menuName'],
-        'menuType' => $input['menuType'],
-        'businessId' => $input['businessId'] ?? null,
+        'menuName'     => $input['menuName'],
+        'menuType'     => $input['menuType'],
+        'businessId'   => $input['businessId'] ?? null,
         'parentMenuId' => $parentMenuId,
-        'isActive' => 1,
-        'isDeleted' => 0,
-        'createdBy' => 9,
-        'modifiedBy' => 0,
-        'createdDate' => date('Y-m-d H:i:s'),
+        'isActive'     => 1,
+        'isDeleted'    => 0,
+        'createdBy'    => 9,
+        'modifiedBy'   => 0,
+        'createdDate'  => date('Y-m-d H:i:s'),
         'modifiedDate' => date('Y-m-d H:i:s'),
     ];
 
     // ✅ Set the value field based on menuType
     if ($input['menuType'] === 'URL' || $input['menuType'] === 'Link') {
         $data['value'] = $input['linkValue'];
+
     } elseif ($input['menuType'] === 'File' && $file && $file->isValid() && !$file->hasMoved()) {
         $uploadPath = WRITEPATH . 'uploads/website/';
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0777, true);
         }
-        $newFileName = $file->getRandomName();
+
+        $newFileName  = $file->getRandomName();   // random save name
+        $originalName = $file->getClientName();   // ✅ original filename
+
         $file->move($uploadPath, $newFileName);
-        $data['value'] = base_url('writable/uploads/website/' . $newFileName);
+
+        $data['value']        = base_url('writable/uploads/website/' . $newFileName);
+        $data['originalName'] = $originalName;   // ✅ correct column name
     }
 
     // ✅ Insert menu
     $model->insert($data);
     $menuId = $model->insertID(); // Get newly inserted menu ID
 
-    // ✅ If menuType is URL, insert into content_menu
+    // ✅ If menuType is URL, also insert into content_menu
     if ($input['menuType'] === 'URL') {
         $contentModel = new \App\Models\ContentModel($db);
 
         $contentData = [
-            'menuId' => $menuId,
-            'businessId' => $input['businessId'] ?? null,
-            'title' => '',
-            'content' => '',
-            'createdBy' => 9,
-            'createdDate' => date('Y-m-d H:i:s'),
-            'modifiedBy' => 0,
+            'menuId'       => $menuId,
+            'businessId'   => $input['businessId'] ?? null,
+            'title'        => '',
+            'content'      => '',
+            'createdBy'    => 9,
+            'createdDate'  => date('Y-m-d H:i:s'),
+            'modifiedBy'   => 0,
             'modifiedDate' => date('Y-m-d H:i:s'),
-            'isActive' => 1,
-            'isDeleted' => 0,
+            'isActive'     => 1,
+            'isDeleted'    => 0,
         ];
 
         $contentModel->insert($contentData);
     }
 
     return $this->respond([
-        'status' => true,
+        'status'  => true,
         'message' => 'Menu created successfully.',
-        'data' => $data
+        'data'    => $data
     ], 200);
 }
 

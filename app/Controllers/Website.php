@@ -191,8 +191,8 @@ public function create()
     $file = $this->request->getFile('file');
 
     $rules = [
-        'menuName' => ['rules' => 'required'],
-        'menuType' => ['rules' => 'required'],
+        'menuName' => [],
+        'menuType' => [],
     ];
 
     // Conditional rules for 'linkValue' or 'file'
@@ -339,13 +339,12 @@ public function createContent()
 }
 public function createLogoBanner()
 {
-    // Get files    
-     $input = $this->request->getPost();
+    // Get POST data
+    $input = $this->request->getPost();
 
     $logo   = $this->request->getFile('logo');
     $banner = $this->request->getFile('banner');
 
-    // Get businessId from POST
     $businessId = $input['businessId'] ?? null;
 
     if (!$businessId) {
@@ -371,17 +370,20 @@ public function createLogoBanner()
     $logoName   = $logo->getRandomName();
     $bannerName = $banner->getRandomName();
 
-    // Define upload path
-    $uploadPath = ROOTPATH . 'writable/uploads/';
-    if (!is_dir($uploadPath)) {
-        mkdir($uploadPath, 0777, true);
-    }
+    // ✅ Upload path inside public so browser can access
+    $uploadPath = ROOTPATH . 'public/uploads/';
+    if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
 
     // Move files
     $logo->move($uploadPath, $logoName);
     $banner->move($uploadPath, $bannerName);
 
-    // Load tenant-specific DB
+    // Prepare full URLs
+    $baseUrl = rtrim(base_url(), '/'); // http://localhost:8080
+    $logoUrl   = $baseUrl . '/uploads/' . $logoName;
+    $bannerUrl = $baseUrl . '/uploads/' . $bannerName;
+
+    // Load tenant DB
     $tenantService = new \App\Libraries\TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
@@ -395,7 +397,7 @@ public function createLogoBanner()
         ->get()
         ->getRowArray();
 
-    // Prepare data
+    // Prepare data (store relative path in DB)
     $data = [
         'logo'         => '/uploads/' . $logoName,
         'banner'       => '/uploads/' . $bannerName,
@@ -413,12 +415,17 @@ public function createLogoBanner()
         $logoModel->insert($data);
     }
 
-    // Response
     return $this->respond([
         'status'  => true,
-        'message' => 'Logo and banner saved successfully.'
+        'message' => 'Logo and banner saved successfully.',
+        'data'    => [
+            'logo'   => $logoUrl,
+            'banner' => $bannerUrl
+        ]
     ]);
 }
+
+
 
 
 
@@ -466,72 +473,56 @@ public function getAllMenu()
 
 
     
-  public function getLogoBanner()
-    {
-        // Get POST or JSON input
-        $input = $this->request->getPost();
-        if (empty($input)) {
-            $input = $this->request->getJSON(true);
-        }
+public function getLogoBanner()
+{
+    // Get POST or JSON input
+    $input = $this->request->getPost();
+    if (empty($input)) $input = $this->request->getJSON(true);
 
-        $businessId = $input['businessId'] ?? null;
+    $businessId = $input['businessId'] ?? null;
 
-        if (!$businessId) {
-            return $this->fail([
-                'status' => false,
-                'message' => 'Business ID is required.'
-            ], 409);
-        }
-
-        // Get tenant DB connection
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-        // Model
-        $logoModel = new LogoBannerModel($db);
-
-        $records = $logoModel
-            ->where('isDeleted', 0)
-            ->where('businessId', $businessId)
-            ->findAll();
-
-        if (empty($records)) {
-            return $this->respond([
-                'status' => false,
-                'message' => 'No logo/banner found.'
-            ], 404);
-        }
-
-        // Full URL path
-        $baseUrl = base_url(); // Example: http://localhost:8080/
-
-        foreach ($records as &$record) {
-            if (!empty($record['logo'])) {
-                $record['logo'] = $baseUrl . 'uploads/' . basename($record['logo']);
-            }
-            if (!empty($record['banner'])) {
-                $record['banner'] = $baseUrl . 'uploads/' . basename($record['banner']);
-            }
-        }
-
-        return $this->respond([
-            'status' => true,
-            'data' => $records
-        ]);
+    if (!$businessId) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Business ID is required.'
+        ], 409);
     }
 
+    // Tenant DB
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
+    $logoModel = new LogoBannerModel($db);
 
+    $records = $logoModel
+        ->where('isDeleted', 0)
+        ->where('businessId', $businessId)
+        ->findAll();
 
+    if (empty($records)) {
+        return $this->respond([
+            'status' => false,
+            'message' => 'No logo/banner found.'
+        ], 404);
+    }
 
+    // Base URL
+    $baseUrl = rtrim(base_url(), '/');
 
+    foreach ($records as &$record) {
+        if (!empty($record['logo']) && !str_starts_with($record['logo'], 'http')) {
+            $record['logo'] = $baseUrl . $record['logo'];
+        }
+        if (!empty($record['banner']) && !str_starts_with($record['banner'], 'http')) {
+            $record['banner'] = $baseUrl . $record['banner'];
+        }
+    }
 
-
-
-
-
-
-
+    return $this->respond([
+        'status' => true,
+        'data'   => $records
+    ]);
+}
 }
 
 

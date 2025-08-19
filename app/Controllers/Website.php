@@ -184,6 +184,10 @@ class Website extends BaseController
 
         return $this->respond($response, 200);
     }
+
+
+
+    
 public function create()
 {
     $input = $this->request->getPost();
@@ -195,7 +199,7 @@ public function create()
     ];
 
     // Conditional rules for 'linkValue' or 'file'
-    if ($input['menuType'] === 'URL' || $input['menuType'] === 'Link') {
+    if ($input['menuType'] === 'URL') {
         $rules['linkValue'] = ['rules' => 'required'];
     } elseif ($input['menuType'] === 'File') {
         $rules['file'] = [
@@ -234,7 +238,7 @@ public function create()
     ];
 
     // ✅ Set the value field based on menuType
-    if ($input['menuType'] === 'URL' || $input['menuType'] === 'Link') {
+    if ($input['menuType'] === 'URL') {
         $data['value'] = $input['linkValue'];
 
     } elseif ($input['menuType'] === 'File' && $file && $file->isValid() && !$file->hasMoved()) {
@@ -256,13 +260,14 @@ public function create()
     $model->insert($data);
     $menuId = $model->insertID(); // Get newly inserted menu ID
 
-    // ✅ If menuType is URL, also insert into content_menu
-    if ($input['menuType'] === 'URL') {
+    // ✅ Only if menuType is Link → insert into content_menu
+    if ($input['menuType'] === 'Link') {
         $contentModel = new \App\Models\ContentModel($db);
 
         $contentData = [
             'menuId'       => $menuId,
             'businessId'   => $input['businessId'] ?? null,
+            'menu'         => $input['menuName'],  // ✅ yaha menuName bhi save hoga
             'title'        => '',
             'content'      => '',
             'createdBy'    => 9,
@@ -282,6 +287,7 @@ public function create()
         'data'    => $data
     ], 200);
 }
+
 
 
 public function createContent()
@@ -310,7 +316,7 @@ public function createContent()
     // Find all URL-type menus with blank content/title (in content table)
     $query = $db->table('content_menu AS c')
         ->join('website_menus AS m', 'm.menuId = c.menuId')
-        ->where('m.menuType', 'URL')
+        ->where('m.menuType', 'LINK')
         ->where('c.isDeleted', 0)
         ->groupStart()
             ->where('c.title', '')
@@ -342,6 +348,7 @@ public function createContent()
         'message' => 'Content updated successfully for all matching URL menus.',
     ], 200);
 }
+
 public function createLogoBanner()
 {
     // Get POST data

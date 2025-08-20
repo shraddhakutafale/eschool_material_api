@@ -427,21 +427,32 @@ class User extends BaseController
                 'password' => password_hash($input->password, PASSWORD_DEFAULT),
                 'roleId'   => 2
             ];
-            $model->insert($data);
-            $businessData = [
-                'businessName' => $input->businessName,
-                'businessCategoryId' => $input->businessCategoryId,
-                'businessSubCategoryId' => $input->businessSubCategoryId ?? null,
-            ];
-            $businessModel->insert($businessData);
-            $userBusinessData = [
-                'userId' => $model->getInsertID(),
-                'businessId' => $businessModel->getInsertID(),
-                'roleId' => 2, // Assuming roleId 2 is for business users
-            ];
-            $userBusinessModel->insert($userBusinessData);
+            $userId = $model->insert($data);
+            if(!$userId) {
+                return $this->fail(['status' => false, 'message' => 'Failed to create user'], 500);
+            }else {
+                $businessData = [
+                    'businessName' => $input->businessName,
+                    'businessCategoryId' => $input->businessCategoryId,
+                    'businessSubCategoryId' => $input->businessSubCategoryId,
+                ];
+                $businessId = $businessModel->insert($businessData);
+                if(!$businessId) {
+                    return $this->fail(['status' => false, 'message' => 'Failed to create business'], 500);
+                }else {
+                    $userBusinessData = [
+                        'userId' => $userId,
+                        'businessId' => $businessId,
+                        'roleId' => 3, // Assuming roleId 3 is for business users
+                        'isActive' => 1,
+                        'isDeleted' => 0
+                    ];
+                    $userBusinessModel->insert($userBusinessData);
+                    return $this->respond(["status" => true, 'message' => 'Registered Successfully'], 200);    
+                }
+                
+            }
             
-            return $this->respond(["status" => true, 'message' => 'Registered Successfully'], 200);
         }else{
             $response = [
                 'status'=>false,

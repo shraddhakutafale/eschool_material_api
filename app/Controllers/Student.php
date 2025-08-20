@@ -156,7 +156,7 @@ public function getStudentsAdmissionPaging()
         item_mst.itemName
     ')
     ->join('admission_details', 'admission_details.studentId = student_mst.studentId', 'left')
-    ->join('item_mst', 'item_mst.itemId = admission_details.itemId', 'left') // ✅ course name ke liye join
+    ->join('item_mst', 'item_mst.itemId = admission_details.itemId', 'left')
     ->where('student_mst.isDeleted', 0)
     ->where('student_mst.businessId', $input->businessId);
 
@@ -203,6 +203,7 @@ public function getStudentsAdmissionPaging()
     foreach ($students as $student) {
         $fees = [];
         $totalFee = 0;
+        $paidAmount = 0;
 
         // Get item fees
         $itemFeeMapArray = $itemFeeMapModel
@@ -282,11 +283,10 @@ public function getStudentsAdmissionPaging()
             'generalRegisterNo' => $student['generalRegisterNo'],
             'admissionId' => $student['admissionId'],
             'itemId' => $student['itemId'],
-                        'itemName' => $student['itemName'],
-
-
+            'itemName' => $student['itemName'],
             'fees' => $fees,
             'totalFee' => $totalFee,
+            'paidAmount' => $paidAmount,
             'paymentStatus' => $paymentStatus,
             'shifts' => $shifts, // ✅ multiple shifts
         ];
@@ -470,15 +470,12 @@ public function getStudentsAdmissionPaging()
         foreach ($payments as $key => $payment) {
             $totalFee = 0;
             $fees = [];
-            $selectedCourseArray = explode(',', $payment['selectedCourses'] ?? '');
-
-            foreach ($selectedCourseArray as $itemId) {
-                $itemFeeMapArray = $itemFeeMapModel
-                    ->where('itemId', $itemId)
+            $itemFeeMapArray = $itemFeeMapModel
+                    ->where('itemId', $payment['itemId'])
                     ->where('isDeleted', 0)
                     ->findAll();
 
-                foreach ($itemFeeMapArray as $feeMap) {
+            foreach ($itemFeeMapArray as $feeMap) {
                     $fee = $feeModel
                         ->where('feeId', $feeMap['feeId'])
                         ->where('isDeleted', 0)
@@ -489,7 +486,6 @@ public function getStudentsAdmissionPaging()
                         $totalFee += (float)$fee['amount'];
                     }
                 }
-            }
 
             $payments[$key]['fees'] = $fees;
             $payments[$key]['totalFee'] = $totalFee;

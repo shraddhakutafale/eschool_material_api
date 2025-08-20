@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\WebsiteModel;
+use App\Models\ElementModel;
 use App\Models\ContentModel;
 use App\Models\LogoBannerModel;
 
@@ -349,6 +350,8 @@ public function createContent()
     ], 200);
 }
 
+
+
 public function createLogoBanner()
 {
     // Get POST data
@@ -382,7 +385,6 @@ public function createLogoBanner()
     $logoName   = $logo->getRandomName();
     $bannerName = $banner->getRandomName();
 
-    // ✅ Upload path inside public so browser can access
     $uploadPath = ROOTPATH . 'public/uploads/';
     if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
 
@@ -391,7 +393,7 @@ public function createLogoBanner()
     $banner->move($uploadPath, $bannerName);
 
     // Prepare full URLs
-    $baseUrl = rtrim(base_url(), '/'); // http://localhost:8080
+    $baseUrl = rtrim(base_url(), '/');
     $logoUrl   = $baseUrl . '/uploads/' . $logoName;
     $bannerUrl = $baseUrl . '/uploads/' . $bannerName;
 
@@ -535,6 +537,62 @@ public function getLogoBanner()
         'data'   => $records
     ]);
 }
+
+
+
+public function createElement()
+{
+    $input = $this->request->getPost();  
+
+    
+    $businessId = $this->request->getPost('businessId') ?? $input['businessId'] ?? null;
+
+    // Validation
+    $rules = [
+        'displayName' => ['rules' => 'required'],
+        'label'       => ['rules' => 'required'],
+        'businessId'  => ['rules' => 'required|integer']
+    ];
+
+    if (! $this->validate($rules)) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $model = new ElementModel($db);
+
+    $data = [
+        'displayName' => $input['displayName'],
+        'label'       => $input['label'],
+        'value'       => $input['value'] ?? null,
+        'extra'       => $input['extra'] ?? null,
+        'businessId'  => $businessId,
+        'createdBy'   => $input['createdBy'] ?? 'system',
+        'createdDate' => date('Y-m-d H:i:s'),
+        'isActive'    => 1,
+        'isDeleted'   => 0
+    ];
+
+    if ($model->insert($data)) {
+        return $this->respond([
+            'status'  => true,
+            'message' => '🚀 Element Created Successfully',
+            'data'    => $data
+        ], 201);
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Database Error'
+        ], 500);
+    }
+}
+
 }
 
 

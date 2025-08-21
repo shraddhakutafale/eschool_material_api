@@ -123,7 +123,6 @@ class Customer extends BaseController
         // Define validation rules for required fields
         $rules = [
             'name' => ['rules' => 'required'],
-            'mobileNo' => ['rules' => 'required']
         ];
     
         if ($this->validate($rules)) {

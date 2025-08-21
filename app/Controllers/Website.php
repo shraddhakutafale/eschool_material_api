@@ -6,10 +6,10 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use Config\Database;
 use App\Models\WebsiteModel;
+use App\Models\IconModel;
 use App\Models\ElementModel;
 use App\Models\ContentModel;
 use App\Models\LogoBannerModel;
-
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
@@ -593,6 +593,14 @@ public function createElement()
     }
 }
 
+
+  public function getAllIcon()
+    {
+           $tenantService = new TenantService();
+           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+        $iconModel = new IconModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $iconModel->findAll()], 200);
+    }
 }
 
 

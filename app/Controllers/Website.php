@@ -601,6 +601,48 @@ public function createElement()
         $iconModel = new IconModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $iconModel->findAll()], 200);
     }
+
+
+      public function getAllElement()
+    {
+           $tenantService = new TenantService();
+           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+        $elementModel = new ElementModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $elementModel->findAll()], 200);
+    }
+
+    public function deleteElement()
+{
+    $input = $this->request->getJSON();
+
+    if (!isset($input->itemId)) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'itemId is required'
+        ], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ElementModel($db);
+
+    $itemId = $input->itemId;
+    $item = $model->find($itemId);
+
+    if (!$item) {
+        return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+    }
+
+    // Soft delete
+    $deleted = $model->update($itemId, ['isDeleted' => 1]);
+
+    if ($deleted) {
+        return $this->respond(['status' => true, 'message' => 'Item deleted successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to delete item'], 500);
+    }
+}
+
 }
 
 

@@ -285,7 +285,10 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('getallpagingcontent', 'Website::getContentPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createelement', 'Website::createElement',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallelement', 'Website::getAllElement',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallicon', 'Website::getAllIcon',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('deleteelement', 'Website::deleteElement',['filter' => ['authFilter','tenantFilter']]);
+
 
    
   });

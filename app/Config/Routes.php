@@ -302,8 +302,6 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('update', 'Settings::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallwebsite', 'Settings::getSettingsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Settings::delete',['filter' => ['authFilter','tenantFilter']]);
-
-
     $routes->post('getallpaginglink', 'Settings::getLinksPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->get('view/(:segment)', 'Settings::show/$1',['filter' => 'authFilter']);
     $routes->post('createlink', 'Settings::createLink',['filter' => ['authFilter','tenantFilter']]);
@@ -313,6 +311,9 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->get('getallfooter', 'Settings::getAllFooter',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpagingfooter', 'Settings::getFooterPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createfooter', 'Settings::createFooter',['filter' => ['authFilter','tenantFilter']]);
+
+    $routes->post('getallpagingvisionmission', 'Settings::getVisionMissionPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createvisionmission', 'Settings::createVisionMission',['filter' => ['authFilter','tenantFilter']]);
   });
 
 

@@ -454,7 +454,7 @@ public function getAllMenu()
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         // ✅ Get businessId from GET or POST
-        $businessId = $this->request->getVar('businessId'); // works for both GET & POST
+        $businessId = $this->request->getVar('businessId'); 
 
         if (!$businessId) {
             return $this->respond([

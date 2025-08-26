@@ -663,6 +663,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallfooter', 'Settings::getFooter', ['filter' => ['tenantFilter']]);
     $routes->post('getalllsettingfooter', 'Settings::getAllSettingFooter', ['filter' => ['tenantFilter']]);
     $routes->post('getalllink', 'Settings::getAllLink', ['filter' => ['tenantFilter']]);
+    $routes->post('getallvisionmission', 'Settings::getAllVisionMission', ['filter' => ['tenantFilter']]);
 
   });
 

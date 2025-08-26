@@ -1019,4 +1019,49 @@ public function createVisionMission()
 }
 
 
+public function getAllVisionMission()
+{
+    try {
+        $tenantService = new \App\Libraries\TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+        $businessId = $this->request->getVar('businessId');
+
+        if (!$businessId) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'Business ID is required.'
+            ], 400);
+        }
+
+        $model = new \App\Models\VisionMissionModel($db);
+
+        $visions = $model->where('businessId', $businessId)
+                       ->where('isActive', 1)
+                       ->where('isDeleted', 0)
+                       ->orderBy('visionMissionId ASC')
+                       ->findAll();
+
+        // ✅ prepend base URL to profilePic
+        $baseUrl = base_url(); // gives you domain + project base
+        foreach ($visions as &$vision) {
+            if (!empty($link['profilePic'])) {
+                $vision['profilePic'] = $baseUrl . $link['profilePic'];
+            }
+        }
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Vision Mission fetched successfully.',
+            'data'    => $visions
+        ], 200);
+
+    } catch (\Exception $e) {
+        return $this->respond([
+            'status' => false,
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
 }

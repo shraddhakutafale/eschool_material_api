@@ -105,86 +105,6 @@ class Settings extends BaseController
     }
     
 
-    // public function getStaffPaging() {
-    //     $input = $this->request->getJSON();
-    
-    //     // Get the page number from the input, default to 1 if not provided
-    //     $page = isset($input->page) ? $input->page : 1;
-    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
-    //     $sortField = isset($input->sortField) ? $input->sortField : 'staffId';
-    //     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-    //     $search = isset($input->search) ? $input->search : '';
-    //     $filter = $input->filter;
-    
-    //     $tenantService = new TenantService();
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    //     // Load StaffModel with the tenant database connection
-    //     $staffModel = new StaffModel($db);
-    
-    //     $query = $staffModel;
-    
-    //     if (!empty($filter)) {
-    //         $filter = json_decode(json_encode($filter), true);
-    
-    //         foreach ($filter as $key => $value) {
-    //             if (in_array($key, ['empName', 'empCategory', 'empCode', 'empSal'])) {
-    //                 $query->like($key, $value); // LIKE filter for specific fields
-    //             } else if ($key === 'createdDate') {
-    //                 $query->where($key, $value); // Exact match filter for createdDate
-    //             }
-    //         }
-    
-    //         // Apply Date Range Filter (startDate and endDate)
-    //         if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-    //             $query->where('createdDate >=', $filter['startDate'])
-    //                 ->where('createdDate <=', $filter['endDate']);
-    //         }
-    
-    //         // Apply Last 7 Days Filter if requested
-    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-    //             $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-    //             $query->where('createdDate >=', $last7DaysStart);
-    //         }
-    
-    //         // Apply Last 30 Days Filter if requested
-    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-    //             $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-    //             $query->where('createdDate >=', $last30DaysStart);
-    //         }
-    //     }
-    
-    //     // Ensure that the "deleted" status is 0 (active records)
-    //     $query->where('isDeleted', 0);
-    
-    //     // Apply Sorting
-    //     if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-    //         $query->orderBy($sortField, $sortOrder);
-    //     }
-    
-    //     // Get Paginated Results
-    //     $staffs = $query->paginate($perPage, 'default', $page);
-    //     $pager = $staffModel->pager;
-    
-    //     $response = [
-    //         "status" => true,
-    //         "message" => "All Staff Data Fetched",
-    //         "data" => $staffs,
-    //         "pagination" => [
-    //             "currentPage" => $pager->getCurrentPage(),
-    //             "totalPages" => $pager->getPageCount(),
-    //             "totalItems" => $pager->getTotal(),
-    //             "perPage" => $perPage
-    //         ]
-    //     ];
-    
-    //     return $this->respond($response, 200);
-    // }
-
-    
-    
-
-
-  
     public function create()
     {
         // Retrieve the input data from the request
@@ -216,79 +136,6 @@ class Settings extends BaseController
     }
 
 
-    //     public function create()
-    // {
-    //     $input = $this->request->getPost();
-
-    //     $rules = [
-    //         'empName' => ['rules' => 'required'],
-    //         'empCode' => ['rules' => 'required'],
-    //     ];
-
-    //     if (!$this->validate($rules)) {
-    //         return $this->fail([
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs',
-    //         ], 409);
-    //     }
-
-    //     // Decode JWT token
-    //     $key = "Exiaa@11";
-    //     $header = $this->request->getHeader("Authorization");
-    //     $token = null;
-
-    //     if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-    //         $token = $matches[1];
-    //     }
-
-    //     $decoded = JWT::decode($token, new Key($key, 'HS256'));
-
-    //     // Handle profilePic upload
-    //     $profilePic = $this->request->getFile('profilePic');
-    //     if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-    //         $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/staffImages/';
-    //         if (!is_dir($profilePicPath)) {
-    //             mkdir($profilePicPath, 0777, true);
-    //         }
-    //         $profilePicName = $profilePic->getRandomName();
-    //         $profilePic->move($profilePicPath, $profilePicName);
-    //         $input['profilePic'] = $decoded->tenantName . '/staffImages/' . $profilePicName;
-    //     }
-
-    //     // Connect to tenant DB
-    //     $tenantService = new TenantService();
-    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-    //     // Start DB transaction
-    //     $db->transStart();
-
-    //     // Save staff
-    //     $staffModel = new StaffModel($db);
-    //     $staffModel->insert($input);
-    //     $staffId = $staffModel->getInsertID();
-
-    //     // Save attendance
-    //     $attendanceModel = new StaffAttendanceModel($db);
-    //     $attendanceData = [
-    //         'staffId'        => $staffId,
-    //         'attendanceDate' => date('Y-m-d'),
-    //         'inTime'         => date('H:i:s'),
-    //         'outTime'        => null,
-    //         'deviceId'       => null,
-    //         'status'         => 'Present',
-    //         'present'        => 1
-    //     ];
-    //     $attendanceModel->insert($attendanceData);
-
-    //     $db->transComplete();
-
-    //     if ($db->transStatus() === false) {
-    //         return $this->failServerError('Failed to add staff or attendance.');
-    //     }
-
-    //     return $this->respond(['status' => true, 'message' => 'Staff and attendance added successfully'], 200);
-    // }
 
 
     public function update()
@@ -359,45 +206,43 @@ class Settings extends BaseController
     {
         $input = $this->request->getJSON();
 
-        // Validation rules for the staff
         $rules = [
-            'staffId' => ['rules' => 'required'], // Ensure staffID is provided and is numeric
+            'departmentId' => ['rules' => 'required|integer']
         ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-                // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new StaffModel($db);
-
-            // Retrieve the staff by staffId
-            $staffId = $input->staffId;
-            $staff = $model->find($staffId); // Assuming find method retrieves the staff
-
-            if (!$staff) {
-                return $this->fail(['status' => false, 'message' => 'staff not found'], 404);
-            }
-
-            // Proceed to delete the staff
-            $deleted = $model->delete($staffId);
-
-            if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'staff Deleted Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete staff'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
+        if (!$this->validate($rules)) {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            ], 422);
         }
-    }
 
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
+        $model = new SettingsModel($db);
+
+        $departmentId = (int) $input->departmentId;
+
+        // Check if department exists
+        $department = $model->find($departmentId);
+        if (!$department) {
+            return $this->failNotFound('Department not found');
+        }
+
+        // Delete department
+        if ($model->delete($departmentId)) {
+            return $this->respond([
+                'status'  => true,
+                'message' => 'Department deleted successfully'
+            ], 200);
+        }
+
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Failed to delete department'
+        ], 500);
+    }
 
 
 
@@ -507,11 +352,9 @@ public function createLink()
 
         $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
-        // ✅ Handle profilePic upload
         $profilePic = $this->request->getFile('profilePic');
         if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
             
-            // 👉 Always save inside public/
             $uploadPath = FCPATH . 'exEducationTraining/linkImages/'; 
             if (!is_dir($uploadPath)) {
                 mkdir($uploadPath, 0777, true);
@@ -520,11 +363,9 @@ public function createLink()
             $newName = $profilePic->getRandomName();
             $profilePic->move($uploadPath, $newName);
 
-            // 👉 Save only relative path in DB (e.g. "exEducationTraining/linkImages/abc.png")
             $input['profilePic'] = 'exEducationTraining/linkImages/' . $newName;
         }
 
-        // 🔗 DB insert
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new LinkModel($db);
@@ -548,20 +389,16 @@ public function createLink()
     {
         $input = $this->request->getPost();
         
-        // Validation rules for the studentId
         $rules = [
             'linkId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
 
         ];
 
-        // Validate the input
         if ($this->validate($rules)) {
              
         $tenantService = new TenantService();
-        // Connect to the tenant's database
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new LinkModel($db);
 
-            // Retrieve the student by studentId
             $linkId = $input['linkId'];  // Corrected here
             $link = $model->find($linkId); // Assuming find method retrieves the student
 
@@ -808,6 +645,50 @@ $input = $this->request->getJSON(true); // true = returns array
 }
 
 
+public function deleteFooter()
+{
+    $input = $this->request->getJSON();
+
+    $rules = [
+        'footerId' => ['rules' => 'required|integer']
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 422);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
+    $model = new FooterModel($db);
+
+    $footerId = (int) $input->footerId;
+
+    // Check if department exists
+    $footer = $model->find($footerId);
+    if (!$footer) {
+        return $this->failNotFound('Footer not found');
+    }
+
+    // Delete department
+    if ($model->delete($footerId)) {
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Footer deleted successfully'
+        ], 200);
+    }
+
+    return $this->fail([
+        'status'  => false,
+        'message' => 'Failed to delete footer'
+    ], 500);
+}
+
+
+
   public function getAllFooter()
     {
            // Insert the product data into the database
@@ -886,7 +767,6 @@ public function getAllLink()
                        ->orderBy('linkId ASC')
                        ->findAll();
 
-        // ✅ prepend base URL to profilePic
         $baseUrl = base_url(); // gives you domain + project base
         foreach ($links as &$link) {
             if (!empty($link['profilePic'])) {
@@ -907,6 +787,8 @@ public function getAllLink()
         ], 500);
     }
 }
+
+
 
 
  
@@ -1042,7 +924,6 @@ public function getAllVisionMission()
                        ->orderBy('visionMissionId ASC')
                        ->findAll();
 
-        // ✅ prepend base URL to profilePic
         $baseUrl = base_url(); // gives you domain + project base
         foreach ($visions as &$vision) {
             if (!empty($link['profilePic'])) {
@@ -1063,5 +944,48 @@ public function getAllVisionMission()
         ], 500);
     }
 }
+
+public function deleteVisionMission()
+{
+    $input = $this->request->getJSON();
+
+    $rules = [
+        'visionMissionId' => ['rules' => 'required|integer']
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 422);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   
+    $model = new VisionMissionModel($db);
+
+    $visionMissionId = (int) $input->visionMissionId;
+
+    // Check if department exists
+    $vision = $model->find($visionMissionId);
+    if (!$vision) {
+        return $this->failNotFound('vision not found');
+    }
+
+    // Delete department
+    if ($model->delete($visionMissionId)) {
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Vision Mission deleted successfully'
+        ], 200);
+    }
+
+    return $this->fail([
+        'status'  => false,
+        'message' => 'Failed to delete footer'
+    ], 500);
+}
+
 
 }

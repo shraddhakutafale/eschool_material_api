@@ -200,7 +200,6 @@ public function create()
         'menuType' => [],
     ];
 
-    // Conditional rules for 'linkValue' or 'file'
     if ($input['menuType'] === 'URL') {
         $rules['linkValue'] = ['rules' => 'required'];
     } elseif ($input['menuType'] === 'File') {
@@ -217,15 +216,12 @@ public function create()
         ], 409);
     }
 
-    // ✅ Get tenant DB
     $tenantService = new \App\Libraries\TenantService();
     $db            = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model         = new \App\Models\WebsiteModel($db);
 
-    // ✅ Use parentMenu passed from form
     $parentMenuId = !empty($input['parentMenu']) ? (int) $input['parentMenu'] : 0;
 
-    // ✅ Prepare data for insert
     $data = [
         'menuName'     => $input['menuName'],
         'menuType'     => $input['menuType'],
@@ -239,7 +235,6 @@ public function create()
         'modifiedDate' => date('Y-m-d H:i:s'),
     ];
 
-    // ✅ Set the value field based on menuType
     if ($input['menuType'] === 'URL') {
         $data['value'] = $input['linkValue'];
 
@@ -249,27 +244,25 @@ public function create()
             mkdir($uploadPath, 0777, true);
         }
 
-        $newFileName  = $file->getRandomName();   // random save name
-        $originalName = $file->getClientName();   // ✅ original filename
+        $newFileName  = $file->getRandomName();   
+        $originalName = $file->getClientName();  
 
         $file->move($uploadPath, $newFileName);
 
         $data['value']        = base_url('writable/uploads/website/' . $newFileName);
-        $data['originalName'] = $originalName;   // ✅ correct column name
+        $data['originalName'] = $originalName;   
     }
 
-    // ✅ Insert menu
     $model->insert($data);
-    $menuId = $model->insertID(); // Get newly inserted menu ID
+    $menuId = $model->insertID(); 
 
-    // ✅ Only if menuType is Link → insert into content_menu
     if ($input['menuType'] === 'Link') {
         $contentModel = new \App\Models\ContentModel($db);
 
         $contentData = [
             'menuId'       => $menuId,
             'businessId'   => $input['businessId'] ?? null,
-            'menu'         => $input['menuName'],  // ✅ yaha menuName bhi save hoga
+            'menu'         => $input['menuName'],  
             'title'        => '',
             'content'      => '',
             'createdBy'    => 9,
@@ -288,6 +281,56 @@ public function create()
         'message' => 'Menu created successfully.',
         'data'    => $data
     ], 200);
+}
+
+
+public function delete()
+{
+    $input = $this->request->getJSON();
+
+    $rules = [
+        'menuId' => ['rules' => 'required'], 
+    ];
+
+    if ($this->validate($rules)) {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new WebsiteModel($db);
+
+        $menuId = $input->menuId;
+
+        // Find the menu
+        $menu = $model->find($menuId);
+        if (!$menu) {
+            return $this->fail(['status' => false, 'message' => 'Menu not found'], 404);
+        }
+
+        $children = $model->where('parentMenuId', $menuId)
+                          ->where('isDeleted', 0)
+                          ->findAll();
+
+        if (!empty($children)) {
+            return $this->fail(['status' => false, 'message' => 'Cannot delete. This menu has child menus.'], 400);
+        }
+
+        $updateData = [
+            'isDeleted' => 1,
+        ];
+
+        $deleted = $model->update($menuId, $updateData);
+
+        if ($deleted) {
+            return $this->respond(['status' => true, 'message' => 'Menu deleted successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to delete menu'], 500);
+        }
+    } else {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
 }
 
 
@@ -449,11 +492,9 @@ public function createLogoBanner()
 public function getAllMenu()
 {
     try {
-        // ✅ Get tenant DB
         $tenantService = new \App\Libraries\TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        // ✅ Get businessId from GET or POST
         $businessId = $this->request->getVar('businessId'); 
 
         if (!$businessId) {
@@ -463,7 +504,6 @@ public function getAllMenu()
             ], 400);
         }
 
-        // ✅ Load model
         $model = new \App\Models\WebsiteModel($db);
 
         $menus = $model->where('businessId', $businessId)

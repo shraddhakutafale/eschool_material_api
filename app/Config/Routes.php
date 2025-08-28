@@ -280,6 +280,7 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('getallpaging', 'Website::getWebsitesPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->get('view/(:segment)', 'Website::show/$1',['filter' => 'authFilter']);
     $routes->post('create', 'Website::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('delete', 'Website::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createcontent', 'Website::createContent',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('updatecontent', 'Website::updateContent',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallpagingcontent', 'Website::getContentPaging',['filter' => ['authFilter', 'tenantFilter']]);
@@ -291,6 +292,7 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('getallpagingscrolling', 'Website::getScrollingPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createscrolling', 'Website::createScrolling',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('deletescrolling', 'Website::deleteScrolling',['filter' => ['authFilter','tenantFilter']]);
+    
 
   });
 
@@ -311,9 +313,13 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->get('getallfooter', 'Settings::getAllFooter',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpagingfooter', 'Settings::getFooterPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createfooter', 'Settings::createFooter',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletefooter', 'Settings::deleteFooter',['filter' => ['authFilter','tenantFilter']]);
+
 
     $routes->post('getallpagingvisionmission', 'Settings::getVisionMissionPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createvisionmission', 'Settings::createVisionMission',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletevisionmission', 'Settings::deleteVisionMission',['filter' => ['authFilter','tenantFilter']]);
+
   });
 
 

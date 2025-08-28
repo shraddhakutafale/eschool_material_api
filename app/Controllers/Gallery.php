@@ -114,120 +114,81 @@ class Gallery extends BaseController
        }
     
 
-    public function create()
-    {
-        // Retrieve the input data from the request
-        $input = $this->request->getPost();
-        
-        // Define validation rules for required fields
-        $rules = [
-            'galleryTitle' => ['rules' => 'required'],
-            'galleryDescription' => ['rules' => 'required']
-        ];
-    
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
+   public function create()
+{
+    $input = $this->request->getPost();
+
+    $rules = [
+        'type'             => ['rules' => 'required|in_list[gallery,event]'],
+        'galleryTitle'     => ['rules' => 'required'],
+        'galleryDescription' => ['rules' => 'permit_empty'],
+        'businessId'       => ['rules' => 'required|integer']
+    ];
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    // --- Token decode (clean) ---
+    $key    = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token  = null;
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $m)) $token = $m[1];
+
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+    $tenant  = $decoded->tenantName ?? 'default';
+
+    // --- Paths ---
+    $uploadBase = FCPATH . 'uploads/' . $tenant . '/galleryImages/';
+    if (!is_dir($uploadBase)) mkdir($uploadBase, 0777, true);
+
+    // --- Cover image ---
+    $cover = $this->request->getFile('coverImage');
+    if ($cover && $cover->isValid() && !$cover->hasMoved()) {
+        $name = $cover->getRandomName();
+        $cover->move($uploadBase, $name);
+        $input['coverImage'] = $tenant . '/galleryImages/' . $name;
+    }
+
+    // --- Multiple images (IMPORTANT: input name must be "images") ---
+    $files = $this->request->getFileMultiple('images');
+    $imageNames = [];
+    if ($files) {
+        foreach ($files as $img) {
+            if ($img && $img->isValid() && !$img->hasMoved()) {
+                $name = $img->getRandomName();
+                $img->move($uploadBase, $name);
+                // Store only the filename, consistent with your current approach
+                $imageNames[] = $name;
             }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-           
-            // Handle image upload for the cover image
-            $coverImage= $this->request->getFile('coverImage');
-            $coverImageName = null;
-    
-            if ($coverImage && $coverImage->isValid() && !$coverImage->hasMoved()) {
-                // Define the upload path for the cover image
-                $coverImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/galleryImages/';
-                if (!is_dir($coverImagePath)) {
-                    mkdir($coverImagePath, 0777, true); // Create directory if it doesn't exist
-                }
-    
-                // Move the file to the desired directory with a unique name
-                $coverImageName = $coverImage->getRandomName();
-                $coverImage->move($coverImagePath, $coverImageName);
-    
-                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $coverImageUrl = 'uploads/galleryImages/' . $coverImageName;
-                $coverImageUrl = str_replace('uploads/galleryImages/', '', $coverImageUrl);
-    
-                // Add the cover image URL to the input data
-                $input['coverImage'] = $decoded->tenantName . '/galleryImages/' .$coverImageUrl; 
-            }
-    
-
-             
-            $galleryImages = $this->request->getFiles('images');  // 'images' is the name for multiple images
-            $imageUrls = []; // Initialize the array for image URLs
-
-            if ($galleryImages && count($galleryImages) > 0) {
-                foreach ($galleryImages as $image) {
-                    // Validate the image: Ensure it's valid, hasn't moved, and exists
-                    if ($image && $image->isValid() && !$image->hasMoved()) {
-                        // Define the upload path for product images
-                        $galleryImagePath = FCPATH . 'uploads/'. $decoded->tenantName .'/galleryImages/';
-
-                        // Check if the directory exists; if not, create it
-                        if (!is_dir($galleryImagePath)) {
-                            mkdir($galleryImagePath, 0777, true); // Create directory if it doesn't exist
-                        }
-
-                        // Generate a unique name for the image to avoid overwriting
-                        $imageName = $image->getRandomName();
-
-                        // Move the uploaded image to the target directory
-                        $image->move($galleryImagePath, $imageName);
-
-                        // Get the URL for the uploaded image and add it to the array
-                        $imageUrl = 'uploads/galleryImages/' . $imageName;
-                        $imageUrl = str_replace('uploads/galleryImages/', '', $imageUrl);
-
-                        $imageUrls[] = $imageUrl; // Add the image URL to the array
-                    }
-                }
-
-                // If there are multiple images, join the URLs with commas and save in the input data
-                if (!empty($imageUrls)) {
-                    $input['galleryImages'] = implode(',', $imageUrls); // Join image URLs with commas
-                }
-            }
-           
-    
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new GalleryModel($db);
-            $model->insert($input);
-    
-            return $this->respond(['status' => true, 'message' => 'Gallery Added Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
-            ];
-            return $this->fail($response, 409);
+        }
+        if ($imageNames) {
+            $input['galleryImages'] = implode(',', $imageNames);
         }
     }
+
+    // --- Audit fields (optional) ---
+    $input['createdBy']   = $decoded->userId ?? null;
+    $input['createdDate'] = date('Y-m-d H:i:s');
+    $input['isActive']    = 1;
+    $input['isDeleted']   = 0;
+
+    // --- Save ---
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new GalleryModel($db);
+    $id = $model->insert($input, true);
+
+    return $this->respond([
+        'status'  => true,
+        'id'      => $id,
+        'message' => 'Gallery/Event Added Successfully'
+    ], 201);
+}
+
 
 
     

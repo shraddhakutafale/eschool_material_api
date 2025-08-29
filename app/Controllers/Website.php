@@ -395,14 +395,11 @@ public function createContent()
 }
 
 
-
 public function createLogoBanner()
 {
-    // Get POST data
     $input = $this->request->getPost();
-
-    $logo   = $this->request->getFile('logo');
-    $banner = $this->request->getFile('banner');
+    $logo  = $this->request->getFile('logo');
+    $banners = $this->request->getFiles(); // get all uploaded files
 
     $businessId = $input['businessId'] ?? null;
 
@@ -413,33 +410,38 @@ public function createLogoBanner()
         ], 409);
     }
 
-    // Validate files
-    if (!$logo || !$logo->isValid() || !$banner || !$banner->isValid()) {
-        return $this->fail([
-            'status'  => false,
-            'errors'  => [
-                'logo'   => $logo ? $logo->getErrorString() : 'Logo file missing',
-                'banner' => $banner ? $banner->getErrorString() : 'Banner file missing',
-            ],
-            'message' => 'Invalid file upload'
-        ], 409);
-    }
-
-    // Generate random file names
-    $logoName   = $logo->getRandomName();
-    $bannerName = $banner->getRandomName();
-
-    $uploadPath = ROOTPATH . 'public/uploads/';
+    // Upload path
+    $uploadPath = WRITEPATH . '/uploads/'; // direct server folder
     if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
 
-    // Move files
-    $logo->move($uploadPath, $logoName);
-    $banner->move($uploadPath, $bannerName);
+    $logoPath = null;
+    $bannerPaths = [];
 
-    // Prepare full URLs
-    $baseUrl = rtrim(base_url(), '/');
-    $logoUrl   = $baseUrl . '/uploads/' . $logoName;
-    $bannerUrl = $baseUrl . '/uploads/' . $bannerName;
+    // Move logo if exists
+    if ($logo && $logo->isValid()) {
+        $logoName = $logo->getRandomName();
+        $logo->move($uploadPath, $logoName);
+        $logoPath = '/uploads/' . $logoName; // relative path
+    }
+
+    // Move banners if exist
+    if (isset($banners['banners'])) {  // frontend must send 'banners[]'
+        foreach ($banners['banners'] as $banner) {
+            if ($banner->isValid()) {
+                $bannerName = $banner->getRandomName();
+                $banner->move($uploadPath, $bannerName);
+                $bannerPaths[] = '/uploads/' . $bannerName; // relative path
+            }
+        }
+    }
+
+    // If neither logo nor banner uploaded
+    if (!$logoPath && empty($bannerPaths)) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'No files uploaded'
+        ], 409);
+    }
 
     // Load tenant DB
     $tenantService = new \App\Libraries\TenantService();
@@ -455,16 +457,15 @@ public function createLogoBanner()
         ->get()
         ->getRowArray();
 
-    // Prepare data (store relative path in DB)
-    $data = [
-        'logo'         => '/uploads/' . $logoName,
-        'banner'       => '/uploads/' . $bannerName,
-        'businessId'   => $businessId,
-        'modifiedBy'   => 9,
-        'modifiedDate' => date('Y-m-d H:i:s')
-    ];
+    // Prepare data
+    $data = [];
+    if ($logoPath) $data['logo'] = $logoPath;
+    if (!empty($bannerPaths)) $data['banner'] = json_encode($bannerPaths, JSON_UNESCAPED_SLASHES);
 
-    // Update or insert
+    $data['businessId']   = $businessId;
+    $data['modifiedBy']   = 9;
+    $data['modifiedDate'] = date('Y-m-d H:i:s');
+
     if (is_array($existing) && isset($existing['id'])) {
         $logoModel->update($existing['id'], $data);
     } else {
@@ -475,13 +476,14 @@ public function createLogoBanner()
 
     return $this->respond([
         'status'  => true,
-        'message' => 'Logo and banner saved successfully.',
+        'message' => 'Files saved successfully.',
         'data'    => [
-            'logo'   => $logoUrl,
-            'banner' => $bannerUrl
+            'logo'    => $logoPath,
+            'banners' => $bannerPaths
         ]
     ]);
 }
+
 
 
 

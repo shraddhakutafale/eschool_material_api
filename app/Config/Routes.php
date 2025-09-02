@@ -221,7 +221,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     
     $routes->post('delete', 'Item::delete',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallcategory', 'Item::getAllItemCategory',['filter' => ['authFilter','tenantFilter']]);
-$routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilter','tenantFilter']]);
 
     $routes->post('getallsubcategory', 'Item::getAllItemSubCategory',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallsubcategorybycategory', 'Item::getAllItemSubCategoryByCategory',['filter' => ['authFilter','tenantFilter']]);
@@ -235,11 +235,10 @@ $routes->get('getallcategory', 'Item::getAllCategoryWeb',['filter' => ['authFilt
     $routes->post('createitemgroup', 'Item::createItemGroup',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('updateitemgroup', 'Item::updateItemGroup',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('deleteitemgroup', 'Item::deleteItemGroup',['filter' => ['authFilter','tenantFilter']]);
-
-    
-
     $routes->get('getallunit', 'Item::getAllUnit',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getItemByItemTypeId/(:segment)', 'Item::getItemByItemTypeId/$1',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('import', 'Item::importExcel', ['filter' => ['authFilter','tenantFilter']]);
+
 
 
     // Routes for website

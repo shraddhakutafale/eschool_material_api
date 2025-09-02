@@ -10,6 +10,8 @@ use App\Models\ItemCategory;
 use App\Models\ItemSubCategory;
 use App\Models\ItemGroup;
 use App\Models\BrandModel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 use App\Models\Unit;
 use Config\Database;
 use App\Libraries\TenantService;
@@ -1131,5 +1133,47 @@ public function getAllCategoryWeb()
         ], 200);
     }
 
+
+
+public function importExcel()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ItemModel($db);
+
+    $json = $this->request->getJSON(true);
+    if (!$json || !is_array($json)) {
+        return $this->fail('Invalid JSON data.');
+    }
+$insertedData = [];
+
+foreach ($json as $row) {
+    if (empty($row['itemName']) || !isset($row['mrp'])) continue;
+
+    $existing = $model->where('itemName', $row['itemName'])->first();
+    if ($existing) continue;
+
+    $insertData[] = [
+        'itemName' => $row['itemName'],
+        'mrp' => floatval($row['mrp']),
+        'sku' => $row['sku'] ?? null,
+        'discountType' => $row['discountType'] ?? null,
+        'barcode' => $row['barcode'] ?? null,
+        'createdDate' => date('Y-m-d H:i:s'),
+    ];
+}
+
+if (!empty($insertData)) {
+    $model->insertBatch($insertData);
+    $insertedData = $insertData; // store inserted rows
+}
+
+return $this->respond([
+    'success' => true,
+    'data' => $insertedData, // return newly inserted rows
+    'message' => 'Items imported successfully!'
+]);
+
+}
 
 }

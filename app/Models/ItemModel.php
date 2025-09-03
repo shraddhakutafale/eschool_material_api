@@ -12,7 +12,7 @@ class ItemModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemId', 'businessId', 'itemName', 'itemCode', 'coverImage', 'productImages', 'itemTypeId', 'categoryInputFieldValues', 'itemCategoryId', 'brandName', 'unitName', 'unitSize', 'mrp', 'finalPrice', 'feature', 'termsCondition', 'type', 'sku', 'startDate', 'duration', 'gstPercentage', 'discountType', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'tags', 'tagId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['itemId', 'businessId', 'itemName', 'itemCode', 'coverImage', 'productImages', 'itemTypeId', 'categoryInputFieldValues', 'itemCategoryId', 'brandName', 'unitName', 'unitSize', 'mrp', 'finalPrice', 'feature', 'termsCondition', 'type', 'sku', 'startDate', 'duration', 'gstPercentage', 'discountType', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'tags', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

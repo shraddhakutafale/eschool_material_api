@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ItemModel extends Model
+class TagModel extends Model
 {
-    protected $table            = 'item_mst';
-    protected $primaryKey       = 'itemId';
+    protected $table            = 'tags';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemId', 'businessId', 'itemName', 'itemCode', 'coverImage', 'productImages', 'itemTypeId', 'categoryInputFieldValues', 'itemCategoryId', 'brandName', 'unitName', 'unitSize', 'mrp', 'finalPrice', 'feature', 'termsCondition', 'type', 'sku', 'startDate', 'duration', 'gstPercentage', 'discountType', 'discount', 'barcode', 'hsnCode', 'minStockLevel', 'description', 'tags', 'tagId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['businessId','name','createdBy','createdDate','modifiedDate','modifiedBy'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -24,7 +24,7 @@ class ItemModel extends Model
      protected $useTimestamps = true;
      protected $dateFormat    = 'datetime';
      protected $createdField  = 'createdDate';
-     protected $updatedField  = 'modifiedDate';
+     protected $updatedField  = '';
      protected $beforeInsert = ['addCreatedBy'];
      protected $beforeUpdate = ['addModifiedBy'];
  

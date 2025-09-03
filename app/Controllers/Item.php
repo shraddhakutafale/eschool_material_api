@@ -7,6 +7,8 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\ItemModel;
 use App\Models\ItemTypeModel;
 use App\Models\ItemCategory;
+use App\Models\TagModel;
+
 use App\Models\ItemSubCategory;
 use App\Models\ItemGroup;
 use App\Models\BrandModel;
@@ -24,7 +26,7 @@ class Item extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
+public function index()
     {
         $input = $this->request->getJSON();
         $tenantService = new TenantService();
@@ -52,7 +54,6 @@ class Item extends BaseController
     
         return $this->respond($response, 200);
     }
-    
     
 
     public function getAllUnit()
@@ -233,6 +234,8 @@ class Item extends BaseController
     
         return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
     }
+
+
 
 
 

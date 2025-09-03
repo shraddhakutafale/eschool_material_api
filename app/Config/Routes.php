@@ -250,6 +250,14 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
 
 
   });
+
+ $routes->group('tag', function ($routes) {
+    $routes->post('getall', 'Tag::index',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('create', 'Tag::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Tag::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('delete', 'Tag::delete',['filter' => ['authFilter','tenantFilter']]);
+});
+
   
   $routes->group('gallery', function ($routes) {
     //Routes for gallery

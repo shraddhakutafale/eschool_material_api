@@ -1135,45 +1135,113 @@ public function getAllCategoryWeb()
 
 
 
+// public function importExcel()
+// {
+//     $tenantService = new TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//     $model = new ItemModel($db);
+
+//     $json = $this->request->getJSON(true);
+//     if (!$json || !is_array($json)) {
+//         return $this->fail('Invalid JSON data.');
+//     }
+
+
+//     $processedItems = [];
+
+//     foreach ($json as $row) {
+//         if (empty($row['itemName']) || !isset($row['mrp'])) continue;
+
+//         $existing = $model->where('itemName', $row['itemName'])->first();
+
+//         if (!$existing) {
+//             $insertData[] = [
+//                 'itemName' => $row['itemName'],
+//                 'mrp' => floatval($row['mrp']),
+//                 'sku' => $row['sku'] ?? null,
+//                 'discountType' => $row['discountType'] ?? null,
+//                 'barcode' => $row['barcode'] ?? null,
+//                 'createdDate' => date('Y-m-d H:i:s'),
+//                 'itemTypeId' => $row['itemTypeId'] ?? 3,
+//                 'businessId'=>$row['businessId']?? 0
+                
+//             ];
+//         }
+
+//         // Track all valid items (existing + new)
+//         $processedItems[] = $existing ?: $row;
+//     }
+
+//     if (!empty($insertData)) {
+//         $model->insertBatch($insertData);
+//     }
+
+//     // Return all items (existing + new) for frontend to refresh list
+//     return $this->respond([
+//         'success' => true,
+//         'data' => $processedItems,
+//         'message' => 'Items processed successfully!'
+//     ]);
+
+//     }
+
 public function importExcel()
 {
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model = new ItemModel($db);
+    $categoryModel = new ItemCategory($db); // ✅ Needed to find itemCategoryId
 
     $json = $this->request->getJSON(true);
     if (!$json || !is_array($json)) {
         return $this->fail('Invalid JSON data.');
     }
-$insertedData = [];
 
-foreach ($json as $row) {
-    if (empty($row['itemName']) || !isset($row['mrp'])) continue;
+    $insertData = [];
+    $insertedItemNames = [];
 
-    $existing = $model->where('itemName', $row['itemName'])->first();
-    if ($existing) continue;
+    foreach ($json as $row) {
+        if (empty($row['itemName']) || !isset($row['mrp']) || empty($row['itemCategoryName'])) continue;
 
-    $insertData[] = [
-        'itemName' => $row['itemName'],
-        'mrp' => floatval($row['mrp']),
-        'sku' => $row['sku'] ?? null,
-        'discountType' => $row['discountType'] ?? null,
-        'barcode' => $row['barcode'] ?? null,
-        'createdDate' => date('Y-m-d H:i:s'),
-    ];
+        // ✅ Find itemCategoryId from itemCategoryName
+        $category = $categoryModel->where('itemCategoryName', $row['itemCategoryName'])->first();
+        if (!$category) continue; // skip if category doesn't exist
+
+        $existing = $model->where('itemName', $row['itemName'])->first();
+
+        if (!$existing) {
+            $insertData[] = [
+                'itemName' => $row['itemName'],
+                'mrp' => floatval($row['mrp']),
+                'sku' => $row['sku'] ?? null,
+                'discountType' => $row['discountType'] ?? null,
+                'barcode' => $row['barcode'] ?? null,
+                'createdDate' => date('Y-m-d H:i:s'),
+                'itemTypeId' => $row['itemTypeId'] ?? 3,
+                'businessId' => $row['businessId'] ?? 0,
+                'discount'=>$row['discount'],
+                'itemCategoryId' => $category['itemCategoryId']
+            ];
+            $insertedItemNames[] = $row['itemName'];
+        }
+    }
+
+    if (!empty($insertData)) {
+        $model->insertBatch($insertData);
+    }
+
+    // ✅ Return only newly inserted items
+    $items = [];
+    if (!empty($insertedItemNames)) {
+        $items = $model->whereIn('itemName', $insertedItemNames)->findAll();
+    }
+
+    return $this->respond([
+        'success' => true,
+        'data' => $items,
+        'message' => 'Items processed successfully!'
+    ]);
 }
 
-if (!empty($insertData)) {
-    $model->insertBatch($insertData);
-    $insertedData = $insertData; // store inserted rows
-}
-
-return $this->respond([
-    'success' => true,
-    'data' => $insertedData, // return newly inserted rows
-    'message' => 'Items imported successfully!'
-]);
-
-}
 
 }

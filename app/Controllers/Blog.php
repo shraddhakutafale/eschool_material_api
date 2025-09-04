@@ -366,7 +366,6 @@ class Blog extends BaseController
             // Move file
             $file->move($uploadPath, $newName);
 
-            // ✅ Detect only "image" or "video"
             $mimeType = $file->getClientMimeType();
             if (strpos($mimeType, 'image') === 0) {
                 $mediaType = 'image';

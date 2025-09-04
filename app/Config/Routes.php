@@ -521,6 +521,10 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->post('update', 'Blog::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallwebsite', 'Blog::getBlogsWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
     $routes->post('delete', 'Blog::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('createmedia', 'Blog::createMedia',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallmedia', 'Blog::getAllMedia',['filter' => ['authFilter', 'tenantFilter']]);
+
+
   });
 
     $routes->group('brand', function ($routes) {

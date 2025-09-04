@@ -350,86 +350,86 @@ class Blog extends BaseController
         ]);
     }
 
-public function createMedia()
-{
-    $file = $this->request->getFile('file');
-    $businessId = $this->request->getPost('businessId'); 
+    public function createMedia()
+    {
+        $file = $this->request->getFile('file');
+        $businessId = $this->request->getPost('businessId'); 
 
-    if ($file && $file->isValid() && !$file->hasMoved()) {
-        $newName = $file->getRandomName();
-        $uploadPath = FCPATH . 'uploads/media/';
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $uploadPath = FCPATH . 'uploads/media/';
 
-        if (!is_dir($uploadPath)) {
-            mkdir($uploadPath, 0777, true);
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            // Move file
+            $file->move($uploadPath, $newName);
+
+            // ✅ Detect only "image" or "video"
+            $mimeType = $file->getClientMimeType();
+            if (strpos($mimeType, 'image') === 0) {
+                $mediaType = 'image';
+            } elseif (strpos($mimeType, 'video') === 0) {
+                $mediaType = 'video';
+            } else {
+                // agar image/video nahi hai to reject kar do
+                return $this->fail([
+                    'status'  => false,
+                    'message' => 'Only images and videos are allowed'
+                ], 400);
+            }
+
+            // Prepare record for DB insert
+            $data = [
+                'type'        => $mediaType,  
+                'mediaUrl'    => 'uploads/media/' . $newName,
+                'businessId'  => $businessId ?: 0,
+                'createdDate' => date('Y-m-d H:i:s'),
+                'isDeleted'   => 0,
+                'isActive'    => 1
+            ];
+
+            // Save to DB
+            $tenantService = new TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+            $mediaModel = new MediaModel($db);
+            $mediaId = $mediaModel->insert($data);
+
+            $data['mediaId'] = $mediaId;
+
+            return $this->respond([
+                'status'  => true,
+                'message' => 'Media uploaded successfully',
+                'data'    => $data
+            ], 200);
         }
 
-        // Move file
-        $file->move($uploadPath, $newName);
+        return $this->fail([
+            'status'  => false,
+            'message' => 'File upload failed'
+        ], 400);
+    }
 
-        // ✅ Detect only "image" or "video"
-        $mimeType = $file->getClientMimeType();
-        if (strpos($mimeType, 'image') === 0) {
-            $mediaType = 'image';
-        } elseif (strpos($mimeType, 'video') === 0) {
-            $mediaType = 'video';
-        } else {
-            // agar image/video nahi hai to reject kar do
-            return $this->fail([
-                'status'  => false,
-                'message' => 'Only images and videos are allowed'
-            ], 400);
-        }
-
-        // Prepare record for DB insert
-        $data = [
-            'type'        => $mediaType,  
-            'mediaUrl'    => 'uploads/media/' . $newName,
-            'businessId'  => $businessId ?: 0,
-            'createdDate' => date('Y-m-d H:i:s'),
-            'isDeleted'   => 0,
-            'isActive'    => 1
-        ];
-
-        // Save to DB
+    public function getAllMedia()
+    {
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $mediaModel = new MediaModel($db);
-        $mediaId = $mediaModel->insert($data);
+        $media = $mediaModel->where('isDeleted', 0)->findAll();
 
-        $data['mediaId'] = $mediaId;
+        $baseUrl = base_url(); 
+
+        foreach ($media as &$m) {
+            $m['mediaUrl'] = $baseUrl . $m['mediaUrl']; 
+        }
 
         return $this->respond([
-            'status'  => true,
-            'message' => 'Media uploaded successfully',
-            'data'    => $data
+            'status' => true,
+            'message' => 'Media fetched successfully',
+            'data' => $media
         ], 200);
     }
-
-    return $this->fail([
-        'status'  => false,
-        'message' => 'File upload failed'
-    ], 400);
-}
-
-public function getAllMedia()
-{
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $mediaModel = new MediaModel($db);
-    $media = $mediaModel->where('isDeleted', 0)->findAll();
-
-    $baseUrl = base_url(); 
-
-    foreach ($media as &$m) {
-        $m['mediaUrl'] = $baseUrl . $m['mediaUrl']; 
-    }
-
-    return $this->respond([
-        'status' => true,
-        'message' => 'Media fetched successfully',
-        'data' => $media
-    ], 200);
-}
 
 
 }

@@ -431,16 +431,8 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
 
    
-  $routes->group('offer', function ($routes) {
-    //Routes for offer
-    $routes->get('getall', 'Offer::index',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->post('getallpaging', 'Offer::getOffersPaging',['filter' => ['authFilter', 'tenantFilter']]);
-    $routes->get('view/(:segment)', 'Offer::show/$1',['filter' => 'authFilter']);
-    $routes->post('create', 'Offer::create',['filter' => ['authFilter','tenantFilter']]);
-    $routes->post('update', 'Offer::update',['filter' => ['authFilter','tenantFilter']]);
-    $routes->get('getallwebsite', 'Offer::getOffersWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
-    $routes->post('delete', 'Offer::delete',['filter' => ['authFilter','tenantFilter']]);
-  });
+ 
+
 
 
 
@@ -600,6 +592,17 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
   $routes->group('iotdevice', function ($routes) {
     $routes->post('getallpaging', 'IotDevice::getIotDevicePaging',['filter' => ['authFilter','tenantFilter']]);
   });
+   $routes->group('offer', function ($routes) {
+    //Routes for offer
+    $routes->get('getall', 'Offer::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Offer::getOffersPaging', ['filter' => ['tenantFilter']]);
+
+    $routes->get('view/(:segment)', 'Offer::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Offer::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Offer::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Offer::getOffersWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Offer::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
 
   $routes->group('tenant', function ($routes) {
     $routes->get('getall', 'Tenant::index',['filter' => ['authFilter']]);
@@ -655,7 +658,17 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
    $routes->group('iotdevice', function ($routes) {
     $routes->post('add-parameter', 'IotDevice::addParameter', ['filter' => ['tenantFilter']]);
   });
+ $routes->group('offer', function ($routes) {
+    //Routes for offer
+    $routes->get('getall', 'Offer::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Offer::getOffersPaging', ['filter' => ['tenantFilter']]);
 
+    $routes->get('view/(:segment)', 'Offer::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Offer::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Offer::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Offer::getOffersWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Offer::delete',['filter' => ['authFilter','tenantFilter']]);
+  });
 
   $routes->group('staff', function ($routes) {
     $routes->get('getall', 'Staff::index',['filter' => ['tenantFilter']]);

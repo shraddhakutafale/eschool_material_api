@@ -12,7 +12,7 @@ class AdmissionModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['admissionId', 'studentId', 'academicYearId', 'itemId', 'rollNo', 'rfId', 'admissionDate', 'active'];
+    protected $allowedFields    = ['admissionId', 'studentId', 'academicYearId', 'itemId', 'rollNo', 'rfId','shiftId', 'admissionDate','businessId', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -20,7 +20,34 @@ class AdmissionModel extends Model
     protected array $casts = [];
     protected array $castHandlers = [];
 
+    // Dates
+     protected $useTimestamps = true;
+     protected $dateFormat    = 'datetime';
+     protected $createdField  = 'createdDate';
+     protected $updatedField  = 'modifiedDate';
+     protected $beforeInsert = ['addCreatedBy'];
+     protected $beforeUpdate = ['addModifiedBy'];
+ 
+     protected function addCreatedBy(array $data)
+     {
+         helper('jwt_helper'); // Ensure the JWT helper is loaded
+         $userId = getUserIdFromToken();
+         if ($userId) {
+             $data['data']['createdBy'] = $userId;
+         }
+         return $data;
+     }
+ 
+     protected function addModifiedBy(array $data)
+     {
+         helper('jwt_helper'); // Ensure the JWT helper is loaded
+         $userId = getUserIdFromToken();
+         if ($userId) {
+             $data['data']['modifiedBy'] = $userId;
+         }
+         return $data;
+     }
     
-    }
+}
   
 

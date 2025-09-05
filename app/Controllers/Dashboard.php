@@ -38,23 +38,27 @@ class Dashboard extends BaseController
             $leadCount = $leadModel
                 ->where('createdDate >=', $fromDate)
                 ->where('createdDate <=', $toDate)
+                ->where('businessId', $filter->businessId)
                 ->countAllResults();
 
             $admissionCount = $admissionModel
-                ->where('admissionDate >=', $fromDate)
-                ->where('admissionDate <=', $toDate)
+                ->where('createdDate >=', $fromDate)
+                ->where('createdDate <=', $toDate)
+                ->where('businessId', $filter->businessId)
                 ->countAllResults();
 
             $paidAmount = $paymentDetailModel
                 ->select('SUM(paidAmount) as totalAmount')
                 ->where('paymentDate >=', $fromDate)
                 ->where('paymentDate <=', $toDate)
+                ->where('businessId', $filter->businessId)
                 ->first();
 
             $pendingAmount = $paymentDetailModel
                 ->select('SUM(paidAmount) as totalPendingAmount')
                 ->where('dueDate >=', $fromDate)
                 ->where('dueDate <=', $toDate)
+                ->where('businessId', $filter->businessId)
                 ->first();
 
         }

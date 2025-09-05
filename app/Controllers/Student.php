@@ -571,8 +571,8 @@ public function create()
                     'studentId'       => $studentId,
                     'itemId'          => $course,
                     'academicYearId'  => $input['academicYearId'],
-                    'registeredDate'  => date('Y-m-d H:i:s'),
-                    'businessId'      => $businessId  // ✅ Optional but recommended
+                    'admissionDate'  => date('Y-m-d H:i:s'),
+                    'businessId'      => $businessId
                 ];
             }
 

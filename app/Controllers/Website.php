@@ -399,7 +399,7 @@ public function createLogoBanner()
 {
     $input = $this->request->getPost();
     $logo  = $this->request->getFile('logo');
-    $banners = $this->request->getFiles(); // get all uploaded files
+    $banners = $this->request->getFiles(); 
 
     $businessId = $input['businessId'] ?? null;
 
@@ -410,32 +410,46 @@ public function createLogoBanner()
         ], 409);
     }
 
-    // Upload path
-    $uploadPath = WRITEPATH . '/uploads/'; // direct server folder
-    if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header)) {
+        if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+    }
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+    // Upload path tenant wise
+    $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/logoBanner/';
+    if (!is_dir($uploadPath)) {
+        mkdir($uploadPath, 0777, true);
+    }
 
     $logoPath = null;
     $bannerPaths = [];
 
     // Move logo if exists
-    if ($logo && $logo->isValid()) {
+    if ($logo && $logo->isValid() && !$logo->hasMoved()) {
         $logoName = $logo->getRandomName();
         $logo->move($uploadPath, $logoName);
-        $logoPath = '/uploads/' . $logoName; // relative path
+
+        $logoPath = $decoded->tenantName . '/logoBanner/' . $logoName;
     }
 
     // Move banners if exist
-    if (isset($banners['banners'])) {  // frontend must send 'banners[]'
+    if (isset($banners['banners'])) {  
         foreach ($banners['banners'] as $banner) {
-            if ($banner->isValid()) {
+            if ($banner->isValid() && !$banner->hasMoved()) {
                 $bannerName = $banner->getRandomName();
                 $banner->move($uploadPath, $bannerName);
-                $bannerPaths[] = '/uploads/' . $bannerName; // relative path
+
+                $bannerPaths[] = $decoded->tenantName . '/logoBanner/' . $bannerName;
             }
         }
     }
 
-    // If neither logo nor banner uploaded
     if (!$logoPath && empty($bannerPaths)) {
         return $this->fail([
             'status' => false,
@@ -443,14 +457,12 @@ public function createLogoBanner()
         ], 409);
     }
 
-    // Load tenant DB
     $tenantService = new \App\Libraries\TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-    // Load model
     $logoModel = new \App\Models\LogoBannerModel($db);
 
-    // Check if record exists
+    
     $existing = $logoModel
         ->where('isDeleted', 0)
         ->where('businessId', $businessId)
@@ -483,11 +495,6 @@ public function createLogoBanner()
         ]
     ]);
 }
-
-
-
-
-
 
 
 
@@ -529,10 +536,9 @@ public function getAllMenu()
 }
 
 
-    
 public function getLogoBanner()
+
 {
-    // Get POST or JSON input
     $input = $this->request->getPost();
     if (empty($input)) $input = $this->request->getJSON(true);
 
@@ -561,18 +567,6 @@ public function getLogoBanner()
             'status' => false,
             'message' => 'No logo/banner found.'
         ], 404);
-    }
-
-    // Base URL
-    $baseUrl = rtrim(base_url(), '/');
-
-    foreach ($records as &$record) {
-        if (!empty($record['logo']) && !str_starts_with($record['logo'], 'http')) {
-            $record['logo'] = $baseUrl . $record['logo'];
-        }
-        if (!empty($record['banner']) && !str_starts_with($record['banner'], 'http')) {
-            $record['banner'] = $baseUrl . $record['banner'];
-        }
     }
 
     return $this->respond([
@@ -793,8 +787,8 @@ public function createElement()
     }
 
     $tenantService = new \App\Libraries\TenantService();
-    $db            = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model         = new \App\Models\ScrollingModel($db);
+    $db  = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new \App\Models\ScrollingModel($db);
 
     $data = [
         'name'         => $input['name'],

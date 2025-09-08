@@ -341,7 +341,6 @@ public function createLink()
     }
 
     try {
-        // 🔑 Decode JWT
         $key    = "Exiaa@11";
         $header = $this->request->getHeader("Authorization");
         $token  = null;
@@ -355,7 +354,7 @@ public function createLink()
         $profilePic = $this->request->getFile('profilePic');
         if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
             
-            $uploadPath = FCPATH . 'exEducationTraining/linkImages/'; 
+            $uploadPath = FCPATH . 'uploads/exEducationTraining/linkImages/'; 
             if (!is_dir($uploadPath)) {
                 mkdir($uploadPath, 0777, true);
             }
@@ -363,6 +362,7 @@ public function createLink()
             $newName = $profilePic->getRandomName();
             $profilePic->move($uploadPath, $newName);
 
+            // Save relative path in DB
             $input['profilePic'] = 'exEducationTraining/linkImages/' . $newName;
         }
 
@@ -383,7 +383,6 @@ public function createLink()
         ], 500);
     }
 }
-
 
     public function updateLink()
     {
@@ -743,7 +742,6 @@ public function deleteFooter()
     return $this->respond(array_values($result));
 }
 
-
 public function getAllLink()
 {
     try {
@@ -751,7 +749,6 @@ public function getAllLink()
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
         $businessId = $this->request->getVar('businessId');
-
         if (!$businessId) {
             return $this->respond([
                 'status' => false,
@@ -767,10 +764,9 @@ public function getAllLink()
                        ->orderBy('linkId ASC')
                        ->findAll();
 
-        $baseUrl = base_url(); // gives you domain + project base
         foreach ($links as &$link) {
             if (!empty($link['profilePic'])) {
-                $link['profilePic'] = $baseUrl . $link['profilePic'];
+                $link['profilePic'] = ltrim($link['profilePic'], '/'); // remove leading slash
             }
         }
 
@@ -787,6 +783,8 @@ public function getAllLink()
         ], 500);
     }
 }
+
+
 
 
 

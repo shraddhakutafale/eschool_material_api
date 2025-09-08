@@ -744,6 +744,10 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   $routes->group('blog', function ($routes) {
     $routes->get('getall', 'Blog::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Blog::getBlogsPaging',['filter' => ['tenantFilter']]);
+     $routes->post('createmedia', 'Blog::createMedia',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallmedia', 'Blog::getAllMedia',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('create', 'Blog::create',['filter' => ['authFilter','tenantFilter']]);
+
   });
 
   $routes->group('portfolio', function ($routes) {

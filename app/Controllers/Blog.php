@@ -247,6 +247,224 @@ class Blog extends BaseController
     }
 
 
+
+    public function uploadPageProfile()
+    {
+        // Retrieve form fields
+        $eventId = $this->request->getPost('eventId'); // Example field
+
+        // Retrieve the file
+        $file = $this->request->getFile('photoUrl');
+
+        
+        // Validate file
+        if (!$file->isValid()) {
+            return $this->fail($file->getErrorString());
+        }
+
+        $mimeType = $file->getMimeType();
+        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
+            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+        }
+
+        // Validate file type and size
+        if ($file->getSize() > 2048 * 1024) {
+            return $this->fail('Invalid file type or size exceeds 2MB');
+        }
+
+        // Generate a random file name and move the file
+        $newName = $file->getRandomName();
+        $filePath = '/uploads/' . $newName;
+        $file->move(WRITEPATH . '../public/uploads', $newName);
+
+        // Save file and additional data in the database
+        $data = [
+            'photoUrl' => $newName,
+        ];
+
+        $model = new EventModel();
+        $model->update($eventId,$data);
+
+        return $this->respond([
+            'status' => 201,
+            'message' => 'File and data uploaded successfully',
+            'data' => $data,
+        ]);
+    }
+// public function createMedia()
+// {
+//     $key = "Exiaa@11";
+//     $header = $this->request->getHeader("Authorization");
+//     $token = null;
+
+//     // extract token
+//     if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+//         $token = $matches[1];
+//     }
+
+//     $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+//     $file = $this->request->getFile('file');
+//     $businessId = $this->request->getPost('businessId');
+//     $createdBy = $decoded->userId ?? 0;
+
+//     if (!$file->isValid()) {
+//         return $this->fail($file->getErrorString());
+//     }
+
+//     $mimeType = $file->getMimeType();
+//     $allowed = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4'];
+
+//     if (!in_array($mimeType, $allowed)) {
+//         return $this->fail('Invalid file type. Only JPEG, PNG, GIF, and MP4 are allowed.');
+//     }
+
+//     // Make directory per tenant
+//     $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/media/';
+//     if (!is_dir($uploadPath)) {
+//         mkdir($uploadPath, 0777, true);
+//     }
+
+//     $newName = $file->getRandomName();
+//     $file->move($uploadPath, $newName);
+
+//     // Build relative path
+//     $mediaUrl = $decoded->tenantName . '/media/' . $newName;
+
+//     // Insert into DB (media_mst)
+//     $db = db_connect();
+//     $db->table('media_mst')->insert([
+//         'type'        => explode('/', $mimeType)[0], // "image" or "video"
+//         'mediaUrl'    => $mediaUrl,
+//         'businessId'  => $businessId,
+//         'createdBy'   => $createdBy,
+//         'createdDate' => date('Y-m-d H:i:s'),
+//         'modifiedBy'  => $createdBy,
+//         'modifiedDate'=> date('Y-m-d H:i:s'),
+//         'isDeleted'   => 0,
+//         'isActive'    => 1
+//     ]);
+
+//     return $this->respond([
+//         'status'  => true,
+//         'message' => 'Media uploaded successfully',
+//         'data'    => [
+//             'mediaUrl' => $mediaUrl,
+//             'type'     => explode('/', $mimeType)[0]
+//         ]
+//     ], 200);
+// }
+
+// public function getAllMedia()
+// {
+//     // Connect to the main database (exiaa_db)
+//     $db = db_connect(); // default connection should point to exiaa_db
+
+//     // Fetch media from media_mst table
+//     $builder = $db->table('media_mst');
+//     $builder->select('*');
+//     $builder->where('isDeleted', 0);
+//     $builder->where('isActive', 1);
+
+//     $media = $builder->get()->getResult();
+
+//     // Prepend full URL for Angular
+//     $baseUrl = base_url('uploads/');
+   
+
+//     return $this->respond([
+//         'status' => true,
+//         'message' => 'Media fetched successfully',
+//         'data' => $media
+//     ], 200);
+// }
+
+
+
+public function createMedia()
+{
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    $file = $this->request->getFile('file');
+    $businessId = $this->request->getPost('businessId');
+    $createdBy = $decoded->userId ?? 0;
+
+    if (!$file->isValid()) {
+        return $this->fail($file->getErrorString());
+    }
+
+    $mimeType = $file->getMimeType();
+    $allowed = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4'];
+    if (!in_array($mimeType, $allowed)) {
+        return $this->fail('Invalid file type. Only JPEG, PNG, GIF, and MP4 are allowed.');
+    }
+
+    // Make directory per tenant
+    $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/media/';
+    if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
+    $newName = $file->getRandomName();
+    $file->move($uploadPath, $newName);
+
+    $mediaUrl = $decoded->tenantName . '/media/' . $newName;
+
+    // Use default DB connection
+    $db = db_connect(); 
+
+    $db->table('media_mst')->insert([
+        'type'        => explode('/', $mimeType)[0],
+        'mediaUrl'    => $mediaUrl,
+        'businessId'  => $businessId,
+        'createdBy'   => $createdBy,
+        'createdDate' => date('Y-m-d H:i:s'),
+        'modifiedBy'  => $createdBy,
+        'modifiedDate'=> date('Y-m-d H:i:s'),
+        'isDeleted'   => 0,
+        'isActive'    => 1
+    ]);
+
+    return $this->respond([
+        'status'  => true,
+        'message' => 'Media uploaded successfully',
+        'data'    => [
+            'mediaUrl' => $mediaUrl,
+            'type'     => explode('/', $mimeType)[0]
+        ]
+    ], 200);
+}
+
+public function getAllMedia()
+{
+    // Default DB connection
+    $db = db_connect(); 
+
+    $builder = $db->table('media_mst');
+    $builder->select('*');
+    $builder->where('isDeleted', 0);
+    $builder->where('isActive', 1);
+
+   $media = $builder->get()->getResult();
+
+    // Prepend full URL for Angular
+    $baseUrl = base_url('uploads/');
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Media fetched successfully',
+        'data' => $media
+    ], 200);
+}
+
+
+
+
     public function delete()
     {
         $input = $this->request->getJSON();
@@ -305,156 +523,5 @@ class Blog extends BaseController
         }
     }
     
-
-    public function uploadPageProfile()
-    {
-        // Retrieve form fields
-        $eventId = $this->request->getPost('eventId'); // Example field
-
-        // Retrieve the file
-        $file = $this->request->getFile('photoUrl');
-
-        
-        // Validate file
-        if (!$file->isValid()) {
-            return $this->fail($file->getErrorString());
-        }
-
-        $mimeType = $file->getMimeType();
-        if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-            return $this->fail('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
-        }
-
-        // Validate file type and size
-        if ($file->getSize() > 2048 * 1024) {
-            return $this->fail('Invalid file type or size exceeds 2MB');
-        }
-
-        // Generate a random file name and move the file
-        $newName = $file->getRandomName();
-        $filePath = '/uploads/' . $newName;
-        $file->move(WRITEPATH . '../public/uploads', $newName);
-
-        // Save file and additional data in the database
-        $data = [
-            'photoUrl' => $newName,
-        ];
-
-        $model = new EventModel();
-        $model->update($eventId,$data);
-
-        return $this->respond([
-            'status' => 201,
-            'message' => 'File and data uploaded successfully',
-            'data' => $data,
-        ]);
-    }
-
- public function createMedia()
-{
-    $file = $this->request->getFile('file');
-    $businessId = $this->request->getPost('businessId'); 
-
-    if (!$file || !$file->isValid() || $file->hasMoved()) {
-        return $this->fail([
-            'status'  => false,
-            'message' => 'File upload failed or invalid file'
-        ], 400);
-    }
-
-    // Get tenant from JWT
-    $key = "Exiaa@11";
-    $header = $this->request->getHeaderLine("Authorization");
-    $token = null;
-    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
-    }
-    if (!$token) {
-        return $this->fail(['status' => false, 'message' => 'Unauthorized'], 401);
-    }
-    $decoded = JWT::decode($token, new Key($key, 'HS256'));
-
-    // Upload path per tenant
-    $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/blogImages/';
-    if (!is_dir($uploadPath)) {
-        mkdir($uploadPath, 0777, true);
-    }
-
-    // Save file
-    $newName = $file->getRandomName();
-    $file->move($uploadPath, $newName);
-
-    // Determine type
-    $mimeType = $file->getClientMimeType();
-    if (strpos($mimeType, 'image') === 0) {
-        $mediaType = 'image';
-    } elseif (strpos($mimeType, 'video') === 0) {
-        $mediaType = 'video';
-    } else {
-        return $this->fail([
-            'status'  => false,
-            'message' => 'Only images and videos are allowed'
-        ], 400);
-    }
-
-    // Prepare DB record
-    $data = [
-        'type'        => $mediaType,
-        'mediaUrl'    => $decoded->tenantName . '/blogImages/' . $newName,
-        'businessId'  => $businessId ?: 0,
-        'createdDate' => date('Y-m-d H:i:s'),
-        'isDeleted'   => 0,
-        'isActive'    => 1
-    ];
-
-    // Save to tenant DB
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $mediaModel = new MediaModel($db);
-    $mediaId = $mediaModel->insert($data);
-
-    $data['mediaId'] = $mediaId;
-
-    return $this->respond([
-        'status'  => true,
-        'message' => 'Media uploaded successfully',
-        'data'    => $data
-    ], 200);
-}
-
-
-public function getAllMedia()
-{
-    // Get tenant from JWT
-    $key = "Exiaa@11";
-    $header = $this->request->getHeaderLine("Authorization");
-    $token = null;
-    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
-    }
-    if (!$token) {
-        return $this->fail(['status' => false, 'message' => 'Unauthorized'], 401);
-    }
-    $decoded = JWT::decode($token, new Key($key, 'HS256'));
-
-    // Fetch media from tenant DB
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $mediaModel = new MediaModel($db);
-
-    $media = $mediaModel->where('isDeleted', 0)
-                        ->where('isActive', 1)
-                        ->like('mediaUrl', $decoded->tenantName) // only media for this tenant
-                        ->orderBy('mediaId', 'ASC')
-                        ->findAll();
-
-    return $this->respond([
-        'status' => true,
-        'message' => 'Media fetched successfully',
-        'data' => $media
-    ], 200);
-}
-
-
 
 }

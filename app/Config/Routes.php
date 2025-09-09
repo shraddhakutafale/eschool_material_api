@@ -296,6 +296,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('updatecontent', 'Website::updateContent',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallpagingcontent', 'Website::getContentPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createlogobanner', 'Website::createLogoBanner',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getalllogo/(:num)', 'Website::getAllLogo/$1', ['filter' => ['authFilter','tenantFilter']]);
     $routes->post('createelement', 'Website::createElement',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallelement', 'Website::getAllElement',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallicon', 'Website::getAllIcon',['filter' => ['authFilter', 'tenantFilter']]);

@@ -394,98 +394,6 @@ public function createContent()
     ], 200);
 }
 
-public function createLogoBanner()
-{
-    $input   = $this->request->getPost();
-    $logo    = $this->request->getFile('logo');
-    $banners = $this->request->getFiles(); 
-
-    $businessId = $input['businessId'] ?? null;
-
-    if (!$businessId) {
-        return $this->fail([
-            'status'  => false,
-            'message' => 'Business ID is required.'
-        ], 409);
-    }
-
-    $key    = "Exiaa@11";
-    $header = $this->request->getHeader("Authorization");
-    $token  = null;
-
-    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
-    }
-
-    $decoded = JWT::decode($token, new Key($key, 'HS256'));
-
-    $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/logoBanner/';
-    if (!is_dir($uploadPath)) {
-        mkdir($uploadPath, 0777, true);
-    }
-
-    $logoPath    = null;
-    $bannerPaths = [];
-
-    if ($logo && $logo->isValid() && !$logo->hasMoved()) {
-        $logoName = $logo->getRandomName();
-        $logo->move($uploadPath, $logoName);
-        $logoPath = $decoded->tenantName . '/logoBanner/' . $logoName; 
-    }
-
-    if (isset($banners['banners'])) {
-        foreach ($banners['banners'] as $banner) {
-            if ($banner->isValid() && !$banner->hasMoved()) {
-                $bannerName = $banner->getRandomName();
-                $banner->move($uploadPath, $bannerName);
-                $bannerPaths[] = $decoded->tenantName . '/logoBanner/' . $bannerName;
-            }
-        }
-    }
-
-    if (!$logoPath && empty($bannerPaths)) {
-        return $this->fail([
-            'status'  => false,
-            'message' => 'No files uploaded'
-        ], 409);
-    }
-
-    $tenantService = new \App\Libraries\TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $logoModel = new \App\Models\LogoBannerModel($db);
-
-    $existing = $logoModel
-        ->where('isDeleted', 0)
-        ->where('businessId', $businessId)
-        ->get()
-        ->getRowArray();
-
-    // Prepare data
-    $data = [];
-    if ($logoPath) $data['logo'] = $logoPath;
-    if (!empty($bannerPaths)) $data['banner'] = json_encode($bannerPaths, JSON_UNESCAPED_SLASHES);
-
-    $data['businessId']   = $businessId;
-    $data['modifiedBy']   = 9;
-    $data['modifiedDate'] = date('Y-m-d H:i:s');
-
-    if (is_array($existing) && isset($existing['id'])) {
-        $logoModel->update($existing['id'], $data);
-    } else {
-        $data['createdBy']   = 9;
-        $data['createdDate'] = date('Y-m-d H:i:s');
-        $logoModel->insert($data);
-    }
-
-    return $this->respond([
-        'status'  => true,
-        'message' => 'Files saved successfully.',
-        'data'    => [
-            'logo'    => $logoPath,
-            'banners' => $bannerPaths
-        ]
-    ]);
-}
 
 
 
@@ -527,13 +435,141 @@ public function getAllMenu()
 }
 
 
-public function getLogoBanner()
-{
-    $input = $this->request->getPost();
-    if (empty($input)) {
-        $input = $this->request->getJSON(true);
+
+
+    public function createLogoBanner()
+    {
+        $input      = $this->request->getPost();
+        $logo       = $this->request->getFile('logo');
+        $banners    = $this->request->getFiles();
+        $businessId = $input['businessId'] ?? null;
+
+        if (!$businessId) {
+            return $this->fail([
+                'status'  => false,
+                'message' => 'Business ID is required.'
+            ], 409);
+        }
+
+        $key    = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token  = null;
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/logoBanner/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
+        $logoPath    = null;
+        $bannerPaths = [];
+
+        if ($logo && $logo->isValid() && !$logo->hasMoved()) {
+            $logoName = $logo->getRandomName();
+            $logo->move($uploadPath, $logoName);
+            $logoPath = $decoded->tenantName . '/logoBanner/' . $logoName; // relative path
+        }
+
+        if (isset($banners['banners'])) {
+            foreach ($banners['banners'] as $banner) {
+                if ($banner->isValid() && !$banner->hasMoved()) {
+                    $bannerName = $banner->getRandomName();
+                    $banner->move($uploadPath, $bannerName);
+                    $bannerPaths[] = $decoded->tenantName . '/logoBanner/' . $bannerName;
+                }
+            }
+        }
+
+        if (!$logoPath && empty($bannerPaths)) {
+            return $this->fail([
+                'status'  => false,
+                'message' => 'No files uploaded'
+            ], 409);
+        }
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $logoModel = new \App\Models\LogoBannerModel($db);
+
+        $existing = $logoModel
+            ->where('isDeleted', 0)
+            ->where('businessId', $businessId)
+            ->get()
+            ->getRowArray();
+
+        $data = [];
+        if ($logoPath) {
+            $data['logo'] = $logoPath;
+        }
+
+        if (!empty($bannerPaths)) {
+            // If old banners exist → merge
+            if ($existing && !empty($existing['banner'])) {
+                $oldBanners = explode(',', $existing['banner']);
+                $bannerPaths = array_merge($oldBanners, $bannerPaths);
+            }
+            $data['banner'] = implode(',', $bannerPaths);
+        }
+
+        $data['businessId']   = $businessId;
+        $data['modifiedBy']   = 9;
+        $data['modifiedDate'] = date('Y-m-d H:i:s');
+
+        if ($existing && isset($existing['logoId'])) {
+            $logoModel->update($existing['logoId'], $data);
+        } else {
+            $data['createdBy']   = 9;
+            $data['createdDate'] = date('Y-m-d H:i:s');
+            $logoModel->insert($data);
+        }
+
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Files saved successfully.',
+            'data'    => [
+                'logo'    => $logoPath,
+                'banners' => $bannerPaths
+            ]
+        ]);
     }
 
+    public function getAllLogo($businessId)
+    {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig(
+            $this->request->getHeaderLine('X-Tenant-Config')
+        );
+
+        $builder = $db->table('logo_mst');
+        $builder->select('*');
+        $builder->where('businessId', $businessId);
+        $builder->where('isDeleted', 0);
+
+        $result = $builder->get()->getRowArray();
+
+        if ($result) {
+            $result['banners'] = [];
+            if (!empty($result['banner'])) {
+                $result['banners'] = array_map('trim', explode(',', $result['banner']));
+            }
+            unset($result['banner']); // remove raw string
+        }
+
+        return $this->respond([
+            'status' => true,
+            'data'   => $result
+        ]);
+    }
+
+
+
+public function getLogoBanner()
+{
+    // Get POST or JSON input
+    $input = $this->request->getPost() ?: $this->request->getJSON(true);
     $businessId = $input['businessId'] ?? null;
 
     if (!$businessId) {
@@ -562,23 +598,21 @@ public function getLogoBanner()
     }
 
     foreach ($records as &$rec) {
-        // Clean logo
+        // Keep logo relative path only
         if (!empty($rec['logo'])) {
-            $rec['logo'] = preg_replace('#https?://[^/]+/uploads/#', '', $rec['logo']);
+            $rec['logo'] = trim($rec['logo']); // e.g., "exEducationTraining/logoBanner/xxx.jpeg"
         }
 
-        // Clean banner
+        // Keep banners relative path only
         if (!empty($rec['banner'])) {
             $banners = json_decode($rec['banner'], true);
 
             if (!is_array($banners)) {
-                // Fallback if stored as CSV string
                 $banners = explode(',', $rec['banner']);
             }
 
-            // Clean each banner path
             $rec['banner'] = array_map(function ($b) {
-                return preg_replace('#https?://[^/]+/uploads/#', '', trim($b));
+                return trim($b); // e.g., "exEducationTraining/logoBanner/xxx.jpg"
             }, $banners);
         } else {
             $rec['banner'] = [];

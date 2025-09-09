@@ -811,11 +811,12 @@ public function createElement()
     }
 
 
-    public function createScrolling()
+public function createScrolling()
 {
     $input = $this->request->getPost();
     $file  = $this->request->getFile('file');
 
+    // Validation rules
     $rules = [
         'name' => [],
         'type' => [],
@@ -837,8 +838,20 @@ public function createElement()
         ], 409);
     }
 
+    // ✅ Decode tenantName from JWT
+    $key    = "Exiaa@11"; // your JWT key
+    $header = $this->request->getHeader("Authorization");
+    $token  = null;
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    $decoded    = JWT::decode($token, new Key($key, 'HS256'));
+    $tenantName = $decoded->tenantName ?? 'defaultTenant';
+
+    // ✅ Tenant database connection
     $tenantService = new \App\Libraries\TenantService();
-    $db  = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model = new \App\Models\ScrollingModel($db);
 
     $data = [
@@ -857,17 +870,19 @@ public function createElement()
         $data['value'] = $input['value'];
 
     } elseif ($input['type'] === 'File' && $file && $file->isValid() && !$file->hasMoved()) {
-        $uploadPath = WRITEPATH . 'uploads/scrolling/';
+        // ✅ Tenant-wise scrolling upload folder
+        $uploadPath = FCPATH . 'uploads/' . $tenantName . '/scrolling/';
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0777, true);
         }
 
-        $newFileName  = $file->getRandomName();
+        $newFileName  = time() . '_' . $file->getRandomName();
         $originalName = $file->getClientName();
 
         $file->move($uploadPath, $newFileName);
 
-        $data['value']        = base_url('writable/uploads/scrolling/' . $newFileName);
+        // ✅ Relative path DB me save
+        $data['value']        = $tenantName . '/scrolling/' . $newFileName;
         $data['originalName'] = $originalName;
     }
 
@@ -880,6 +895,7 @@ public function createElement()
         'data'    => array_merge($data, ['id' => $id])
     ], 200);
 }
+
 
 
  public function deleteScrolling()

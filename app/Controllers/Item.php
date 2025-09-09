@@ -158,83 +158,161 @@ public function index()
 
 
 
-    public function create()
-    {
-        // Retrieve POST data
-        $input = $this->request->getPost();
-    
-        // Validate required fields
-        $rules = [
-            'itemName' => ['rules' => 'required']
-        ];
-    
-        if (!$this->validate($rules)) {
-            return $this->fail([
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
-            ], 409);
-        }
-    
-        // JWT decode from header
-        $key = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token = null;
-    
-        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-            $token = $matches[1];
-        }
-    
-        try {
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-        } catch (\Exception $e) {
-            return $this->failUnauthorized('Invalid Token');
-        }
-    
-        // ✅ Handle cover image (base64)
-        if (!empty($input['coverImage'])) {
-            $coverImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $input['coverImage']));
-            $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-            if (!is_dir($coverImagePath)) {
-                mkdir($coverImagePath, 0777, true);
-            }
-    
-            $coverImageName = uniqid() . '.png';
-            file_put_contents($coverImagePath . $coverImageName, $coverImageData);
-            $input['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
-        }
-    
-        // ✅ Handle multiple product images (array of base64)
-        if (!empty($input['productImages']) && is_array($input['productImages'])) {
-            $imageUrls = [];
-            $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
-            if (!is_dir($productImagePath)) {
-                mkdir($productImagePath, 0777, true);
-            }
-    
-            foreach ($input['productImages'] as $base64Image) {
-                if (empty($base64Image)) continue;
-    
-                $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
-                $imageName = uniqid() . '.png';
-                file_put_contents($productImagePath . $imageName, $imageData);
-                $imageUrls[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
-            }
-    
-            if (!empty($imageUrls)) {
-                $input['productImages'] = implode(',', $imageUrls);
-            }
-        }
-    
-        // ✅ Insert into database
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new ItemModel($db);
-        $model->insert($input);
-    
-        return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
+public function create()
+{
+    $input = $this->request->getPost();
+
+    // Validate required fields
+    $rules = ['itemName' => ['rules' => 'required']];
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ], 409);
     }
 
+    // JWT decode from header
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    try {
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $tenantName = $decoded->tenantName; // e.g., ExITSoftwareSaaS
+    } catch (\Exception $e) {
+        return $this->failUnauthorized('Invalid Token');
+    }
+
+    // ---------- Handle Cover Image ----------
+    if (!empty($input['coverImage'])) {
+        $coverData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $input['coverImage']));
+        $coverPath = FCPATH . 'uploads/' . $tenantName . '/itemImages/';
+        if (!is_dir($coverPath)) mkdir($coverPath, 0777, true);
+
+        $coverFile = uniqid() . '.jpeg';
+        file_put_contents($coverPath . $coverFile, $coverData);
+        $input['coverImage'] = $tenantName . '/itemImages/' . $coverFile;
+    }
+
+    // ---------- Handle Product Images ----------
+    if (!empty($input['productImages']) && is_array($input['productImages'])) {
+        $slidePath = FCPATH . 'uploads/' . $tenantName . '/itemSlideImages/';
+        if (!is_dir($slidePath)) mkdir($slidePath, 0777, true);
+
+        $slideUrls = [];
+        foreach ($input['productImages'] as $base64) {
+            if (empty($base64)) continue;
+
+            $imgData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64));
+            $fileName = uniqid() . '.jpeg';
+            file_put_contents($slidePath . $fileName, $imgData);
+            $slideUrls[] = $tenantName . '/itemSlideImages/' . $fileName;
+        }
+
+        if (!empty($slideUrls)) $input['productImages'] = implode(',', $slideUrls);
+    }
+
+    // ---------- Handle Editor Images ----------
+  $editorFields = ['description', 'feature', 'termsCondition'];
+$mediaPath = FCPATH . 'uploads/' . $tenantName . '/media/';
+if (!is_dir($mediaPath)) mkdir($mediaPath, 0777, true);
+
+foreach ($editorFields as $field) {
+    if (!empty($input[$field])) {
+        // Match all base64 images
+        preg_match_all('/<img.*?src=["\'](data:image\/.*?;base64,.*?)["\'].*?>/i', $input[$field], $matches);
+
+        if (!empty($matches[1])) {
+            foreach ($matches[1] as $base64Image) {
+                $imgData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
+                $fileName = uniqid() . '.jpeg';
+                file_put_contents($mediaPath . $fileName, $imgData);
+
+                // ✅ Replace base64 in editor HTML with relative path only
+                $input[$field] = str_replace($base64Image, $tenantName . '/media/' . $fileName, $input[$field]);
+            }
+        }
+
+        // ✅ Remove any existing full URLs like http://localhost:8081/uploads/
+        $input[$field] = preg_replace('#https?://[^/]+/uploads/#', '', $input[$field]);
+    }
+}
+
+    
+
+    // ---------- Insert into Database ----------
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ItemModel($db);
+
+    $model->insert($input);
+
+    return $this->respond(['status' => true, 'message' => 'Item Added Successfully'], 200);
+}
+
+
+
+public function createMedia()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    helper(['form', 'filesystem']);
+
+    $file = $this->request->getFile('file');
+    $businessId = $this->request->getPost('businessId');
+    $createdBy = $this->request->getPost('createdBy') ?? 0;
+
+    if (!$file->isValid()) {
+        return $this->fail(['status' => false, 'message' => 'Invalid File'], 400);
+    }
+
+    // Allowed file types
+    $allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'video/mp4', 'video/mpeg'];
+    if (!in_array($file->getMimeType(), $allowedTypes)) {
+        return $this->fail(['status' => false, 'message' => 'File type not allowed'], 415);
+    }
+
+    // Upload directory
+    $tenantName = $this->request->getHeaderLine('X-Tenant-Config');
+    $uploadPath = FCPATH . 'uploads/' . $tenantName . '/media/';
+
+    if (!is_dir($uploadPath)) {
+        mkdir($uploadPath, 0777, true);
+    }
+
+    // Save file
+    $newName = uniqid() . '_' . $file->getRandomName();
+    $file->move($uploadPath, $newName);
+
+    $mediaUrl = $tenantName . '/media/' . $newName;
+
+    // Insert into DB
+    $builder = $db->table('media_mst');
+    $data = [
+        'type'        => explode('/', $file->getMimeType())[0], // image or video
+        'mediaUrl'    => $mediaUrl,
+        'businessId'  => $businessId,
+        'createdBy'   => $createdBy,
+        'createdDate' => date('Y-m-d H:i:s'),
+        'modifiedBy'  => $createdBy,
+        'modifiedDate'=> date('Y-m-d H:i:s'),
+        'isDeleted'   => 0,
+        'isActive'    => 1,
+    ];
+    $builder->insert($data);
+
+    return $this->respond([
+        'status'  => true,
+        'message' => 'Media uploaded successfully',
+        'data'    => $data
+    ], 200);
+}
 
 
 

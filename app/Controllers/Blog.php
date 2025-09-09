@@ -115,84 +115,86 @@ class Blog extends BaseController
     }
 
     public function create()
-    {
-        // Retrieve the input data from the request
-        $input = $this->request->getPost();
-        
-        // Define validation rules for required fields
-        $rules = [
-            'title'  => ['rules' => 'required'],
+{
+    // Retrieve the input data from the request
+    $input = $this->request->getPost();
+    
+    // Define validation rules for required fields
+    $rules = [
+        'title'  => ['rules' => 'required'],
+    ];
 
+    if ($this->validate($rules)) {
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
 
-        ];
-    
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
+        // extract the token from the header
+        if (!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
             }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-           
-            // Handle image upload for the cover image
-            $profilePic= $this->request->getFile('profilePic');
-            $profilePicName = null;
-    
-            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                // Define the upload path for the cover image
-                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/blogImages/';
-                if (!is_dir($profilePicPath)) {
-                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-                }
-    
-                // Move the file to the desired directory with a unique name
-                $profilePicName = $profilePic->getRandomName();
-                $profilePic->move($profilePicPath, $profilePicName);
-    
-                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $profilePicUrl = 'uploads/blogImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/blogImages/', '', $profilePicUrl);
-    
-                // Add the cover image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/blogImages/' .$profilePicUrl; 
-            }
-    
-           
-    
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new BlogModel($db);
-            $model->insert($input);
-    
-            return $this->respond(['status' => true, 'message' => 'Blog Added Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
-            ];
-            return $this->fail($response, 409);
         }
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+        // Handle image upload for the cover image
+        $profilePic = $this->request->getFile('profilePic');
+        $profilePicName = null;
+
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            // Define the upload path for the cover image
+            $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/blogImages/';
+            if (!is_dir($profilePicPath)) {
+                mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
+            }
+
+            // Move the file to the desired directory with a unique name
+            $profilePicName = $profilePic->getRandomName();
+            $profilePic->move($profilePicPath, $profilePicName);
+
+            // Build the blog image path
+            $profilePicUrl = $profilePicName;
+
+            // Add the cover image URL to the input data
+            $input['profilePic'] = $decoded->tenantName . '/blogImages/' . $profilePicUrl;
+        }
+
+        // ✅ Normalize editor images to same path (tenantName/blogImages/)
+        if (!empty($input['description'])) {
+            // Remove absolute URLs like http://localhost:8080/uploads/
+            $input['description'] = preg_replace(
+                '#https?://[^/]+/uploads/#',
+                '',
+                $input['description']
+            );
+
+            // Replace any folder with tenantName/blogImages/
+            $input['description'] = preg_replace(
+                '#/?' . preg_quote($decoded->tenantName, '#') . '/[^"]+/#',
+                $decoded->tenantName . '/blogImages/',
+                $input['description']
+            );
+        }
+
+        $tenantService = new TenantService();
+        // Connect to the tenant's database
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new BlogModel($db);
+        $model->insert($input);
+
+        return $this->respond(['status' => true, 'message' => 'Blog Added Successfully'], 200);
+    } else {
+        // If validation fails, return the error messages
+        $response = [
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ];
+        return $this->fail($response, 409);
     }
+}
+
     
     public function update()
     {
@@ -439,6 +441,7 @@ public function createMedia()
         ]
     ], 200);
 }
+
 
 public function getAllMedia()
 {

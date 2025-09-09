@@ -715,6 +715,9 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->get('getfouritemproductbycategory', 'Item::getFourItemProductByCategory',['filter' => ['tenantFilter']]);
     $routes->post('view', 'Item::show',['filter' => ['tenantFilter']]);
     $routes->post('getallfiltereditem', 'Item::filteredItems',['filter' => ['tenantFilter']]);
+      $routes->post('createmedia', 'Item::createMedia',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallmedia', 'Item::getAllMedia',['filter' => ['authFilter', 'tenantFilter']]);
+   
   });
 
   $routes->group('order', function ($routes) {

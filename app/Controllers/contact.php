@@ -101,15 +101,32 @@ public function create()
         ], 409);
     }
 
+    // 🔑 JWT से businessId लेना
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header)) {
+        if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+    }
+
+    $decoded = null;
+    if ($token) {
+        $decoded = \Firebase\JWT\JWT::decode($token, new \Firebase\JWT\Key($key, 'HS256'));
+    }
+
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model = new ContactModel($db);
 
-    // Use frontend data directly
+    // ✅ Insert data with businessId
     $insertData = [
+        'businessId'  => $decoded->businessId ?? ($input['businessId'] ?? null), // <-- businessId add
         'contactType' => $input['contactType'],
         'title'       => trim($input['title']),
-        'data'        => $input['data'],       // <-- formatted string
+        'data'        => $input['data'],
         'isActive'    => 1,
         'isDeleted'   => 0,
         'createdBy'   => $input['createdBy'] ?? null,

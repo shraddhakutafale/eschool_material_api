@@ -111,81 +111,169 @@ class Website extends BaseController
 
 
 
-       public function getContentPaging()
-    {
-        $input = $this->request->getJSON();
+    //    public function getContentPaging()
+    // {
+    //     $input = $this->request->getJSON();
 
-        // Get the page number from the input, default to 1 if not provided
-        $page = isset($input->page) ? $input->page : 1;
-        $perPage = isset($input->perPage) ? $input->perPage : 10;
-        $sortField = isset($input->sortField) ? $input->sortField : 'contentId';
-        $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
-        $search = isset($input->search) ? $input->search : '';
-        $filter = $input->filter;
+    //     // Get the page number from the input, default to 1 if not provided
+    //     $page = isset($input->page) ? $input->page : 1;
+    //     $perPage = isset($input->perPage) ? $input->perPage : 10;
+    //     $sortField = isset($input->sortField) ? $input->sortField : 'contentId';
+    //     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    //     $search = isset($input->search) ? $input->search : '';
+    //     $filter = $input->filter;
         
 
-        $tenantService = new TenantService();
+    //     $tenantService = new TenantService();
         
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load leadModel with the tenant database connection
-        $contentModel = new ContentModel($db);
+    //     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    //     // Load leadModel with the tenant database connection
+    //     $contentModel = new ContentModel($db);
 
-        $query = $contentModel;
+    //     $query = $contentModel;
 
-        if (!empty($filter)) {
-            $filter = json_decode(json_encode($filter), true);
+    //     if (!empty($filter)) {
+    //         $filter = json_decode(json_encode($filter), true);
 
-            foreach ($filter as $key => $value) {
-                if (in_array($key, ['fName','lName','email', 'primaryMobileNo'])) {
-                    $query->like($key, $value); // LIKE filter for specific fields
-                }  else if ($key === 'createdDate') {
-                    $query->where($key, $value); // Exact match filter for createdDate
-                }
-            }
+    //         foreach ($filter as $key => $value) {
+    //             if (in_array($key, ['fName','lName','email', 'primaryMobileNo'])) {
+    //                 $query->like($key, $value); // LIKE filter for specific fields
+    //             }  else if ($key === 'createdDate') {
+    //                 $query->where($key, $value); // Exact match filter for createdDate
+    //             }
+    //         }
 
-            // Apply Date Range Filter (startDate and endDate)
-            if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-                $query->where('createdDate >=', $filter['startDate'])
-                      ->where('createdDate <=', $filter['endDate']);
-            }
+    //         // Apply Date Range Filter (startDate and endDate)
+    //         if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+    //             $query->where('createdDate >=', $filter['startDate'])
+    //                   ->where('createdDate <=', $filter['endDate']);
+    //         }
     
-            // Apply Last 7 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
-                $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
-                $query->where('createdDate >=', $last7DaysStart);
-            }
+    //         // Apply Last 7 Days Filter if requested
+    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+    //             $last7DaysStart = date('Y-m-d', strtotime('-7 days'));  // 7 days ago from today
+    //             $query->where('createdDate >=', $last7DaysStart);
+    //         }
     
-            // Apply Last 30 Days Filter if requested
-            if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
-                $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
-                $query->where('createdDate >=', $last30DaysStart);
+    //         // Apply Last 30 Days Filter if requested
+    //         if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+    //             $last30DaysStart = date('Y-m-d', strtotime('-30 days'));  // 30 days ago from today
+    //             $query->where('createdDate >=', $last30DaysStart);
+    //         }
+    //     }
+        
+    //     $query->where('isDeleted',0)->where('businessId', $input->businessId)->where('menuType', 'URL'); // ✅ Add this line;
+    //     // Apply Sorting
+    //     if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+    //         $query->orderBy($sortField, $sortOrder);
+    //     }
+
+    //     // Get Paginated Results
+    //     $contents = $query->paginate($perPage, 'default', $page);
+    //     $pager = $contentModel->pager;
+
+    //     $response = [
+    //         "status" => true,
+    //         "message" => "All  Data Fetched",
+    //         "data" => $contents,
+    //         "pagination" => [
+    //             "currentPage" => $pager->getCurrentPage(),
+    //             "totalPages" => $pager->getPageCount(),
+    //             "totalItems" => $pager->getTotal(),
+    //             "perPage" => $perPage
+    //         ]
+    //     ];
+
+    //     return $this->respond($response, 200);
+    // }
+
+    public function getContentPaging()
+{
+    $input = $this->request->getJSON();
+
+    // Get pagination & sorting values
+    $page      = isset($input->page) ? $input->page : 1;
+    $perPage   = isset($input->perPage) ? $input->perPage : 10;
+    $sortField = isset($input->sortField) ? $input->sortField : 'contentId';
+    $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
+    $search    = isset($input->search) ? $input->search : '';
+    $filter    = $input->filter;
+
+    // Tenant DB connection
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $contentModel = new ContentModel($db);
+    $elementModel = new ElementModel($db);
+
+    $query = $contentModel;
+
+    // ✅ Apply filters if available
+    if (!empty($filter)) {
+        $filter = json_decode(json_encode($filter), true);
+
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['fName','lName','email','primaryMobileNo'])) {
+                $query->like($key, $value); // partial match
+            } else if ($key === 'createdDate') {
+                $query->where($key, $value); // exact match
             }
         }
-        
-        $query->where('isDeleted',0)->where('businessId', $input->businessId);
-        // Apply Sorting
-        if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
-            $query->orderBy($sortField, $sortOrder);
+
+        // Date range filters
+        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+            $query->where('createdDate >=', $filter['startDate'])
+                  ->where('createdDate <=', $filter['endDate']);
         }
 
-        // Get Paginated Results
-        $contents = $query->paginate($perPage, 'default', $page);
-        $pager = $contentModel->pager;
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last7days') {
+            $last7DaysStart = date('Y-m-d', strtotime('-7 days'));
+            $query->where('createdDate >=', $last7DaysStart);
+        }
 
-        $response = [
-            "status" => true,
-            "message" => "All  Data Fetched",
-            "data" => $contents,
-            "pagination" => [
-                "currentPage" => $pager->getCurrentPage(),
-                "totalPages" => $pager->getPageCount(),
-                "totalItems" => $pager->getTotal(),
-                "perPage" => $perPage
-            ]
-        ];
-
-        return $this->respond($response, 200);
+        if (!empty($filter['dateRange']) && $filter['dateRange'] === 'last30days') {
+            $last30DaysStart = date('Y-m-d', strtotime('-30 days'));
+            $query->where('createdDate >=', $last30DaysStart);
+        }
     }
+
+    // ✅ Basic conditions
+    $query->where('isDeleted', 0)
+          ->where('businessId', $input->businessId)
+          ->where('menuType', 'URL');
+
+    // ✅ Sorting
+    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+        $query->orderBy($sortField, $sortOrder);
+    }
+
+    // ✅ Paginate
+    $contents = $query->paginate($perPage, 'default', $page);
+    $pager = $contentModel->pager;
+
+    // ✅ Merge elements for each content item
+    foreach ($contents as &$content) {
+        $content['elements'] = $elementModel
+            ->where('contentId', $content['contentId'])
+            ->where('isDeleted', 0)
+            ->findAll();
+    }
+
+    // ✅ Final response
+    $response = [
+        "status" => true,
+        "message" => "All Data Fetched",
+        "data" => $contents,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages"  => $pager->getPageCount(),
+            "totalItems"  => $pager->getTotal(),
+            "perPage"     => $perPage
+        ]
+    ];
+
+    return $this->respond($response, 200);
+}
 
 
 
@@ -256,25 +344,55 @@ public function create()
     $model->insert($data);
     $menuId = $model->insertID(); 
 
-    if ($input['menuType'] === 'Link') {
-        $contentModel = new \App\Models\ContentModel($db);
+    // if ($input['menuType'] === 'Link') {
+    //     $contentModel = new \App\Models\ContentModel($db);
 
-        $contentData = [
-            'menuId'       => $menuId,
-            'businessId'   => $input['businessId'] ?? null,
-            'menu'         => $input['menuName'],  
-            'title'        => '',
-            'content'      => '',
-            'createdBy'    => 9,
-            'createdDate'  => date('Y-m-d H:i:s'),
-            'modifiedBy'   => 0,
-            'modifiedDate' => date('Y-m-d H:i:s'),
-            'isActive'     => 1,
-            'isDeleted'    => 0,
-        ];
+    //     $contentData = [
+    //         'menuId'       => $menuId,
+    //         'businessId'   => $input['businessId'] ?? null,
+    //         'menu'         => $input['menuName'],  
+    //         'title'        => '',
+    //         'content'      => '',
+    //         'createdBy'    => 9,
+    //         'createdDate'  => date('Y-m-d H:i:s'),
+    //         'modifiedBy'   => 0,
+    //         'modifiedDate' => date('Y-m-d H:i:s'),
+    //         'isActive'     => 1,
+    //         'isDeleted'    => 0,
+    //     ];
 
-        $contentModel->insert($contentData);
+    //     $contentModel->insert($contentData);
+    // }
+
+    $contentModel = new \App\Models\ContentModel($db);
+
+    $value = null;
+    if ($input['menuType'] === 'URL') {
+        $value = $input['linkValue'];
+    } elseif ($input['menuType'] === 'File' && isset($data['value'])) {
+        $value = $data['value']; // File URL
+    } elseif ($input['menuType'] === 'Link') {
+        $value = ''; // Placeholder if no link or file needed
     }
+
+    
+    $contentData = [
+        'menuId'       => $menuId,
+        'menuType'     => $input['menuType'],       // ✅ Add menuType
+        'value'        => $value,                   // ✅ Save URL or file path
+        'businessId'   => $input['businessId'] ?? null,
+        'menu'         => $input['menuName'],  
+        'title'        => '',
+        'content'      => '',
+        'createdBy'    => 9,
+        'createdDate'  => date('Y-m-d H:i:s'),
+        'modifiedBy'   => 0,
+        'modifiedDate' => date('Y-m-d H:i:s'),
+        'isActive'     => 1,
+        'isDeleted'    => 0,
+    ];
+
+$contentModel->insert($contentData);
 
     return $this->respond([
         'status'  => true,
@@ -335,14 +453,73 @@ public function delete()
 
 
 
+// public function createContent()
+// {
+//     $input = $this->request->getJSON(true);
+
+//     $rules = [
+//         'title' => 'required|string',
+//         'content' => 'required|string',
+//         'menuId' => 'required|integer',
+//         'businessId' => 'required|integer',
+//     ];
+
+//     if (!$this->validate($rules)) {
+//         return $this->fail([
+//             'status' => false,
+//             'errors' => $this->validator->getErrors(),
+//             'message' => 'Invalid Inputs'
+//         ], 409);
+//     }
+
+//     $tenantService = new \App\Libraries\TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+//     $contentModel = new \App\Models\ContentModel($db);
+
+//     // You may want to update or create based on contentId or menuId
+//     // For now, insert new record:
+
+//     $data = [
+//         'title' => $input['title'],
+//         'content' => $input['content'],
+//         'menuId' => $input['menuId'],
+//         'businessId' => $input['businessId'],
+//         'createdBy' => 9, // Adjust as needed
+//         'createdDate' => date('Y-m-d H:i:s'),
+//         'isActive' => 1,
+//         'isDeleted' => 0,
+//     ];
+
+//     $insertId = $contentModel->insert($data);
+
+//     if ($insertId) {
+//         return $this->respond([
+//             'status' => true,
+//             'message' => 'Content saved successfully',
+//             'contentId' => $insertId
+//         ], 201);
+//     } else {
+//         return $this->failServerError('Failed to save content');
+//     }
+// }
+
 public function createContent()
 {
     $input = $this->request->getJSON(true);
 
+    // Basic required fields validation
     $rules = [
         'title' => 'required|string',
         'content' => 'required|string',
+        'menuId' => 'required|integer',
+        'businessId' => 'required|integer',
     ];
+
+    // Add contentId rule if updating (optional for create)
+    if (isset($input['contentId'])) {
+        $rules['contentId'] = 'integer';
+    }
 
     if (!$this->validate($rules)) {
         return $this->fail([
@@ -354,45 +531,53 @@ public function createContent()
 
     $tenantService = new \App\Libraries\TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-    $menuModel = new \App\Models\WebsiteModel($db);
     $contentModel = new \App\Models\ContentModel($db);
 
-    // Find all URL-type menus with blank content/title (in content table)
-    $query = $db->table('content_menu AS c')
-        ->join('website_menus AS m', 'm.menuId = c.menuId')
-        ->where('m.menuType', 'LINK')
-        ->where('c.isDeleted', 0)
-        ->groupStart()
-            ->where('c.title', '')
-            ->orWhere('c.content', '')
-        ->groupEnd()
-        ->select('c.contentId')
-        ->get();
+    $data = [
+        'title' => $input['title'],
+        'content' => $input['content'],
+        'menuId' => $input['menuId'],
+        'businessId' => $input['businessId'],
+        'isActive' => 1,
+        'isDeleted' => 0,
+    ];
 
-    $results = $query->getResultArray();
+    if (isset($input['contentId']) && !empty($input['contentId'])) {
+        // Update existing content
+        $data['modifiedBy'] = 9; // or current user
+        $data['modifiedDate'] = date('Y-m-d H:i:s');
 
-    if (empty($results)) {
-        return $this->respond([
-            'status' => false,
-            'message' => 'No empty URL content entries found.'
-        ], 200);
+        $updated = $contentModel->update($input['contentId'], $data);
+
+        if ($updated) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'Content updated successfully',
+                'contentId' => $input['contentId']
+            ], 200);
+        } else {
+            return $this->failServerError('Failed to update content');
+        }
+    } else {
+        // Create new content
+        $data['createdBy'] = 9; // or current user
+        $data['createdDate'] = date('Y-m-d H:i:s');
+
+        $insertId = $contentModel->insert($data);
+
+        if ($insertId) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'Content saved successfully',
+                'contentId' => $insertId
+            ], 201);
+        } else {
+            return $this->failServerError('Failed to save content');
+        }
     }
-
-    foreach ($results as $row) {
-        $contentModel->update($row['contentId'], [
-            'title' => $input['title'],
-            'content' => $input['content'],
-            'modifiedBy' => 9,
-            'modifiedDate' => date('Y-m-d H:i:s')
-        ]);
-    }
-
-    return $this->respond([
-        'status' => true,
-        'message' => 'Content updated successfully for all matching URL menus.',
-    ], 200);
 }
+
+
 
 
 
@@ -625,61 +810,169 @@ public function getLogoBanner()
     ]);
 }
 
+// public function createElement()
+// {
+//     $input = $this->request->getPost();
+//     $files = $this->request->getFiles();
+
+//     $businessId = $input['businessId'] ?? null;
+
+//     // ✅ Validate required fields
+//     $rules = [
+//         'businessId'  => ['rules' => 'required|integer']
+//     ];
+
+//     if (! $this->validate($rules)) {
+//         return $this->fail([
+//             'status'  => false,
+//             'errors'  => $this->validator->getErrors(),
+//             'message' => 'Invalid Inputs'
+//         ], 400);
+//     }
+
+//     // ✅ Parse the JSON value
+//     $value = json_decode($input['value'] ?? '{}', true);
+
+//     // ✅ Handle gallery images
+//     if (isset($value['type']) && $value['type'] === 'gallery' && isset($files['images'])) {
+//         $uploadedImagePaths = [];
+//         foreach ($files['images'] as $img) {
+//             if ($img->isValid() && !$img->hasMoved()) {
+//                 $newName = $img->getRandomName();
+//                 $img->move(WRITEPATH . 'uploads/gallery/', $newName);
+//                 $uploadedImagePaths[] = base_url('writable/uploads/gallery/' . $newName);
+//             }
+//         }
+//         $value['selectedImages'] = implode(', ', $uploadedImagePaths);
+//     }
+
+//     // ✅ Handle PDF upload
+//     if (isset($value['type']) && $value['type'] === 'pdf' && isset($files['pdf'])) {
+//         $pdf = $files['pdf'];
+//         if ($pdf->isValid() && !$pdf->hasMoved()) {
+//             $newName = $pdf->getRandomName();
+//             $pdf->move(WRITEPATH . 'uploads/pdf/', $newName);
+//             $value['selectedPdf'] = base_url('writable/uploads/pdf/' . $newName);
+//         }
+//     }
+
+//     // ✅ Prepare DB record
+//     $data = [
+//         'value'       => json_encode($value),
+//         'extra'       => $input['extra'] ?? null,
+//         'businessId'  => $businessId,
+//         'createdDate' => date('Y-m-d H:i:s'),
+//         'isActive'    => 1,
+//         'isDeleted'   => 0
+//     ];
+
+//     $tenantService = new TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//     $model = new ElementModel($db);
+
+//     // ✅ Save to DB
+//     if ($model->insert($data)) {
+//         return $this->respond([
+//             'status'  => true,
+//             'message' => '🚀 Element Created Successfully',
+//             'data'    => $data
+//         ], 201);
+//     } else {
+//         return $this->fail([
+//             'status'  => false,
+//             'message' => 'Database Error'
+//         ], 500);
+//     }
+// }
 
 
 
-public function createElement()
+    public function createElement()
 {
-    $input = $this->request->getPost();  
+    $input = $this->request->getPost();
+    $files = $this->request->getFiles();
 
-    
-    $businessId = $this->request->getPost('businessId') ?? $input['businessId'] ?? null;
+    $type = strtolower($input['displayName'] ?? '');
+    $value = '';
 
-    // Validation
-    $rules = [
-        'displayName' => ['rules' => 'required'],
-        'label'       => ['rules' => 'required'],
-        'businessId'  => ['rules' => 'required|integer']
-    ];
+    // Get tenant for folder
+    $key = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token = null;
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $m)) {
+        $token = $m[1];
+    }
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+    $tenant = $decoded->tenantName ?? 'default';
 
-    if (! $this->validate($rules)) {
-        return $this->fail([
-            'status'  => false,
-            'errors'  => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ], 400);
+    $uploadPath = FCPATH . 'uploads/' . $tenant . '/pdf/';
+    if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
+    // ✅ PDF
+    if ($type === 'pdf' && isset($files['pdfFile'])) {
+        $pdf = $files['pdfFile'];
+        if ($pdf->isValid() && !$pdf->hasMoved()) {
+            $newName = $pdf->getRandomName();
+            $pdf->move($uploadPath, $newName);
+            $value = $tenant . '/pdf/' . $newName;
+        }
     }
 
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    // ✅ Text
+    elseif ($type === 'text') {
+        $value = $input['value'] ?? '';
+    }
 
-    $model = new ElementModel($db);
+    // ✅ Gallery
+    elseif ($type === 'gallery' && isset($files['galleryFiles'])) {
+        $galleryPath = FCPATH . 'uploads/' . $tenant . '/galleryImages/';
+        if (!is_dir($galleryPath)) mkdir($galleryPath, 0777, true);
 
+        $uploadedPaths = [];
+        foreach ($files['galleryFiles'] as $img) {
+            if ($img->isValid() && !$img->hasMoved()) {
+                $newName = $img->getRandomName();
+                $img->move($galleryPath, $newName);
+                $uploadedPaths[] = $tenant . '/galleryImages/' . $newName;
+            }
+        }
+        $value = implode(',', $uploadedPaths);
+    }
+
+    // Save data
     $data = [
         'displayName' => $input['displayName'],
         'label'       => $input['label'],
-        'value'       => $input['value'] ?? null,
+        'value'       => $value,
         'extra'       => $input['extra'] ?? null,
-        'businessId'  => $businessId,
+        'businessId'  => $input['businessId'],
+        'contentId'   => $input['contentId'],
         'createdBy'   => $input['createdBy'] ?? 'system',
         'createdDate' => date('Y-m-d H:i:s'),
         'isActive'    => 1,
         'isDeleted'   => 0
     ];
 
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ElementModel($db);
+
     if ($model->insert($data)) {
         return $this->respond([
             'status'  => true,
-            'message' => '🚀 Element Created Successfully',
+            'message' => '✅ Element created successfully',
             'data'    => $data
         ], 201);
-    } else {
-        return $this->fail([
-            'status'  => false,
-            'message' => 'Database Error'
-        ], 500);
     }
+
+    return $this->fail([
+        'status'  => false,
+        'message' => 'Database Error'
+    ], 500);
 }
+
+
+
 
 
   public function getAllIcon()
@@ -691,12 +984,21 @@ public function createElement()
     }
 
 
-      public function getAllElement()
+    public function getAllElement()
     {
-           $tenantService = new TenantService();
-           $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
         $elementModel = new ElementModel($db);
-        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $elementModel->findAll()], 200);
+
+        // ✅ Filter only non-deleted elements
+        $elements = $elementModel->where('isDeleted', 0)->findAll();
+
+        return $this->respond([
+            "status" => true,
+            "message" => "All Data Fetched",
+            "data" => $elements
+        ], 200);
     }
 
     public function deleteElement()
@@ -964,6 +1266,71 @@ public function createScrolling()
         $scrollingModel = new ScrollingModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $scrollingModel->findAll()], 200);
     }
+
+//     public function updateContentOrder()
+// {
+//     $input = $this->request->getJSON(true);
+
+//     if (!is_array($input)) {
+//         return $this->fail('Invalid input');
+//     }
+
+//     $tenantService = new \App\Libraries\TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//     $contentModel = new \App\Models\ContentModel($db);
+
+//     foreach ($input as $item) {
+//         if (isset($item['contentId']) && isset($item['priority'])) {
+//             $contentModel->update($item['contentId'], ['priority' => $item['priority']]);
+//         }
+//     }
+
+//     return $this->respond(['status' => true, 'message' => 'Order updated']);
+// }
+
+public function updateContentOrder()
+{
+    $input = $this->request->getJSON(true);
+
+    if (!is_array($input)) {
+        return $this->failValidationErrors('Invalid data format.');
+    }
+
+    $tenantService = new \App\Libraries\TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $contentModel = new \App\Models\ContentModel($db);
+
+    foreach ($input as $item) {
+        if (!isset($item['contentId'])) {
+            continue;
+        }
+
+        $updateData = [];
+
+        if (isset($item['priority'])) {
+            $updateData['priority'] = $item['priority'];
+        }
+
+        if (isset($item['modifiedBy'])) {
+            $updateData['modifiedBy'] = $item['modifiedBy'];
+        }
+
+        $updateData['modifiedDate'] = date('Y-m-d H:i:s');
+
+        // 🔐 Only update if there's actually something to update
+        if (!empty($updateData)) {
+            $contentModel->update($item['contentId'], $updateData);
+        }
+    }
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Priorities updated successfully.'
+    ]);
+}
+
+
 
 }
 

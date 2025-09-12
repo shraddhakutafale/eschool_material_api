@@ -304,6 +304,8 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('getallpagingscrolling', 'Website::getScrollingPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createscrolling', 'Website::createScrolling',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('deletescrolling', 'Website::deleteScrolling',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updateContentOrder', 'Website::updateContentOrder',['filter' => ['authFilter','tenantFilter']]);
+
     
 
   });

@@ -12,7 +12,7 @@ class ElementModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemId', 'displayName','businessId', 'label', 'value', 'colapsImage', 'extra', 'isVisibled', 'modifiedDate', 'modifiedBy', 'isActive', 'createdDate', 'createdBy', 'isDeleted'];
+    protected $allowedFields    = ['itemId', 'displayName','contentId','businessId', 'label', 'value', 'colapsImage', 'extra', 'isVisibled','priority','modifiedDate', 'modifiedBy', 'isActive', 'createdDate', 'createdBy', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

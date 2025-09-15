@@ -578,10 +578,6 @@ public function createContent()
 }
 
 
-
-
-
-
 public function getAllMenu()
 {
     try {
@@ -597,17 +593,45 @@ public function getAllMenu()
             ], 400);
         }
 
-        $model = new \App\Models\WebsiteModel($db);
+        // Load models
+        $menuModel = new \App\Models\WebsiteModel($db);
+        $contentModel = new \App\Models\ContentModel($db);
+        $elementModel = new \App\Models\ElementModel($db);
 
-        $menus = $model->where('businessId', $businessId)
-                       ->where('isActive', 1)
-                       ->where('isDeleted', 0)
-                       ->orderBy('parentMenuId ASC, menuId ASC')
-                       ->findAll();
+        // Get menus
+        $menus = $menuModel->where('businessId', $businessId)
+                           ->where('isActive', 1)
+                           ->where('isDeleted', 0)
+                           ->orderBy('parentMenuId ASC, menuId ASC')
+                           ->findAll();
 
+        // Loop through each menu
+        foreach ($menus as &$menu) {
+
+            // Fetch contents for this menu
+            $contents = $contentModel
+                ->where('menuId', $menu['menuId'])
+                ->where('isDeleted', 0)
+                ->findAll();
+
+            // For each content, fetch its elements (items)
+            foreach ($contents as &$content) {
+                $elements = $elementModel
+                    ->where('contentId', $content['contentId'])
+                    ->where('isDeleted', 0)
+                    ->findAll();
+
+                $content['elements'] = $elements;
+            }
+
+            // Attach contents (with elements) to menu
+            $menu['contents'] = $contents;
+        }
+
+        // Return data
         return $this->respond([
             'status' => true,
-            'message' => 'Menus fetched successfully.',
+            'message' => 'Menus with contents and items fetched successfully.',
             'data' => $menus
         ], 200);
 
@@ -618,6 +642,48 @@ public function getAllMenu()
         ], 500);
     }
 }
+
+
+
+
+
+
+// public function getAllMenu()
+// {
+//     try {
+//         $tenantService = new \App\Libraries\TenantService();
+//         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+//         $businessId = $this->request->getVar('businessId'); 
+
+//         if (!$businessId) {
+//             return $this->respond([
+//                 'status' => false,
+//                 'message' => 'Business ID is required.'
+//             ], 400);
+//         }
+
+//         $model = new \App\Models\WebsiteModel($db);
+
+//         $menus = $model->where('businessId', $businessId)
+//                        ->where('isActive', 1)
+//                        ->where('isDeleted', 0)
+//                        ->orderBy('parentMenuId ASC, menuId ASC')
+//                        ->findAll();
+
+//         return $this->respond([
+//             'status' => true,
+//             'message' => 'Menus fetched successfully.',
+//             'data' => $menus
+//         ], 200);
+
+//     } catch (\Exception $e) {
+//         return $this->respond([
+//             'status' => false,
+//             'message' => $e->getMessage()
+//         ], 500);
+//     }
+// }
 
 
 
@@ -905,7 +971,7 @@ public function getLogoBanner()
     $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
     $tenant = $decoded->tenantName ?? 'default';
 
-    $uploadPath = FCPATH . 'uploads/' . $tenant . '/pdf/';
+    $uploadPath = FCPATH . 'uploads/' . $tenant . '/contentPdf/';
     if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
 
     // ✅ PDF
@@ -914,7 +980,7 @@ public function getLogoBanner()
         if ($pdf->isValid() && !$pdf->hasMoved()) {
             $newName = $pdf->getRandomName();
             $pdf->move($uploadPath, $newName);
-            $value = $tenant . '/pdf/' . $newName;
+            $value = $tenant . '/contentPdf/' . $newName;
         }
     }
 
@@ -925,7 +991,7 @@ public function getLogoBanner()
 
     // ✅ Gallery
     elseif ($type === 'gallery' && isset($files['galleryFiles'])) {
-        $galleryPath = FCPATH . 'uploads/' . $tenant . '/galleryImages/';
+        $galleryPath = FCPATH . 'uploads/' . $tenant . '/contentImages/';
         if (!is_dir($galleryPath)) mkdir($galleryPath, 0777, true);
 
         $uploadedPaths = [];
@@ -933,7 +999,7 @@ public function getLogoBanner()
             if ($img->isValid() && !$img->hasMoved()) {
                 $newName = $img->getRandomName();
                 $img->move($galleryPath, $newName);
-                $uploadedPaths[] = $tenant . '/galleryImages/' . $newName;
+                $uploadedPaths[] = $tenant . '/contentImages/' . $newName;
             }
         }
         $value = implode(',', $uploadedPaths);
@@ -984,22 +1050,31 @@ public function getLogoBanner()
     }
 
 
-    public function getAllElement()
-    {
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+public function getAllElement()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-        $elementModel = new ElementModel($db);
+    $elementModel = new ElementModel($db);
+    $contentModel = new ContentModel($db);
 
-        // ✅ Filter only non-deleted elements
-        $elements = $elementModel->where('isDeleted', 0)->findAll();
+    // ✅ Fetch all content records (not deleted)
+    $contents = $contentModel->where('isDeleted', 0)->findAll();
 
-        return $this->respond([
-            "status" => true,
-            "message" => "All Data Fetched",
-            "data" => $elements
-        ], 200);
+    foreach ($contents as &$content) {
+        $content['elements'] = $elementModel
+            ->where('contentId', $content['contentId'])
+            ->where('isDeleted', 0)
+            ->findAll();
     }
+
+    return $this->respond([
+        "status" => true,
+        "message" => "All data fetched with elements",
+        "data" => $contents,
+    ], 200);
+}
+
 
     public function deleteElement()
 {

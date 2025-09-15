@@ -689,7 +689,8 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getalllogobanner', 'Website::getLogoBanner', ['filter' => ['tenantFilter']]);
     $routes->post('getalllmenu', 'Website::getAllMenu', ['filter' => ['tenantFilter']]);
     $routes->post('getallscrolling', 'Website::getAllScrolling', ['filter' => ['tenantFilter']]);
-
+    $routes->get('getallelement', 'Website::getAllElement',['filter' => ['tenantFilter']]);
+    
 
 
   });

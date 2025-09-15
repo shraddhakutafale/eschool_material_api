@@ -376,4 +376,34 @@ class Event extends BaseController
     }
 
 
+  public function getAllEvent()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $EventModel = new EventModel($db);
+
+    $input = $this->request->getJSON(true); // get JSON body
+    $filter = $input['filter'] ?? [];
+
+    if (isset($filter['eventId']) && !empty($filter['eventId'])) {
+        // Fetch only the event with the given ID
+        $eventId = $filter['eventId'];
+        $event = $EventModel->where('id', $eventId)->first();
+        return $this->respond([
+            "status" => true,
+            "message" => "Event fetched",
+            "data" => $event ? [$event] : []
+        ], 200);
+    }
+
+    // If no eventId provided, return all events
+    return $this->respond([
+        "status" => true,
+        "message" => "All Data Fetched",
+        "data" => $EventModel->findAll()
+    ], 200);
+}
+
+
+    
 }

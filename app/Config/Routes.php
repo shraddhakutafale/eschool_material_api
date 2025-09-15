@@ -785,7 +785,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
 
   $routes->group('event', function ($routes) {
     //Routes for event
-    $routes->get('getall', 'Event::index',['filter' => ['tenantFilter']]);
+    $routes->post('getall', 'Event::getAllEvent',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Event::getEventsPaging',['filter' => ['tenantFilter']]);
   });
 

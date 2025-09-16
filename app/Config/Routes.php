@@ -779,7 +779,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
 
   $routes->group('gallery', function ($routes) {
     //Routes for gallery
-    $routes->get('getall', 'Gallery::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallgallery', 'Gallery::getAllGallery',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Gallery::getGallerysPaging',['filter' => ['tenantFilter']]);
   });
 

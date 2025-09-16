@@ -152,8 +152,7 @@ class Gallery extends BaseController
         $cover->move($uploadBase, $name);
         $input['coverImage'] = $tenant . '/galleryImages/' . $name;
     }
-
-    // --- Multiple images (IMPORTANT: input name must be "images") ---
+   // --- Multiple images ---
     $files = $this->request->getFileMultiple('images');
     $imageNames = [];
     if ($files) {
@@ -161,15 +160,14 @@ class Gallery extends BaseController
             if ($img && $img->isValid() && !$img->hasMoved()) {
                 $name = $img->getRandomName();
                 $img->move($uploadBase, $name);
-                // Store only the filename, consistent with your current approach
-                $imageNames[] = $name;
+                // ✅ Full path store karo
+                $imageNames[] = $tenant . '/galleryImages/' . $name;
             }
         }
         if ($imageNames) {
             $input['galleryImages'] = implode(',', $imageNames);
         }
     }
-
     // --- Audit fields (optional) ---
     $input['createdBy']   = $decoded->userId ?? null;
     $input['createdDate'] = date('Y-m-d H:i:s');
@@ -346,6 +344,32 @@ class Gallery extends BaseController
             'data' => $data,
         ]);
     }
+
+    public function getAllGallery()
+{
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $GalleryModel = new GalleryModel($db);
+
+    $input = $this->request->getJSON(true); // get JSON body
+    $filter = $input['filter'] ?? [];
+
+    if (isset($filter['galleryId']) && !empty($filter['galleryId'])) {
+        $galleryId = $filter['galleryId'];
+        $gallery = $GalleryModel->where('id', $galleryId)->first();
+        return $this->respond([
+            "status" => true,
+            "message" => "Gallery fetched",
+            "data" => $gallery ? [$gallery] : []
+        ], 200);
+    }
+
+    return $this->respond([
+        "status" => true,
+        "message" => "All Gallery Data Fetched",
+        "data" => $GalleryModel->findAll()
+    ], 200);
+}
 
 
 }

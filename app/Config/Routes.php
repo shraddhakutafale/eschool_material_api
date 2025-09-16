@@ -28,6 +28,8 @@ $allowed_origins = [
   'https://www.mgcsg.bizmanage.in',
   'https://sectr.bizmanage.in',
   'https://www.sectr.bizmanage.in',
+  'https://groupgrampanchayatpoman.org',
+  'https://www.groupgrampanchayatpoman.org',
 ];
 $routes->options('(:any)', function () use ($allowed_origins){
   if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {

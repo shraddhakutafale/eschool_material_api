@@ -36,6 +36,8 @@ class CorsFilter implements FilterInterface
             'https://www.mgcsg.bizmanage.in',
             'https://sectr.bizmanage.in',
             'https://www.sectr.bizmanage.in',
+            'https://groupgrampanchayatpoman.org',
+            'https://www.groupgrampanchayatpoman.org',
         ];
 
         // Get the origin of the request

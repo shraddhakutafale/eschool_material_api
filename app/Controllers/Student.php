@@ -225,6 +225,7 @@ public function getStudentsAdmissionPaging()
         // Get payments
         $payments = $paymentDetailModel
             ->where('admissionId', $student['admissionId'])
+            ->where('status', 'paid')
             ->where('isDeleted', 0)
             ->findAll();
 

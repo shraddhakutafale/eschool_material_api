@@ -107,37 +107,98 @@ class Lead extends BaseController
 
 
     // Create a new lead
-    public function create()
-    {
-        $input = $this->request->getJSON();
+    // public function create()
+    // {
+    //     $input = $this->request->getJSON();
+    //     $rules = [
+    //         'fName' => ['rules' => 'required'],
+    //         'lName' => ['rules' => 'required'],
+
+    //     ];
+
+    //     if ($this->validate($rules)) {
+    //         // Insert the product data into the database
+    //         $tenantService = new TenantService();
+    //         // Connect to the tenant's database
+    //         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
+    //         $model = new LeadModel($db);
+
+    //         // Insert the lead data into the database
+    //         $model->insert($input);
+
+    //         // Return a success response
+    //         return $this->respond(['status' => true, 'message' => 'Lead Created Successfully'], 200);
+    //     } else {
+    //         // Return validation errors if the rules are not satisfied
+    //         $response = [
+    //             'status' => false,
+    //             'errors' => $this->validator->getErrors(),
+    //             'message' => 'Invalid Inputs'
+    //         ];
+    //         return $this->fail($response, 409);
+    //     }
+    // }
+
+public function create()
+{
+    try {
+        $input = (array) $this->request->getJSON(true);
+
         $rules = [
             'fName' => ['rules' => 'required'],
             'lName' => ['rules' => 'required'],
-
         ];
 
         if ($this->validate($rules)) {
-            // Insert the product data into the database
             $tenantService = new TenantService();
-            // Connect to the tenant's database
             $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
             $model = new LeadModel($db);
 
-            // Insert the lead data into the database
-            $model->insert($input);
+            // ✅ Use leadId instead of id
+            $lastLead = $model->orderBy('leadId', 'DESC')->first();
 
-            // Return a success response
-            return $this->respond(['status' => true, 'message' => 'Lead Created Successfully'], 200);
+            if ($lastLead && isset($lastLead['inquiryNo'])) {
+                $lastNumber = intval(substr($lastLead['inquiryNo'], 3));
+                $newNumber  = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+            } else {
+                $newNumber = '001';
+            }
+
+            $inquiryNo = 'NS-' . $newNumber;
+            $input['inquiryNo'] = $inquiryNo;
+
+            if (!$model->insert($input)) {
+                log_message('error', 'Insert failed: ' . print_r($model->errors(), true));
+                return $this->fail([
+                    'status'  => false,
+                    'message' => 'Insert Failed',
+                    'errors'  => $model->errors()
+                ], 500);
+            }
+
+            return $this->respond([
+                'status'    => true,
+                'message'   => 'Lead Created Successfully',
+                'inquiryNo' => $inquiryNo
+            ], 200);
         } else {
-            // Return validation errors if the rules are not satisfied
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            ], 409);
         }
+    } catch (\Throwable $e) {
+        log_message('error', 'Create Lead Exception: ' . $e->getMessage());
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Server Error',
+            'error'   => $e->getMessage()
+        ], 500);
     }
+}
+
+
 
     // Update an existing lead
     public function update()

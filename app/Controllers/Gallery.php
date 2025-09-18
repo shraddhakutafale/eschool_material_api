@@ -188,57 +188,123 @@ class Gallery extends BaseController
 }
 
 
+public function update()
+{
+    $input = $this->request->getPost();
 
-    
+    // Validation
+    $rules = ['galleryId' => ['rules' => 'required|numeric']];
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
 
-    public function update()
-    {
-        $input = $this->request->getPost();
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new GalleryModel($db);
 
-        // Validation rules for the gallery
-        $rules = [
-            'galleryId' => ['rules' => 'required|numeric'], // Ensure galleryId is provided and is numeric
-        ];
+    $galleryId = $input['galleryId'];
+    $gallery = $model->find($galleryId);
+    if (!$gallery) {
+        return $this->fail(['status' => false, 'message' => 'Gallery not found'], 404);
+    }
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new GalleryModel($db);
+    // Upload folder
+    $uploadFolder = FCPATH . 'uploads/exEducationTraining/galleryImages/';
+    if (!is_dir($uploadFolder)) mkdir($uploadFolder, 0777, true);
 
-            // Retrieve the gallery by galleryId
-            $galleryId = $input['galleryId'];  // Corrected here
-            $gallery = $model->find($galleryId);
+    /** ------------------------
+     * 1️⃣ Handle Cover Image
+     * ------------------------ */
+    $coverImagePath = $gallery['coverImage'] ?? null;
+    $coverFile = $this->request->getFile('coverImage');
+    if ($coverFile && $coverFile->isValid() && !$coverFile->hasMoved()) {
+        // Fix: ensure extension always present
+        $ext = $coverFile->getClientExtension();
+        if (!$ext) {
+            $ext = pathinfo($coverFile->getName(), PATHINFO_EXTENSION) ?: 'jpg';
+        }
+        $newName = uniqid() . '.' . $ext;
+        $coverFile->move($uploadFolder, $newName);
+        $coverImagePath = 'exEducationTraining/galleryImages/' . $newName;
+    } elseif (!empty($input['coverImageOld'])) {
+        $coverImagePath = $input['coverImageOld'];
+    }
 
-            if (!$gallery) {
-                return $this->fail(['status' => false, 'message' => 'Gallery not found'], 404);
+    /** ------------------------
+     * 2️⃣ Handle Gallery Images
+     * ------------------------ */
+    // Existing images from DB
+    $existingImages = !empty($gallery['galleryImages'])
+        ? (is_array($gallery['galleryImages']) ? $gallery['galleryImages'] : explode(',', $gallery['galleryImages']))
+            : [];
+    // Kept images from frontend
+    $keptImages = !empty($input['existingImages'])
+        ? (is_array($input['existingImages']) ? $input['existingImages'] : explode(',', $input['existingImages']))
+        : [];
+
+    // Normalize → ensure only exEducationTraining/galleryImages/xxx.ext
+    $keptImages = array_map(function ($img) {
+        return 'exEducationTraining/galleryImages/' . basename(trim($img));
+    }, $keptImages);
+
+    // Remove duplicates + empty
+    $keptImages = array_values(array_unique(array_filter($keptImages)));
+
+        // Delete removed images from server
+        $deletedImages = array_diff($existingImages, $keptImages);
+        foreach ($deletedImages as $delImg) {
+            $filePath = FCPATH . 'uploads/' . $delImg;
+            if (file_exists($filePath)) unlink($filePath);
+        }
+
+    // Handle new uploaded images
+    $newImages = [];
+    $files = $this->request->getFiles();
+    if (!empty($files['images'])) {
+        foreach ($files['images'] as $file) {
+            if ($file->isValid() && !$file->hasMoved()) {
+                // Fix: ensure extension always present
+                $ext = $file->getClientExtension();
+                if (!$ext) {
+                    $ext = pathinfo($file->getName(), PATHINFO_EXTENSION) ?: 'jpg';
+                }
+                $newName = uniqid() . '.' . $ext;
+                $file->move($uploadFolder, $newName);
+
+                $newImages[] = 'exEducationTraining/galleryImages/' . $newName;
             }
-
-            // Prepare the data to be updated (exclude galleryId if it's included)
-            $updateData = [
-               'galleryTitle'=> $input['galleryTitle'],
-               'galleryDescription'=> $input['galleryDescription'],
-            ];
-
-            // Update the gallery with new data
-            $updated = $model->update($galleryId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Gallery Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update Gallery'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
         }
     }
+
+    // Merge kept + new images
+    $finalImages = array_values(array_unique(array_merge($keptImages, $newImages)));
+
+    /** ------------------------
+     * 3️⃣ Update Gallery in DB
+     * ------------------------ */
+    $updateData = [
+        'galleryTitle'       => $input['galleryTitle'] ?? $gallery['galleryTitle'],
+        'galleryDescription' => $input['galleryDescription'] ?? $gallery['galleryDescription'],
+        'type'               => $input['type'] ?? $gallery['type'],
+        'businessId'         => $input['businessId'] ?? $gallery['businessId'],
+        'coverImage'         => $coverImagePath,
+        'galleryImages'      => implode(',', $finalImages),
+    ];
+
+    $model->update($galleryId, $updateData);
+
+    return $this->respond([
+        'status'  => true,
+        'message' => 'Gallery updated successfully',
+        'data'    => $updateData
+    ], 200);
+}
+
+
 
 
         public function delete()

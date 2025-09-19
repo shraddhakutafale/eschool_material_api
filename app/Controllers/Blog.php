@@ -196,57 +196,104 @@ class Blog extends BaseController
 }
 
     
-    public function update()
-    {
-        $input = $this->request->getPost();
-        
-        // Validation rules for the studentId
-        $rules = [
-            'blogId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
-        ];
+   public function update()
+{
+    $input = $this->request->getPost();
 
-        // Validate the input
-        if ($this->validate($rules)) {
-             
+    $rules = [
+        'blogId' => ['rules' => 'required|numeric'],
+    ];
+
+    if ($this->validate($rules)) {
         $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new BlogModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new BlogModel($db);
 
-            // Retrieve the student by studentId
-            $blogId = $input['blogId'];  // Corrected here
-            $blog = $model->find($blogId); // Assuming find method retrieves the student
+        $blogId = $input['blogId'];
+        $blog = $model->find($blogId);
 
-            if (!$blog) {
-                return $this->fail(['status' => false, 'message' => 'blog not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude studentId if it's included)
-            $updateData = [
-
-                'title' => $input['title'],  // Corrected here
-                'authorName' => $input['authorName'],  // Corrected here
-                'description' => $input['description'],  // Corrected here
-
-            ];
-
-            // Update the student with new data
-            $updated = $model->update($blogId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'blog Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update blog'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+        if (!$blog) {
+            return $this->fail(['status' => false, 'message' => 'Blog not found'], 404);
         }
+
+        // 🔑 JWT decoding for tenant folder
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+        if (!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
+        }
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+        // 🔄 Handle new image upload (optional)
+        $profilePic = $this->request->getFile('profilePic');
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/blogImages/';
+            if (!is_dir($profilePicPath)) {
+                mkdir($profilePicPath, 0777, true);
+            }
+
+            $profilePicName = $profilePic->getRandomName();
+            $profilePic->move($profilePicPath, $profilePicName);
+
+            $input['profilePic'] = $decoded->tenantName . '/blogImages/' . $profilePicName;
+        } elseif (!empty($input['profilePic'])) {
+            // If an existing relative path is sent → keep it
+            $input['profilePic'] = str_replace($this->request->getServer('HTTP_ORIGIN') . '/uploads/', '', $input['profilePic']);
+        } else {
+            unset($input['profilePic']); // Prevent overwriting with null
+        }
+
+        // 🔄 Normalize editor images path
+        // 🔄 Normalize editor images path if description is sent
+if (!empty($input['description'])) {
+    $input['description'] = preg_replace(
+        '#https?://[^/]+/uploads/#',
+        '',
+        $input['description']
+    );
+    $input['description'] = preg_replace(
+        '#/?' . preg_quote($decoded->tenantName, '#') . '/[^"]+/#',
+        $decoded->tenantName . '/blogImages/',
+        $input['description']
+    );
+}
+
+// ✅ Build update data (patch only provided fields)
+$updateData = [
+    'title'       => $input['title'] ?? $blog['title'],
+    'authorName'  => $input['authorName'] ?? $blog['authorName'],
+    'description' => array_key_exists('description', $input) && $input['description'] !== null
+                    ? $input['description']
+                    : $blog['description'],
+];
+
+
+
+
+
+        if (!empty($input['profilePic'])) {
+            $updateData['profilePic'] = $input['profilePic'];
+        }
+
+        $updated = $model->update($blogId, $updateData);
+
+        if ($updated) {
+            return $this->respond(['status' => true, 'message' => 'Blog updated successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to update blog'], 500);
+        }
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ], 409);
     }
+}
+
 
 
 

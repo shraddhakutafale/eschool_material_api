@@ -136,140 +136,143 @@ class Event extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $events], 200);
     }
 
-    public function create()
-    {
-        // Retrieve the input data from the request
-        $input = $this->request->getPost();
-        
-        // Define validation rules for required fields
-        $rules = [
-            'eventName'  => ['rules' => 'required'],
-            'venue'  => ['rules' => 'required'],
-            'eventDesc'  => ['rules' => 'required'],
+   public function create()
+{
+    $input = $this->request->getPost();
 
+    // Validation rules
+    $rules = [
+        'eventName'  => ['rules' => 'required'],
+        'venue'      => ['rules' => 'required'],
+        'eventDesc'  => ['rules' => 'required'],
+    ];
 
-        ];
-    
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
+    if ($this->validate($rules)) {
+        // 🔑 Decode tenant from JWT
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+
+        if (!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
             }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256')); $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // extract the token from the header
-            if(!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-           
-            // Handle image upload for the cover image
-            $profilePic= $this->request->getFile('profilePic');
-            $profilePicName = null;
-    
-            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                // Define the upload path for the cover image
-                $profilePicPath = FCPATH . 'uploads/'. $decoded->tenantName .'/eventImages/';
-                if (!is_dir($profilePicPath)) {
-                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-                }
-    
-                // Move the file to the desired directory with a unique name
-                $profilePicName = $profilePic->getRandomName();
-                $profilePic->move($profilePicPath, $profilePicName);
-    
-                // Get the URL of the uploaded cover image and remove the 'uploads/coverImages/' prefix
-                $profilePicUrl = 'uploads/eventImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/eventImages/', '', $profilePicUrl);
-    
-                // Add the cover image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/eventImages/' .$profilePicUrl; 
-            }
-    
-           
-    
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new EventModel($db);
-            $model->insert($input);
-    
-            return $this->respond(['status' => true, 'message' => 'Event Added Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
-            ];
-            return $this->fail($response, 409);
         }
-    }
-    
-    public function update()
-    {
-        $input = $this->request->getPost();
-        
-        // Validation rules for the studentId
-        $rules = [
-            'eventId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
-        ];
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
-        // Validate the input
-        if ($this->validate($rules)) {
-             
+        // Handle image upload
+        $profilePic = $this->request->getFile('profilePic');
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/eventImages/';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $newName = $profilePic->getRandomName();
+            $profilePic->move($uploadPath, $newName);
+
+            // ✅ Save only relative path (no duplicate "uploads/")
+            $input['profilePic'] = $decoded->tenantName . '/eventImages/' . $newName;
+        }
+
+        // Save in DB
         $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new EventModel($db);
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new EventModel($db);
+        $model->insert($input);
 
-            // Retrieve the student by studentId
-            $eventId = $input['eventId'];  // Corrected here
-            $event = $model->find($eventId); // Assuming find method retrieves the student
-
-            if (!$event) {
-                return $this->fail(['status' => false, 'message' => 'event not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude studentId if it's included)
-            $updateData = [
-
-                'eventName' => $input['eventName'],  // Corrected here
-                'eventDesc' => $input['eventDesc'],  // Corrected here
-                'venue' => $input['venue'],  // Corrected here
-                
-               
-            ];
-
-            // Update the student with new data
-            $updated = $model->update($eventId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'event Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update event'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+        return $this->respond(['status' => true, 'message' => 'Event Added Successfully'], 200);
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ], 409);
     }
+}
+
+
+public function update()
+{
+    $input = $this->request->getPost();
+
+    // Validation rules
+    $rules = [
+        'eventId' => ['rules' => 'required|numeric'],
+    ];
+
+    if ($this->validate($rules)) {
+        // 🔑 Decode tenant from JWT
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+
+        if (!empty($header)) {
+            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+                $token = $matches[1];
+            }
+        }
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new EventModel($db);
+
+        $eventId = $input['eventId'];
+        $event = $model->find($eventId);
+
+        if (!$event) {
+            return $this->fail(['status' => false, 'message' => 'Event not found'], 404);
+        }
+
+        // Base update data
+        $updateData = [
+            'eventName' => $input['eventName'] ?? $event['eventName'],
+            'eventDesc' => $input['eventDesc'] ?? $event['eventDesc'],
+            'venue'     => $input['venue'] ?? $event['venue'],
+        ];
+
+        // ✅ Handle new image upload
+        $file = $this->request->getFile('profilePic');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/eventImages/';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $newName = $file->getRandomName();
+            $file->move($uploadPath, $newName);
+
+            // Save relative path
+            $updateData['profilePic'] = $decoded->tenantName . '/eventImages/' . $newName;
+
+            // (Optional) Delete old image
+            if (!empty($event['profilePic'])) {
+                $oldPath = FCPATH . 'uploads/' . $event['profilePic'];
+                if (is_file($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+        }
+
+        // Update DB
+        $updated = $model->update($eventId, $updateData);
+
+        if ($updated) {
+            return $this->respond(['status' => true, 'message' => 'Event Updated Successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to update event'], 500);
+        }
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ], 409);
+    }
+}
+
+
 
 
     public function delete()

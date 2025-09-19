@@ -183,7 +183,6 @@ public function update()
 {
     $input = $this->request->getJSON(true);
 
-    // Validation rules
     $rules = [
         'formId' => ['rules' => 'required|numeric'],
         'formHeader' => ['rules' => 'required|string|max_length[255]'],
@@ -194,10 +193,8 @@ public function update()
         return $this->failValidationErrors($this->validator->getErrors());
     }
 
-    // Get tenant db connection
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
     $FormModel = new \App\Models\FormModel($db);
 
     $formId = $input['formId'];
@@ -206,13 +203,30 @@ public function update()
         return $this->failNotFound('Form not found');
     }
 
+    // Only update fields provided in input, otherwise keep old values
     $updateData = [
-        'formHeader' => $input['formHeader'],
-        'formDescripton' => $input['formDescripton'] ?? $existingForm['formDescripton'],
-        'footerMessage' => $input['footerMessage'] ?? $existingForm['footerMessage'],
-        'businessId' => $input['businessId'] ?? $existingForm['businessId'],
-        'formStructureJson' => $input['formStructureJson'], // This is your full JSON string with all fields
-        'modifiedDate' => date('Y-m-d H:i:s'),
+        'formHeader'       => $input['formHeader'],
+        'formDescripton'   => $input['formDescripton']   ?? $existingForm['formDescripton'],
+        'footerMessage'    => $input['footerMessage']    ?? $existingForm['footerMessage'],
+        'businessId'       => $input['businessId']       ?? $existingForm['businessId'],
+        'formStructureJson'=> $input['formStructureJson'],
+        'formUrl'          => $input['formUrl']          ?? $existingForm['formUrl'],
+        'coverImageUrl'    => $input['coverImageUrl']    ?? $existingForm['coverImageUrl'],
+        'bannerImageUrl'   => $input['bannerImageUrl']   ?? $existingForm['bannerImageUrl'],
+        'isDefault'        => $input['isDefault']        ?? $existingForm['isDefault'],
+        'formType'         => $input['formType']         ?? $existingForm['formType'],
+        'buttontextColor'  => $input['buttontextColor']  ?? $existingForm['buttontextColor'],
+        'formSetingData'   => $input['formSetingData']   ?? $existingForm['formSetingData'],
+        'isAdvancedForm'   => $input['isAdvancedForm']   ?? $existingForm['isAdvancedForm'],
+        'buttonColor'      => $input['buttonColor']      ?? $existingForm['buttonColor'],
+        'bagroundColor'    => $input['bagroundColor']    ?? $existingForm['bagroundColor'],
+        'userId'           => $input['userId']           ?? $existingForm['userId'],
+        'updDatetime'      => date('Y-m-d H:i:s'),
+        'active'           => $input['active']           ?? $existingForm['active'],
+        'isDeleted'        => $input['isDeleted']        ?? $existingForm['isDeleted'],
+        'logoImageUrl'     => $input['logoImageUrl']     ?? $existingForm['logoImageUrl'],
+        'isHeaderHidden'   => $input['isHeaderHidden']   ?? $existingForm['isHeaderHidden'],
+        'isLogoHidden'     => $input['isLogoHidden']     ?? $existingForm['isLogoHidden'],
     ];
 
     if (!$FormModel->update($formId, $updateData)) {
@@ -225,6 +239,7 @@ public function update()
         'formId' => $formId,
     ]);
 }
+
 
 
 public function view($formId)

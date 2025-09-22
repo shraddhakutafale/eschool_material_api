@@ -1065,6 +1065,7 @@ public function getAllElement()
         $content['elements'] = $elementModel
             ->where('contentId', $content['contentId'])
             ->where('isDeleted', 0)
+            ->orderBy('priority', 'ASC')
             ->findAll();
     }
 
@@ -1371,14 +1372,13 @@ public function updateContentOrder()
         return $this->failValidationErrors('Invalid data format.');
     }
 
-    $tenantService = new \App\Libraries\TenantService();
+    $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-    $contentModel = new \App\Models\ContentModel($db);
+    $contentModel = new ElementModel($db);
 
     foreach ($input as $item) {
-        if (!isset($item['contentId'])) {
-            continue;
+        if (!isset($item['itemId']) || !isset($item['contentId'])) {
+            continue; // skip invalid rows
         }
 
         $updateData = [];
@@ -1393,14 +1393,16 @@ public function updateContentOrder()
 
         $updateData['modifiedDate'] = date('Y-m-d H:i:s');
 
-        // 🔐 Only update if there's actually something to update
         if (!empty($updateData)) {
-            $contentModel->update($item['contentId'], $updateData);
+            $contentModel->where('itemId', $item['itemId'])
+                         ->where('contentId', $item['contentId'])
+                         ->set($updateData)
+                         ->update();
         }
     }
 
     return $this->respond([
-        'status' => true,
+        'status'  => true,
         'message' => 'Priorities updated successfully.'
     ]);
 }

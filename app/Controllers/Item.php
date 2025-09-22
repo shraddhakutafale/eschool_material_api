@@ -320,14 +320,14 @@ public function createMedia()
 
 
 
-    public function update()
+  public function update()
 {
     $input = $this->request->getPost();
 
+    // ----- Validate -----
     $rules = [
         'itemId' => ['rules' => 'required|numeric'],
     ];
-
     if (!$this->validate($rules)) {
         return $this->fail([
             'status' => false,
@@ -336,114 +336,104 @@ public function createMedia()
         ], 409);
     }
 
-    // Get DB config
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new ItemModel($db);
-
-    $itemId = $input['itemId'];
-    $item = $model->find($itemId);
-
-    if (!$item) {
-        return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
-    }
-
-    // JWT Auth
+    // ----- JWT Auth -----
     $key = "Exiaa@11";
     $header = $this->request->getHeader("Authorization");
     $token = null;
-
     if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
         $token = $matches[1];
     }
 
     try {
         $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $tenantName = $decoded->tenantName;
     } catch (\Exception $e) {
         return $this->failUnauthorized('Invalid Token');
     }
 
-    // Prepare update data
+    // ----- DB & Model -----
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ItemModel($db);
+
+    $itemId = $input['itemId'];
+    $item = $model->find($itemId);
+    if (!$item) {
+        return $this->fail(['status' => false, 'message' => 'Item not found'], 404);
+    }
+
+    // ----- Prepare update data -----
     $updateData = [
-        'itemName' => $input['itemName'],
-        'itemCategoryId' => $input['itemCategoryId'],
-        'mrp' => $input['mrp'],
-        'discountType' => $input['discountType'],
-        'discount' => $input['discount'],
-        'barcode' => $input['barcode'],
-        'description' => $input['description'],
-        'itemTypeId' => $input['itemTypeId'],
-        'sku' => $input['sku'],
-        'hsnCode' => $input['hsnCode'],
-        'feature' => $input['feature'],
-        'unitName' => $input['unitName'],
-        'termsCondition'  => isset($input['termsCondition']) ? $input['termsCondition'] : ($item['termsCondition'] ?? null),
+        'itemName' => $input['itemName'] ?? $item['itemName'],
+        'itemCategoryId' => $input['itemCategoryId'] ?? $item['itemCategoryId'],
+        'mrp' => $input['mrp'] ?? $item['mrp'],
+        'discountType' => $input['discountType'] ?? $item['discountType'],
+        'discount' => $input['discount'] ?? $item['discount'],
+        'barcode' => $input['barcode'] ?? $item['barcode'],
+        'description' => $input['description'] ?? $item['description'],
+        'itemTypeId' => $input['itemTypeId'] ?? $item['itemTypeId'],
+        'sku' => $input['sku'] ?? $item['sku'],
+        'hsnCode' => $input['hsnCode'] ?? $item['hsnCode'],
+        'feature' => $input['feature'] ?? $item['feature'],
+        'unitName' => $input['unitName'] ?? $item['unitName'],
+        'termsCondition' => $input['termsCondition'] ?? $item['termsCondition'],
     ];
 
-    // ✅ Handle cover image update
-    if (!empty($input['coverImage'])) {
-        $coverImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $input['coverImage']));
-        $coverImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemImages/';
-        if (!is_dir($coverImagePath)) {
-            mkdir($coverImagePath, 0777, true);
+    // ----- Cover Image -----
+    if (!empty($input['coverImage']) && str_starts_with($input['coverImage'], 'data:image')) {
+        $coverData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $input['coverImage']));
+        $coverPath = FCPATH . 'uploads/' . $tenantName . '/itemImages/';
+        if (!is_dir($coverPath)) mkdir($coverPath, 0777, true);
+
+        // Delete old cover
+        if (!empty($item['coverImage']) && file_exists(FCPATH . 'uploads/' . $item['coverImage'])) {
+            unlink(FCPATH . 'uploads/' . $item['coverImage']);
         }
 
-        // Delete old cover image if exists
-        if (!empty($item['coverImage'])) {
-            $oldCoverImage = FCPATH . 'uploads/' . $item['coverImage'];
-            if (file_exists($oldCoverImage)) {
-                unlink($oldCoverImage);
-            }
-        }
-
-        $coverImageName = uniqid() . '.png';
-        file_put_contents($coverImagePath . $coverImageName, $coverImageData);
-        $updateData['coverImage'] = $decoded->tenantName . '/itemImages/' . $coverImageName;
+        $coverFile = uniqid() . '.jpeg';
+        file_put_contents($coverPath . $coverFile, $coverData);
+        $updateData['coverImage'] = $tenantName . '/itemImages/' . $coverFile;
     }
 
-    // ✅ Handle multiple product images
-    $existingImages = [];
-    if (!empty($item['productImages'])) {
-        $existingImages = explode(',', $item['productImages']);
-    }
-
+    // ----- Product Images -----
+    $existingImages = !empty($item['productImages']) ? explode(',', $item['productImages']) : [];
     $newImages = [];
-    $productImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemSlideImages/';
-    if (!is_dir($productImagePath)) {
-        mkdir($productImagePath, 0777, true);
+
+    // Remove deleted images
+    $removedImages = !empty($input['removedImages']) ? json_decode($input['removedImages'], true) : [];
+    foreach ($removedImages as $img) {
+        $imgPath = FCPATH . 'uploads/' . $img;
+        if (file_exists($imgPath)) unlink($imgPath);
     }
+    $existingImages = array_diff($existingImages, $removedImages);
 
+    // Add new images
     if (!empty($input['productImages']) && is_array($input['productImages'])) {
-        foreach ($input['productImages'] as $img) {
-            if (empty($img)) continue;
+        $slidePath = FCPATH . 'uploads/' . $tenantName . '/itemSlideImages/';
+        if (!is_dir($slidePath)) mkdir($slidePath, 0777, true);
 
-            // If base64 image
+        foreach ($input['productImages'] as $img) {
             if (str_starts_with($img, 'data:image')) {
-                $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $img));
-                $imageName = uniqid() . '.png';
-                file_put_contents($productImagePath . $imageName, $imageData);
-                $newImages[] = $decoded->tenantName . '/itemSlideImages/' . $imageName;
-            }
-            // If already existing image URL, just keep
-            elseif (!str_contains($img, 'base64')) {
-                $newImages[] = $img;
+                $imgData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $img));
+                $fileName = uniqid() . '.jpeg';
+                file_put_contents($slidePath . $fileName, $imgData);
+                $newImages[] = $tenantName . '/itemSlideImages/' . $fileName;
+            } else {
+                $newImages[] = $img; // Existing URL
             }
         }
     }
 
-    // Merge old + new images (ensure no duplicates)
-    $finalImageList = array_unique(array_merge($existingImages, $newImages));
+    $updateData['productImages'] = implode(',', array_unique(array_merge($existingImages, $newImages)));
 
-    $updateData['productImages'] = implode(',', $finalImageList);
-
-    // 🔄 Perform the update
+    // ----- Update item -----
     $updated = $model->update($itemId, $updateData);
 
     if ($updated) {
         return $this->respond(['status' => true, 'message' => 'Item Updated Successfully'], 200);
-    } else {
-        return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
     }
+
+    return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
 }
 
 

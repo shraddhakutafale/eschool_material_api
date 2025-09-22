@@ -314,13 +314,7 @@ public function createMedia()
     ], 200);
 }
 
-
-
-
-
-
-
-  public function update()
+public function update()
 {
     $input = $this->request->getPost();
 
@@ -364,20 +358,28 @@ public function createMedia()
 
     // ----- Prepare update data -----
     $updateData = [
-        'itemName' => $input['itemName'] ?? $item['itemName'],
-        'itemCategoryId' => $input['itemCategoryId'] ?? $item['itemCategoryId'],
-        'mrp' => $input['mrp'] ?? $item['mrp'],
-        'discountType' => $input['discountType'] ?? $item['discountType'],
-        'discount' => $input['discount'] ?? $item['discount'],
-        'barcode' => $input['barcode'] ?? $item['barcode'],
-        'description' => $input['description'] ?? $item['description'],
-        'itemTypeId' => $input['itemTypeId'] ?? $item['itemTypeId'],
-        'sku' => $input['sku'] ?? $item['sku'],
-        'hsnCode' => $input['hsnCode'] ?? $item['hsnCode'],
-        'feature' => $input['feature'] ?? $item['feature'],
-        'unitName' => $input['unitName'] ?? $item['unitName'],
-        'termsCondition' => $input['termsCondition'] ?? $item['termsCondition'],
+        'itemName'        => $input['itemName']        ?? $item['itemName'],
+        'itemCategoryId'  => $input['itemCategoryId']  ?? $item['itemCategoryId'],
+        'mrp'             => $input['mrp']             ?? $item['mrp'],
+        'discountType'    => $input['discountType']    ?? $item['discountType'],
+        'discount'        => $input['discount']        ?? $item['discount'],
+        'barcode'         => $input['barcode']         ?? $item['barcode'],
+        'description'     => $input['description']     ?? $item['description'],
+        'itemTypeId'      => $input['itemTypeId']      ?? $item['itemTypeId'],
+        'sku'             => $input['sku']             ?? $item['sku'],
+        'hsnCode'         => $input['hsnCode']         ?? $item['hsnCode'],
+        'feature'         => $input['feature']         ?? $item['feature'],
+        'unitName'        => $input['unitName']        ?? $item['unitName'],
+        'termsCondition'  => $input['termsCondition']  ?? $item['termsCondition'],
     ];
+
+    // ----- Tags -----
+    if (!empty($input['tags'])) {
+        $tags = is_string($input['tags']) ? json_decode($input['tags'], true) : $input['tags'];
+        if (is_array($tags)) {
+            $updateData['tags'] = implode(',', array_map('trim', $tags));
+        }
+    }
 
     // ----- Cover Image -----
     if (!empty($input['coverImage']) && str_starts_with($input['coverImage'], 'data:image')) {
@@ -435,6 +437,7 @@ public function createMedia()
 
     return $this->fail(['status' => false, 'message' => 'Failed to update item'], 500);
 }
+
 
 
 

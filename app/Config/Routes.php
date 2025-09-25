@@ -620,6 +620,8 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
   $routes->group('dashboard', function ($routes) {
     $routes->post('getstatsforinstitute', 'Dashboard::getStatsForInstitute',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getStatsForOrder', 'Dashboard::getStatsForOrder',['filter' => ['authFilter','tenantFilter']]);
+
   });
 
       $routes->group('staffAttendance', function ($routes) {

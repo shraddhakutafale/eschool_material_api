@@ -12,6 +12,8 @@ use App\Models\ItemFeeMapModel;
 use App\Models\FeeModel;
 use App\Models\PaymentDetailModel;
 use App\Libraries\TenantService;
+use App\Models\OrderModel;
+
 
 class Dashboard extends BaseController
 {
@@ -75,6 +77,92 @@ class Dashboard extends BaseController
         ], 200);
 
     }
+
+
+public function getStatsForOrder()
+{
+    $filter = $this->request->getJSON();
+    $fromDate = null;
+    $toDate = null;
+
+    // Determine date range
+    if (!empty($filter->filterBy)) {
+        switch ($filter->filterBy) {
+            case 'financialYear':
+                if (!empty($filter->financialYear)) {
+                    [$startYear, $endYear] = explode('-', $filter->financialYear);
+                    $fromDate = "$startYear-04-01";
+                    $toDate   = "$endYear-03-31";
+                }
+                break;
+
+            case 'monthly':
+                if (!empty($filter->month)) {
+                    [$monthStr, $yearStr] = explode('-', $filter->month);
+                    $fromDate = date('Y-m-d', strtotime("first day of $monthStr $yearStr"));
+                    $toDate   = date('Y-m-d', strtotime("last day of $monthStr $yearStr"));
+                }
+                break;
+
+            case 'specificDate':
+                if (!empty($filter->specificDate)) {
+                    $fromDate = date('Y-m-d', strtotime($filter->specificDate));
+                    $toDate   = $fromDate;
+                }
+                break;
+
+            case 'dateRange':
+                if (!empty($filter->fromDate) && !empty($filter->toDate)) {
+                    $fromDate = date('Y-m-d', strtotime($filter->fromDate));
+                    $toDate   = date('Y-m-d', strtotime($filter->toDate));
+                }
+                break;
+        }
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $orderModel = new OrderModel($db);
+
+    // --- Use separate builders ---
+    $countQuery = $orderModel->builder('order_mst');
+    $totalQuery = $orderModel->builder('order_mst');
+
+    // Apply filters
+    if ($fromDate && $toDate) {
+        $countQuery->where('orderDate >=', $fromDate)->where('orderDate <=', $toDate);
+        $totalQuery->where('orderDate >=', $fromDate)->where('orderDate <=', $toDate);
+    }
+
+    if (isset($filter->businessId)) {
+        $countQuery->where('businessId', $filter->businessId);
+        $totalQuery->where('businessId', $filter->businessId);
+    }
+
+    // Count orders
+    $orderCount = $countQuery->countAllResults();
+
+    // Sum total
+    $totalRow = $totalQuery->select('SUM(total) as totalOrderAmount')->get()->getRowArray();
+    $totalOrderAmount = $totalRow ? $totalRow['totalOrderAmount'] : 0;
+
+    $message = ($orderCount > 0) ? 'Order statistics fetched successfully' : 'No orders found for selected filter';
+
+    return $this->respond([
+        'status' => $orderCount > 0,
+        'message' => $message,
+        'data' => [
+            'orderCount' => $orderCount,
+            'totalOrderAmount' => $totalOrderAmount
+        ]
+    ], 200);
+}
+
+
+
+
+
 
     public function getTotalAndPendingCollection()
     {

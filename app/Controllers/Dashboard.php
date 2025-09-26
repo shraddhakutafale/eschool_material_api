@@ -20,72 +20,61 @@ class Dashboard extends BaseController
 
     use ResponseTrait;
 
-    public function getStatsForInstitute()
-    {
-        $filter = $this->request->getJSON();
-        $fromDate = $filter->fromDate ?? null;
-        $toDate   = $filter->toDate ?? null;
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+public function getStatsForInstitute()
+{
+    $filter = $this->request->getJSON();
+    $fromDate = $filter->fromDate ?? null;
+    $toDate   = $filter->toDate ?? null;
 
-        $leadModel = new LeadModel($db);
-        $admissionModel = new AdmissionModel($db);
-        $paymentDetailModel = new PaymentDetailModel($db);
-        
-        $leadCount = 0;
-        $admissionCount = 0;
-        $pendingAmount = 0;
-        $paidAmount = 0;  
-        if ($fromDate && $toDate) {
-            $leadCount = $leadModel
-                ->where('createdDate >=', $fromDate)
-                ->where('createdDate <=', $toDate)
-                ->where('businessId', $filter->businessId)
-                ->countAllResults();
+    // Tenant configuration
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
-            $admissionCount = $admissionModel
-                ->where('createdDate >=', $fromDate)
-                ->where('createdDate <=', $toDate)
-                ->where('businessId', $filter->businessId)
-                ->countAllResults();
+    $paymentDetailModel = new PaymentDetailModel($db);
 
-            $paidAmount = $paymentDetailModel
-                ->select('SUM(paidAmount) as totalAmount')
-                ->where('paymentDate >=', $fromDate)
-                ->where('paymentDate <=', $toDate)
-                ->where('businessId', $filter->businessId)
-                ->first();
+    $paidAmount = 0;
+    $pendingAmount = 0;
 
-            $pendingAmount = $paymentDetailModel
-                ->select('SUM(paidAmount) as totalPendingAmount')
-                ->where('dueDate >=', $fromDate)
-                ->where('dueDate <=', $toDate)
-                ->where('businessId', $filter->businessId)
-                ->first();
+    if ($fromDate && $toDate) {
+        // Paid amount
+        $paid = $paymentDetailModel
+            ->select('SUM(paidAmount) as totalAmount')
+            ->where('paymentDate >=', $fromDate)
+            ->where('paymentDate <=', $toDate)
+            ->where('businessId', $filter->businessId)
+            ->first();
 
-        }
+        $paidAmount = $paid ? $paid['totalAmount'] : 0;
 
-        return $this->respond([
-            'status' => true,
-            'message' => 'Statistics fetched successfully',
-            'data' => [
-                'leadCount' => $leadCount,
-                'admissionCount' => $admissionCount,
-                'paidAmount' => $paidAmount ? $paidAmount['totalAmount'] : 0,
-                'pendingAmount' => $pendingAmount ? $pendingAmount['totalPendingAmount'] : 0
-            ]
-        ], 200);
+        // Pending amount
+        $pending = $paymentDetailModel
+            ->select('SUM(paidAmount) as totalPendingAmount')
+            ->where('dueDate >=', $fromDate)
+            ->where('dueDate <=', $toDate)
+            ->where('businessId', $filter->businessId)
+            ->first();
 
+        $pendingAmount = $pending ? $pending['totalPendingAmount'] : 0;
     }
 
+    return $this->respond([
+        'status' => true,
+        'message' => 'Statistics fetched successfully',
+        'data' => [
+            'paidAmount' => $paidAmount,
+            'pendingAmount' => $pendingAmount
+        ]
+    ], 200);
+}
 
 public function getStatsForOrder()
 {
     $filter = $this->request->getJSON();
+
     $fromDate = null;
     $toDate = null;
 
-    // Determine date range
+    // Determine date range based on filter type
     if (!empty($filter->filterBy)) {
         switch ($filter->filterBy) {
             case 'financialYear':
@@ -120,32 +109,28 @@ public function getStatsForOrder()
         }
     }
 
+    // Tenant configuration
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
     $orderModel = new OrderModel($db);
 
-    // --- Use separate builders ---
-    $countQuery = $orderModel->builder('order_mst');
-    $totalQuery = $orderModel->builder('order_mst');
+    // Query orders
+    $query = $orderModel->builder('order_mst');
 
-    // Apply filters
     if ($fromDate && $toDate) {
-        $countQuery->where('orderDate >=', $fromDate)->where('orderDate <=', $toDate);
-        $totalQuery->where('orderDate >=', $fromDate)->where('orderDate <=', $toDate);
+        $query->where('orderDate >=', $fromDate)
+              ->where('orderDate <=', $toDate);
     }
 
     if (isset($filter->businessId)) {
-        $countQuery->where('businessId', $filter->businessId);
-        $totalQuery->where('businessId', $filter->businessId);
+        $query->where('businessId', $filter->businessId);
     }
 
-    // Count orders
-    $orderCount = $countQuery->countAllResults();
+    $orders = $query->get()->getResultArray();
 
-    // Sum total
-    $totalRow = $totalQuery->select('SUM(total) as totalOrderAmount')->get()->getRowArray();
-    $totalOrderAmount = $totalRow ? $totalRow['totalOrderAmount'] : 0;
+    $orderCount = count($orders);
+    $totalOrderAmount = array_sum(array_column($orders, 'total'));
 
     $message = ($orderCount > 0) ? 'Order statistics fetched successfully' : 'No orders found for selected filter';
 
@@ -153,6 +138,7 @@ public function getStatsForOrder()
         'status' => $orderCount > 0,
         'message' => $message,
         'data' => [
+            'orders' => $orders,
             'orderCount' => $orderCount,
             'totalOrderAmount' => $totalOrderAmount
         ]
@@ -161,6 +147,65 @@ public function getStatsForOrder()
 
 
 
+ public function getFilteredOrders()
+    {
+        $input = $this->request->getJSON(true);
+
+        $businessId = $input['businessId'] ?? null;
+        $fromDate = $input['fromDate'] ?? null;
+        $toDate   = $input['toDate'] ?? null;
+
+        if (!$businessId || !$fromDate || !$toDate) {
+            return $this->failValidationErrors('Missing businessId or date range');
+        }
+
+        // Convert to proper datetime
+        $fromDate = date('Y-m-d 00:00:00', strtotime($fromDate));
+        $toDate   = date('Y-m-d 23:59:59', strtotime($toDate));
+
+        // Fetch filtered orders
+        $orders = $this->model
+            ->where('businessId', $businessId)
+            ->where('orderDate >=', $fromDate)
+            ->where('orderDate <=', $toDate)
+            ->findAll();
+
+        $totalOrders = count($orders);
+
+        $totalAmount = 0;
+        $totalRevenue = 0;
+        $emails = [];
+
+        foreach ($orders as $order) {
+            $price = floatval($order['totalPrice']);
+            $status = strtolower($order['status'] ?? '');
+
+            $totalAmount += $price;
+
+            if ($status === 'completed' || $status === 'paid') {
+                $totalRevenue += $price;
+            } elseif ($status === 'cancelled' || $status === 'refunded') {
+                $totalRevenue -= $price;
+            }
+
+            if (!empty($order['email'])) {
+                $emails[] = $order['email'];
+            }
+        }
+
+        $totalCustomers = count(array_unique($emails));
+
+        return $this->respond([
+            'status' => true,
+            'data' => [
+                'orders' => $orders,
+                'orderCount' => $totalOrders,
+                'totalOrderAmount' => $totalAmount,
+                'totalRevenue' => $totalRevenue,
+                'totalCustomers' => $totalCustomers
+            ]
+        ]);
+    }
 
 
 

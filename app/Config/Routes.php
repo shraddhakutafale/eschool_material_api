@@ -678,7 +678,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   });
 
   $routes->group('staff', function ($routes) {
-    $routes->get('getall', 'Staff::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallstaff', 'Staff::getAllStaff',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Staff::getStaffPaging',['filter' => ['tenantFilter']]);
   });
 

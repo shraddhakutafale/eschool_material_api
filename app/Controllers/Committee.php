@@ -15,52 +15,18 @@ class Committee extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
-{
-    // Retrieve tenantConfig from the headers
-    $tenantConfigHeader = $this->request->getHeaderLine('X-Tenant-Config');
-    if (!$tenantConfigHeader) {
-        throw new \Exception('Tenant configuration not found.');
-    }
-
-    // Decode the tenantConfig JSON
-    $tenantConfig = json_decode($tenantConfigHeader, true);
-    if (!$tenantConfig) {
-        throw new \Exception('Invalid tenant configuration.');
-    }
-
-    // Connect to the tenant's database
-    $db = Database::connect($tenantConfig);
-
-    $committeeModel = new CommitteeModel($db);
-
-    $committees = $committeeModel
-        ->where('committee_mst.isDeleted', 0)
-        ->findAll();
-
-    return $this->respond([
-        "status" => true,
-        "message" => "All Committee Data Fetched",
-        "data" => $committees
-    ], 200);
-}
-
-     public function getAllCommittee()
+     public function index()
     {
-        $tenantService = new TenantService();
-
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        // Load UserModel with the tenant database connection
-        $committeemodel = new CommitteeModel($db);
-        $response = [
-            "status" => true,
-            "message" => "All Data Fetched",
-            "data" => $committeemodel->findAll(),
-        ];
-        return $this->respond($response, 200);
+       // Insert the product data into the database
+       $tenantService = new TenantService();
+       // Connect to the tenant's database
+       $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); // Load UserModel with the tenant database connection
+        $CommitteeModel = new CommitteeModel($db);
+        return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $CommitteeModel->findAll()], 200);
     }
-public function getCommitteePaging()
+
+   
+  public function getCommitteePaging()
 {
     $input = $this->request->getJSON();
 
@@ -85,15 +51,15 @@ public function getCommitteePaging()
         ], 400);
     }
 
-    // ✅ Get DB connection and select database
+    // ✅ Connect to the tenant DB directly
     $db = \Config\Database::connect();
-    $db->query("USE exiaa_ex0009");
+    $db->query("USE exiaa_ex0009"); // Make sure you're using the correct database
 
     $builder = $db->table('committee_mst')
                   ->where('isDeleted', 0)
                   ->where('businessId', $input->businessId);
 
-    // ✅ Filters
+    // Filters
     if (!empty($filter)) {
         foreach ($filter as $key => $value) {
             if (in_array($key, ['committeeName', 'committeeCode', 'committeeType'])) {
@@ -117,7 +83,7 @@ public function getCommitteePaging()
         }
     }
 
-    // ✅ Global search
+    // Search
     if (!empty($search)) {
         $builder->groupStart()
                 ->like('committeeName', $search)
@@ -126,11 +92,10 @@ public function getCommitteePaging()
                 ->groupEnd();
     }
 
-    // ✅ Sorting
     $builder->orderBy($sortField, $sortOrder);
 
-    // ✅ Pagination
-    $total = $builder->countAllResults(false); // false prevents reset
+    // Pagination
+    $total = $builder->countAllResults(false); // total without limit
     $builder->limit($perPage, ($page - 1) * $perPage);
     $query = $builder->get();
     $committees = $query->getResult();
@@ -148,218 +113,154 @@ public function getCommitteePaging()
     ], 200);
 }
 
-public function create()
-{
-    $input = $this->request->getPost();
 
-    // Validation rules
-    $rules = [
-        'committeeMember' => ['rules' => 'required'],
-    ];
 
-    if (!$this->validate($rules)) {
-        return $this->fail([
-            'status'  => false,
-            'errors'  => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ], 409);
-    }
 
-    // 🔑 Decode tenant from JWT
-    $key = "Exiaa@11";
-    $header = $this->request->getHeader("Authorization");
-    $token = null;
 
-    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
-    }
 
-    if (!$token) {
-        return $this->failUnauthorized('JWT token missing');
-    }
 
-    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    public function create()
+    {
+        $input = $this->request->getPost();
 
-    // Handle profile picture upload
-    $profilePic = $this->request->getFile('profilePic');
-    if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/committeeImages/';
-        if (!is_dir($uploadPath)) {
-            mkdir($uploadPath, 0777, true);
+        // Validation rules
+        $rules = [
+            'committeeMember' => ['rules' => 'required'],
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->fail([
+                'status'  => false,
+                'errors'  => $this->validator->getErrors(),
+                'message' => 'Invalid Inputs'
+            ], 409);
         }
 
-        $newName = $profilePic->getRandomName();
-        $profilePic->move($uploadPath, $newName);
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
 
-        // Save relative path only
-        $input['profilePic'] = $decoded->tenantName . '/committeeImages/' . $newName;
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+
+        if (!$token) {
+            return $this->failUnauthorized('JWT token missing');
+        }
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+        // Handle profile picture upload
+        $profilePic = $this->request->getFile('profilePic');
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/committeeImages/';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $newName = $profilePic->getRandomName();
+            $profilePic->move($uploadPath, $newName);
+
+            // Save relative path only
+            $input['profilePic'] = $decoded->tenantName . '/committeeImages/' . $newName;
+        }
+
+    
+        $db = \Config\Database::connect();
+        $db->query("USE exiaa_ex0009");
+        $model = new CommitteeModel($db);
+        $model->insert($input);
+
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Committee Added Successfully'
+        ], 200);
     }
-
-    // Explicitly use exiaa_ex0009 database
-  // ✅ Get DB connection and select database
-    $db = \Config\Database::connect();
-    $db->query("USE exiaa_ex0009");
-    // Use the tenant-aware model with this DB
-    $model = new CommitteeModel($db);
-    $model->insert($input);
-
-    return $this->respond([
-        'status'  => true,
-        'message' => 'Committee Added Successfully'
-    ], 200);
-}
 
     public function update()
     {
         $input = $this->request->getPost();
 
-        // Validation rules for the staff
         $rules = [
-            'staffId' => ['rules' => 'required|numeric'], // Ensure staffId is provided and is numeric
+            'committeeId' => ['rules' => 'required|numeric'],
         ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new StaffModel($db);
-
-            // Retrieve the staff by staffId
-            $staffId = $input['staffId'];  // Corrected here
-            $staff = $model->find($staffId);
-
-            if (!$staff) {
-                return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude staffId if it's included)
-            $updateData = [
-                'empName'=> $input['empName'],
-                'empCategory'=> $input['empCategory'],
-                'empCode'=> $input['empCode'],
-                'aadharNumber'=> $input['aadharNumber'],
-                'panNumber'=> $input['panNumber'],
-                'uanNumber'=> $input['uanNumber'],
-                'ipNumber'=> $input['ipNumber'],
-                'fatherName'=> $input['fatherName'],
-                'empSal'=> $input['empSal'],
-                'empDoj'=> $input['empDoj'],
-                'empDol'=> $input['empDol'],
-
-                
-               
-            ];
-
-            // Update the staff with new data
-            $updated = $model->update($staffId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Staff Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update staff'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
+        if (!$this->validate($rules)) {
+            return $this->fail([
                 'status' => false,
                 'errors' => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            ], 409);
+        }
+
+        $db = \Config\Database::connect();
+        $db->query("USE exiaa_ex0009"); 
+        $model = new CommitteeModel($db);
+
+        $committeeId = $input['committeeId'];
+        $committee = $model->find($committeeId);
+
+        if (!$committee) {
+            return $this->fail(['status' => false, 'message' => 'Committee not found'], 404);
+        }
+
+        $updateData = [
+            'committeeMember'  => $input['committeeMember'] ?? $committee['committeeMember'],
+            'qualification'    => $input['qualification'] ?? $committee['qualification'],
+            'email'            => $input['email'] ?? $committee['email'],
+            'committeeMemberDob'=> $input['committeeMemberDob'] ?? $committee['committeeMemberDob'],
+            'phoneNo'          => $input['phoneNo'] ?? $committee['phoneNo'],
+            'facebookUrl'      => $input['facebookUrl'] ?? $committee['facebookUrl'],
+            'instaUrl'         => $input['instaUrl'] ?? $committee['instaUrl'],
+            'twitterUrl'       => $input['twitterUrl'] ?? $committee['twitterUrl'],
+            'profilePic'       => $input['profilePic'] ?? $committee['profilePic'],
+        ];
+
+        $updated = $model->update($committeeId, $updateData);
+
+        if ($updated) {
+            return $this->respond(['status' => true, 'message' => 'Committee Updated Successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to update committee'], 500);
         }
     }
 
-
-    
 
     public function delete()
     {
         $input = $this->request->getJSON();
 
-        // Validation rules for the staff
         $rules = [
-            'staffId' => ['rules' => 'required'], // Ensure staffID is provided and is numeric
+            'committeeId' => ['rules' => 'required|numeric'],
         ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-                // Insert the product data into the database
-        $tenantService = new TenantService();
-        // Connect to the tenant's database
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));   $model = new StaffModel($db);
-
-            // Retrieve the staff by staffId
-            $staffId = $input->staffId;
-            $staff = $model->find($staffId); // Assuming find method retrieves the staff
-
-            if (!$staff) {
-                return $this->fail(['status' => false, 'message' => 'staff not found'], 404);
-            }
-
-            // Proceed to delete the staff
-            $deleted = $model->delete($staffId);
-
-            if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'staff Deleted Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete staff'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
+        if (!$this->validate($rules)) {
+            return $this->fail([
                 'status' => false,
                 'errors' => $this->validator->getErrors(),
                 'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            ], 409);
         }
-    }
 
+        $db = \Config\Database::connect();
+        $db->query("USE exiaa_ex0009"); 
+        $model = new CommitteeModel($db);
 
-      public function getAllType()
-    {
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $typeModel = new TypeModel($db);
-        $types = $typeModel->where('isDeleted', 0)->findAll();
-        return $this->respond(['status' => true, 'message' => 'Subjects fetched successfully', 'data' => $types], 200);
-    }
+        $committeeId = $input->committeeId;
+        $committee = $model->find($committeeId);
 
+        if (!$committee) {
+            return $this->fail(['status' => false, 'message' => 'Committee not found'], 404);
+        }
 
+        // Delete the record
+        $deleted = $model->delete($committeeId);
 
-      public function createType()
-    {
-        $input = $this->request->getJSON();
-        $rules = [
-            'title' => ['rules' => 'required'],
-
-        ];
-
-        if ($this->validate($rules)) {
-            // Insert the product data into the database
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-            $model = new TypeModel($db);
-
-            // Insert the lead data into the database
-            $model->insert($input);
-
-            // Return a success response
-            return $this->respond(['status' => true, 'message' => 'Type Created Successfully'], 200);
+        if ($deleted) {
+            return $this->respond(['status' => true, 'message' => 'Committee Deleted Successfully'], 200);
         } else {
-            // Return validation errors if the rules are not satisfied
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
+            return $this->fail(['status' => false, 'message' => 'Failed to delete committee'], 500);
         }
     }
-
-
-
     
 }

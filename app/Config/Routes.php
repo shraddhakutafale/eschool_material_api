@@ -647,6 +647,19 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
   });
 
+
+  
+  $routes->group('committee', function ($routes) {
+    $routes->get('getall', 'Committee::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Committee::getCommitteePaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Committee::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Committee::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Committee::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Committee::getCommitteesWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Committee::delete',['filter' => ['authFilter','tenantFilter']]);
+   
+  });
+
 });
 
 $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) {

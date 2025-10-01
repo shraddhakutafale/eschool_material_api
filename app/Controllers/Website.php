@@ -510,8 +510,6 @@ public function createContent()
 
     // Basic required fields validation
     $rules = [
-        'title' => 'required|string',
-        'content' => 'required|string',
         'menuId' => 'required|integer',
         'businessId' => 'required|integer',
     ];

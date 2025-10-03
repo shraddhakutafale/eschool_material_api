@@ -798,6 +798,15 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     //Routes for gallery
     $routes->post('getallgallery', 'Gallery::getAllGallery',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Gallery::getGallerysPaging',['filter' => ['tenantFilter']]);
+    $routes->get('getall', 'Gallery::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Gallery::getGallerysPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Gallery::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Gallery::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Gallery::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Gallery::getGallerysWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Gallery::delete',['filter' => ['authFilter','tenantFilter']]);
+
+
   });
 
   $routes->group('event', function ($routes) {

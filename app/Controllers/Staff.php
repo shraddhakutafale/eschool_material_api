@@ -166,52 +166,52 @@ public function create()
     ];
 
     if ($this->validate($rules)) {
-        // ✅ Decode JWT token
+
+        // Decode JWT token
         $key = "Exiaa@11";
         $header = $this->request->getHeader("Authorization");
         $token = null;
 
-        if (!empty($header)) {
-            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                $token = $matches[1];
-            }
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
         }
 
         $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
-        // ✅ Add businessId to input
+        // Add businessId
         $input['businessId'] = $decoded->businessId;
 
-        // ✅ Handle profilePic upload
+        // Handle profilePic upload
         $profilePic = $this->request->getFile('profilePic');
         if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
             $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/staffImages/';
-            if (!is_dir($uploadPath)) {
-                mkdir($uploadPath, 0777, true);
-            }
+            if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
 
             $fileName = $profilePic->getRandomName();
             $profilePic->move($uploadPath, $fileName);
-
             $input['profilePic'] = $decoded->tenantName . '/staffImages/' . $fileName;
         }
 
-        // ✅ Handle resume file upload
+            // Handle resume PDF upload
         $resume = $this->request->getFile('resumeFile');
         if ($resume && $resume->isValid() && !$resume->hasMoved()) {
-            $resumeUploadPath = FCPATH . 'writable/uploads/' . $decoded->tenantName . '/resume/';
-            if (!is_dir($resumeUploadPath)) {
-                mkdir($resumeUploadPath, 0777, true);
-            }
+            $resumeUploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/resume/';
+            if (!is_dir($resumeUploadPath)) mkdir($resumeUploadPath, 0777, true);
 
             $resumeName = $resume->getRandomName();
             $resume->move($resumeUploadPath, $resumeName);
 
-            // Store full URL path
-            $input['resumeUrl'] = base_url('writable/uploads/' . $decoded->tenantName . '/resume/' . $resumeName);
+            // Save relative path for Angular
+            $input['resumeUrl'] = $decoded->tenantName . '/resume/' . $resumeName;
         }
 
-        // ✅ Database setup
+        // Remove empty optional fields so DB doesn't store '-'
+        $optionalFields = ['photoUrl','linkedinUrl','virtualCardUrl','qualification','email','panNumber','uanNumber','ipNumber','fatherName','empSal','empDoj','empDol'];
+        foreach ($optionalFields as $field) {
+            if(empty($input[$field])) unset($input[$field]);
+        }
+
+        // Database setup
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
@@ -220,11 +220,11 @@ public function create()
 
         $db->transStart();
 
-        // ✅ Save staff with businessId
+        // Save staff with businessId
         $staffModel->insert($input);
         $staffId = $staffModel->getInsertID();
 
-        // ✅ Save today's attendance also with businessId
+        // Save today's attendance
         $attendanceModel->insert([
             'staffId'        => $staffId,
             'businessId'     => $decoded->businessId,
@@ -239,6 +239,7 @@ public function create()
         $db->transComplete();
 
         return $this->respond(['status' => true, 'message' => 'Staff Added Successfully'], 200);
+
     } else {
         return $this->fail([
             'status' => false,
@@ -248,66 +249,99 @@ public function create()
     }
 }
 
-    public function update()
-    {
-        $input = $this->request->getPost();
+public function update()
+{
+    $input = $this->request->getPost();
 
-        // Validation rules for the staff
-        $rules = [
-            'staffId' => ['rules' => 'required|numeric'], // Ensure staffId is provided and is numeric
-        ];
+    $rules = [
+        'staffId' => ['rules' => 'required|numeric'],
+    ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new StaffModel($db);
-
-            // Retrieve the staff by staffId
-            $staffId = $input['staffId'];  // Corrected here
-            $staff = $model->find($staffId);
-
-            if (!$staff) {
-                return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude staffId if it's included)
-            $updateData = [
-                'empName'=> $input['empName'],
-                'empCategory'=> $input['empCategory'],
-                'empCode'=> $input['empCode'],
-                'aadharNumber'=> $input['aadharNumber'],
-                'panNumber'=> $input['panNumber'],
-                'uanNumber'=> $input['uanNumber'],
-                'ipNumber'=> $input['ipNumber'],
-                'fatherName'=> $input['fatherName'],
-                'empSal'=> $input['empSal'],
-                'empDoj'=> $input['empDoj'],
-                'empDol'=> $input['empDol'],
-
-                
-               
-            ];
-
-            // Update the staff with new data
-            $updated = $model->update($staffId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Staff Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update staff'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
     }
+
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new StaffModel($db);
+
+    $staffId = $input['staffId'];
+    $staff = $model->find($staffId);
+
+    if (!$staff) {
+        return $this->fail(['status' => false, 'message' => 'Staff not found'], 404);
+    }
+
+    // Handle profilePic upload
+    $profilePic = $this->request->getFile('profilePic');
+    if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/staffImages/';
+        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
+        $fileName = $profilePic->getRandomName();
+        $profilePic->move($uploadPath, $fileName);
+        $input['profilePic'] = $decoded->tenantName . '/staffImages/' . $fileName;
+    }
+
+    // Handle resume upload
+    $resume = $this->request->getFile('resumeFile');
+    if ($resume && $resume->isValid() && !$resume->hasMoved()) {
+        $resumeUploadPath = FCPATH . 'writable/uploads/' . $decoded->tenantName . '/resume/';
+        if (!is_dir($resumeUploadPath)) mkdir($resumeUploadPath, 0777, true);
+
+        $resumeName = $resume->getRandomName();
+        $resume->move($resumeUploadPath, $resumeName);
+
+        $input['resumeUrl'] = $decoded->tenantName . '/resume/' . $resumeName; // relative path only
+    }
+
+    // Prepare all update fields (only the fields you have in the table)
+    $updateData = [
+        'businessId'     => $decoded->businessId,
+        'empName'        => $input['empName'] ?? $staff['empName'],
+        'empCategory'    => $input['empCategory'] ?? $staff['empCategory'],
+        'empCode'        => $input['empCode'] ?? $staff['empCode'],
+        'type'           => $input['type'] ?? $staff['type'],
+        'department'     => $input['department'] ?? $staff['department'],
+        'qualification'  => $input['qualification'] ?? $staff['qualification'],
+        'email'          => $input['email'] ?? $staff['email'],
+        'aadharNumber'   => $input['aadharNumber'] ?? $staff['aadharNumber'],
+        'profilePic'     => $input['profilePic'] ?? $staff['profilePic'],
+        'photoUrl'       => $input['photoUrl'] ?? $staff['photoUrl'],
+        'resumeUrl'      => $input['resumeUrl'] ?? $staff['resumeUrl'],
+        'linkedinUrl'    => $input['linkedinUrl'] ?? $staff['linkedinUrl'],
+        'virtualCardUrl' => $input['virtualCardUrl'] ?? $staff['virtualCardUrl'],
+        'panNumber'      => $input['panNumber'] ?? $staff['panNumber'],
+        'uanNumber'      => $input['uanNumber'] ?? $staff['uanNumber'],
+        'ipNumber'       => $input['ipNumber'] ?? $staff['ipNumber'],
+        'fatherName'     => $input['fatherName'] ?? $staff['fatherName'],
+        'empSal'         => $input['empSal'] ?? $staff['empSal'],
+        'empDoj'         => $input['empDoj'] ?? $staff['empDoj'],
+        'empDol'         => $input['empDol'] ?? $staff['empDol'],
+    ];
+
+    $updated = $model->update($staffId, $updateData);
+
+    if ($updated) {
+        return $this->respond(['status' => true, 'message' => 'Staff Updated Successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to update staff'], 500);
+    }
+}
 
 
     

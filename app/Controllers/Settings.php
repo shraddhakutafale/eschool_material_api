@@ -985,5 +985,48 @@ public function deleteVisionMission()
     ], 500);
 }
 
+public function updateFooter()
+{
+    $input = $this->request->getJSON(true); // <- parse JSON as array
+
+    $rules = [
+        'footerId' => ['rules' => 'required|numeric'],
+    ];
+
+    if ($this->validate($rules)) {
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new FooterModel($db);
+
+        $footerId = $input['footerId'] ?? 0;
+
+        $footer = $model->find($footerId);
+
+        if (!$footer) {
+            return $this->fail(['status' => false, 'message' => 'Footer not found'], 404);
+        }
+
+        $updateData = [
+            'title' => $input['title'] ?? '',
+            'parentFooterId' => $input['parentFooterId'] ?? 0,
+            'url' => $input['url'] ?? '',
+        ];
+
+        $updated = $model->update($footerId, $updateData);
+
+        if ($updated) {
+            return $this->respond(['status' => true, 'message' => 'Footer updated successfully'], 200);
+        } else {
+            return $this->fail(['status' => false, 'message' => 'Failed to update footer'], 500);
+        }
+    } else {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+}
+
 
 }

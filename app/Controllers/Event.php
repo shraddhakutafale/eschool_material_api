@@ -135,7 +135,6 @@ class Event extends BaseController
         $events = $EventModel->orderBy('createdDate', 'DESC')->where('isActive', 1)->where('isDeleted', 0)->findAll();
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $events], 200);
     }
-
    public function create()
 {
     $input = $this->request->getPost();
@@ -190,6 +189,7 @@ class Event extends BaseController
         ], 409);
     }
 }
+
 
 
 public function update()

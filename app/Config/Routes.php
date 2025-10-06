@@ -332,6 +332,7 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     $routes->post('deletefooter', 'Settings::deleteFooter',['filter' => ['authFilter','tenantFilter']]);
 
 
+    $routes->post('updatefooter', 'Settings::updateFooter',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('getallpagingvisionmission', 'Settings::getVisionMissionPaging',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('createvisionmission', 'Settings::createVisionMission',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('deletevisionmission', 'Settings::deleteVisionMission',['filter' => ['authFilter','tenantFilter']]);

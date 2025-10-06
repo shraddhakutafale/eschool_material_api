@@ -660,6 +660,19 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
    
   });
 
+  $routes->group('data', function ($routes) {
+    $routes->get('getall', 'Data::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Data::getAllDataPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Data::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Data::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Data::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Data::getDatasWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Data::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('import', 'Data::importExcel', ['filter' => ['authFilter','tenantFilter']]);
+
+});
+
+
 });
 
 $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) {
@@ -814,5 +827,8 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getall', 'Event::getAllEvent',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Event::getEventsPaging',['filter' => ['tenantFilter']]);
   });
+
+
+
 
 });

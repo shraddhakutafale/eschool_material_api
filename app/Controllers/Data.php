@@ -119,108 +119,68 @@ class Data extends BaseController
 
 
 
-  public function create()
+public function create()
 {
     $input = $this->request->getPost();
-
     $rules = [
         'fullName' => ['rules' => 'required'],
-        'gender'   => ['rules' => 'required'],
         'mobileNo' => ['rules' => 'required'],
-        'email'    => ['rules' => 'permit_empty|valid_email']
+        'gender'   => ['rules' => 'permit_empty']
     ];
 
-    if ($this->validate($rules)) {
-
-        $key = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token = null;
-
-        // Extract the token from the Authorization header
-        if(!empty($header)) {
-            if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                $token = $matches[1];
-            }
-        }
-
-        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-
-        // Handle profile image upload
-        $profileImage = $this->request->getFile('profilePic');
-        $profileImageName = null;
-
-        if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
-            $profileImagePath = FCPATH . 'uploads/' . $decoded->tenantName . '/profilePic/';
-            if (!is_dir($profileImagePath)) {
-                mkdir($profileImagePath, 0777, true);
-            }
-
-            $profileImageName = $profileImage->getRandomName();
-            $profileImage->move($profileImagePath, $profileImageName);
-
-            $profileImageUrl = $decoded->tenantName . '/profilePic/' . $profileImageName;
-            $input['profilePic'] = $profileImageUrl;
-        }
-
-        // Connect to tenant DB
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-
-        $model = new DataModel($db);
-
-        // Prepare data array for insertion
-        $data = [
-            'fullName'         => $input['fullName'] ?? null,
-            'gender'           => $input['gender'] ?? null,
-            'dob'              => $input['dob'] ?? null,
-            'age'              => $input['age'] ?? null,
-            'mobileNo'         => $input['mobileNo'] ?? null,
-            'email'            => $input['email'] ?? null,
-            'address'          => $input['address'] ?? null,
-            'villageTown'      => $input['villageTown'] ?? null,
-            'talukaBlock'      => $input['talukaBlock'] ?? null,
-            'district'         => $input['district'] ?? null,
-            'state'            => $input['state'] ?? null,
-            'pincode'          => $input['pincode'] ?? null,
-            'voterIdNo'        => $input['voterIdNo'] ?? null,
-            'wardBoothNo'      => $input['wardBoothNo'] ?? null,
-            'serialNo'         => $input['serialNo'] ?? null,
-            'assemblyNo'       => $input['assemblyNo'] ?? null,
-            'aadharNo'         => $input['aadharNo'] ?? null,
-            'voterCategory'    => $input['voterCategory'] ?? null,
-            'voterSubCategory' => $input['voterSubCategory'] ?? null,
-            'locationCoord'    => $input['locationCoord'] ?? null,
-            'profilePic'       => $input['profilePic'] ?? null,
-            'status'           => $input['status'] ?? 'active',
-            'notify'           => $input['notify'] ?? 'yes',
-            'dueDate'          => $input['dueDate'] ?? null,
-            'assignee'         => $input['assignee'] ?? null,
-            'subheadingFields' => $input['subheadingFields'] ?? null,
-            'paragraphFields'  => $input['paragraphFields'] ?? null,
-            'headerFields'     => $input['headerFields'] ?? null,
-            'isActive'         => $input['isActive'] ?? 1,
-            'businessId'       => $decoded->businessId ?? $input['businessId'] ?? null,
-        ];
-
-        $id = $model->insert($data);
-
-        log_message('info', 'Data successfully added with ID: ' . $id);
-
-        return $this->respond([
-            'status' => true,
-            'message' => 'Data added successfully',
-            'data' => $id
-        ], 200);
-
-    } else {
-        log_message('error', json_encode($this->validator->getErrors()));
+    if (!$this->validate($rules)) {
         return $this->fail([
             'status' => false,
             'errors' => $this->validator->getErrors(),
             'message' => 'Invalid Inputs'
         ], 409);
     }
+
+    $key = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token = null;
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) $token = $matches[1];
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+    $tenantName = $decoded->tenantName ?? 'default';
+
+    // ✅ Profile Image Upload
+    $profileImage = $this->request->getFile('profilePic');
+    if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
+        $uploadPath = FCPATH . "uploads/{$tenantName}/dataImages/";
+        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+        $newName = $profileImage->getRandomName();
+        $profileImage->move($uploadPath, $newName);
+        $input['profilePic'] = "{$tenantName}/dataImages/{$newName}";
+    } else {
+        $input['profilePic'] = $input['profilePicOld'] ?? null;
+    }
+
+    $data = [
+        'fullName'   => $input['fullName'],
+        'mobileNo'   => $input['mobileNo'],
+        'gender'     => $input['gender'] ?? null,
+        'dob'        => $input['dob'] ?? null,
+        'age'        => $input['age'] ?? null,
+        'email'      => $input['email'] ?? null,
+        'profilePic' => $input['profilePic'],
+        'businessId' => $decoded->businessId ?? $input['businessId'],
+        'createdBy'  => $decoded->userId ?? null,
+        'createdDate'=> date('Y-m-d H:i:s'),
+        'isDeleted'  => 0
+    ];
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new DataModel($db);
+    $id = $model->insert($data);
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Data added successfully',
+        'data' => $id
+    ], 200);
 }
+
 
 
 public function update()
@@ -265,21 +225,23 @@ public function update()
     }
 
     // ----- Handle profile image upload -----
-    $profileImage = $this->request->getFile('profileImage');
-    if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
+   // Change this line
+$profileImage = $this->request->getFile('profilePic'); // <- match Angular key
 
-        $uploadBase = FCPATH . 'uploads/';
-        $uploadPath = $uploadBase . $tenantFolder . '/profileImage/';
+if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
 
-        // Create directories if not exist
-        if (!is_dir($uploadBase)) mkdir($uploadBase, 0777, true);
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+    $uploadBase = FCPATH . 'uploads/';
+$uploadPath = $uploadBase . $tenantFolder . '/profileImage/';
 
-        $imageName = $profileImage->getRandomName();
-        $profileImage->move($uploadPath, $imageName);
+if (!is_dir($uploadBase)) mkdir($uploadBase, 0777, true);
+if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
 
-        $input['profilePic'] = $tenantFolder . '/profileImage/' . $imageName;
-    }
+$imageName = $profileImage->getRandomName();
+$profileImage->move($uploadPath, $imageName);
+
+$input['profilePic'] = $tenantFolder . '/profileImage/' . $imageName;
+
+}
 
     $input['modifiedDate'] = date('Y-m-d H:i:s');
 
@@ -383,11 +345,11 @@ public function update()
         }
     }
 
-   public function importExcel()
+public function importExcel()
 {
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new DataModel($db); // Connect to tenant DB
+    $model = new DataModel($db);
 
     $json = $this->request->getJSON(true);
     if (!$json || !is_array($json)) {
@@ -395,22 +357,53 @@ public function update()
     }
 
     $insertData = [];
-    $insertedDataNames = [];
+    $updatedData = [];
+    $processedMobile = [];
 
     foreach ($json as $row) {
+        // Skip invalid rows
         if (empty($row['fullName']) || empty($row['mobileNo']) || empty($row['dob'])) continue;
 
-        $existing = $model->where('fullName', $row['fullName'])->first();
+        $mobileNo = $row['mobileNo'];
 
-        if (!$existing) {
-            $insertData[] = [
-                'fullName' => $row['fullName'],
-                'mobileNo' => $row['mobileNo'],
-                'dob' => $row['dob'],
-                'createdDate' => $row['createdDate'] ?? date('Y-m-d H:i:s'),
-                'businessId' => $row['businessId'] ?? 0,
-            ];
-            $insertedDataNames[] = $row['fullName'];
+        // Prevent processing duplicates in same import
+        if (in_array($mobileNo, $processedMobile)) continue;
+        $processedMobile[] = $mobileNo;
+
+        // Check if mobileNo exists already
+        $existing = $model->where('mobileNo', $mobileNo)->first();
+
+        $dataRow = [
+            'fullName'         => $row['fullName'],
+            'gender'           => $row['gender'] ?? '-',
+            'mobileNo'         => $mobileNo,
+            'dob'              => $row['dob'],
+            'age'              => $row['age'] ?? null,
+            'email'            => $row['email'] ?? null,
+            'address'          => $row['address'] ?? null,
+            'villageTown'      => $row['villageTown'] ?? null,
+            'talukaBlock'      => $row['talukaBlock'] ?? null,
+            'district'         => $row['district'] ?? null,
+            'state'            => $row['state'] ?? null,
+            'pincode'          => $row['pincode'] ?? null,
+            'voterIdNo'        => $row['voterIdNo'] ?? null,
+            'wardBoothNo'      => $row['wardBoothNo'] ?? null,
+            'serialNo'         => $row['serialNo'] ?? null,
+            'assemblyNo'       => $row['assemblyNo'] ?? null,
+            'aadharNo'         => $row['aadharNo'] ?? null,
+            'voterCategory'    => $row['voterCategory'] ?? null,
+            'voterSubCategory' => $row['voterSubCategory'] ?? null,
+            'locationCoord'    => $row['locationCoord'] ?? null,
+            'createdDate'      => date('Y-m-d H:i:s'),
+            'businessId'       => $row['businessId'] ?? 0,
+        ];
+
+        if ($existing) {
+            // Update existing record
+            $model->update($existing['id'], $dataRow);
+            $updatedData[] = $mobileNo;
+        } else {
+            $insertData[] = $dataRow;
         }
     }
 
@@ -418,15 +411,27 @@ public function update()
         $model->insertBatch($insertData);
     }
 
-    $dataList = [];
-    if (!empty($insertedDataNames)) {
-        $dataList = $model->whereIn('fullName', $insertedDataNames)->findAll();
-    }
+    $dataList = $model->whereIn('mobileNo', array_merge($processedMobile, $updatedData))->findAll();
 
     return $this->respond([
         'success' => true,
-        'data' => $dataList,
+        'data'    => $dataList,
         'message' => 'Data imported successfully!'
+    ]);
+}
+public function checkMobileExists()
+{
+    $mobileNo = $this->request->getPost('mobileNo');
+    if (!$mobileNo) return $this->fail('Mobile No required', 400);
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new DataModel($db);
+
+    $existing = $model->where('mobileNo', $mobileNo)->first();
+    return $this->respond([
+        'exists' => $existing ? true : false,
+        'dataId' => $existing['id'] ?? null
     ]);
 }
 

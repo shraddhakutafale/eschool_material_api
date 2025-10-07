@@ -571,11 +571,9 @@ public function createLink()
     
         return $this->respond($response, 200);
     }
-
-
- public function createFooter()
+public function createFooter()
 {
-$input = $this->request->getJSON(true); // true = returns array
+    $input = $this->request->getJSON(true); // true = array
     $file = $this->request->getFile('file');
 
     // ✅ Get tenant DB
@@ -584,54 +582,65 @@ $input = $this->request->getJSON(true); // true = returns array
     $model = new \App\Models\FooterModel($db);
 
     // ✅ Common fields
-    $data = [
-        'businessId'     => isset($input['businessId']) ? (int)$input['businessId'] : 0,
-        'parentFooterId' => isset($input['parentFooterId']) ? (int)$input['parentFooterId'] : 0,
-        'isActive'       => 1,
-        'isDeleted'      => 0,
-        'modifiedBy'     => session()->get('userId') ?? 0,
-        'modifiedDate'   => date('Y-m-d H:i:s'),
+    $commonData = [
+        'businessId'   => isset($input['businessId']) ? (int)$input['businessId'] : 0,
+        'isActive'     => 1,
+        'isDeleted'    => 0,
+        'modifiedBy'   => session()->get('userId') ?? 0,
+        'modifiedDate' => date('Y-m-d H:i:s'),
     ];
 
-    // ✅ Add title only if provided
+    // ✅ Optional fields
     if (!empty($input['title'])) {
-        $data['title'] = trim($input['title']);
+        $commonData['title'] = trim($input['title']);
     }
 
-    // ✅ Add URL only if provided
+    // ✅ Handle parentFooterId, footerTitle, url as arrays/strings
+    if (!empty($input['parentFooterId'])) {
+        $parentIds = is_array($input['parentFooterId']) ? $input['parentFooterId'] : explode(',', $input['parentFooterId']);
+        $commonData['parentFooterId'] = implode(',', $parentIds); // store as comma-separated
+    }
+
+    if (!empty($input['footerTitle'])) {
+        $titles = is_array($input['footerTitle']) ? $input['footerTitle'] : explode(',', $input['footerTitle']);
+        $commonData['footerTitle'] = implode(', ', $titles); // store as comma-separated string
+    }
+
     if (!empty($input['url'])) {
-        $data['url'] = trim($input['url']);
+        $urls = is_array($input['url']) ? $input['url'] : explode(',', $input['url']);
+        $commonData['url'] = implode(', ', $urls); // store as comma-separated string
     }
 
-    // ✅ Handle file upload if exists
+    // ✅ Handle file upload
     if ($file && $file->isValid() && !$file->hasMoved()) {
         $uploadPath = WRITEPATH . 'uploads/footer/';
-        if (!is_dir($uploadPath)) {
-            mkdir($uploadPath, 0777, true);
-        }
+        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
         $newFileName = $file->getRandomName();
         $file->move($uploadPath, $newFileName);
-        $data['file'] = base_url('writable/uploads/footer/' . $newFileName);
+        $commonData['file'] = base_url('writable/uploads/footer/' . $newFileName);
     }
 
     try {
-        // ✅ Update if footerId exists, otherwise insert
         if (!empty($input['footerId'])) {
+            // Edit mode: update single row
             $footerId = (int)$input['footerId'];
-            $model->update($footerId, $data);
+            $model->update($footerId, $commonData);
+            $insertedIds = [$footerId];
             $message = 'Footer updated successfully.';
         } else {
-            $data['createdBy']   = session()->get('userId') ?? 0;
-            $data['createdDate'] = date('Y-m-d H:i:s');
-            $model->insert($data);
-            $footerId = $model->insertID();
+            // Create new footer
+            $commonData['createdBy']   = session()->get('userId') ?? 0;
+            $commonData['createdDate'] = date('Y-m-d H:i:s');
+            $model->insert($commonData);
+            $insertedIds = [$model->insertID()];
             $message = 'Footer created successfully.';
         }
 
         return $this->respond([
-            'status'   => true,
-            'message'  => $message,
-            'footerId' => $footerId
+            'status'    => true,
+            'message'   => $message,
+            'footerIds' => $insertedIds
         ], 200);
 
     } catch (\Exception $e) {
@@ -642,6 +651,7 @@ $input = $this->request->getJSON(true); // true = returns array
         ], 500);
     }
 }
+
 
 
 public function deleteFooter()
@@ -700,7 +710,7 @@ public function deleteFooter()
 
 
 
-    public function getFooter()
+public function getFooter()
 {
     $tenantService = new \App\Libraries\TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
@@ -708,38 +718,34 @@ public function deleteFooter()
 
     // Get all active + non-deleted footers
     $footers = $model->where('isActive', 1)
-                    ->where('isDeleted', 0)
-                    ->orderBy('parentFooterId ASC, footerId ASC')
-                    ->findAll();
+                     ->where('isDeleted', 0)
+                     ->orderBy('footerId ASC')
+                     ->findAll();
 
     $result = [];
 
-    // Step 1: collect parents
     foreach ($footers as $footer) {
-        if ($footer['parentFooterId'] == 0) {
-            $result[$footer['footerId']] = [
+        // Split comma-separated footerTitle and url
+        $titles = !empty($footer['footerTitle']) ? explode(',', $footer['footerTitle']) : [];
+        $urls   = !empty($footer['url']) ? explode(',', $footer['url']) : [];
+
+        $children = [];
+        for ($i = 0; $i < count($titles); $i++) {
+            $children[] = [
                 'footerId' => $footer['footerId'],
-                'title'    => $footer['title'],
-                'children' => []
+                'title'    => trim($titles[$i] ?? ''),
+                'url'      => trim($urls[$i] ?? '')
             ];
         }
+
+        $result[] = [
+            'footerId' => $footer['footerId'],
+            'title'    => $footer['title'],
+            'children' => $children
+        ];
     }
 
-    // Step 2: attach children to their parents
-    foreach ($footers as $footer) {
-        if ($footer['parentFooterId'] != 0) {
-            if (isset($result[$footer['parentFooterId']])) {
-                $result[$footer['parentFooterId']]['children'][] = [
-                    'footerId' => $footer['footerId'],
-                    'title'    => $footer['title'],
-                    'url'      => $footer['url']
-                ];
-            }
-        }
-    }
-
-    // Step 3: return only values (reset keys)
-    return $this->respond(array_values($result));
+    return $this->respond($result);
 }
 
 public function getAllLink()

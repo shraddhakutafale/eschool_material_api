@@ -993,7 +993,7 @@ public function deleteVisionMission()
 
 public function updateFooter()
 {
-    $input = $this->request->getJSON(true); // <- parse JSON as array
+    $input = $this->request->getJSON(true);
 
     $rules = [
         'footerId' => ['rules' => 'required|numeric'],
@@ -1005,23 +1005,39 @@ public function updateFooter()
         $model = new FooterModel($db);
 
         $footerId = $input['footerId'] ?? 0;
-
         $footer = $model->find($footerId);
 
         if (!$footer) {
             return $this->fail(['status' => false, 'message' => 'Footer not found'], 404);
         }
 
+        // Get existing URLs and titles
+        $existingUrls = $footer['url'] ?? '';
+        $existingTitles = $footer['footerTitle'] ?? '';
+        $existingParentIds = $footer['parentFooterId'] ?? '';
+
+        // Convert new inputs to comma-separated strings if array
+        $newUrls = is_array($input['url']) ? implode(', ', $input['url']) : $input['url'];
+        $newTitles = is_array($input['footerTitle']) ? implode(', ', $input['footerTitle']) : $input['footerTitle'];
+        $newParentIds = is_array($input['parentFooterId']) ? implode(', ', $input['parentFooterId']) : $input['parentFooterId'];
+
+        // Append new values to existing ones
+        $updatedUrls = trim($existingUrls . ', ' . $newUrls, ', ');
+        $updatedTitles = trim($existingTitles . ', ' . $newTitles, ', ');
+        $updatedParentIds = trim($existingParentIds . ', ' . $newParentIds, ', ');
+
         $updateData = [
             'title' => $input['title'] ?? '',
-            'parentFooterId' => $input['parentFooterId'] ?? 0,
-            'url' => $input['url'] ?? '',
+            'footerTitle' => $updatedTitles,
+            'parentFooterId' => $updatedParentIds,
+            'url' => $updatedUrls,
+            'modifiedDate' => date('Y-m-d H:i:s'),
         ];
 
         $updated = $model->update($footerId, $updateData);
 
         if ($updated) {
-            return $this->respond(['status' => true, 'message' => 'Footer updated successfully'], 200);
+            return $this->respond(['status' => true, 'message' => 'Footer updated successfully']);
         } else {
             return $this->fail(['status' => false, 'message' => 'Failed to update footer'], 500);
         }
@@ -1033,6 +1049,7 @@ public function updateFooter()
         ], 409);
     }
 }
+
 
 
 }

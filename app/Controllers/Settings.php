@@ -385,53 +385,71 @@ public function createLink()
 }
 
     public function updateLink()
-    {
-        $input = $this->request->getPost();
-        
-        $rules = [
-            'linkId' => ['rules' => 'required|numeric'], // Ensure studentId is provided and is numeric
+{
+    $input = $this->request->getPost();
+    $files = $this->request->getFiles(); // get uploaded files
 
-        ];
+    $rules = [
+        'linkId' => ['rules' => 'required|numeric'],
+    ];
 
-        if ($this->validate($rules)) {
-             
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); $model = new LinkModel($db);
-
-            $linkId = $input['linkId'];  // Corrected here
-            $link = $model->find($linkId); // Assuming find method retrieves the student
-
-            if (!$link) {
-                return $this->fail(['status' => false, 'message' => 'link not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude studentId if it's included)
-            $updateData = [
-
-                'categoryName' => $input['categoryName'],  // Corrected here
-                'labelName' => $input['labelName'],  // Corrected here
-                'link' => $input['link'],  // Corrected here
-
-            ];
-
-            // Update the student with new data
-            $updated = $model->update($linkId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'link Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update link '], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
     }
+
+    // JWT / Tenant logic if needed
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new LinkModel($db);
+
+    $linkId = $input['linkId'];
+    $link = $model->find($linkId);
+
+    if (!$link) {
+        return $this->fail(['status' => false, 'message' => 'Link not found'], 404);
+    }
+
+    // Handle profile picture upload
+    $profilePic = $this->request->getFile('profilePic');
+    if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/linkImages/';
+        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
+        $fileName = $profilePic->getRandomName();
+        $profilePic->move($uploadPath, $fileName);
+        $input['profilePic'] = $decoded->tenantName . '/linkImages/' . $fileName;
+    }
+
+    // Prepare all update fields
+    $updateData = [
+        'categoryName' => $input['categoryName'] ?? $link['categoryName'],
+        'labelName'    => $input['labelName'] ?? $link['labelName'],
+        'link'         => $input['link'] ?? $link['link'],
+        'profilePic'   => $input['profilePic'] ?? $link['profilePic'],
+        'businessId'   => $decoded->businessId ?? $link['businessId'],
+    ];
+
+    $updated = $model->update($linkId, $updateData);
+
+    if ($updated) {
+        return $this->respond(['status' => true, 'message' => 'Link Updated Successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to update link'], 500);
+    }
+}
+
 
 
     public function deleteLink()
@@ -999,57 +1017,43 @@ public function updateFooter()
         'footerId' => ['rules' => 'required|numeric'],
     ];
 
-    if ($this->validate($rules)) {
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new FooterModel($db);
-
-        $footerId = $input['footerId'] ?? 0;
-        $footer = $model->find($footerId);
-
-        if (!$footer) {
-            return $this->fail(['status' => false, 'message' => 'Footer not found'], 404);
-        }
-
-        // Get existing URLs and titles
-        $existingUrls = $footer['url'] ?? '';
-        $existingTitles = $footer['footerTitle'] ?? '';
-        $existingParentIds = $footer['parentFooterId'] ?? '';
-
-        // Convert new inputs to comma-separated strings if array
-        $newUrls = is_array($input['url']) ? implode(', ', $input['url']) : $input['url'];
-        $newTitles = is_array($input['footerTitle']) ? implode(', ', $input['footerTitle']) : $input['footerTitle'];
-        $newParentIds = is_array($input['parentFooterId']) ? implode(', ', $input['parentFooterId']) : $input['parentFooterId'];
-
-        // Append new values to existing ones
-        $updatedUrls = trim($existingUrls . ', ' . $newUrls, ', ');
-        $updatedTitles = trim($existingTitles . ', ' . $newTitles, ', ');
-        $updatedParentIds = trim($existingParentIds . ', ' . $newParentIds, ', ');
-
-        $updateData = [
-            'title' => $input['title'] ?? '',
-            'footerTitle' => $updatedTitles,
-            'parentFooterId' => $updatedParentIds,
-            'url' => $updatedUrls,
-            'modifiedDate' => date('Y-m-d H:i:s'),
-        ];
-
-        $updated = $model->update($footerId, $updateData);
-
-        if ($updated) {
-            return $this->respond(['status' => true, 'message' => 'Footer updated successfully']);
-        } else {
-            return $this->fail(['status' => false, 'message' => 'Failed to update footer'], 500);
-        }
-    } else {
+    if (!$this->validate($rules)) {
         return $this->fail([
             'status' => false,
             'errors' => $this->validator->getErrors(),
             'message' => 'Invalid Inputs'
         ], 409);
     }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new FooterModel($db);
+
+    $footerId = $input['footerId'] ?? 0;
+    $footer = $model->find($footerId);
+
+    if (!$footer) {
+        return $this->fail(['status' => false, 'message' => 'Footer not found'], 404);
+    }
+
+    // Replace existing values instead of appending
+    $updateData = [
+        'title' => $input['title'] ?? $footer['title'],
+        'footerTitle' => is_array($input['footerTitle']) ? implode(', ', $input['footerTitle']) : $input['footerTitle'],
+        'parentFooterId' => is_array($input['parentFooterId']) ? implode(', ', $input['parentFooterId']) : $input['parentFooterId'],
+        'url' => is_array($input['url']) ? implode(', ', $input['url']) : $input['url'],
+        'modifiedDate' => date('Y-m-d H:i:s'),
+    ];
+
+    $updated = $model->update($footerId, $updateData);
+
+    if ($updated) {
+        return $this->respond(['status' => true, 'message' => 'Footer updated successfully']);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to update footer'], 500);
+    }
 }
 
 
-
+ 
 }

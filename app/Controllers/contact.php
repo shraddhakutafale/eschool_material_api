@@ -145,9 +145,9 @@ public function create()
 
 
 
-    public function update()
+public function update()
 {
-    $input = $this->request->getJSON();
+    $input = $this->request->getJSON(true); // Decode JSON as array
 
     $rules = [
         'contactId' => ['rules' => 'required|numeric'],
@@ -158,7 +158,7 @@ public function create()
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
         $model = new ContactModel($db);
 
-        $contactId = $input->contactId;
+        $contactId = $input['contactId'];
         $contact = $model->find($contactId);
 
         if (!$contact) {
@@ -166,13 +166,17 @@ public function create()
         }
 
         $updateData = [
-            'title' => $input->title ?? $contact['title'],
-            'address' => $input->address ?? $contact['address'],
-            'telephone' => $input->telephone ?? $contact['telephone'],
-            'fax' => $input->fax ?? $contact['fax'],
-            'email' => $input->email ?? $contact['email'],
-            'mapUrl' => $input->mapUrl ?? $contact['mapUrl'],
-            'extraUrl' => $input->extraUrl ?? $contact['extraUrl'],
+            'contactType' => $input['contactType'] ?? $contact['contactType'],
+            'title'       => $input['title'] ?? $contact['title'],
+            'address'     => $input['address'] ?? $contact['address'],
+            'telephone'   => $input['telephone'] ?? $contact['telephone'],
+            'fax'         => $input['fax'] ?? $contact['fax'],
+            'email'       => $input['email'] ?? $contact['email'],
+            'mapUrl'      => $input['mapUrl'] ?? $contact['mapUrl'],
+            'extraUrl'    => $input['extraUrl'] ?? $contact['extraUrl'],
+            'data'        => $input['data'] ?? $contact['data'],
+            'modifiedBy'  => $input['modifiedBy'] ?? $contact['modifiedBy'],
+            'modifiedDate'=> date('Y-m-d H:i:s')
         ];
 
         $updated = $model->update($contactId, $updateData);
@@ -182,6 +186,7 @@ public function create()
         } else {
             return $this->fail(['status' => false, 'message' => 'Failed to update contact'], 500);
         }
+
     } else {
         return $this->fail([
             'status' => false,
@@ -190,6 +195,7 @@ public function create()
         ], 409);
     }
 }
+
 
     
 

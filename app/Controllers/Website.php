@@ -1405,6 +1405,33 @@ public function updateContentOrder()
     ]);
 }
 
+public function deleteContent()
+{
+    $input = $this->request->getJSON(true);
+
+    if (!isset($input['contentId'])) {
+        return $this->fail(['status' => false, 'message' => 'Content ID is required'], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ContentModel($db);
+
+    $contentId = $input['contentId'];
+    $content = $model->find($contentId);
+
+    if (!$content) {
+        return $this->fail(['status' => false, 'message' => 'Content not found'], 404);
+    }
+
+    $deleted = $model->delete($contentId);
+
+    if ($deleted) {
+        return $this->respond(['status' => true, 'message' => 'Content deleted successfully']);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to delete content'], 500);
+    }
+}
 
 
 }

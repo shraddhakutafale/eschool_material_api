@@ -675,6 +675,18 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
 });
 
+ $routes->group('candidate', function ($routes) {
+    $routes->get('getall', 'Candidate::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Candidate::getAllCandidatePaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Candidate::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Candidate::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Candidate::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Candidate::getCandidatesWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Candidate::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('import', 'Candidate::importExcel', ['filter' => ['authFilter','tenantFilter']]);
+
+});
+
 
 });
 

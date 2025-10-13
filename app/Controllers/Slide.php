@@ -26,129 +26,114 @@ class Slide extends BaseController
         $slideModel = new SlideModel($db);
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $slideModel->findAll()], 200);
     }
+public function create()
+{
+    $input = $this->request->getPost();
 
-    public function create()
-    {
-        // Retrieve input data from the request
-        $input = $this->request->getPost();
-        
-        // Define validation rules for required fields
-        $rules = [
-            'title' => ['rules' => 'required|string'],
-            'content' => ['rules' => 'required|string'],
-            'buttonUrl' => ['rules' => 'required|valid_url'],
-            'buttonText' => ['rules' => 'required']
-        ];
-    
-        if ($this->validate($rules)) {
-            $key = "Exiaa@11";
-            $header = $this->request->getHeader("Authorization");
-            $token = null;
-    
-            // Extract the token from the header
-            if (!empty($header)) {
-                if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-                    $token = $matches[1];
-                }
-            }
-            
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-            $input['businessId'] = $decoded->businessId;
-            
-            // Handle image upload for the slide image
-            $profilePic = $this->request->getFile('profilePic');
-            $profilePicName = null;
-    
-            if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
-                // Define the upload path for slide images
-                $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemCategoryImages/';
-                if (!is_dir($profilePicPath)) {
-                    mkdir($profilePicPath, 0777, true); // Create directory if it doesn't exist
-                }
-    
-                // Move file with a unique name
-                $profilePicName = $profilePic->getRandomName();
-                $profilePic->move($profilePicPath, $profilePicName);
-    
-                // Get the URL of the uploaded image
-                $profilePicUrl = 'uploads/itemCategoryImages/' . $profilePicName;
-                $profilePicUrl = str_replace('uploads/itemCategoryImages/', '', $profilePicUrl);
-    
-                // Add the image URL to the input data
-                $input['profilePic'] = $decoded->tenantName . '/itemCategoryImages/' . $profilePicUrl;
-            }
-    
-            // Connect to the tenant's database
-            $tenantService = new TenantService();
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            
-            $model = new SlideModel($db);
-            $model->insert($input);
-    
-            return $this->respond(['status' => true, 'message' => 'Slide Created Successfully'], 200);
-        } else {
-            // If validation fails, return the error messages
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs',
-            ];
-            return $this->fail($response, 409);
+    // Ensure showButton is set
+    $input['showButton'] = isset($input['showButton']) && ($input['showButton'] === 'true' || $input['showButton'] == 1) ? 1 : 0;
+
+    // Normalize all other fields: convert null, undefined, or "null" to empty string
+    $optionalFields = ['content', 'buttonText', 'buttonUrl', 'profilePic'];
+    foreach ($optionalFields as $field) {
+        if (!isset($input[$field]) || $input[$field] === null || $input[$field] === 'null') {
+            $input[$field] = '';
         }
     }
 
-    public function update()
-    {
-        $input = $this->request->getPost();
+    // Validation rules: only title is required
+    $rules = [
+        'title' => ['rules' => 'required|string']
+    ];
 
-        // Validation rules for the slide
-        $rules = [
-            'slideId' => ['rules' => 'required|numeric'], // Ensure slideId is provided and is numeric
+    if ($this->validate($rules)) {
+        $key = "Exiaa@11";
+        $header = $this->request->getHeader("Authorization");
+        $token = null;
+
+        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+            $token = $matches[1];
+        }
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $input['businessId'] = $decoded->businessId;
+
+        // Handle image upload
+        $profilePic = $this->request->getFile('profilePic');
+        if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+            $profilePicPath = FCPATH . 'uploads/' . $decoded->tenantName . '/itemCategoryImages/';
+            if (!is_dir($profilePicPath)) mkdir($profilePicPath, 0777, true);
+            $profilePicName = $profilePic->getRandomName();
+            $profilePic->move($profilePicPath, $profilePicName);
+            $input['profilePic'] = $decoded->tenantName . '/itemCategoryImages/' . $profilePicName;
+        }
+
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new SlideModel($db);
+        $model->insert($input);
+
+        return $this->respond(['status' => true, 'message' => 'Slide Created Successfully'], 200);
+    } else {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs',
+        ], 409);
+    }
+}
+
+
+
+public function update()
+{
+    $input = $this->request->getPost();
+
+    // Ensure showButton is 0 or 1
+    $input['showButton'] = isset($input['showButton']) && ($input['showButton'] === 'true' || $input['showButton'] == 1) ? 1 : 0;
+
+    $rules = [
+        'slideId' => ['rules' => 'required|numeric'],
+        'title' => ['rules' => 'required|string'],
         ];
 
-        // Validate the input
-        if ($this->validate($rules)) {
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-            $model = new SlideModel($db);
-
-            // Retrieve the Slide by slideId
-            $slideId = $input['slideId'];  // Corrected here
-            $slide = $model->find($slideId);
-
-            if (!$slide) {
-                return $this->fail(['status' => false, 'message' => 'Slide not found'], 404);
-            }
-
-            // Prepare the data to be updated (exclude slideId if it's included)
-            $updateData = [
-                'title' => $input['title'],
-                'content' => $input['content'],
-                'buttonUrl' => $input['buttonUrl'],
-                'buttonText' => $input['buttonText'],
-                'profilePic' => $input['profilePic'],
-               
-            ];
-
-            // Update the slide with new data
-            $updated = $model->update($slideId, $updateData);
-
-            if ($updated) {
-                return $this->respond(['status' => true, 'message' => 'Slide Updated Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to update Slide'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
     }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new SlideModel($db);
+
+    $slideId = $input['slideId'];
+    $slide = $model->find($slideId);
+    if (!$slide) return $this->fail(['status' => false, 'message' => 'Slide not found'], 404);
+
+    // Preserve buttonText and buttonUrl even if showButton = 0
+    $updateData = [
+        'title' => $input['title'],
+        'content' => $input['content'],
+        'buttonText' => $input['buttonText'] ?? $slide['buttonText'],
+        'buttonUrl' => $input['buttonUrl'] ?? $slide['buttonUrl'],
+        'profilePic' => $input['profilePic'] ?? $slide['profilePic'],
+        'showButton' => $input['showButton'],
+    ];
+
+    $updated = $model->update($slideId, $updateData);
+
+    return $updated
+        ? $this->respond([
+            'status' => true,
+            'message' => 'Slide Updated Successfully',
+            'data' => $model->find($slideId) // Return slide data to frontend
+        ], 200)
+        : $this->fail(['status' => false, 'message' => 'Failed to update Slide'], 500);
+}
+
 
     public function delete()
     {
@@ -195,7 +180,7 @@ class Slide extends BaseController
 
 
     
-    public function getall()
+    public function getAllSlide()
     {
         $tenantService = new TenantService();
         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));

@@ -686,104 +686,80 @@ public function getAllMenu()
 
 
 
-    public function createLogoBanner()
-    {
-        $input      = $this->request->getPost();
-        $logo       = $this->request->getFile('logo');
-        $banners    = $this->request->getFiles();
-        $businessId = $input['businessId'] ?? null;
+  public function createLogoBanner()
+{
+    $input = $this->request->getPost();
+    $logo = $this->request->getFile('logo');
+    $businessId = $input['businessId'] ?? null;
 
-        if (!$businessId) {
-            return $this->fail([
-                'status'  => false,
-                'message' => 'Business ID is required.'
-            ], 409);
-        }
-
-        $key    = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token  = null;
-        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-            $token = $matches[1];
-        }
-        $decoded = JWT::decode($token, new Key($key, 'HS256'));
-
-        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/logoBanner/';
-        if (!is_dir($uploadPath)) {
-            mkdir($uploadPath, 0777, true);
-        }
-
-        $logoPath    = null;
-        $bannerPaths = [];
-
-        if ($logo && $logo->isValid() && !$logo->hasMoved()) {
-            $logoName = $logo->getRandomName();
-            $logo->move($uploadPath, $logoName);
-            $logoPath = $decoded->tenantName . '/logoBanner/' . $logoName; // relative path
-        }
-
-        if (isset($banners['banners'])) {
-            foreach ($banners['banners'] as $banner) {
-                if ($banner->isValid() && !$banner->hasMoved()) {
-                    $bannerName = $banner->getRandomName();
-                    $banner->move($uploadPath, $bannerName);
-                    $bannerPaths[] = $decoded->tenantName . '/logoBanner/' . $bannerName;
-                }
-            }
-        }
-
-        if (!$logoPath && empty($bannerPaths)) {
-            return $this->fail([
-                'status'  => false,
-                'message' => 'No files uploaded'
-            ], 409);
-        }
-
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $logoModel = new \App\Models\LogoBannerModel($db);
-
-        $existing = $logoModel
-            ->where('isDeleted', 0)
-            ->where('businessId', $businessId)
-            ->get()
-            ->getRowArray();
-
-        $data = [];
-        if ($logoPath) {
-            $data['logo'] = $logoPath;
-        }
-
-        if (!empty($bannerPaths)) {
-            // If old banners exist → merge
-            if ($existing && !empty($existing['banner'])) {
-                $oldBanners = explode(',', $existing['banner']);
-                $bannerPaths = array_merge($oldBanners, $bannerPaths);
-            }
-            $data['banner'] = implode(',', $bannerPaths);
-        }
-
-        $data['businessId']   = $businessId;
-        $data['modifiedBy']   = 9;
-        $data['modifiedDate'] = date('Y-m-d H:i:s');
-
-        if ($existing && isset($existing['logoId'])) {
-            $logoModel->update($existing['logoId'], $data);
-        } else {
-            $data['createdBy']   = 9;
-            $data['createdDate'] = date('Y-m-d H:i:s');
-            $logoModel->insert($data);
-        }
-
-        return $this->respond([
-            'status'  => true,
-            'message' => 'Files saved successfully.',
-            'data'    => [
-                'logo'    => $logoPath,
-                'banners' => $bannerPaths
-            ]
-        ]);
+    if (!$businessId) {
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Business ID is required.'
+        ], 409);
     }
+
+    // Decode JWT to get tenant info
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+    // Upload path
+    $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/logoBanner/';
+    if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
+    $logoPath = null;
+
+    if ($logo && $logo->isValid() && !$logo->hasMoved()) {
+        $logoName = $logo->getRandomName();
+        $logo->move($uploadPath, $logoName);
+        $logoPath = $decoded->tenantName . '/logoBanner/' . $logoName; // relative path
+    } else {
+        return $this->fail([
+            'status'  => false,
+            'message' => 'No logo uploaded'
+        ], 409);
+    }
+
+    // Save to DB
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $logoModel = new \App\Models\LogoBannerModel($db);
+
+    $existing = $logoModel
+        ->where('isDeleted', 0)
+        ->where('businessId', $businessId)
+        ->get()
+        ->getRowArray();
+
+    $data = [
+        'logo'         => $logoPath,
+        'businessId'   => $businessId,
+        'modifiedBy'   => 9,
+        'modifiedDate' => date('Y-m-d H:i:s')
+    ];
+
+    if ($existing && isset($existing['logoId'])) {
+        $logoModel->update($existing['logoId'], $data);
+    } else {
+        $data['createdBy']   = 9;
+        $data['createdDate'] = date('Y-m-d H:i:s');
+        $logoModel->insert($data);
+    }
+
+    return $this->respond([
+        'status'  => true,
+        'message' => 'Logo uploaded successfully.',
+        'data'    => [
+            'logo' => $logoPath
+        ]
+    ]);
+}
+
 
     public function getAllLogo($businessId)
     {
@@ -1187,6 +1163,92 @@ public function getAllElement()
     }
 
 
+// public function createScrolling()
+// {
+//     $input = $this->request->getPost();
+//     $file  = $this->request->getFile('file');
+
+//     // Validation rules
+//     $rules = [
+//         'name' => [],
+//         'type' => [],
+//     ];
+
+//     if ($input['type'] === 'URL') {
+//         $rules['value'] = ['rules' => 'required'];
+//     } elseif ($input['type'] === 'File') {
+//         $rules['file'] = [
+//             'rules' => 'uploaded[file]|max_size[file,10240]|mime_in[file,image/jpeg,image/jpg,image/png,application/pdf]'
+//         ];
+//     }
+
+//     if (!$this->validate($rules)) {
+//         return $this->fail([
+//             'status'  => false,
+//             'errors'  => $this->validator->getErrors(),
+//             'message' => 'Invalid Inputs'
+//         ], 409);
+//     }
+
+//     // ✅ Decode tenantName from JWT
+//     $key    = "Exiaa@11"; // your JWT key
+//     $header = $this->request->getHeader("Authorization");
+//     $token  = null;
+//     if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+//         $token = $matches[1];
+//     }
+
+//     $decoded    = JWT::decode($token, new Key($key, 'HS256'));
+//     $tenantName = $decoded->tenantName ?? 'defaultTenant';
+
+//     // ✅ Tenant database connection
+//     $tenantService = new \App\Libraries\TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//     $model = new \App\Models\ScrollingModel($db);
+
+//     $data = [
+//         'name'         => $input['name'],
+//         'type'         => $input['type'],
+//         'businessId'   => $input['businessId'] ?? null,
+//         'isActive'     => 1,
+//         'isDeleted'    => 0,
+//         'createdBy'    => 9,
+//         'modifiedBy'   => 0,
+//         'createdDate'  => date('Y-m-d H:i:s'),
+//         'modifiedDate' => date('Y-m-d H:i:s'),
+//     ];
+
+//     if ($input['type'] === 'URL') {
+//         $data['value'] = $input['value'];
+
+//     } elseif ($input['type'] === 'File' && $file && $file->isValid() && !$file->hasMoved()) {
+//         // ✅ Tenant-wise scrolling upload folder
+//         $uploadPath = FCPATH . 'uploads/' . $tenantName . '/scrolling/';
+//         if (!is_dir($uploadPath)) {
+//             mkdir($uploadPath, 0777, true);
+//         }
+
+//         $newFileName  = time() . '_' . $file->getRandomName();
+//         $originalName = $file->getClientName();
+
+//         $file->move($uploadPath, $newFileName);
+
+//         // ✅ Relative path DB me save
+//         $data['value']        = $tenantName . '/scrolling/' . $newFileName;
+//         $data['originalName'] = $originalName;
+//     }
+
+//     $model->insert($data);
+//     $id = $model->insertID();
+
+//     return $this->respond([
+//         'status'  => true,
+//         'message' => 'Scrolling item created successfully.',
+//         'data'    => array_merge($data, ['id' => $id])
+//     ], 200);
+// }
+
+
 public function createScrolling()
 {
     $input = $this->request->getPost();
@@ -1214,7 +1276,7 @@ public function createScrolling()
         ], 409);
     }
 
-    // ✅ Decode tenantName from JWT
+    // Decode tenantName from JWT
     $key    = "Exiaa@11"; // your JWT key
     $header = $this->request->getHeader("Authorization");
     $token  = null;
@@ -1225,13 +1287,14 @@ public function createScrolling()
     $decoded    = JWT::decode($token, new Key($key, 'HS256'));
     $tenantName = $decoded->tenantName ?? 'defaultTenant';
 
-    // ✅ Tenant database connection
+    // Tenant database connection
     $tenantService = new \App\Libraries\TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model = new \App\Models\ScrollingModel($db);
 
     $data = [
         'name'         => $input['name'],
+        'tag'          => $input['tag'],
         'type'         => $input['type'],
         'businessId'   => $input['businessId'] ?? null,
         'isActive'     => 1,
@@ -1244,9 +1307,7 @@ public function createScrolling()
 
     if ($input['type'] === 'URL') {
         $data['value'] = $input['value'];
-
     } elseif ($input['type'] === 'File' && $file && $file->isValid() && !$file->hasMoved()) {
-        // ✅ Tenant-wise scrolling upload folder
         $uploadPath = FCPATH . 'uploads/' . $tenantName . '/scrolling/';
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0777, true);
@@ -1257,18 +1318,32 @@ public function createScrolling()
 
         $file->move($uploadPath, $newFileName);
 
-        // ✅ Relative path DB me save
         $data['value']        = $tenantName . '/scrolling/' . $newFileName;
         $data['originalName'] = $originalName;
     }
 
+    // ✅ Save scrolling item
     $model->insert($data);
-    $id = $model->insertID();
+    $scrollingId = $model->insertID();
+
+    // ✅ Save tags if provided
+    if (!empty($input['tags'])) {
+        $tags = explode(',', $input['tags']); // assuming comma-separated
+        $tagModel = new \App\Models\ScrollingTagModel($db); // create separate model for tags
+
+        foreach ($tags as $tag) {
+            $tagModel->insert([
+                'scrollingId'  => $scrollingId,
+                'tag'          => trim($tag),
+                'createdDate'  => date('Y-m-d H:i:s')
+            ]);
+        }
+    }
 
     return $this->respond([
         'status'  => true,
         'message' => 'Scrolling item created successfully.',
-        'data'    => array_merge($data, ['id' => $id])
+        'data'    => array_merge($data, ['id' => $scrollingId])
     ], 200);
 }
 

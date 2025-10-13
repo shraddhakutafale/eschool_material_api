@@ -801,7 +801,7 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   });
 
   $routes->group('slide', function ($routes) {
-    $routes->get('getall', 'Slide::index',['filter' => ['tenantFilter']]);
+    $routes->post('getallslide', 'Slide::getAllSlide',['filter' => ['tenantFilter']]);
   });
 
   $routes->group('testimonial', function ($routes) {

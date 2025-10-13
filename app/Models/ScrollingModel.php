@@ -12,7 +12,7 @@ class ScrollingModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['scrollingId', 'name', 'type', 'value', 'originalName', 'businessId', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['scrollingId', 'name', 'type', 'value', 'originalName','tag','businessId', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

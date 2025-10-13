@@ -709,6 +709,17 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
 });
 
+ $routes->group('voter', function ($routes) {
+    $routes->get('getall', 'Voter::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Voter::getAllVoterPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Voter::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Voter::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Voter::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Voter::getVotersWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Voter::delete',['filter' => ['authFilter','tenantFilter']]);
+
+});
+
 
 });
 

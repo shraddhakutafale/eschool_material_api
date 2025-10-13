@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ConstituencyModel extends Model
+class VoterModel extends Model
 {
-    protected $table            = 'constituency';
-    protected $primaryKey       = 'constituencyId';
+    protected $table            = 'voters';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['constituencyId', 'constituencyCode', 'constituencyName', 'districtName', 'stateName', 'constituencyNumber', 'totalVoters', 'reservationType', 'loksabhaConstituency', 'created_at', 'updated_at', 'createdBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['id', 'epic_no', 'full_name', 'husband_father_name', 'relation_type', 'first_name', 'last_name', 'father_name', 'age', 'gender', 'address', 'booth_no', 'serial_no', 'part_no', 'assembly_code', 'ward_no', 'source_page', 'extraction_date', 'created_at', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

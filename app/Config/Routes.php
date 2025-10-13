@@ -687,6 +687,28 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
 });
 
+ $routes->group('constituency', function ($routes) {
+    $routes->get('getall', 'Constituency::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Constituency::getAllConstituencyPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Constituency::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Constituency::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Constituency::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Constituency::getConstituencysWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Constituency::delete',['filter' => ['authFilter','tenantFilter']]);
+
+});
+
+ $routes->group('parliament', function ($routes) {
+    $routes->get('getall', 'Parliament::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Parliament::getAllParliamentPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Parliament::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Parliament::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Parliament::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Parliament::getParliamentsWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Parliament::delete',['filter' => ['authFilter','tenantFilter']]);
+
+});
+
 
 });
 

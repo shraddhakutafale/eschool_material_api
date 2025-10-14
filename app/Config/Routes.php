@@ -717,6 +717,7 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->post('update', 'Voter::update',['filter' => ['authFilter','tenantFilter']]);
     $routes->get('getallwebsite', 'Voter::getVotersWebsite',['filter' => ['tenantFilter']]);
     $routes->post('delete', 'Voter::delete',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('import', 'Voter::importExcel', ['filter' => ['authFilter','tenantFilter']]);
 
 });
 

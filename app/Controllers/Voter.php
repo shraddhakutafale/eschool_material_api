@@ -122,12 +122,16 @@ public function create()
 {
     $input = $this->request->getPost();
 
-    // Validation rules
+    if (empty($input)) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'No input received'
+        ], 400);
+    }
+
     $rules = [
-        'fullName'      => ['rules' => 'required'],
-        'contactNumber' => ['rules' => 'required'],
-        'gender'        => ['rules' => 'permit_empty'],
-        'email'         => ['rules' => 'valid_email|permit_empty']
+        'epic_no'   => ['rules' => 'required'],
+        'full_name' => ['rules' => 'required'],
     ];
 
     if (!$this->validate($rules)) {
@@ -138,106 +142,49 @@ public function create()
         ], 409);
     }
 
-    // Decode JWT token for tenant info
-    $key = "Exiaa@11";
-    $header = $this->request->getHeaderLine("Authorization");
-    $token = null;
-    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) $token = $matches[1];
-    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
-    $tenantName = $decoded->tenantName ?? 'default';
-
-    // ✅ File uploads
-    $uploadPath = FCPATH . "uploads/{$tenantName}/dataImages/";
-    if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
-
-    // Profile Photo
-    $profilePhoto = $this->request->getFile('profilePhoto');
-    if ($profilePhoto && $profilePhoto->isValid() && !$profilePhoto->hasMoved()) {
-        $profileName = $profilePhoto->getRandomName();
-        $profilePhoto->move($uploadPath, $profileName);
-        $input['profilePhoto'] = "{$tenantName}/dataImages/{$profileName}";
-    } else {
-        $input['profilePhoto'] = $input['profilePhotoOld'] ?? null;
-    }
-
-    // ID Proof
-    $idProofFile = $this->request->getFile('idProofFile');
-    if ($idProofFile && $idProofFile->isValid() && !$idProofFile->hasMoved()) {
-        $idProofName = $idProofFile->getRandomName();
-        $idProofFile->move($uploadPath, $idProofName);
-        $input['idProofFile'] = "{$tenantName}/dataImages/{$idProofName}";
-    } else {
-        $input['idProofFile'] = $input['idProofFileOld'] ?? null;
-    }
-
-    // Resume
-    $resumeFile = $this->request->getFile('resumeFile');
-    if ($resumeFile && $resumeFile->isValid() && !$resumeFile->hasMoved()) {
-        $resumeName = $resumeFile->getRandomName();
-        $resumeFile->move($uploadPath, $resumeName);
-        $input['resumeFile'] = "{$tenantName}/dataImages/{$resumeName}";
-    } else {
-        $input['resumeFile'] = $input['resumeFileOld'] ?? null;
-    }
-
-    // Prepare full data array matching Angular form
     $data = [
-        'businessId'         => $decoded->businessId ?? $input['businessId'] ?? 0,
-        'fullName'           => $input['fullName'],
-        'gender'             => $input['gender'] ?? null,
-        'dob'                => $input['dob'] ?? null,
-        'age'                => $input['age'] ?? null,
-        'maritalStatus'      => $input['maritalStatus'] ?? null,
-        'religion'           => $input['religion'] ?? null,
-        'caste'              => $input['caste'] ?? null,
-        'motherTongue'       => $input['motherTongue'] ?? null,
-        'height'             => $input['height'] ?? null,
-        'weight'             => $input['weight'] ?? null,
-        'bloodGroup'         => $input['bloodGroup'] ?? null,
-        'education'          => $input['education'] ?? null,
-        'profession'         => $input['profession'] ?? null,
-        'annualIncome'       => $input['annualIncome'] ?? null,
-        'workLocation'       => $input['workLocation'] ?? null,
-        'address'            => $input['address'] ?? null,
-        'state'              => $input['state'] ?? null,
-        'district'           => $input['district'] ?? null,
-        'talukaBlock'        => $input['talukaBlock'] ?? null,
-        'villageTown'        => $input['villageTown'] ?? null,
-        'pincode'            => $input['pincode'] ?? null,
-        'contactNumber'      => $input['contactNumber'],
-        'alternateNumber'    => $input['alternateNumber'] ?? null,
-        'email'              => $input['email'] ?? null,
-        'fatherName'         => $input['fatherName'] ?? null,
-        'motherName'         => $input['motherName'] ?? null,
-        'familyDetails'      => $input['familyDetails'] ?? null,
-        'partnerPreferences' => $input['partnerPreferences'] ?? null,
-        'idProofType'        => $input['idProofType'] ?? null,
-        'idProofNumber'      => $input['idProofNumber'] ?? null,
-        'idProofFile'        => $input['idProofFile'] ?? null,
-        'resumeFile'         => $input['resumeFile'] ?? null,
-        'profilePhoto'       => $input['profilePhoto'] ?? null,
-        'registrationDate'   => $input['registrationDate'] ?? date('Y-m-d'),
-        'profileStatus'      => $input['profileStatus'] ?? 'Active',
-        'addedBy'            => $decoded->userId ?? null,
-        'createdDate'        => date('Y-m-d H:i:s'),
-        'isDeleted'          => 0,
-        'isActive'           => 1,
-        'createdBy'          => $decoded->userId ?? null,
-        'modifiedBy'         => null
+        'epic_no'             => $input['epic_no'],
+        'full_name'           => $input['full_name'],
+        'husband_father_name' => $input['husband_father_name'] ?? null,
+        'relation_type'       => $input['relation_type'] ?? null,
+        'first_name'          => $input['first_name'] ?? null,
+        'last_name'           => $input['last_name'] ?? null,
+        'father_name'         => $input['father_name'] ?? null,
+        'age'                 => $input['age'] ?? null,
+        'gender'              => $input['gender'] ?? null,
+        'address'             => $input['address'] ?? null,
+        'booth_no'            => $input['booth_no'] ?? null,
+        'serial_no'           => $input['serial_no'] ?? null,
+        'part_no'             => $input['part_no'] ?? null,
+        'assembly_code'       => $input['assembly_code'] ?? null,
+        'ward_no'             => $input['ward_no'] ?? null,
+        'source_page'         => $input['source_page'] ?? null,
+        'extraction_date'     => $input['extraction_date'] ?? null,
+        'created_at'          => date('Y-m-d H:i:s'),
+        'updated_at'          => date('Y-m-d H:i:s'),
     ];
 
-    // Insert into tenant-specific database
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new CandidateModel($db);
+    $model = new VoterModel($db);
+
     $id = $model->insert($data);
+
+    if (!$id) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Failed to add voter'
+        ], 500);
+    }
 
     return $this->respond([
         'status' => true,
-        'message' => 'Candidate added successfully',
+        'message' => 'Voter added successfully',
         'data' => $id
     ], 200);
 }
+
+
 
 
 
@@ -249,7 +196,7 @@ public function update()
     // Get POST + FILE input
     $input = $this->request->getPost();
 
-    // --- Validate dataId ---
+    // Validate voter ID
     if (!$this->validate(['id' => 'required|numeric'])) {
         return $this->fail([
             'status' => false,
@@ -258,15 +205,14 @@ public function update()
         ], 409);
     }
 
-    $Id = $input['id'];
+    $voterId = $input['id'];
 
-    // --- Tenant configuration ---
+    // Tenant DB configuration
     $tenantName = $this->request->getHeaderLine('X-Tenant-Config');
     if (empty($tenantName)) {
         return $this->fail(['status' => false, 'message' => 'Tenant database not specified'], 400);
     }
 
-    // --- Load tenant DB config ---
     $tenantService = new \App\Libraries\TenantService();
     try {
         $dbConfig = $tenantService->getTenantConfig($tenantName);
@@ -274,71 +220,31 @@ public function update()
         return $this->fail(['status' => false, 'message' => 'Invalid tenant configuration'], 400);
     }
 
-    // --- Determine tenant folder ---
-    $tenantFolder = is_array($dbConfig) && isset($dbConfig['database'])
-        ? $dbConfig['database']
-        : preg_replace('/[^a-zA-Z0-9_-]/', '', $tenantName);
+    $voterModel = new \App\Models\VoterModel($dbConfig);
 
-    // --- Initialize Candidate model (candidate_mst table) ---
-    $model = new \App\Models\CandidateModel($dbConfig);
-
-    // --- Check if candidate exists ---
-    $existing = $model->find($Id);
-    if (!$existing) {
-        return $this->fail(['status' => false, 'message' => 'Candidate not found'], 404);
+    // Check if voter exists
+    $existingVoter = $voterModel->find($voterId);
+    if (!$existingVoter) {
+        return $this->fail(['status' => false, 'message' => 'Voter not found'], 404);
     }
 
-    // --- Handle Profile Photo Upload ---
-    $profileImage = $this->request->getFile('profilePic');
-    if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $tenantFolder . '/candidate/profileImage/';
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+    // Optional: handle file uploads here (if any)
 
-        $imageName = $profileImage->getRandomName();
-        $profileImage->move($uploadPath, $imageName);
-
-        $input['profilePic'] = $tenantFolder . '/candidate/profileImage/' . $imageName;
-    }
-
-    // --- Handle ID Proof Upload ---
-    $idProofFile = $this->request->getFile('idProof');
-    if ($idProofFile && $idProofFile->isValid() && !$idProofFile->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $tenantFolder . '/candidate/idProof/';
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
-
-        $idProofName = $idProofFile->getRandomName();
-        $idProofFile->move($uploadPath, $idProofName);
-
-        $input['idProofFile'] = $tenantFolder . '/candidate/idProof/' . $idProofName;
-    }
-
-    // --- Handle Resume Upload ---
-    $resumeFile = $this->request->getFile('resume');
-    if ($resumeFile && $resumeFile->isValid() && !$resumeFile->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $tenantFolder . '/candidate/resume/';
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
-
-        $resumeName = $resumeFile->getRandomName();
-        $resumeFile->move($uploadPath, $resumeName);
-
-        $input['resumeFile'] = $tenantFolder . '/candidate/resume/' . $resumeName;
-    }
-
-    // --- Add audit fields ---
+    // Add audit field
     $input['modifiedDate'] = date('Y-m-d H:i:s');
 
-    // --- Sanitize and allow only permitted fields ---
-    $allowedColumns = $model->allowedFields;
-    $filteredInput = array_intersect_key($input, array_flip($allowedColumns));
+    // Filter only allowed fields
+    $allowedColumns = $voterModel->allowedFields;
+    $updateData = array_intersect_key($input, array_flip($allowedColumns));
 
-    // --- Perform the update ---
+    // Update voter
     try {
-        $updated = $model->update($Id, $filteredInput);
+        $updated = $voterModel->update($voterId, $updateData);
         if ($updated) {
             return $this->respond([
                 'status' => true,
-                'message' => 'Candidate updated successfully',
-                'dataId' => $Id
+                'message' => 'Voter updated successfully',
+                'dataId' => $voterId
             ], 200);
         } else {
             return $this->fail([
@@ -349,10 +255,11 @@ public function update()
     } catch (\Exception $e) {
         return $this->fail([
             'status' => false,
-            'message' => 'Error updating candidate: ' . $e->getMessage()
+            'message' => 'Error updating voter: ' . $e->getMessage()
         ], 500);
     }
 }
+
 
 
 
@@ -390,58 +297,39 @@ public function update()
     //     }
     // }
     
-      public function delete()
-    {
-        $input = $this->request->getJSON();
-        
-        // Validation rules for the course
-        $rules = [
-            'id' => ['rules' => 'required'], 
-        ];
+public function delete()
+{
+    $input = $this->request->getJSON(true);
 
-        // Validate the input
-        if ($this->validate($rules)) {
-
-            // Insert the product data into the database
-             $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-            $model = new CandidateModel($db);
-
-            // Retrieve the course by eventId
-            $id = $input->id;
-            $data = $model->find($id); // Assuming find method retrieves the course
-
-            if (!$data) {
-                return $this->fail(['status' => false, 'message' => 'data not found'], 404);
-            }
-
-            $updateData = [
-                'isDeleted' => 1,
-            ];
-            $deleted = $model->update($id, $updateData);
-
-            if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'candidate Deleted Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete candidate'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+    if (empty($input['id'])) {
+        return $this->fail(['status' => false, 'message' => 'Voter ID is required'], 400);
     }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new VoterModel($db);
+
+    $voter = $model->find($input['id']);
+    if (!$voter) {
+        return $this->fail(['status' => false, 'message' => 'Voter not found'], 404);
+    }
+
+    // Properly delete the record
+    if ($model->delete($input['id'], true)) { // true = force delete, bypass soft delete if enabled
+        return $this->respond(['status' => true, 'message' => 'Voter deleted successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to delete voter'], 500);
+    }
+}
+
+
+
 
 public function importExcel()
 {
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new DataModel($db);
+    $voterModel = new VoterModel($db);
 
     $json = $this->request->getJSON(true);
     if (!$json || !is_array($json)) {
@@ -449,83 +337,56 @@ public function importExcel()
     }
 
     $insertData = [];
-    $updatedData = [];
-    $processedMobile = [];
+    $insertedEpicNos = [];
 
     foreach ($json as $row) {
-        // Skip invalid rows
-        if (empty($row['fullName']) || empty($row['mobileNo']) || empty($row['dob'])) continue;
+        // Mandatory fields: epic_no and full_name
+        if (empty($row['epic_no']) || empty($row['full_name'])) continue;
 
-        $mobileNo = $row['mobileNo'];
-
-        // Prevent processing duplicates in same import
-        if (in_array($mobileNo, $processedMobile)) continue;
-        $processedMobile[] = $mobileNo;
-
-        // Check if mobileNo exists already
-        $existing = $model->where('mobileNo', $mobileNo)->first();
-
-        $dataRow = [
-            'fullName'         => $row['fullName'],
-            'gender'           => $row['gender'] ?? '-',
-            'mobileNo'         => $mobileNo,
-            'dob'              => $row['dob'],
-            'age'              => $row['age'] ?? null,
-            'email'            => $row['email'] ?? null,
-            'address'          => $row['address'] ?? null,
-            'villageTown'      => $row['villageTown'] ?? null,
-            'talukaBlock'      => $row['talukaBlock'] ?? null,
-            'district'         => $row['district'] ?? null,
-            'state'            => $row['state'] ?? null,
-            'pincode'          => $row['pincode'] ?? null,
-            'voterIdNo'        => $row['voterIdNo'] ?? null,
-            'wardBoothNo'      => $row['wardBoothNo'] ?? null,
-            'serialNo'         => $row['serialNo'] ?? null,
-            'assemblyNo'       => $row['assemblyNo'] ?? null,
-            'aadharNo'         => $row['aadharNo'] ?? null,
-            'voterCategory'    => $row['voterCategory'] ?? null,
-            'voterSubCategory' => $row['voterSubCategory'] ?? null,
-            'locationCoord'    => $row['locationCoord'] ?? null,
-            'createdDate'      => date('Y-m-d H:i:s'),
-            'businessId'       => $row['businessId'] ?? 0,
-        ];
-
-        if ($existing) {
-            // Update existing record
-            $model->update($existing['id'], $dataRow);
-            $updatedData[] = $mobileNo;
-        } else {
-            $insertData[] = $dataRow;
+        // Check if voter with same EPIC already exists
+        $existing = $voterModel->where('epic_no', $row['epic_no'])->first();
+        if (!$existing) {
+            $insertData[] = [
+                'epic_no' => $row['epic_no'],
+                'full_name' => $row['full_name'],
+                'husband_father_name' => $row['husband_father_name'] ?? null,
+                'relation_type' => $row['relation_type'] ?? null,
+                'first_name' => $row['first_name'] ?? null,
+                'last_name' => $row['last_name'] ?? null,
+                'father_name' => $row['father_name'] ?? null,
+                'age' => !empty($row['age']) ? intval($row['age']) : null,
+                'gender' => !empty($row['gender']) ? $row['gender'] : '-',
+                'address' => !empty($row['address']) ? $row['address'] : '-',
+                'booth_no' => !empty($row['booth_no']) ? $row['booth_no'] : null,
+                'serial_no' => !empty($row['serial_no']) ? $row['serial_no'] : null,
+                'part_no' => !empty($row['part_no']) ? $row['part_no'] : null,
+                'assembly_code' => !empty($row['assembly_code']) ? $row['assembly_code'] : null,
+                'ward_no' => !empty($row['ward_no']) ? $row['ward_no'] : null,
+                'source_page' => !empty($row['source_page']) ? $row['source_page'] : null,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+            $insertedEpicNos[] = $row['epic_no'];
         }
     }
 
     if (!empty($insertData)) {
-        $model->insertBatch($insertData);
+        $voterModel->insertBatch($insertData);
     }
 
-    $dataList = $model->whereIn('mobileNo', array_merge($processedMobile, $updatedData))->findAll();
+    // Return only newly inserted voters
+    $voters = [];
+    if (!empty($insertedEpicNos)) {
+        $voters = $voterModel->whereIn('epic_no', $insertedEpicNos)->findAll();
+    }
 
     return $this->respond([
         'success' => true,
-        'data'    => $dataList,
-        'message' => 'Data imported successfully!'
+        'data' => $voters,
+        'message' => count($voters).' voters processed successfully!'
     ]);
 }
-public function checkMobileExists()
-{
-    $mobileNo = $this->request->getPost('mobileNo');
-    if (!$mobileNo) return $this->fail('Mobile No required', 400);
 
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new DataModel($db);
 
-    $existing = $model->where('mobileNo', $mobileNo)->first();
-    return $this->respond([
-        'exists' => $existing ? true : false,
-        'dataId' => $existing['id'] ?? null
-    ]);
-}
 
 
 }

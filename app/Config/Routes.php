@@ -391,6 +391,20 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
   });
 
+
+   $routes->group('inquiry', function ($routes) {
+    //Routes for staff
+    $routes->get('getall', 'Inquiry::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Inquiry::getInquiryPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Inquiry::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Inquiry::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Inquiry::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Inquiry::getInquirysWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Inquiry::delete',['filter' => ['authFilter','tenantFilter']]);
+ 
+  });
+
+
   $routes->group('portfolio', function ($routes) {
     //Routes for portfolio
     $routes->get('getall', 'Portfolio::index',['filter' => ['authFilter', 'tenantFilter']]);

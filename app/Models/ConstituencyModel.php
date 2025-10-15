@@ -12,7 +12,7 @@ class ConstituencyModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['constituencyId', 'constituencyCode', 'constituencyName', 'districtName', 'stateName', 'constituencyNumber', 'totalVoters', 'reservationType', 'loksabhaConstituency', 'created_at', 'updated_at', 'createdBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['constituencyId', 'constituencyCode', 'constituencyName', 'districtName', 'stateName', 'constituencyNumber', 'totalVoters', 'reservationType', 'parliamentConstituencyId', 'created_at', 'updated_at', 'createdBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

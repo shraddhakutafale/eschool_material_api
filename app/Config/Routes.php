@@ -735,6 +735,18 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
 });
 
+$routes->group('state', function ($routes) {
+    $routes->get('getall', 'State::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'State::getAllStatePaging', ['filter' => ['authFilter', 'tenantFilter']]);
+  
+
+});
+$routes->group('district', function ($routes) {
+    $routes->get('getall', 'District::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'District::getAllDistrictPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+  
+
+});
 
 });
 

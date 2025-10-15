@@ -128,7 +128,7 @@ public function create()
         'reservationType'       => ['rules' => 'permit_empty'],
         'constituencyNumber'    => ['rules' => 'permit_empty|numeric'],
         'totalVoters'           => ['rules' => 'permit_empty|numeric'],
-        'loksabhaConstituency'  => ['rules' => 'permit_empty']
+        'parliamentConstituencyId'  => ['rules' => 'permit_empty']
     ];
 
     if (!$this->validate($rules)) {
@@ -157,7 +157,9 @@ public function create()
     'constituencyNumber'     => $input['constituencyNumber'] ?? null,
     'totalVoters'            => $input['totalVoters'] ?? 0,
     'reservationType'        => $input['reservationType'] ?? 'General',
-    'loksabhaConstituency'   => $input['loksabhaConstituency'] ?? null,
+     'parliamentConstituencyId' => isset($input['parliamentConstituencyId']) 
+                                     ? (int)$input['parliamentConstituencyId'] 
+                                     : null,
     'created_at'             => date('Y-m-d H:i:s'),
     'updated_at'             => date('Y-m-d H:i:s'),
     'addedBy'                => $decoded->userId ?? null,
@@ -179,8 +181,106 @@ public function create()
 }
 
 
-   
+ public function update()
+{
+    helper(['form', 'filesystem']);
 
+    // Get POST input
+    $input = $this->request->getPost();
+
+    // Validate constituencyId
+    if (!$this->validate(['constituencyId' => 'required|numeric'])) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    $constituencyId = $input['constituencyId'];
+
+    // Tenant DB configuration (if using multi-tenant)
+    $tenantName = $this->request->getHeaderLine('X-Tenant-Config');
+    if (empty($tenantName)) {
+        return $this->fail(['status' => false, 'message' => 'Tenant database not specified'], 400);
+    }
+
+    $tenantService = new \App\Libraries\TenantService();
+    try {
+        $dbConfig = $tenantService->getTenantConfig($tenantName);
+    } catch (\Exception $e) {
+        return $this->fail(['status' => false, 'message' => 'Invalid tenant configuration'], 400);
+    }
+
+    $constituencyModel = new \App\Models\ConstituencyModel($dbConfig);
+
+    // Check if constituency exists
+    $existingConstituency = $constituencyModel->find($constituencyId);
+    if (!$existingConstituency) {
+        return $this->fail(['status' => false, 'message' => 'Constituency not found'], 404);
+    }
+
+    // Optional: add audit field
+    $input['modifiedDate'] = date('Y-m-d H:i:s');
+
+    // Ensure parliamentConstituencyId is numeric or null
+    if (isset($input['parliamentConstituencyId'])) {
+        $input['parliamentConstituencyId'] = $input['parliamentConstituencyId'] !== '' 
+            ? (int)$input['parliamentConstituencyId'] 
+            : null;
+    }
+
+    // Filter only allowed columns
+    $allowedColumns = $constituencyModel->allowedFields;
+    $updateData = array_intersect_key($input, array_flip($allowedColumns));
+
+    // Update constituency
+    try {
+        $updated = $constituencyModel->update($constituencyId, $updateData);
+        if ($updated) {
+            return $this->respond([
+                'status' => true,
+                'message' => 'Constituency updated successfully',
+                'dataId' => $constituencyId
+            ], 200);
+        } else {
+            return $this->fail([
+                'status' => false,
+                'message' => 'No changes made or update failed'
+            ], 400);
+        }
+    } catch (\Exception $e) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Error updating constituency: ' . $e->getMessage()
+        ], 500);
+    }
+}  
+
+public function delete()
+{
+    $input = $this->request->getJSON(true);
+
+    if (empty($input['id'])) {
+        return $this->fail(['status' => false, 'message' => 'Constituency ID is required'], 400);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new ConstituencyModel($db); // Make sure you have a ConstituencyModel
+
+    $constituency = $model->find($input['id']);
+    if (!$constituency) {
+        return $this->fail(['status' => false, 'message' => 'Constituency not found'], 404);
+    }
+
+    // Properly delete the record
+    if ($model->delete($input['id'], true)) { // true = force delete if soft delete enabled
+        return $this->respond(['status' => true, 'message' => 'Constituency deleted successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to delete constituency'], 500);
+    }
+}
 
 
 

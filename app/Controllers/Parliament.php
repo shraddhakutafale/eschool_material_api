@@ -181,11 +181,10 @@ public function update()
 {
     helper(['form', 'filesystem']);
 
-    // Get POST + FILE input
     $input = $this->request->getPost();
 
-    // --- Validate dataId ---
-    if (!$this->validate(['id' => 'required|numeric'])) {
+    // Validate parliamentConstituencyId
+    if (!$this->validate(['parliamentConstituencyId' => 'required|numeric'])) {
         return $this->fail([
             'status' => false,
             'errors' => $this->validator->getErrors(),
@@ -193,15 +192,14 @@ public function update()
         ], 409);
     }
 
-    $Id = $input['id'];
+    $parliamentId = $input['parliamentConstituencyId'];
 
-    // --- Tenant configuration ---
+    // Multi-tenant DB
     $tenantName = $this->request->getHeaderLine('X-Tenant-Config');
     if (empty($tenantName)) {
         return $this->fail(['status' => false, 'message' => 'Tenant database not specified'], 400);
     }
 
-    // --- Load tenant DB config ---
     $tenantService = new \App\Libraries\TenantService();
     try {
         $dbConfig = $tenantService->getTenantConfig($tenantName);
@@ -209,71 +207,28 @@ public function update()
         return $this->fail(['status' => false, 'message' => 'Invalid tenant configuration'], 400);
     }
 
-    // --- Determine tenant folder ---
-    $tenantFolder = is_array($dbConfig) && isset($dbConfig['database'])
-        ? $dbConfig['database']
-        : preg_replace('/[^a-zA-Z0-9_-]/', '', $tenantName);
+    $parliamentModel = new \App\Models\ParliamentModel($dbConfig);
 
-    // --- Initialize Candidate model (candidate_mst table) ---
-    $model = new \App\Models\CandidateModel($dbConfig);
-
-    // --- Check if candidate exists ---
-    $existing = $model->find($Id);
+    // Check if record exists
+    $existing = $parliamentModel->find($parliamentId);
     if (!$existing) {
-        return $this->fail(['status' => false, 'message' => 'Candidate not found'], 404);
+        return $this->fail(['status' => false, 'message' => 'Parliament constituency not found'], 404);
     }
 
-    // --- Handle Profile Photo Upload ---
-    $profileImage = $this->request->getFile('profilePic');
-    if ($profileImage && $profileImage->isValid() && !$profileImage->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $tenantFolder . '/candidate/profileImage/';
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
-
-        $imageName = $profileImage->getRandomName();
-        $profileImage->move($uploadPath, $imageName);
-
-        $input['profilePic'] = $tenantFolder . '/candidate/profileImage/' . $imageName;
-    }
-
-    // --- Handle ID Proof Upload ---
-    $idProofFile = $this->request->getFile('idProof');
-    if ($idProofFile && $idProofFile->isValid() && !$idProofFile->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $tenantFolder . '/candidate/idProof/';
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
-
-        $idProofName = $idProofFile->getRandomName();
-        $idProofFile->move($uploadPath, $idProofName);
-
-        $input['idProofFile'] = $tenantFolder . '/candidate/idProof/' . $idProofName;
-    }
-
-    // --- Handle Resume Upload ---
-    $resumeFile = $this->request->getFile('resume');
-    if ($resumeFile && $resumeFile->isValid() && !$resumeFile->hasMoved()) {
-        $uploadPath = FCPATH . 'uploads/' . $tenantFolder . '/candidate/resume/';
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
-
-        $resumeName = $resumeFile->getRandomName();
-        $resumeFile->move($uploadPath, $resumeName);
-
-        $input['resumeFile'] = $tenantFolder . '/candidate/resume/' . $resumeName;
-    }
-
-    // --- Add audit fields ---
+    // Optional: update audit fields
     $input['modifiedDate'] = date('Y-m-d H:i:s');
 
-    // --- Sanitize and allow only permitted fields ---
-    $allowedColumns = $model->allowedFields;
-    $filteredInput = array_intersect_key($input, array_flip($allowedColumns));
+    // Only update allowed fields
+    $allowedColumns = $parliamentModel->allowedFields;
+    $updateData = array_intersect_key($input, array_flip($allowedColumns));
 
-    // --- Perform the update ---
     try {
-        $updated = $model->update($Id, $filteredInput);
+        $updated = $parliamentModel->update($parliamentId, $updateData);
         if ($updated) {
             return $this->respond([
                 'status' => true,
-                'message' => 'Candidate updated successfully',
-                'dataId' => $Id
+                'message' => 'Parliament constituency updated successfully',
+                'dataId' => $parliamentId
             ], 200);
         } else {
             return $this->fail([
@@ -284,7 +239,7 @@ public function update()
     } catch (\Exception $e) {
         return $this->fail([
             'status' => false,
-            'message' => 'Error updating candidate: ' . $e->getMessage()
+            'message' => 'Error updating constituency: ' . $e->getMessage()
         ], 500);
     }
 }
@@ -327,52 +282,33 @@ public function update()
     //     }
     // }
     
-      public function delete()
-    {
-        $input = $this->request->getJSON();
-        
-        // Validation rules for the course
-        $rules = [
-            'id' => ['rules' => 'required'], 
-        ];
+  public function delete()
+{
+    $input = $this->request->getJSON(true);
 
-        // Validate the input
-        if ($this->validate($rules)) {
-
-            // Insert the product data into the database
-             $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-            $model = new CandidateModel($db);
-
-            // Retrieve the course by eventId
-            $id = $input->id;
-            $data = $model->find($id); // Assuming find method retrieves the course
-
-            if (!$data) {
-                return $this->fail(['status' => false, 'message' => 'data not found'], 404);
-            }
-
-            $updateData = [
-                'isDeleted' => 1,
-            ];
-            $deleted = $model->update($id, $updateData);
-
-            if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'candidate Deleted Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete candidate'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+    if (empty($input['id'])) {
+        return $this->fail(['status' => false, 'message' => 'Parliament ID is required'], 400);
     }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    // Use ParliamentModel instead of ConstituencyModel
+    $model = new ParliamentModel($db); 
+
+    $parliament = $model->find($input['id']);
+    if (!$parliament) {
+        return $this->fail(['status' => false, 'message' => 'Parliament record not found'], 404);
+    }
+
+    // Properly delete the record (force delete if soft delete is enabled)
+    if ($model->delete($input['id'], true)) {
+        return $this->respond(['status' => true, 'message' => 'Parliament record deleted successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to delete parliament record'], 500);
+    }
+}
+
 
 public function importExcel()
 {

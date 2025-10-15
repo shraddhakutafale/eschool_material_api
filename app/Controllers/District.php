@@ -36,6 +36,45 @@ class District extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $districtModel->findAll()], 200);
     }
 
+// public function getAllDistrictPaging()
+// {
+//     $input = $this->request->getJSON();
+
+//     $page = isset($input->page) ? (int)$input->page : 1;
+//     $perPage = isset($input->perPage) ? (int)$input->perPage : 200;
+//     $search = isset($input->search) ? trim($input->search) : '';
+
+//     $tenantService = new TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+//     $districtModel = new \App\Models\DistrictModel($db);
+
+//     // ✅ Show all districts where not deleted
+//     $query = $districtModel->where('is_deleted', 0);
+
+//     // Optional search
+//     if ($search !== '') {
+//         $query->like('dist_name', $search);
+//     }
+
+//     // Paginate
+//     $records = $query->paginate($perPage, 'default', $page);
+//     $pager = $districtModel->pager;
+
+//     return $this->respond([
+//         "status" => true,
+//         "message" => "All Districts Fetched Successfully",
+//         "data" => $records,
+//         "pagination" => [
+//             "currentPage" => $pager->getCurrentPage(),
+//             "totalPages" => $pager->getPageCount(),
+//             "totalItems" => $pager->getTotal(),
+//             "perPage" => $perPage
+//         ]
+//     ], 200);
+// }
+
+
 public function getAllDistrictPaging()
 {
     $input = $this->request->getJSON();
@@ -43,21 +82,24 @@ public function getAllDistrictPaging()
     $page = isset($input->page) ? (int)$input->page : 1;
     $perPage = isset($input->perPage) ? (int)$input->perPage : 200;
     $search = isset($input->search) ? trim($input->search) : '';
+    $stateName = isset($input->stateName) ? trim($input->stateName) : '';
 
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
     $districtModel = new \App\Models\DistrictModel($db);
 
-    // ✅ Show all districts where not deleted
     $query = $districtModel->where('is_deleted', 0);
 
-    // Optional search
+    // ✅ Filter by state if provided
+    if ($stateName !== '') {
+        $query->where('state_name', $stateName);  // Adjust field name as per your DB
+    }
+
     if ($search !== '') {
         $query->like('dist_name', $search);
     }
 
-    // Paginate
     $records = $query->paginate($perPage, 'default', $page);
     $pager = $districtModel->pager;
 
@@ -73,8 +115,6 @@ public function getAllDistrictPaging()
         ]
     ], 200);
 }
-
-
 
 
 

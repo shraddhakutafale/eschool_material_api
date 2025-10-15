@@ -145,8 +145,8 @@ public function create()
         $input = (array) $this->request->getJSON(true);
 
         $rules = [
-            'fName' => ['rules' => 'required'],
-            'lName' => ['rules' => 'required'],
+            'fName' => [],
+            'lName' => [],
         ];
 
         if ($this->validate($rules)) {

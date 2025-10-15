@@ -871,6 +871,9 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->get('getall', 'Lead::index',['filter' => ['tenantFilter']]);
     $routes->post('getallpaging', 'Lead::getLeadsPaging',['filter' => ['tenantFilter']]);
     $routes->post('createweb', 'Lead::createWeb',['filter' => 'tenantFilter']);
+    $routes->post('create', 'Lead::create',['filter' => ['tenantFilter']]);
+
+
 
   });
 
@@ -903,6 +906,9 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->post('getallpaging', 'Event::getEventsPaging',['filter' => ['tenantFilter']]);
   });
 
+ $routes->group('inquiry', function ($routes) {
+    $routes->post('create', 'Inquiry::create',['filter' => ['tenantFilter']]);
+  });
 
 
 

@@ -62,33 +62,26 @@ public function getAllVoterPaging()
     }
 
     // Apply filters
-    if ($filter) {
-        $filter = json_decode(json_encode($filter), true);
+   if ($filter) {
+    $filter = json_decode(json_encode($filter), true);
 
-        foreach ($filter as $key => $value) {
-            if ($value === '' || $value === null) continue;
+    foreach ($filter as $key => $value) {
+        if ($value === '' || $value === null) continue;
 
-            // Apply filters only on existing columns
-            if (in_array($key, ['full_name', 'epic_no', 'father_name', 'gender', 'assembly_code', 'part_no'])) {
-                $query->like($key, $value);
-            }
-        }
-
-        // Date range filter
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('created_at >=', $filter['startDate'])
-                  ->where('created_at <=', $filter['endDate']);
-        }
-
-        // Date range shortcuts
-        if (!empty($filter['dateRange'])) {
-            if ($filter['dateRange'] === 'last7days') {
-                $query->where('created_at >=', date('Y-m-d', strtotime('-7 days')));
-            } elseif ($filter['dateRange'] === 'last30days') {
-                $query->where('created_at >=', date('Y-m-d', strtotime('-30 days')));
-            }
+        // Numeric fields
+        if (in_array($key, ['age', 'booth_no', 'serial_no', 'ward_no', 'part_no'])) {
+            $query->where($key, $value); // exact match
+        } else {
+            $query->like($key, $value);  // partial match for string fields
         }
     }
+
+    // Date range filter
+    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+        $query->where('created_at >=', $filter['startDate'])
+              ->where('created_at <=', $filter['endDate']);
+    }
+}
 
     // Pagination
     $records = $query->paginate($perPage, 'default', $page);

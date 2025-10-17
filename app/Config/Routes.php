@@ -176,6 +176,21 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
     
   });
 
+  $routes->group('voter_business', function ($routes) {
+    $routes->post('create', 'VoterBusiness::create', ['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('getallbybusiness', 'VoterBusiness::getAllByBusiness', ['filter' => ['authFilter','tenantFilter']]);
+    // add update/delete as required
+});
+
+$routes->group('color_code', function($routes) {
+    $routes->post('getall', 'ColorCode::getAllColorCodes', ['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'ColorCode::getAllColorCodesPaging', ['filter' => ['tenantFilter']]);
+    $routes->post('create', 'ColorCode::create', ['filter' => ['tenantFilter']]);
+    $routes->post('update', 'ColorCode::update', ['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'ColorCode::delete', ['filter' => ['tenantFilter']]);
+});
+
+
   $routes->group('form', function ($routes) {
     //Routes for member
     $routes->get('getall', 'Form::index',['filter' => ['authFilter', 'tenantFilter']]);
@@ -196,6 +211,22 @@ $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
   $routes->post('updatestatus', 'Form::updateStatus', ['filter' => ['authFilter', 'tenantFilter']]);
 
 
+$routes->group('voterBusiness', function ($routes) {
+    $routes->get('getall', 'VoterBusiness::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'VoterBusiness::getAllVoterBusinessPaging', ['filter' => [ 'tenantFilter']]);
+    $routes->post('getallwithouttenant', 'VoterBusiness::getAllWithoutTenant', ['filter' => [ 'tenantFilter']]);
+    $routes->post('create', 'VoterBusiness::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'VoterBusiness::update',['filter' => ['authFilter','tenantFilter']]);
+});
+
+
+$routes->group('voterBusiness', function ($routes) {
+    $routes->get('getall', 'VoterBusiness::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'VoterBusiness::getAllVoterBusinessPaging', ['filter' => [ 'tenantFilter']]);
+    $routes->post('getallwithouttenant', 'VoterBusiness::getAllWithoutTenant', ['filter' => [ 'tenantFilter']]);
+    $routes->post('create', 'VoterBusiness::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'VoterBusiness::update',['filter' => ['authFilter','tenantFilter']]);
+});
 
 
 
@@ -909,6 +940,31 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
  $routes->group('inquiry', function ($routes) {
     $routes->post('create', 'Inquiry::create',['filter' => ['tenantFilter']]);
   });
+
+  
+ $routes->group('voter', function ($routes) {
+    $routes->get('getall', 'Voter::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Voter::getAllVoterPaging', ['filter' => [ 'tenantFilter']]);
+      $routes->post('getallwithouttenant', 'Voter::getAllWithoutTenant', ['filter' => [ 'tenantFilter']]);
+  
+
+});
+
+ $routes->group('voter', function ($routes) {
+    $routes->get('getall', 'Voter::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Voter::getAllVoterPaging', ['filter' => [ 'tenantFilter']]);
+      $routes->post('getallwithouttenant', 'Voter::getAllWithoutTenant', ['filter' => [ 'tenantFilter']]);
+  
+
+});
+
+$routes->group('color_code', function($routes) {
+    $routes->post('getall', 'ColorCode::getAllColorCodes', ['filter' => ['tenantFilter']]);
+    $routes->post('getallpaging', 'ColorCode::getAllColorCodesPaging', ['filter' => ['tenantFilter']]);
+    $routes->post('create', 'ColorCode::create', ['filter' => ['tenantFilter']]);
+    $routes->post('update', 'ColorCode::update', ['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'ColorCode::delete', ['filter' => ['tenantFilter']]);
+});
 
 
 

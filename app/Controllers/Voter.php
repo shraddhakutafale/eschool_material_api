@@ -101,6 +101,29 @@ public function getAllVoterPaging()
 }
 
 
+  public function getAllWithoutTenant()
+    {
+        $input = $this->request->getJSON(true);
+        $page = $input['page'] ?? 1;
+        $perPage = $input['perPage'] ?? 10;
+
+        $voterModel = new VoterModel();
+        $data = $voterModel->paginate($perPage, 'default', $page);
+        $pager = $voterModel->pager;
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Voters fetched successfully (no tenant)',
+            'data' => $data,
+            'pagination' => [
+                'currentPage' => $pager->getCurrentPage(),
+                'totalPages'  => $pager->getPageCount(),
+                'totalItems'  => $pager->getTotal(),
+                'perPage'     => $perPage
+            ]
+        ]);
+    }
+
 
 
 

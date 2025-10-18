@@ -273,6 +273,70 @@ public function delete()
     }
 }
 
+public function createInquiry()
+{
+    try {
+        // Get JSON input (all fields optional)
+        $input = (array) $this->request->getJSON(true);
+
+        // Connect to tenant DB
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new InquiryModel($db);
+
+        // Auto-generate inquiryNo: e.g., INQ-001, INQ-002, ...
+        $lastInquiry = $model->orderBy('inquiryNo', 'DESC')->first();
+        $newNumber = '001';
+        if ($lastInquiry && isset($lastInquiry['inquiryNo'])) {
+            $lastNumber = intval(substr($lastInquiry['inquiryNo'], 4)); // remove "INQ-"
+            $newNumber  = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        }
+        $input['inquiryNo'] = 'INQ-' . $newNumber;
+
+        // Optional fields: set to NULL if missing
+        $optionalFields = ['name', 'email', 'phone', 'subject', 'message', 'remarks', 'status', 'assignedTo', 'businessId'];
+        foreach ($optionalFields as $field) {
+            if (!isset($input[$field])) {
+                $input[$field] = null;
+            }
+        }
+
+        // Ensure businessId is numeric if provided
+        if ($input['businessId'] !== null) {
+            $input['businessId'] = is_numeric($input['businessId']) ? (int)$input['businessId'] : null;
+        }
+
+        // Log for debugging
+        log_message('error', 'Insert Inquiry Data: ' . json_encode($input));
+
+        // Insert into DB
+        $inserted = $model->insert($input);
+        if ($inserted === false) {
+            log_message('error', 'Inquiry Insert Failed: ' . json_encode($model->errors()));
+            return $this->fail([
+                'status'  => false,
+                'message' => 'Insert Failed',
+                'errors'  => $model->errors()
+            ], 500);
+        }
+
+        // Success response
+        return $this->respond([
+            'status'    => true,
+            'message'   => 'Inquiry Created Successfully',
+            'inquiryNo' => $input['inquiryNo']
+        ], 200);
+
+    } catch (\Throwable $e) {
+        log_message('error', 'Create Inquiry Exception: ' . $e->getMessage());
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Server Error',
+            'error'   => $e->getMessage()
+        ], 500);
+    }
+}
+
 }
 
 

@@ -164,7 +164,7 @@ public function create()
                 $newNumber = '001';
             }
 
-            $inquiryNo = 'NS-' . $newNumber;
+            $inquiryNo = 'RP-' . $newNumber;
             $input['inquiryNo'] = $inquiryNo;
 
             if (!$model->insert($input)) {
@@ -340,35 +340,83 @@ public function create()
         return $this->respond(["status" => true, "message" => "All Lead Interests Fetched", "data" => $leadInterestedModel->findAll()], 200);
     }
 
-    public function createWeb()
-    {
-        $input = $this->request->getJSON();
-        $rules = [
-            'fName' => ['rules' => 'required'],
-        ];
+public function createWeb()
+{
+    $input = $this->request->getJSON(true); // get request as array
 
-        if ($this->validate($rules)) {
-            // Insert the product data into the database
-            $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-            $model = new LeadModel($db);
-
-            // Insert the lead data into the database
-            $model->insert($input);
-
-            // Return a success response
-            return $this->respond(['status' => true, 'message' => 'Lead Created Successfully'], 200);
-        } else {
-            // Return validation errors if the rules are not satisfied
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+    // Validate required fields
+    if (!isset($input['fName']) || empty(trim($input['fName']))) {
+        return $this->fail([
+            'status'  => false,
+            'message' => 'fName is required'
+        ], 400);
     }
+
+    try {
+        // Connect to tenant DB
+        $tenantService = new TenantService();
+        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+        $model = new LeadModel($db);
+
+        // Auto-generate inquiryNo
+        $lastLead = $model->orderBy('leadId', 'DESC')->first();
+        $newNumber = '001';
+        if ($lastLead && isset($lastLead['inquiryNo'])) {
+            $lastNumber = intval(substr($lastLead['inquiryNo'], 3));
+            $newNumber  = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        }
+        $input['inquiryNo'] = 'RP-' . $newNumber;
+
+        // Ensure businessId is numeric if passed, otherwise null
+        if (isset($input['businessId'])) {
+            $input['businessId'] = is_numeric($input['businessId']) ? (int)$input['businessId'] : null;
+        } else {
+            $input['businessId'] = null; // no default
+        }
+
+        // Optional fields: leave them as they are or NULL if missing
+        $optionalFields = ['lName', 'primaryMobileNo', 'email', 'address', 'companyName', 'location', 'requirementDetails'];
+        foreach ($optionalFields as $field) {
+            if (!isset($input[$field])) {
+                $input[$field] = null;
+            }
+        }
+
+        // Log input for debugging
+        log_message('error', 'Insert Data: ' . json_encode($input));
+
+        // Insert lead into DB
+        $inserted = $model->insert($input);
+
+        if ($inserted === false) {
+            log_message('error', 'Lead Insert Failed: ' . json_encode($model->errors()));
+            return $this->fail([
+                'status'  => false,
+                'message' => 'Insert Failed',
+                'errors'  => $model->errors()
+            ], 500);
+        }
+
+        // Success response
+        return $this->respond([
+            'status'    => true,
+            'message'   => 'Lead Created Successfully',
+            'inquiryNo' => $input['inquiryNo']
+        ], 200);
+
+    } catch (\Throwable $e) {
+        log_message('error', 'CreateWeb Lead Exception: ' . $e->getMessage());
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Server Error',
+            'error'   => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+
+
 
 }
 

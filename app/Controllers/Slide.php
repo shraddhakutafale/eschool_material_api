@@ -30,8 +30,6 @@ public function create()
 {
     $input = $this->request->getPost();
 
-    // Ensure showButton is set
-    $input['showButton'] = isset($input['showButton']) && ($input['showButton'] === 'true' || $input['showButton'] == 1) ? 1 : 0;
 
     // Normalize all other fields: convert null, undefined, or "null" to empty string
     $optionalFields = ['content', 'buttonText', 'buttonUrl', 'profilePic'];
@@ -89,8 +87,6 @@ public function update()
 {
     $input = $this->request->getPost();
 
-    // Ensure showButton is 0 or 1
-    $input['showButton'] = isset($input['showButton']) && ($input['showButton'] === 'true' || $input['showButton'] == 1) ? 1 : 0;
 
     $rules = [
         'slideId' => ['rules' => 'required|numeric'],
@@ -120,7 +116,6 @@ public function update()
         'buttonText' => $input['buttonText'] ?? $slide['buttonText'],
         'buttonUrl' => $input['buttonUrl'] ?? $slide['buttonUrl'],
         'profilePic' => $input['profilePic'] ?? $slide['profilePic'],
-        'showButton' => $input['showButton'],
     ];
 
     $updated = $model->update($slideId, $updateData);

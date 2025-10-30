@@ -551,7 +551,10 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
     $routes->post('addpayment', 'Student::addPayment',['filter' => ['authFilter','tenantFilter']]);
     $routes->post('assignshifttostudent', 'Student::assignShiftToStudent', ['filter' => ['authFilter', 'tenantFilter']]);
 
-
+    $routes->post('getallalumnipaging', 'Student::getAlumnisPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createalumni', 'Student::createAlumni',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updatealumni', 'Student::updateAlumni',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletealumni', 'Student::deleteAlumni',['filter' => ['authFilter','tenantFilter']]);
   });
 
 

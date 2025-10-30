@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\StudentModel;
+use App\Models\AlumniModel;
 use App\Models\AdmissionModel;
 use App\Models\AttendanceModel;
 use App\Models\ItemModel;
@@ -944,7 +945,297 @@ public function addAllPayment() {
             ]);
         }
     }
+
+    public function getAlumnisPaging()
+{
+    $input = $this->request->getJSON();
+
+    $page = $input->page ?? 1;
+    $perPage = $input->perPage ?? 10;
+    $sortField = $input->sortField ?? 'alumniId';
+    $sortOrder = $input->sortOrder ?? 'asc';
+    $filter = $input->filter ?? [];
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $alumniModel = new AlumniModel($db);
+    $query = $alumniModel;
+
+    // ✅ Filtering
+    if (!empty($filter)) {
+        $filter = json_decode(json_encode($filter), true);
+
+        foreach ($filter as $key => $value) {
+            if (in_array($key, ['firstName', 'lastName', 'currentStatus', 'organizationName'])) {
+                $query->like($key, $value);
+            } elseif (in_array($key, ['gender', 'maritalStatus', 'passingYear'])) {
+                $query->where($key, $value);
+            }
+        }
+
+        // ✅ Optional: Date-based filters (e.g. by joining year)
+        if (!empty($filter['startYear']) && !empty($filter['endYear'])) {
+            $query->where('passingYear >=', $filter['startYear'])
+                  ->where('passingYear <=', $filter['endYear']);
+        }
+    }
+
+    // ✅ Exclude deleted or inactive records
+    $query->where('isDeleted', 0);
+
+    // ✅ Sorting
+    if (!empty($sortField) && in_array(strtoupper($sortOrder), ['ASC', 'DESC'])) {
+        $query->orderBy($sortField, $sortOrder);
+    }
+
+    // ✅ Pagination
+    $alumnis = $query->paginate($perPage, 'default', $page);
+    $pager = $alumniModel->pager;
+
+    // ✅ Response
+    $response = [
+        "status" => true,
+        "message" => "All Alumni Data Fetched Successfully",
+        "data" => $alumnis,
+        "pagination" => [
+            "currentPage" => $pager->getCurrentPage(),
+            "totalPages" => $pager->getPageCount(),
+            "totalItems" => $pager->getTotal(),
+            "perPage" => $perPage
+        ]
+    ];
+
+    return $this->respond($response, 200);
+}
+
     
+// public function updateAlumni()
+// {
+//     $input = $this->request->getPost();
+
+//     if (!$this->validate(['alumniId' => 'required|numeric'])) {
+//         return $this->fail([
+//             'status' => false,
+//             'errors' => $this->validator->getErrors(),
+//             'message' => 'Invalid Inputs'
+//         ], 409);
+//     }
+
+//     $key = "Exiaa@11";
+//     $header = $this->request->getHeader("Authorization");
+//     $token = null;
+//     if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+//         $token = $matches[1];
+//     }
+//     $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+//     // Tenant DB connection
+//     $tenantService = new TenantService();
+//     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//     $model = new AlumniModel($db);
+
+//     $alumniId = $input['alumniId'];
+//     $alumni = $model->find($alumniId);
+
+//     if (!$alumni) {
+//         return $this->fail(['status' => false, 'message' => 'Alumni not found'], 404);
+//     }
+
+//     // Collect updatable fields
+//     $updateData = [];
+//     foreach (['name', 'gender', 'mobileNo', 'email', 'materialStatus', 'currentStatus', 'businessId'] as $field) {
+//         if (isset($input[$field])) {
+//             $updateData[$field] = $input[$field];
+//         }
+//     }
+
+//     $updateData['modifiedBy'] = $decoded->userId ?? null;
+//     $updateData['modifiedDate'] = date('Y-m-d H:i:s');
+
+//     $updated = $model->update($alumniId, $updateData);
+
+//     if ($updated) {
+//         return $this->respond(['status' => true, 'message' => 'Alumni Updated Successfully'], 200);
+//     }
+
+//     return $this->fail(['status' => false, 'message' => 'Failed to update Alumni'], 500);
+// }
+
+public function updateAlumni()
+{
+    $input = $this->request->getPost();
+
+    $rules = [
+        'alumniId' => ['rules' => 'required|numeric'],
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new AlumniModel($db);
+
+    $alumniId = $input['alumniId'];
+    $alumni = $model->find($alumniId);
+
+    if (!$alumni) {
+        return $this->fail(['status' => false, 'message' => 'Alumni not found'], 404);
+    }
+
+    // Handle profilePic upload
+    $profilePic = $this->request->getFile('profilePic');
+    if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+        $uploadPath = FCPATH . 'uploads/' . $decoded->tenantName . '/staffImages/';
+        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
+        $fileName = $profilePic->getRandomName();
+        $profilePic->move($uploadPath, $fileName);
+        $input['profilePic'] = $decoded->tenantName . '/staffImages/' . $fileName;
+    }
+
+    // Handle resume upload
+    $resume = $this->request->getFile('resumeFile');
+    if ($resume && $resume->isValid() && !$resume->hasMoved()) {
+        $resumeUploadPath = FCPATH . 'writable/uploads/' . $decoded->tenantName . '/resume/';
+        if (!is_dir($resumeUploadPath)) mkdir($resumeUploadPath, 0777, true);
+
+        $resumeName = $resume->getRandomName();
+        $resume->move($resumeUploadPath, $resumeName);
+
+        $input['resumeUrl'] = $decoded->tenantName . '/resume/' . $resumeName; // relative path only
+    }
+
+    // Prepare all update fields (only the fields you have in the table)
+    $updateData = [
+        'businessId'     => $decoded->businessId,
+        'name'           => $input['name'] ?? $alumni['name'],
+        'gender'         => $input['gender'] ?? $alumni['gender'],
+        'materialStatus' => $input['materialStatus'] ?? $alumni['materialStatus'],
+        'currentStatus'  => $input['currentStatus'] ?? $alumni['currentStatus'],
+        'email'          => $input['email'] ?? $alumni['email'],
+        'mobileNo'       => $input['mobileNo'] ?? $alumni['mobileNo'],
+        'address'       => $input['address'] ?? $alumni['address'],
+
+
+    ];
+
+    $updated = $model->update($alumniId, $updateData);
+
+    if ($updated) {
+        return $this->respond(['status' => true, 'message' => 'Alumni Updated Successfully'], 200);
+    } else {
+        return $this->fail(['status' => false, 'message' => 'Failed to update alumni'], 500);
+    }
+}
+
+public function deleteAlumni()
+{
+    $input = $this->request->getJSON();
+
+    if (!$this->validate(['alumniId' => 'required|numeric'])) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new AlumniModel($db);
+
+    $alumniId = $input->alumniId;
+    $alumni = $model->find($alumniId);
+
+    if (!$alumni) {
+        return $this->fail(['status' => false, 'message' => 'Alumni not found'], 404);
+    }
+
+    // Soft delete
+    $updateData = [
+        'isDeleted'    => 1,
+        'modifiedDate' => date('Y-m-d H:i:s')
+    ];
+
+    $model->update($alumniId, $updateData);
+
+    return $this->respond(['status' => true, 'message' => 'Alumni Deleted Successfully'], 200);
+}
+
+
+public function createAlumni()
+{
+    $input = $this->request->getPost();
+
+    // ✅ Validation rules
+    $rules = [
+        'name'          => ['rules' => 'required'],
+      
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status'  => false,
+            'errors'  => $this->validator->getErrors(),
+            'message' => 'Invalid inputs',
+        ], 409);
+    }
+
+    // 🔑 Decode tenant from JWT
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+
+    // Tenant DB connection
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new AlumniModel($db);
+
+    // Prepare data
+    $data = [
+        'name'           => $input['name'],
+        'gender'         => $input['gender'],
+        'mobileNo'       => $input['mobileNo'],
+        'email'          => $input['email'] ?? null,
+        'materialStatus' => $input['materialStatus'] ?? null,
+        'currentStatus'  => $input['currentStatus'] ?? null,
+        'businessId'     => $input['businessId'] ?? null,
+        'createdBy'      => $decoded->userId ?? null,
+        'createdDate'    => date('Y-m-d H:i:s'),
+        'isActive'       => 1,
+        'isDeleted'      => 0
+    ];
+
+    $model->insert($data);
+
+    return $this->respond([
+        'status'  => true,
+        'message' => 'Alumni Added Successfully'
+    ], 200);
+}
 
     // public function addallpayment()
     // {

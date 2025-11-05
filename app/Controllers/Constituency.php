@@ -56,7 +56,7 @@ class Constituency extends BaseController
               ->orLike('constituencyName', $search)
               ->orLike('districtName', $search)
               ->orLike('stateName', $search)
-              ->orLike('loksabhaConstituency', $search)
+            //   ->orLike('loksabhaConstituency', $search)
               ->groupEnd();
     }
 

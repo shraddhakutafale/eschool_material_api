@@ -31,71 +31,163 @@ class VoterBusiness extends BaseController
         return $this->respond($response, 200);
     }
 
-  public function create()
-    {
-        $input = $this->request->getJSON(true); // assoc array
+//   public function create()
+//     {
+//         $input = $this->request->getJSON(true); // assoc array
 
-        // simple validation - mobileNumber or geoLocation or colorCodeId must be present
-        if (empty($input['mobileNumber']) && empty($input['geoLocation']) && empty($input['colorCodeId'])) {
-            return $this->failValidationErrors(['message' => 'At least one of mobileNumber, geoLocation or colorCodeId is required']);
-        }
+//         // simple validation - mobileNumber or geoLocation or colorCodeId must be present
+//         if (empty($input['mobileNumber']) && empty($input['geoLocation']) && empty($input['colorCodeId'])) {
+//             return $this->failValidationErrors(['message' => 'At least one of mobileNumber, geoLocation or colorCodeId is required']);
+//         }
 
-        // Get userId & businessId from token (if present) - make optional for public forms
-        $key = "Exiaa@11";
-        $header = $this->request->getHeader("Authorization");
-        $token = null;
-        if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
-            $token = $matches[1];
-        }
+//         // Get userId & businessId from token (if present) - make optional for public forms
+//         $key = "Exiaa@11";
+//         $header = $this->request->getHeader("Authorization");
+//         $token = null;
+//         if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
+//             $token = $matches[1];
+//         }
 
-        $userId = null;
-        $businessId = null;
-        if ($token) {
-            try {
-                $decoded = JWT::decode($token, new Key($key, 'HS256'));
-                $userId = $decoded->userId ?? null;
-                $businessId = $decoded->businessId ?? null;
-            } catch (\Exception $e) {
-                // token invalid — you may allow anonymous saves by not returning error
-                return $this->failUnauthorized('Invalid or expired token');
-            }
-        }
+//         $userId = null;
+//         $businessId = null;
+//         if ($token) {
+//             try {
+//                 $decoded = JWT::decode($token, new Key($key, 'HS256'));
+//                 $userId = $decoded->userId ?? null;
+//                 $businessId = $decoded->businessId ?? null;
+//             } catch (\Exception $e) {
+//                 // token invalid — you may allow anonymous saves by not returning error
+//                 return $this->failUnauthorized('Invalid or expired token');
+//             }
+//         }
 
-        $tenantService = new TenantService();
-        $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-        $model = new VoterBusinessModel($db);
+//         $tenantService = new TenantService();
+//         $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+//         $model = new VoterBusinessModel($db);
 
-        // prepare save data
-        $saveData = [
-            'businessId'  => $businessId ?? ($input['businessId'] ?? null),
-            'userId'      => $userId ?? ($input['userId'] ?? null),
-            'mobileNumber'=> $input['mobileNumber'] ?? null,
-            'geoLocation' => $input['geoLocation'] ?? null,
-            'colorCodeId' => $input['colorCodeId'] ?? null,
-            'isActive'    => 1,
-            'isDeleted'   => 0,
-            'createdDate' => date('Y-m-d H:i:s')
-        ];
+//         // prepare save data
+//         $saveData = [
+//             'businessId'  => $businessId ?? ($input['businessId'] ?? null),
+//             'userId'      => $userId ?? ($input['userId'] ?? null),
+//             'mobileNumber'=> $input['mobileNumber'] ?? null,
+//             'geoLocation' => $input['geoLocation'] ?? null,
+//             'colorCodeId' => $input['colorCodeId'] ?? null,
+//             'isActive'    => 1,
+//             'isDeleted'   => 0,
+//             'createdDate' => date('Y-m-d H:i:s')
+//         ];
 
+//         try {
+//             $insertId = $model->insert($saveData);
+//             if ($insertId) {
+//                 return $this->respond([
+//                     'status' => true,
+//                     'message' => 'Voter business saved successfully',
+//                     'insertId' => $insertId
+//                 ], 200);
+//             } else {
+//                 log_message('error', 'VoterBusiness insert failed: ' . json_encode($model->errors()));
+//                 return $this->failServerError('Failed to save record');
+//             }
+//         } catch (\Exception $e) {
+//             log_message('error', 'VoterBusiness create error: ' . $e->getMessage());
+//             return $this->failServerError('Something went wrong');
+//         }
+//     }
+
+    // Optional: getAllByBusiness
+
+
+public function create()
+{
+    $input = $this->request->getJSON(true);
+
+    if (empty($input['voterId'])) {
+        return $this->failValidationErrors(['message' => 'voterId is required']);
+    }
+
+    // Ensure at least one updatable field
+    if (empty($input['mobileNumber']) && empty($input['geoLocation']) && empty($input['colorCodeId'])) {
+        return $this->failValidationErrors(['message' => 'At least one of mobileNumber, geoLocation or colorCodeId is required']);
+    }
+
+    // Decode token for user & business
+    $key = "Exiaa@11";
+    $header = $this->request->getHeader("Authorization");
+    $token = null;
+    if (!empty($header) && preg_match('/Bearer\s(\S+)/', $header->getValue(), $matches)) {
+        $token = $matches[1];
+    }
+
+    $userId = null;
+    $businessId = null;
+    if ($token) {
         try {
-            $insertId = $model->insert($saveData);
-            if ($insertId) {
-                return $this->respond([
-                    'status' => true,
-                    'message' => 'Voter business saved successfully',
-                    'insertId' => $insertId
-                ], 200);
-            } else {
-                log_message('error', 'VoterBusiness insert failed: ' . json_encode($model->errors()));
-                return $this->failServerError('Failed to save record');
-            }
+            $decoded = \Firebase\JWT\JWT::decode($token, new \Firebase\JWT\Key($key, 'HS256'));
+            $userId = $decoded->userId ?? null;
+            $businessId = $decoded->businessId ?? null;
         } catch (\Exception $e) {
-            log_message('error', 'VoterBusiness create error: ' . $e->getMessage());
-            return $this->failServerError('Something went wrong');
+            return $this->failUnauthorized('Invalid or expired token');
         }
     }
 
-    // Optional: getAllByBusiness
+    $tenantService = new \App\Libraries\TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new \App\Models\VoterBusinessModel($db);
+
+    // Check if this voter already has an entry
+    $existing = $model->where('voterId', $input['voterId'])
+                      ->where('isDeleted', 0)
+                      ->first();
+
+    if ($existing) {
+        // 🔁 Update only this voter's existing record
+        $updateData = [];
+        if (isset($input['mobileNumber'])) $updateData['mobileNumber'] = $input['mobileNumber'];
+        if (isset($input['geoLocation'])) $updateData['geoLocation'] = $input['geoLocation'];
+        if (isset($input['colorCodeId'])) $updateData['colorCodeId'] = $input['colorCodeId'];
+        $updateData['modifiedDate'] = date('Y-m-d H:i:s');
+        $updateData['modifiedBy'] = $userId ?? ($input['userId'] ?? null);
+
+        $model->update($existing['voterBusinessId'], $updateData);
+
+        return $this->respond([
+            'status' => true,
+            'message' => 'Voter business updated successfully',
+            'voterBusinessId' => $existing['voterBusinessId'],
+        ], 200);
+    }
+
+    // ➕ Otherwise, create a new record
+    $saveData = [
+        'voterId'     => $input['voterId'],
+        'businessId'  => $businessId ?? ($input['businessId'] ?? null),
+        'userId'      => $userId ?? ($input['userId'] ?? null),
+        'mobileNumber'=> $input['mobileNumber'] ?? null,
+        'geoLocation' => $input['geoLocation'] ?? null,
+        'colorCodeId' => $input['colorCodeId'] ?? null,
+        'isActive'    => 1,
+        'isDeleted'   => 0,
+        'createdDate' => date('Y-m-d H:i:s'),
+        'createdBy'   => $userId ?? ($input['userId'] ?? null),
+    ];
+
+    $insertId = $model->insert($saveData);
+    if ($insertId) {
+        return $this->respond([
+            'status' => true,
+            'message' => 'Voter business created successfully',
+            'voterBusinessId' => $insertId
+        ], 200);
+    }
+
+    return $this->failServerError('Failed to create record');
+}
+
+
+
+
+
  public function getAllByBusiness()
 {
     $tenantService = new TenantService();
@@ -129,6 +221,9 @@ class VoterBusiness extends BaseController
 
     return $this->respond(['status' => true, 'data' => $data]);
 }
+
+
+
 
 
 

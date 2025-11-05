@@ -402,7 +402,101 @@ public function importExcel()
     ]);
 }
 
+ public function updateVoter()
+    {
+        try {
+            $data = $this->request->getJSON(true);
 
+            if (!$data) {
+                return $this->respond([
+                    'status' => false,
+                    'message' => 'No data received.'
+                ], 400);
+            }
+
+            $voterId = $data['id'] ?? null;
+
+            if (empty($voterId)) {
+                return $this->respond([
+                    'status' => false,
+                    'message' => 'Voter ID is missing.'
+                ], 400);
+            }
+
+            // ✅ Load tenant-based DB connection
+            $tenantService = new \App\Services\TenantService();
+            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+            $voterModel = new VoterModel($db);
+            $voterBusinessModel = new VoterBusinessModel($db);
+
+            // ✅ Check if voter exists
+            $voter = $voterModel->find($voterId);
+            if (!$voter) {
+                return $this->respond([
+                    'status' => false,
+                    'message' => 'Voter not found.'
+                ], 404);
+            }
+
+            // ✅ Prepare update data for voter table
+            $updateVoter = [
+                'full_name'           => $data['full_name'] ?? $voter['full_name'],
+                'husband_father_name' => $data['husband_father_name'] ?? $voter['husband_father_name'],
+                'relation_type'       => $data['relation_type'] ?? $voter['relation_type'],
+                'father_name'         => $data['father_name'] ?? $voter['father_name'],
+                'age'                 => $data['age'] ?? $voter['age'],
+                'gender'              => $data['gender'] ?? $voter['gender'],
+                'address'             => $data['address'] ?? $voter['address'],
+                'booth_no'            => $data['booth_no'] ?? $voter['booth_no'],
+                'serial_no'           => $data['serial_no'] ?? $voter['serial_no'],
+                'part_no'             => $data['part_no'] ?? $voter['part_no'],
+                'assembly_code'       => $data['assembly_code'] ?? $voter['assembly_code'],
+                'ward_no'             => $data['ward_no'] ?? $voter['ward_no'],
+                'modifiedDate'        => date('Y-m-d H:i:s'),
+                'modifiedBy'          => $data['modifiedBy'] ?? null,
+            ];
+
+            $voterModel->update($voterId, $updateVoter);
+
+            // ✅ Handle voter_business table (insert or update)
+            $businessData = [
+                'voterId'       => $voterId,
+                'mobileNumber'  => $data['mobileNumber'] ?? null,
+                'geoLocation'   => $data['geoLocation'] ?? null,
+                'colorCodeId'   => $data['colorCodeId'] ?? null,
+                'modifiedDate'  => date('Y-m-d H:i:s'),
+                'modifiedBy'    => $data['modifiedBy'] ?? null,
+                'isActive'      => 1,
+                'isDeleted'     => 0,
+            ];
+
+            // ✅ Check if voter_business entry exists
+            $existingBusiness = $voterBusinessModel->where('voterId', $voterId)->first();
+
+            if ($existingBusiness) {
+                $voterBusinessModel->update($existingBusiness['voterBusinessId'], $businessData);
+            } else {
+                $businessData['createdDate'] = date('Y-m-d H:i:s');
+                $voterBusinessModel->insert($businessData);
+            }
+
+            return $this->respond([
+                'status'  => true,
+                'message' => 'Voter and business info updated successfully',
+                'data'    => [
+                    'voter' => $updateVoter,
+                    'business' => $businessData,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return $this->respond([
+                'status' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 }

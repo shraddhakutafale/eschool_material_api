@@ -12,7 +12,7 @@ class VoterBusinessModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['voterBusinessId', 'businessId', 'userId', 'mobileNumber', 'geoLocation', 'colorCodeId', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted', 'createdBy', 'modifiedBy'];
+    protected $allowedFields    = ['voterBusinessId','voterId', 'businessId', 'userId', 'mobileNumber', 'geoLocation', 'colorCodeId', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted', 'createdBy', 'modifiedBy'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

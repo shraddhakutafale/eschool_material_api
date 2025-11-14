@@ -128,77 +128,68 @@ public function getAllVoterPaging()
 
 
 
-
-
-
-
-
-
 public function create()
 {
-    $input = $this->request->getPost();
+    // Get JSON array input
+    $inputs = $this->request->getJSON(true); // true converts JSON to array
 
-    if (empty($input)) {
-        return $this->fail([
-            'status' => false,
-            'message' => 'No input received'
-        ], 400);
+    if (empty($inputs) || !is_array($inputs)) {
+        return $this->fail(['status' => false, 'message' => 'No input received or not an array'], 400);
     }
-
-    $rules = [
-        'epic_no'   => ['rules' => 'required'],
-        'full_name' => ['rules' => 'required'],
-    ];
-
-    if (!$this->validate($rules)) {
-        return $this->fail([
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ], 409);
-    }
-
-    $data = [
-        'epic_no'             => $input['epic_no'],
-        'full_name'           => $input['full_name'],
-        'husband_father_name' => $input['husband_father_name'] ?? null,
-        'relation_type'       => $input['relation_type'] ?? null,
-        'first_name'          => $input['first_name'] ?? null,
-        'last_name'           => $input['last_name'] ?? null,
-        'father_name'         => $input['father_name'] ?? null,
-        'age'                 => $input['age'] ?? null,
-        'gender'              => $input['gender'] ?? null,
-        'address'             => $input['address'] ?? null,
-        'booth_no'            => $input['booth_no'] ?? null,
-        'serial_no'           => $input['serial_no'] ?? null,
-        'part_no'             => $input['part_no'] ?? null,
-        'assembly_code'       => $input['assembly_code'] ?? null,
-        'ward_no'             => $input['ward_no'] ?? null,
-        'source_page'         => $input['source_page'] ?? null,
-        'extraction_date'     => $input['extraction_date'] ?? null,
-        'created_at'          => date('Y-m-d H:i:s'),
-        'updated_at'          => date('Y-m-d H:i:s'),
-    ];
 
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
     $model = new VoterModel($db);
 
-    $id = $model->insert($data);
+    $insertedIds = [];
 
-    if (!$id) {
-        return $this->fail([
-            'status' => false,
-            'message' => 'Failed to add voter'
-        ], 500);
+    foreach ($inputs as $input) {
+        // Basic validation per row
+        if (empty($input['epic_no']) || empty($input['full_name'])) {
+            continue; // skip invalid row
+        }
+
+        $data = [
+            'epic_no'              => $input['epic_no'],
+            'full_name'            => $input['full_name'],
+            'm_full_name'          => $input['m_full_name'] ?? null,
+            'husband_father_name'  => $input['husband_father_name'] ?? null,
+            'm_husband_father_name'=> $input['m_husband_father_name'] ?? null,
+            'relation_type'        => $input['relation_type'] ?? null,
+            'm_relation_type'      => $input['m_relation_type'] ?? null,
+            'age'                  => $input['age'] ?? null,
+            'gender'               => $input['gender'] ?? null,
+            'm_gender'             => $input['m_gender'] ?? null,
+            'address'              => $input['address'] ?? null,
+            'm_address'            => $input['m_address'] ?? null,
+            'booth_no'             => $input['booth_no'] ?? null,
+            'serial_no'            => $input['serial_no'] ?? null,
+            'part_no'              => $input['part_no'] ?? null,
+            'part_name'            => $input['part_name'] ?? null,
+            'assembly_code'        => $input['assembly_code'] ?? null,
+            'ward_no'              => $input['ward_no'] ?? null,
+            'source_page'          => $input['source_page'] ?? null,
+            'state_name'           => $input['state_name'] ?? null,
+            'district_name'        => $input['district_name'] ?? null,
+            'language'             => $input['language'] ?? null,
+            'extraction_date'      => $input['extraction_date'] ?? null,
+            'constituencyId'       => isset($input['constituencyId']) ? (int)$input['constituencyId'] : null,
+        ];
+
+        $id = $model->insert($data);
+        if ($id) $insertedIds[] = $id;
     }
 
     return $this->respond([
-        'status' => true,
-        'message' => 'Voter added successfully',
-        'data' => $id
+        'status'  => true,
+        'message' => count($insertedIds) . ' voters added successfully',
+        'data'    => $insertedIds
     ], 200);
 }
+
+
+
+
 
 
 

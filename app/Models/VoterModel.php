@@ -12,7 +12,13 @@ class VoterModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'epic_no', 'full_name', 'husband_father_name', 'relation_type', 'first_name', 'last_name', 'father_name', 'age', 'gender', 'address', 'booth_no', 'serial_no', 'part_no', 'assembly_code', 'ward_no', 'source_page', 'extraction_date', 'created_at', 'updated_at', 'createdDate', 'modifiedDate', 'isActive', 'createdBy', 'isDeleted','modifiedBy'];
+    protected $allowedFields = [
+        'id','epic_no','full_name','m_full_name','husband_father_name','m_husband_father_name',
+        'relation_type','m_relation_type','age','gender','m_gender','address','m_address','booth_no',
+        'serial_no','part_no','part_name','assembly_code','ward_no','source_page',
+        'state_name','district_name','language','extraction_date','constituencyId',
+        'created_at','updated_at','createdDate','modifiedDate','isActive','createdBy','isDeleted','modifiedBy'
+    ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

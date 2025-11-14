@@ -247,6 +247,11 @@ $routes->group('voterBusiness', function ($routes) {
 
 
 
+
+
+
+
+
   });
 
   $routes->post('donate/createweb', 'Donation::createWeb',['filter' => 'tenantFilter']);
@@ -770,6 +775,17 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
 });
 
+ $routes->group('part', function ($routes) {
+    $routes->get('getall', 'Part::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Part::getAllPartPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Part::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Part::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Part::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Part::getPartsWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Part::delete',['filter' => ['authFilter','tenantFilter']]);
+
+});
+
  $routes->group('voter', function ($routes) {
     $routes->get('getall', 'Voter::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Voter::getAllVoterPaging', ['filter' => ['authFilter', 'tenantFilter']]);
@@ -981,6 +997,9 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
   
 
 });
+
+
+
 
 $routes->group('color_code', function($routes) {
     $routes->post('getall', 'ColorCode::getAllColorCodes', ['filter' => ['tenantFilter']]);

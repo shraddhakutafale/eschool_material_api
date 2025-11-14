@@ -102,7 +102,7 @@ public function getAllPartPaging()
     $search = isset($input->search) ? trim($input->search) : '';
     $filter = isset($input->filter) ? $input->filter : null;
 
-    // 🔗 Tenant DB connect (if multi-tenant)
+    // Tenant DB connect
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
@@ -115,29 +115,36 @@ public function getAllPartPaging()
         ->orderBy($sortField, $sortOrder);
 
     // 🔍 Search
- 
+    if (!empty($search)) {
+        $query->groupStart()
+              ->like('partCode', $search)
+              ->orLike('partName', $search)
+              ->orLike('stateName', $search)
+              ->orLike('districtName', $search)
+              ->groupEnd();
+    }
 
-    // 🎯 Filter
+    // 🎯 Filters
     if ($filter) {
         $filter = json_decode(json_encode($filter), true);
 
         foreach ($filter as $key => $value) {
             if ($value === '' || $value === null) continue;
 
-            if (in_array($key, ['constituencyCode', 'constituencyName', 'stateName', 'reservationType'])) {
+            if (in_array($key, ['partCode', 'partName', 'stateName', 'districtName'])) {
                 $query->like($key, $value);
             } elseif ($key === 'createdDate') {
                 $query->where($key, $value);
             }
         }
 
-        // Date range filter
+        // Date range
         if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
             $query->where('createdDate >=', $filter['startDate'])
                   ->where('createdDate <=', $filter['endDate']);
         }
 
-        // Date range shortcuts
+        // Date shortcut
         if (!empty($filter['dateRange'])) {
             if ($filter['dateRange'] === 'last7days') {
                 $query->where('createdDate >=', date('Y-m-d', strtotime('-7 days')));
@@ -147,13 +154,13 @@ public function getAllPartPaging()
         }
     }
 
-    // 🧾 Pagination
+    // Pagination
     $records = $query->paginate($perPage, 'default', $page);
     $pager = $partModel->pager;
 
     return $this->respond([
         "status" => true,
-        "message" => "All Parliament Constituency Data Fetched Successfully",
+        "message" => "All Part Data Fetched Successfully",
         "data" => $records,
         "pagination" => [
             "currentPage" => $pager->getCurrentPage(),
@@ -167,14 +174,15 @@ public function getAllPartPaging()
 
 
 
+
 public function update()
 {
     helper(['form', 'filesystem']);
 
     $input = $this->request->getPost();
 
-    // Validate parliamentConstituencyId
-    if (!$this->validate(['parliamentConstituencyId' => 'required|numeric'])) {
+    // Validate partId
+    if (!$this->validate(['partId' => 'required|numeric'])) {
         return $this->fail([
             'status' => false,
             'errors' => $this->validator->getErrors(),
@@ -182,7 +190,7 @@ public function update()
         ], 409);
     }
 
-    $parliamentId = $input['parliamentConstituencyId'];
+    $partId = $input['partId'];
 
     // Multi-tenant DB
     $tenantName = $this->request->getHeaderLine('X-Tenant-Config');
@@ -191,34 +199,36 @@ public function update()
     }
 
     $tenantService = new \App\Libraries\TenantService();
+
     try {
         $dbConfig = $tenantService->getTenantConfig($tenantName);
     } catch (\Exception $e) {
         return $this->fail(['status' => false, 'message' => 'Invalid tenant configuration'], 400);
     }
 
-    $parliamentModel = new \App\Models\ParliamentModel($dbConfig);
+    $partModel = new \App\Models\PartModel($dbConfig);
 
     // Check if record exists
-    $existing = $parliamentModel->find($parliamentId);
+    $existing = $partModel->find($partId);
     if (!$existing) {
-        return $this->fail(['status' => false, 'message' => 'Parliament constituency not found'], 404);
+        return $this->fail(['status' => false, 'message' => 'Part not found'], 404);
     }
 
     // Optional: update audit fields
     $input['modifiedDate'] = date('Y-m-d H:i:s');
 
     // Only update allowed fields
-    $allowedColumns = $parliamentModel->allowedFields;
+    $allowedColumns = $partModel->allowedFields;
     $updateData = array_intersect_key($input, array_flip($allowedColumns));
 
     try {
-        $updated = $parliamentModel->update($parliamentId, $updateData);
+        $updated = $partModel->update($partId, $updateData);
+
         if ($updated) {
             return $this->respond([
                 'status' => true,
-                'message' => 'Parliament constituency updated successfully',
-                'dataId' => $parliamentId
+                'message' => 'Part updated successfully',
+                'dataId' => $partId
             ], 200);
         } else {
             return $this->fail([
@@ -229,10 +239,11 @@ public function update()
     } catch (\Exception $e) {
         return $this->fail([
             'status' => false,
-            'message' => 'Error updating constituency: ' . $e->getMessage()
+            'message' => 'Error updating part: ' . $e->getMessage()
         ], 500);
     }
 }
+
 
 
 

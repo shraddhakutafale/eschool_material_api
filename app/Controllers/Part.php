@@ -29,69 +29,7 @@ class Part extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $PartModel->findAll()], 200);
     }
 
-   
-
-public function create()
-{
-    $input = $this->request->getJSON(true);
-
-
-    // Validation rules for PART creation
-    $rules = [
-        'constituencyId' => ['rules' => 'required'],
-        'partNo'           => ['rules' => 'required'],
-        'partName'         => ['rules' => 'required']
-    ];
-
-    if (!$this->validate($rules)) {
-        return $this->fail([
-            'status' => false,
-            'errors' => $this->validator->getErrors(),
-            'message' => 'Invalid Inputs'
-        ], 409);
-    }
-
-    // Decode JWT token
-    $key = "Exiaa@11";
-    $header = $this->request->getHeaderLine("Authorization");
-    $token = null;
-    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
-        $token = $matches[1];
-    }
-    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
-
-    // Prepare PART data
-    $data = [
-    'stateName'        => $input['stateName'] ?? null,
-    'districtName'     => $input['districtName'] ?? null,
-    'constituencyId'   => $input['constituencyId'] ?? null,
-    'constituencyName' => $input['constituencyName'] ?? null,   // FIXED
-    'partNo'           => $input['partNo'],
-    'partName'         => $input['partName'],
-    'createdDate'      => date('Y-m-d H:i:s'),
-    'modifiedDate'     => date('Y-m-d H:i:s'),
-    'addedBy'          => $decoded->userId ?? null,
-    'isActive'         => 1,
-    'isDeleted'        => 0
-];
-
-
-    // Tenant DB Config
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-    // Use your PartModel (Change model name accordingly)
-    $model = new PartModel($db);
-    $id = $model->insert($data);
-
-    return $this->respond([
-        'status' => true,
-        'message' => 'Part added successfully',
-        'data' => $id
-    ], 200);
-}
-
-public function getAllPartPaging()
+  public function getAllPartPaging()
 {
     $input = $this->request->getJSON();
 
@@ -169,20 +107,21 @@ public function getAllPartPaging()
             "perPage"     => $perPage
         ]
     ], 200);
-}
+} 
 
-
-
-
-
-public function update()
+public function create()
 {
-    helper(['form', 'filesystem']);
+    $input = $this->request->getJSON(true);
 
-    $input = $this->request->getPost();
 
-    // Validate partId
-    if (!$this->validate(['partId' => 'required|numeric'])) {
+    // Validation rules for PART creation
+    $rules = [
+        'constituencyId' => ['rules' => 'required'],
+        'partNo'           => ['rules' => 'required'],
+        'partName'         => ['rules' => 'required']
+    ];
+
+    if (!$this->validate($rules)) {
         return $this->fail([
             'status' => false,
             'errors' => $this->validator->getErrors(),
@@ -190,7 +129,63 @@ public function update()
         ], 409);
     }
 
-    $partId = $input['partId'];
+    // Decode JWT token
+    $key = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token = null;
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+
+    // Prepare PART data
+    $data = [
+    'stateName'        => $input['stateName'] ?? null,
+    'districtName'     => $input['districtName'] ?? null,
+    'constituencyId'   => $input['constituencyId'] ?? null,
+    'constituencyName' => $input['constituencyName'] ?? null,   // FIXED
+    'partNo'           => $input['partNo'],
+    'partName'         => $input['partName'],
+    'createdDate'      => date('Y-m-d H:i:s'),
+    'modifiedDate'     => date('Y-m-d H:i:s'),
+    'addedBy'          => $decoded->userId ?? null,
+    'isActive'         => 1,
+    'isDeleted'        => 0
+];
+
+
+    // Tenant DB Config
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    // Use your PartModel (Change model name accordingly)
+    $model = new PartModel($db);
+    $id = $model->insert($data);
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Part added successfully',
+        'data' => $id
+    ], 200);
+}
+
+
+
+public function update()
+{
+    helper(['form', 'filesystem']);
+
+    $input = $this->request->getJSON(true);
+
+    // Validate partId
+    $partId = $input['partId'] ?? null;
+
+    if (!$partId || !is_numeric($partId)) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Invalid partId'
+        ], 409);
+    }
 
     // Multi-tenant DB
     $tenantName = $this->request->getHeaderLine('X-Tenant-Config');
@@ -199,12 +194,7 @@ public function update()
     }
 
     $tenantService = new \App\Libraries\TenantService();
-
-    try {
-        $dbConfig = $tenantService->getTenantConfig($tenantName);
-    } catch (\Exception $e) {
-        return $this->fail(['status' => false, 'message' => 'Invalid tenant configuration'], 400);
-    }
+    $dbConfig = $tenantService->getTenantConfig($tenantName);
 
     $partModel = new \App\Models\PartModel($dbConfig);
 
@@ -214,192 +204,70 @@ public function update()
         return $this->fail(['status' => false, 'message' => 'Part not found'], 404);
     }
 
-    // Optional: update audit fields
+    // Update audit field
     $input['modifiedDate'] = date('Y-m-d H:i:s');
 
     // Only update allowed fields
     $allowedColumns = $partModel->allowedFields;
     $updateData = array_intersect_key($input, array_flip($allowedColumns));
 
-    try {
-        $updated = $partModel->update($partId, $updateData);
+    $updated = $partModel->update($partId, $updateData);
 
-        if ($updated) {
-            return $this->respond([
-                'status' => true,
-                'message' => 'Part updated successfully',
-                'dataId' => $partId
-            ], 200);
-        } else {
-            return $this->fail([
-                'status' => false,
-                'message' => 'No changes made or update failed'
-            ], 400);
-        }
-    } catch (\Exception $e) {
+    if ($updated) {
+        return $this->respond([
+            'status' => true,
+            'message' => 'Part updated successfully',
+            'dataId' => $partId
+        ], 200);
+    } else {
         return $this->fail([
             'status' => false,
-            'message' => 'Error updating part: ' . $e->getMessage()
+            'message' => 'No changes made or update failed'
+        ], 400);
+    }
+}
+
+
+
+
+
+
+public function delete()
+{
+    $input = $this->request->getJSON(true);
+
+    if (empty($input['id'])) {
+        return $this->fail(['status' => false, 'message' => 'Part ID is required'], 400);
+    }
+
+    // Tenant Connect
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    // Use PartModel
+    $model = new PartModel($db);
+
+    // Check if record exists
+    $part = $model->find($input['id']);
+    if (!$part) {
+        return $this->fail(['status' => false, 'message' => 'Part record not found'], 404);
+    }
+
+    // Perform delete (force delete if soft delete enabled)
+    if ($model->delete($input['id'], true)) {
+        return $this->respond([
+            'status'  => true,
+            'message' => 'Part record deleted successfully'
+        ], 200);
+    } else {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Failed to delete Part record'
         ], 500);
     }
 }
 
 
-
-
-
-
-
-
-    // public function delete()
-    // {
-    //     $input = $this->request->getJSON();
-
-    //     $rules = [
-    //         'dataId' => ['rules' => 'required|numeric']
-    //     ];
-
-    //     if (!$this->validate($rules)) {
-    //         return $this->fail([
-    //             'status' => false,
-    //             'errors' => $this->validator->getErrors(),
-    //             'message' => 'Invalid Inputs'
-    //         ], 409);
-    //     }
-
-    //     $model = new DataModel();
-    //     $dataId = $input->dataId;
-    //     $existing = $model->find($dataId);
-
-    //     if (!$existing) {
-    //         return $this->fail(['status' => false, 'message' => 'Data not found'], 404);
-    //     }
-
-    //     $deleted = $model->update($dataId, ['isDeleted' => 1]);
-    //     if ($deleted) {
-    //         return $this->respond(['status' => true, 'message' => 'Data deleted successfully'], 200);
-    //     } else {
-    //         return $this->fail(['status' => false, 'message' => 'Failed to delete data'], 500);
-    //     }
-    // }
-    
-  public function delete()
-{
-    $input = $this->request->getJSON(true);
-
-    if (empty($input['id'])) {
-        return $this->fail(['status' => false, 'message' => 'Parliament ID is required'], 400);
-    }
-
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-
-    // Use ParliamentModel instead of ConstituencyModel
-    $model = new ParliamentModel($db); 
-
-    $parliament = $model->find($input['id']);
-    if (!$parliament) {
-        return $this->fail(['status' => false, 'message' => 'Parliament record not found'], 404);
-    }
-
-    // Properly delete the record (force delete if soft delete is enabled)
-    if ($model->delete($input['id'], true)) {
-        return $this->respond(['status' => true, 'message' => 'Parliament record deleted successfully'], 200);
-    } else {
-        return $this->fail(['status' => false, 'message' => 'Failed to delete parliament record'], 500);
-    }
-}
-
-
-public function importExcel()
-{
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new DataModel($db);
-
-    $json = $this->request->getJSON(true);
-    if (!$json || !is_array($json)) {
-        return $this->fail('Invalid JSON data.');
-    }
-
-    $insertData = [];
-    $updatedData = [];
-    $processedMobile = [];
-
-    foreach ($json as $row) {
-        // Skip invalid rows
-        if (empty($row['fullName']) || empty($row['mobileNo']) || empty($row['dob'])) continue;
-
-        $mobileNo = $row['mobileNo'];
-
-        // Prevent processing duplicates in same import
-        if (in_array($mobileNo, $processedMobile)) continue;
-        $processedMobile[] = $mobileNo;
-
-        // Check if mobileNo exists already
-        $existing = $model->where('mobileNo', $mobileNo)->first();
-
-        $dataRow = [
-            'fullName'         => $row['fullName'],
-            'gender'           => $row['gender'] ?? '-',
-            'mobileNo'         => $mobileNo,
-            'dob'              => $row['dob'],
-            'age'              => $row['age'] ?? null,
-            'email'            => $row['email'] ?? null,
-            'address'          => $row['address'] ?? null,
-            'villageTown'      => $row['villageTown'] ?? null,
-            'talukaBlock'      => $row['talukaBlock'] ?? null,
-            'district'         => $row['district'] ?? null,
-            'state'            => $row['state'] ?? null,
-            'pincode'          => $row['pincode'] ?? null,
-            'voterIdNo'        => $row['voterIdNo'] ?? null,
-            'wardBoothNo'      => $row['wardBoothNo'] ?? null,
-            'serialNo'         => $row['serialNo'] ?? null,
-            'assemblyNo'       => $row['assemblyNo'] ?? null,
-            'aadharNo'         => $row['aadharNo'] ?? null,
-            'voterCategory'    => $row['voterCategory'] ?? null,
-            'voterSubCategory' => $row['voterSubCategory'] ?? null,
-            'locationCoord'    => $row['locationCoord'] ?? null,
-            'createdDate'      => date('Y-m-d H:i:s'),
-            'businessId'       => $row['businessId'] ?? 0,
-        ];
-
-        if ($existing) {
-            // Update existing record
-            $model->update($existing['id'], $dataRow);
-            $updatedData[] = $mobileNo;
-        } else {
-            $insertData[] = $dataRow;
-        }
-    }
-
-    if (!empty($insertData)) {
-        $model->insertBatch($insertData);
-    }
-
-    $dataList = $model->whereIn('mobileNo', array_merge($processedMobile, $updatedData))->findAll();
-
-    return $this->respond([
-        'success' => true,
-        'data'    => $dataList,
-        'message' => 'Data imported successfully!'
-    ]);
-}
-public function checkMobileExists()
-{
-    $mobileNo = $this->request->getPost('mobileNo');
-    if (!$mobileNo) return $this->fail('Mobile No required', 400);
-
-    $tenantService = new TenantService();
-    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
-    $model = new DataModel($db);
-
-    $existing = $model->where('mobileNo', $mobileNo)->first();
-    return $this->respond([
-        'exists' => $existing ? true : false,
-        'dataId' => $existing['id'] ?? null
-    ]);
-}
 
 
 }

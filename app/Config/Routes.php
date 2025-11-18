@@ -764,6 +764,17 @@ $routes->post('getall', 'Item::getall', ['filter' => ['authFilter', 'tenantFilte
 
 });
 
+ $routes->group('status', function ($routes) {
+    $routes->get('getall', 'Status::index',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Status::getAllStatusPaging', ['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Status::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Status::create',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('update', 'Status::update',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallwebsite', 'Status::getStatussWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Status::delete',['filter' => ['authFilter','tenantFilter']]);
+
+});
+
  $routes->group('parliament', function ($routes) {
     $routes->get('getall', 'Parliament::index',['filter' => ['authFilter', 'tenantFilter']]);
     $routes->post('getallpaging', 'Parliament::getAllParliamentPaging', ['filter' => ['authFilter', 'tenantFilter']]);

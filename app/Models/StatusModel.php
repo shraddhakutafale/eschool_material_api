@@ -12,7 +12,7 @@ class StatusModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['statusId', 'workName', 'funds', 'workDate', 'status', 'image', 'reportPdf', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted', 'createdBy', 'modifiedBy'];
+    protected $allowedFields    = ['statusId', 'workName', 'funds', 'workDate', 'status', 'image', 'reportPdf','originalName', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted', 'createdBy', 'modifiedBy'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -25,19 +25,19 @@ class Status extends BaseController
         return $this->respond(["status" => true, "message" => "All Data Fetched", "data" => $statusModel->findAll()], 200);
     }
     
-  public function create()
+
+public function create()
 {
     helper(['form']);
 
-    // Get PDF file
     $pdfFile = $this->request->getFile('reportPdf');
 
     $rules = [
-        'workName' => 'required',
-        'funds'    => 'permit_empty|decimal',
-        'workDate' => 'required',
-        'status'   => 'permit_empty',
-        'reportPdf' => 'ext_in[reportPdf,pdf]|max_size[reportPdf,2048]' // PDF optional
+        'workName'  => 'required',
+        'funds'     => 'permit_empty|decimal',
+        'workDate'  => 'required',
+        'status'    => 'permit_empty',
+        'reportPdf' => 'ext_in[reportPdf,pdf]|max_size[reportPdf,2048]' 
     ];
 
     if (!$this->validate($rules)) {
@@ -48,25 +48,27 @@ class Status extends BaseController
         ], 409);
     }
 
-    // Upload file if provided
     $pdfName = null;
+    $originalName = null;
+
     if ($pdfFile && $pdfFile->isValid() && !$pdfFile->hasMoved()) {
         $pdfName = $pdfFile->getRandomName();
-        $pdfFile->move('uploads/status', $pdfName);
+        $originalName = $pdfFile->getClientName();   // ← SAVE ORIGINAL FILENAME
+
+        $pdfFile->move(FCPATH . 'public/uploads/status', $pdfName);
     }
 
-    // Collect other POST fields
     $data = [
-        'workName'  => $this->request->getPost('workName'),
-        'funds'     => $this->request->getPost('funds'),
-        'workDate'  => $this->request->getPost('workDate'),
-        'status'    => $this->request->getPost('status'),
-        'reportPdf' => $pdfName,
-        'isActive'  => 1,
-        'isDeleted' => 0
+        'workName'     => $this->request->getPost('workName'),
+        'funds'        => $this->request->getPost('funds'),
+        'workDate'     => $this->request->getPost('workDate'),
+        'status'       => $this->request->getPost('status'),
+        'reportPdf'    => $pdfName,
+        'originalName' => $originalName,   // ← INSERT IT
+        'isActive'     => 1,
+        'isDeleted'    => 0
     ];
 
-    // Insert to DB with tenant connection
     $tenantService = new TenantService();
     $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
 
@@ -114,41 +116,40 @@ class Status extends BaseController
     }
 
     // 🎯 Filter
-    if ($filter) {
-        $filter = json_decode(json_encode($filter), true);
+    // FILTERS
+if ($filter) {
+    $filter = json_decode(json_encode($filter), true);
 
-        foreach ($filter as $key => $value) {
-            if ($value === '' || $value === null) continue;
+    // ✔ Filter by Work Name
+    if (!empty($filter['workName'])) {
+        $query->like('workName', $filter['workName']);
+    }
 
-            // Text filters
-            if (in_array($key, [
-                'statusName',
-                'statusDescription'
-            ])) {
-                $query->like($key, $value);
-            }
+    // ✔ Filter by Status
+    if (!empty($filter['status'])) {
+        $query->where('status', $filter['status']);
+    }
 
-            // Exact date filter
-            elseif ($key === 'created_at') {
-                $query->where($key, $value);
-            }
-        }
+    // ✔ Filter by Exact Work Date
+    if (!empty($filter['workDate'])) {
+        $query->where('workDate', $filter['workDate']);
+    }
 
-        // 📅 Date range filter
-        if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
-            $query->where('created_at >=', $filter['startDate'])
-                  ->where('created_at <=', $filter['endDate']);
-        }
+    // ✔ Date Range Filter using Work Date
+    if (!empty($filter['startDate']) && !empty($filter['endDate'])) {
+        $query->where('workDate >=', $filter['startDate'])
+              ->where('workDate <=', $filter['endDate']);
+    }
 
-        // Date range shortcuts
-        if (!empty($filter['dateRange'])) {
-            if ($filter['dateRange'] === 'last7days') {
-                $query->where('created_at >=', date('Y-m-d', strtotime('-7 days')));
-            } elseif ($filter['dateRange'] === 'last30days') {
-                $query->where('created_at >=', date('Y-m-d', strtotime('-30 days')));
-            }
+    // 🔥 Date Range Shortcut
+    if (!empty($filter['dateRange'])) {
+        if ($filter['dateRange'] === 'last7days') {
+            $query->where('workDate >=', date('Y-m-d', strtotime('-7 days')));
+        } elseif ($filter['dateRange'] === 'last30days') {
+            $query->where('workDate >=', date('Y-m-d', strtotime('-30 days')));
         }
     }
+}
 
     // 🧾 Pagination
     $records = $query->paginate($perPage, 'default', $page);

@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CandidateModel extends Model
+class FamilyDetailsModel extends Model
 {
-    protected $table            = 'candidate_mst';
-    protected $primaryKey       = 'candidateId';
+    protected $table            = 'family_details';
+    protected $primaryKey       = 'familyId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['candidateId', 'name', 'about', 'age', 'height', 'weight', 'materialStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'religion', 'cast', 'community', 'stars', 'rashi', 'zodiac', 'dosh', 'otherCommunities', 'country', 'state', 'residingCity', 'currentCity', 'citizenship', 'hobbies', 'musicGenre', 'typeOfBooks', 'typeOfMovies', 'sports', 'favCuisine', 'knownLanguages', 'createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['familyId', 'value', 'type', 'status', 'income', 'fatherOccupation', 'motherOccupation', 'noOfBrothers', 'noOfSisters', 'sisterMarried', 'aboutFamily', 'modifiedBy', 'createdBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

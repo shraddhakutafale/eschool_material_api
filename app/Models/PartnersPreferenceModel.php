@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CandidateModel extends Model
+class PartnersPreferenceModel extends Model
 {
-    protected $table            = 'candidate_mst';
-    protected $primaryKey       = 'candidateId';
+    protected $table            = 'partners_preference';
+    protected $primaryKey       = 'partnerPreferenceId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['candidateId', 'name', 'about', 'age', 'height', 'weight', 'materialStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'religion', 'cast', 'community', 'stars', 'rashi', 'zodiac', 'dosh', 'otherCommunities', 'country', 'state', 'residingCity', 'currentCity', 'citizenship', 'hobbies', 'musicGenre', 'typeOfBooks', 'typeOfMovies', 'sports', 'favCuisine', 'knownLanguages', 'createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['partnerPreferenceId', 'city', 'workingStatus', 'education', 'salaryRange', 'heightRange', 'ageRange', 'maritalStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

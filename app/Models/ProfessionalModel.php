@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CandidateModel extends Model
+class ProfessionalModel extends Model
 {
-    protected $table            = 'candidate_mst';
-    protected $primaryKey       = 'candidateId';
+    protected $table            = 'professional_mst';
+    protected $primaryKey       = 'professionalId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['candidateId', 'name', 'about', 'age', 'height', 'weight', 'materialStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'religion', 'cast', 'community', 'stars', 'rashi', 'zodiac', 'dosh', 'otherCommunities', 'country', 'state', 'residingCity', 'currentCity', 'citizenship', 'hobbies', 'musicGenre', 'typeOfBooks', 'typeOfMovies', 'sports', 'favCuisine', 'knownLanguages', 'createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['professionalId', 'highestEducation', 'college', 'employedIn', 'occupation', 'organizationName', 'currencyType', 'anuualIncome', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -30,7 +30,7 @@ class CandidateModel extends Model
 
    protected function addCreatedBy(array $data)
    {
-       helper('jwt_helper'); // Ensure the JWT helper is loaded
+       helper('jwt_helper'); 
        $userId = getUserIdFromToken();
        if ($userId) {
            $data['data']['createdBy'] = $userId;

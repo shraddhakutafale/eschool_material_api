@@ -188,69 +188,68 @@ public function update()
         ], 409);
     }
 
-    $db = \Config\Database::connect();
-    $db->query("USE exiaa_ex0009"); // keep fixed database
-    $model = new CommitteeModel($db);
-
-    $committeeId = $input['committeeId'];
-    $committee = $model->find($committeeId);
-
-    if (!$committee) {
-        return $this->fail(['status' => false, 'message' => 'Committee not found'], 404);
-    }
-
-    // --- Tenant dynamic from JWT ---
+    // ---- Decode JWT ----
     $key = "Exiaa@11";
     $header = $this->request->getHeaderLine("Authorization");
     $token = null;
     if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
         $token = $matches[1];
     }
-    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
-    $tenant = $decoded->tenantName ?? 'default';
-
-    $uploadFolder = FCPATH . 'uploads/' . $tenant . '/committeeImages/';
-    if (!is_dir($uploadFolder)) mkdir($uploadFolder, 0777, true);
-
-    // --- Handle Profile Picture ---
-    $profilePicPath = $committee['profilePic'] ?? null;
-    $file = $this->request->getFile('profilePic');
-
-    if ($file && $file->isValid() && !$file->hasMoved()) {
-        $ext = $file->getClientExtension() ?: 'jpg';
-        $newName = uniqid() . '.' . $ext;
-        $file->move($uploadFolder, $newName);
-
-        if (!empty($profilePicPath) && file_exists(FCPATH . 'uploads/' . $profilePicPath)) {
-            unlink(FCPATH . 'uploads/' . $profilePicPath);
-        }
-
-        $profilePicPath = $tenant . '/committeeImages/' . $newName;
-    } elseif (!empty($input['profilePicOld'])) {
-        $profilePicPath = $input['profilePicOld'];
+    if (!$token) {
+        return $this->failUnauthorized('JWT token missing');
     }
 
-    // --- Update data ---
-    $updateData = [
-        'committeeMember'    => $input['committeeMember'] ?? $committee['committeeMember'],
-        'qualification'      => $input['qualification'] ?? $committee['qualification'],
-        'email'              => $input['email'] ?? $committee['email'],
-        'committeeMemberDob' => $input['committeeMemberDob'] ?? $committee['committeeMemberDob'],
-        'phoneNo'            => $input['phoneNo'] ?? $committee['phoneNo'],
-        'facebookUrl'        => $input['facebookUrl'] ?? $committee['facebookUrl'],
-        'instaUrl'           => $input['instaUrl'] ?? $committee['instaUrl'],
-        'twitterUrl'         => $input['twitterUrl'] ?? $committee['twitterUrl'],
-        'profilePic'         => $profilePicPath,
-    ];
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    $tenant = $decoded->tenantName ?? 'default';
 
-    $model->update($committeeId, $updateData);
+    // ---- Database ----
+    $db = \Config\Database::connect();
+    $db->query("USE exiaa_ex0009");
+    $model = new CommitteeModel($db);
+
+    $committeeId = $input['committeeId'];
+    $oldData = $model->find($committeeId);
+
+    if (!$oldData) {
+        return $this->fail([
+            'status' => false,
+            'message' => 'Committee not found'
+        ], 404);
+    }
+
+    // ---- Handle Profile Picture ----
+    $profilePic = $this->request->getFile('profilePic');
+    $profilePicOld = $input['profilePicOld'] ?? null;
+
+    if ($profilePic && $profilePic->isValid() && !$profilePic->hasMoved()) {
+
+        // Upload folder
+        $uploadPath = FCPATH . 'uploads/' . $tenant . '/committeeImages/';
+        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+
+        // New name
+        $newName = $profilePic->getRandomName();
+        $profilePic->move($uploadPath, $newName);
+
+        // Save new path
+        $input['profilePic'] = $tenant . '/committeeImages/' . $newName;
+
+    } else {
+        // No new file uploaded → keep old
+        $input['profilePic'] = $profilePicOld ?: $oldData['profilePic'];
+    }
+
+    unset($input['profilePicOld']);
+
+    // ---- Update DB ----
+    $model->update($committeeId, $input);
 
     return $this->respond([
-        'status'  => true,
-        'message' => 'Committee updated successfully',
-        'data'    => $updateData
+        'status' => true,
+        'message' => 'Committee Updated Successfully'
     ], 200);
 }
+
 
 
 

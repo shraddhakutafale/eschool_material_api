@@ -864,7 +864,16 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->get('getall', 'Contact::index',['filter' => ['tenantFilter']]);
     $routes->post('getallcontactpaging', 'Contact::getContactPaging',['filter' => ['tenantFilter']]);
   });
-
+  $routes->group('committee', function ($routes) {
+    $routes->get('getall', 'Committee::index',['filter' => [ 'tenantFilter']]);
+    $routes->post('getallpaging', 'Committee::getCommitteePaging',['filter' => [ 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Committee::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Committee::create',['filter' => ['tenantFilter']]);
+    $routes->post('update', 'Committee::update',['filter' => ['tenantFilter']]);
+    $routes->get('getallwebsite', 'Committee::getCommitteesWebsite',['filter' => ['tenantFilter']]); // Get all Item for website
+    $routes->post('delete', 'Committee::delete',['filter' => ['tenantFilter']]);
+   
+  });
 
 
   $routes->group('website', function ($routes) {
@@ -915,8 +924,19 @@ $routes->group('webapi', ['namespace' => 'App\Controllers'], function ($routes) 
     $routes->get('getlastorder', 'Order::getLastOrder',['filter' => ['tenantFilter']]);
   });
 
-  $routes->group('slide', function ($routes) {
-    $routes->post('getallslide', 'Slide::getAllSlide',['filter' => ['tenantFilter']]);
+  // $routes->group('slide', function ($routes) {
+  //   $routes->post('getallslide', 'Slide::getAllSlide',['filter' => ['tenantFilter']]);
+  // });
+
+    $routes->group('slide', function ($routes) {
+    // Routes for Slide
+    $routes->get('getall', 'Slide::index',['filter' => [ 'tenantFilter']]);
+    $routes->post('getallpaging', 'Slide::getSlidesPaging',['filter' => [ 'tenantFilter']]);
+    // $routes->get('view/(:segment)', 'Slide::show/$1',['filter' => 'authFilter']);
+    $routes->post('create', 'Slide::create',['filter' => ['tenantFilter']]);
+    $routes->post('update', 'Slide::update',['filter' => ['tenantFilter']]);
+    $routes->get('getallwebsite', 'Slide::getSlidesWebsite',['filter' => ['tenantFilter']]);
+    $routes->post('delete', 'Slide::delete',['filter' => ['tenantFilter']]); 
   });
 
   $routes->group('testimonial', function ($routes) {

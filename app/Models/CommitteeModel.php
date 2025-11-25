@@ -12,7 +12,7 @@ class CommitteeModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['committeeId', 'businessId', 'committeeMember', 'qualification', 'email', 'profilePic', 'committeeMemberDob', 'phoneNo', 'facebookUrl', 'instaUrl', 'twitterUrl', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
+    protected $allowedFields    = ['committeeId', 'businessId', 'committeeMember', 'committeeType', 'designation', 'qualification', 'email', 'gender', 'wardNo', 'address', 'profilePic', 'committeeMemberDob', 'phoneNo', 'facebookUrl', 'instaUrl', 'twitterUrl', 'isActive', 'isDeleted', 'createdBy', 'createdDate', 'modifiedBy', 'modifiedDate'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

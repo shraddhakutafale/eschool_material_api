@@ -12,7 +12,7 @@ class PartnersPreferenceModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['partnerPreferenceId', 'city', 'workingStatus', 'education', 'salaryRange', 'heightRange', 'ageRange', 'maritalStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['partnerPreferenceId', 'candidateId','city', 'workingStatus', 'education', 'salaryRange', 'heightRange', 'ageRange', 'maritalStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -12,7 +12,7 @@ class FamilyDetailsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['familyId', 'value', 'type', 'status', 'income', 'fatherOccupation', 'motherOccupation', 'noOfBrothers', 'noOfSisters', 'sisterMarried', 'aboutFamily', 'modifiedBy', 'createdBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['familyId','candidateId','value', 'type', 'status', 'income', 'fatherOccupation', 'motherOccupation', 'noOfBrothers', 'noOfSisters', 'sisterMarried', 'aboutFamily', 'modifiedBy', 'createdBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

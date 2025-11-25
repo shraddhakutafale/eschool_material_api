@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\CandidateModel;
+use App\Models\FamilyDetailsModel;
+use App\Models\PartnersPreferenceModel;
+use App\Models\ProfessionalModel;
 use Config\Database;
 use App\Libraries\TenantService;
 use \Firebase\JWT\JWT;
@@ -32,7 +35,7 @@ class Candidate extends BaseController
 
     $page = isset($input->page) ? (int)$input->page : 1;
     $perPage = isset($input->perPage) ? (int)$input->perPage : 10;
-    $sortField = isset($input->sortField) ? $input->sortField : 'id';
+    $sortField = isset($input->sortField) ? $input->sortField : 'candidateId';
     $sortOrder = isset($input->sortOrder) ? $input->sortOrder : 'asc';
     $search = isset($input->search) ? trim($input->search) : '';
     $filter = isset($input->filter) ? $input->filter : null;
@@ -57,7 +60,7 @@ class Candidate extends BaseController
     // 🔍 Search
     if (!empty($search)) {
         $query->groupStart()
-              ->like('fullName', $search)
+              ->like('name', $search)
               ->orLike('mobileNo', $search)
               ->orLike('email', $search)
               ->groupEnd();
@@ -70,7 +73,7 @@ class Candidate extends BaseController
         foreach ($filter as $key => $value) {
             if ($value === '' || $value === null) continue;
             
-            if (in_array($key, ['fullName', 'mobileNo', 'district', 'state'])) {
+            if (in_array($key, ['name', 'mobileNo', 'district', 'state'])) {
                 $query->like($key, $value);
             } elseif ($key === 'createdDate') {
                 $query->where($key, $value);
@@ -125,10 +128,8 @@ public function create()
 
     // Validation rules
     $rules = [
-        'fullName'      => ['rules' => 'required'],
-        'contactNumber' => ['rules' => 'required'],
-        'gender'        => ['rules' => 'permit_empty'],
-        'email'         => ['rules' => 'valid_email|permit_empty']
+        'name'      => ['rules' => 'required'],
+        
     ];
 
     if (!$this->validate($rules)) {
@@ -184,47 +185,8 @@ public function create()
     // Prepare full data array matching Angular form
     $data = [
         'businessId'         => $decoded->businessId ?? $input['businessId'] ?? 0,
-        'fullName'           => $input['fullName'],
-        'gender'             => $input['gender'] ?? null,
-        'dob'                => $input['dob'] ?? null,
-        'age'                => $input['age'] ?? null,
-        'maritalStatus'      => $input['maritalStatus'] ?? null,
-        'religion'           => $input['religion'] ?? null,
-        'caste'              => $input['caste'] ?? null,
-        'motherTongue'       => $input['motherTongue'] ?? null,
-        'height'             => $input['height'] ?? null,
-        'weight'             => $input['weight'] ?? null,
-        'bloodGroup'         => $input['bloodGroup'] ?? null,
-        'education'          => $input['education'] ?? null,
-        'profession'         => $input['profession'] ?? null,
-        'annualIncome'       => $input['annualIncome'] ?? null,
-        'workLocation'       => $input['workLocation'] ?? null,
-        'address'            => $input['address'] ?? null,
-        'state'              => $input['state'] ?? null,
-        'district'           => $input['district'] ?? null,
-        'talukaBlock'        => $input['talukaBlock'] ?? null,
-        'villageTown'        => $input['villageTown'] ?? null,
-        'pincode'            => $input['pincode'] ?? null,
-        'contactNumber'      => $input['contactNumber'],
-        'alternateNumber'    => $input['alternateNumber'] ?? null,
-        'email'              => $input['email'] ?? null,
-        'fatherName'         => $input['fatherName'] ?? null,
-        'motherName'         => $input['motherName'] ?? null,
-        'familyDetails'      => $input['familyDetails'] ?? null,
-        'partnerPreferences' => $input['partnerPreferences'] ?? null,
-        'idProofType'        => $input['idProofType'] ?? null,
-        'idProofNumber'      => $input['idProofNumber'] ?? null,
-        'idProofFile'        => $input['idProofFile'] ?? null,
-        'resumeFile'         => $input['resumeFile'] ?? null,
-        'profilePhoto'       => $input['profilePhoto'] ?? null,
-        'registrationDate'   => $input['registrationDate'] ?? date('Y-m-d'),
-        'profileStatus'      => $input['profileStatus'] ?? 'Active',
-        'addedBy'            => $decoded->userId ?? null,
-        'createdDate'        => date('Y-m-d H:i:s'),
-        'isDeleted'          => 0,
-        'isActive'           => 1,
-        'createdBy'          => $decoded->userId ?? null,
-        'modifiedBy'         => null
+        'name'           => $input['name'],
+       
     ];
 
     // Insert into tenant-specific database
@@ -240,6 +202,214 @@ public function create()
     ], 200);
 }
 
+public function createProfessional()
+{
+    $input = $this->request->getPost();
+
+    // Validation
+    $rules = [
+        'highestEducation' => 'required',
+        'occupation'       => 'required',
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    // Decode token
+    $key = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token = null;
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) $token = $matches[1];
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+    $businessId = $decoded->businessId ?? 0;
+    $userId = $decoded->userId ?? null;
+
+    // ============================
+    // 1️⃣ INSERT INTO professional_mst
+    // ============================
+ $professionalData = [
+    "businessId"       => $businessId,
+    "highestEducation" => $input['highestEducation'],
+    "college"          => $input['college'],            // FIXED
+    "employedIn"       => $input['employedIn'],
+    "occupation"       => $input['occupation'],
+    "organizationName" => $input['organizationName'],
+    "currencyType"     => $input['currencyType'],
+
+    // match DB spelling
+    "annualIncome"     => $input['annualIncome'],        // FIXED
+
+    "createdBy"        => $userId,
+    "modifiedBy"       => $userId,
+    "createdDate"      => date('Y-m-d H:i:s'),
+    "modifiedDate"     => date('Y-m-d H:i:s'),
+    "isActive"         => 1,
+    "isDeleted"        => 0
+];
+
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+
+    $professionalModel = new ProfessionalModel($db);
+    $profId = $professionalModel->insert($professionalData);
+
+    // ============================
+    // 2️⃣ UPDATE candidate_mst (Location + Hobbies)
+    // ============================
+    $candidateUpdate = [
+        "country"        => $input['country'] ?? null,
+        "residingState"  => $input['residingState'] ?? null,
+        "residingCity"   => $input['residingCity'] ?? null,
+        "citizenship"    => $input['citizenship'] ?? null,
+        "currentCity"    => $input['currentCity'] ?? null,
+
+        "hobbies"        => $input['hobbies'] ?? null,
+        "musicGenre"     => $input['musicGenre'] ?? null,
+        "booksType"      => $input['booksType'] ?? null,
+        "movieType"      => $input['movieType'] ?? null,
+        "sports"         => $input['sports'] ?? null,
+        "cuisine"        => $input['cuisine'] ?? null,
+        "languagesKnown" => $input['languagesKnown'] ?? null,
+
+        "modifiedBy"     => $userId,
+        "modifiedDate"   => date('Y-m-d H:i:s')
+    ];
+
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Professional details saved & Candidate updated successfully',
+        'data' => [
+            'professionalId' => $profId,
+        ]
+    ], 200);
+}
+
+
+public function createFamily()
+{
+    $input = $this->request->getPost();
+
+    // Validation
+    $rules = [
+        'value' => 'required',
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    // Token decode
+    $key = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token = null;
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) $token = $matches[1];
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+
+    $data = [
+        'businessId'       => $decoded->businessId ?? 0,
+        'value'            => $input['value'] ?? null,
+        'type'             => $input['type'] ?? null,
+        'status'           => $input['status'] ?? null,
+        'income'           => $input['income'] ?? null,
+        'fatherOccupation' => $input['fatherOccupation'] ?? null,
+        'motherOccupation' => $input['motherOccupation'] ?? null,
+        'noOfBrothers'     => $input['noOfBrothers'] ?? null,
+        'noOfSisters'      => $input['noOfSisters'] ?? null,
+        'sisterMarried'    => $input['sisterMarried'] ?? null,
+        'aboutFamily'      => $input['aboutFamily'] ?? null,
+        'createdBy'        => $decoded->userId ?? null,
+        'modifiedBy'       => $decoded->userId ?? null,
+        'createdDate'      => date('Y-m-d H:i:s'),
+        'modifiedDate'     => date('Y-m-d H:i:s'),
+        'isActive'         => 1,
+        'isDeleted'        => 0,
+    ];
+
+    // Insert
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new FamilyDetailsModel($db);
+    $id = $model->insert($data);
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Family details added successfully',
+        'data' => $id
+    ], 200);
+}
+
+
+public function createPartnersPreference()
+{
+    $input = $this->request->getPost();
+
+    // Validation
+    $rules = [
+        'city' => 'required',
+    ];
+
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
+    }
+
+    // Token decode
+    $key = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token = null;
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) $token = $matches[1];
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+
+    $data = [
+        "businessId"       => $decoded->businessId ?? 0,
+        "city"             => $input['city'] ?? null,
+        "workingStatus"    => $input['workingStatus'] ?? null,
+        "education"        => $input['education'] ?? null,
+        "salaryRange"      => $input['salaryRange'] ?? null,
+        "heightRange"      => $input['heightRange'] ?? null,
+        "ageRange"         => $input['ageRange'] ?? null,
+        "maritalStatus"    => $input['maritalStatus'] ?? null,
+        "motherTongue"     => $input['motherTongue'] ?? null,
+        "physicalStatus"   => $input['physicalStatus'] ?? null,
+        "bodyType"         => $input['bodyType'] ?? null,
+        "profileCreatedBy" => $input['profileCreatedBy'] ?? null,
+        "eatingHabits"     => $input['eatingHabits'] ?? null,
+        "drinkingHabits"   => $input['drinkingHabits'] ?? null,
+        "smokingHabits"    => $input['smokingHabits'] ?? null,
+        "createdBy"        => $decoded->userId ?? null,
+        "modifiedBy"       => $decoded->userId ?? null,
+        "createdDate"      => date('Y-m-d H:i:s'),
+        "modifiedDate"     => date('Y-m-d H:i:s'),
+        "isActive"         => 1,
+        "isDeleted"        => 0
+    ];
+
+    // Insert
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new PartnersPreferenceModel($db);
+    $id = $model->insert($data);
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Partner preference saved successfully',
+        'data' => $id
+    ], 200);
+}
 
 
 
@@ -391,52 +561,44 @@ public function update()
     //     }
     // }
     
-      public function delete()
-    {
-        $input = $this->request->getJSON();
-        
-        // Validation rules for the course
-        $rules = [
-            'id' => ['rules' => 'required'], 
-        ];
+  public function delete()
+{
+    $input = $this->request->getJSON();
 
-        // Validate the input
-        if ($this->validate($rules)) {
+    $rules = [
+        'candidateId' => 'required|integer'
+    ];
 
-            // Insert the product data into the database
-             $tenantService = new TenantService();
-            // Connect to the tenant's database
-            $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config')); 
-            $model = new CandidateModel($db);
-
-            // Retrieve the course by eventId
-            $id = $input->id;
-            $data = $model->find($id); // Assuming find method retrieves the course
-
-            if (!$data) {
-                return $this->fail(['status' => false, 'message' => 'data not found'], 404);
-            }
-
-            $updateData = [
-                'isDeleted' => 1,
-            ];
-            $deleted = $model->update($id, $updateData);
-
-            if ($deleted) {
-                return $this->respond(['status' => true, 'message' => 'candidate Deleted Successfully'], 200);
-            } else {
-                return $this->fail(['status' => false, 'message' => 'Failed to delete candidate'], 500);
-            }
-        } else {
-            // Validation failed
-            $response = [
-                'status' => false,
-                'errors' => $this->validator->getErrors(),
-                'message' => 'Invalid Inputs'
-            ];
-            return $this->fail($response, 409);
-        }
+    if (!$this->validate($rules)) {
+        return $this->fail([
+            'status' => false,
+            'errors' => $this->validator->getErrors(),
+            'message' => 'Invalid Inputs'
+        ], 409);
     }
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new CandidateModel($db);
+
+    $id = $input->candidateId;
+    $data = $model->find($id);
+
+    if (!$data) {
+        return $this->fail(['status' => false, 'message' => 'Candidate not found'], 404);
+    }
+
+    $deleted = $model->update($id, ['isDeleted' => 1]);
+
+    if ($deleted) {
+        return $this->respond([
+            'status' => true,
+            'message' => 'Candidate Deleted Successfully'
+        ], 200);
+    }
+
+    return $this->fail(['status' => false, 'message' => 'Failed to delete candidate'], 500);
+}
 
 public function importExcel()
 {

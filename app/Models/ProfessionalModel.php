@@ -12,7 +12,7 @@ class ProfessionalModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['professionalId', 'highestEducation', 'college', 'employedIn', 'occupation', 'organizationName', 'currencyType', 'anuualIncome', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['professionalId', 'candidateId', 'highestEducation', 'college', 'employedIn', 'occupation', 'organizationName', 'currencyType', 'anuualIncome', 'createdBy', 'modifiedBy', 'createdDate', 'modifiedDate', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

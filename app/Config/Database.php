@@ -50,6 +50,28 @@ class Database extends Config
         ],
     ];
 
+
+    public array $exiaa_ex0018 = [
+    'DSN'          => '',
+    'hostname'     => 'localhost',
+    'username'     => 'root',
+    'password'     => '',
+    'database'     => 'exiaa_ex0018',   // <-- EXACT DB NAME
+    'DBDriver'     => 'MySQLi',
+    'DBPrefix'     => '',
+    'pConnect'     => false,
+    'DBDebug'      => true,
+    'charset'      => 'utf8mb4',
+    'DBCollat'     => 'utf8mb4_general_ci',
+    'swapPre'      => '',
+    'encrypt'      => false,
+    'compress'     => false,
+    'strictOn'     => false,
+    'failover'     => [],
+    'port'         => 3306,
+    'numberNative' => false,
+];
+
     //    /**
     //     * Sample database connection for SQLite3.
     //     *

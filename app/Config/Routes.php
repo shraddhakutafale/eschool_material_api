@@ -1033,7 +1033,12 @@ $routes->group('color_code', function($routes) {
     // add update/delete as required
 });
 
+  $routes->group('communitee', function ($routes) {
 
+    $routes->post('communiteelogin','Communitee::communiteeLogin');
+    $routes->post('registercommunitee','Communitee::registerCommunitee');
+
+  });
 $routes->group('address', function ($routes) {
     // Get all addresses
     $routes->get('getall', 'Address::index', ['filter' => ['tenantFilter']]);

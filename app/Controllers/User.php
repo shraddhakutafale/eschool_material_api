@@ -509,6 +509,9 @@ class User extends BaseController
             
     }
 
+
+    
+
     public function registerBusinessUser()
     {
         $input = $this->request->getJSON();
@@ -1333,5 +1336,118 @@ public function create()
         return $this->respond(["status" => true, "message" => "Business Assigned Successfully", "data" => []], 200);
 
     }
+
+
+
+    public function registerUser()
+{
+    $input = $this->request->getJSON();
+
+    if(!$input || !isset($input->email) || !isset($input->password) || !isset($input->tenantName)) {
+        return $this->respond([
+            'status' => false,
+            'message' => 'email, password and tenantName are required'
+        ], 400);
+    }
+
+    $tenantModel = new TenantModel();
+    $roleModel   = new RoleModel();
+    $userModel   = new UserModel();
+
+    // check tenant
+    $tenant = $tenantModel->where('tenantName', $input->tenantName)->first();
+    if(!$tenant){
+        return $this->respond([
+            'status' => false,
+            'message' => 'Invalid tenant'
+        ], 401);
+    }
+
+    // default role = Customer (3)
+    $roleId = 3;
+
+    // email check
+    $existing = $userModel->where('email', $input->email)->first();
+    if($existing){
+        return $this->respond(['status' => false, 'message' => 'Email already exists'], 409);
+    }
+
+    // insert user
+    $data = [
+        'userName' => $input->email,
+        'email'    => $input->email,
+        'password' => password_hash($input->password, PASSWORD_DEFAULT),
+        'roleId'   => $roleId,
+        'tenantId' => $tenant['tenantId'],
+        'isActive' => 1,
+        'isDeleted'=> 0,
+    ];
+
+    $userModel->insert($data);
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Registered successfully'
+    ], 200);
+}
+
+public function loginUser()
+{
+    $input = $this->request->getJSON();
+
+    if(!$input || !isset($input->email) || !isset($input->password)) {
+        return $this->respond([
+            'status' => false,
+            'message' => 'email and password are required'
+        ], 400);
+    }
+
+    $userModel   = new UserModel();
+    $roleModel   = new RoleModel();
+    $tenantModel = new TenantModel();
+
+    // find user
+    $user = $userModel->where('email', $input->email)->first();
+    if(!$user){
+        return $this->respond(['status' => false, 'message' => 'Invalid email'], 401);
+    }
+
+    // verify password
+    if(!password_verify($input->password, $user['password'])){
+        return $this->respond(['status' => false, 'message' => 'Incorrect password'], 401);
+    }
+
+    // check tenant
+    $tenant = $tenantModel->where('tenantId', $user['tenantId'])->first();
+
+    // check role
+    $role = $roleModel->where('roleId', $user['roleId'])->first();
+
+    // JWT
+    $key = "Exiaa@11";
+    $iat = time();
+    $exp = $iat + 3600;
+
+    $payload = [
+        "iat" => $iat,
+        "exp" => $exp,
+        "email" => $user['email'],
+        "userId" => $user['userId'],
+        "roleId" => $user['roleId'],
+        "roleName" => $role['roleName'],
+        "tenantName" => $tenant['tenantName'],
+    ];
+
+    $token = JWT::encode($payload, $key, 'HS256');
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Login successful',
+        'access_token' => $token,
+        'expires_in'   => $exp,
+        'role'         => $role['roleName'],
+        'tenantName'   => $tenant['tenantName']
+    ], 200);
+}
 
 }

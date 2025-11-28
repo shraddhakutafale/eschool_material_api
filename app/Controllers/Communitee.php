@@ -5,6 +5,10 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\CommuniteeModel;
+use App\Models\CandidateModel;
+use App\Libraries\TenantService;
+
+
 
 use App\Models\RoleModel;
 
@@ -119,5 +123,73 @@ public function communiteeLogin()
         ]
     ], 200);
 }
+
+public function createCandidate()
+{
+    $input = $this->request->getJSON(true); // JSON RECEIVE
+
+    /** JWT decode same logic */
+    $key = "Exiaa@11";
+    $header = $this->request->getHeaderLine("Authorization");
+    $token = null;
+
+    if ($header && preg_match('/Bearer\s(\S+)/', $header, $matches)) {
+        $token = $matches[1];
+    }
+
+    $decoded = $token ? JWT::decode($token, new Key($key, 'HS256')) : null;
+    $tenantName = $decoded->tenantName ?? 'default';
+
+    /** No File Upload here because JSON use kar rahe ho */
+$data = [
+    'businessId'       => $decoded->businessId ?? 0,
+    'name'             => $input['name'] ?? null,
+    'about'            => $input['about'] ?? null,
+    'mobileNo'         => $input['mobileNo'] ?? null,
+    'email'            => $input['email'] ?? null,
+    'age'              => $input['age'] ?? null,
+    'height'           => $input['height'] ?? null,
+    'weight'           => $input['weight'] ?? null,
+    'maritalStatus'    => $input['maritalStatus'] ?? null,
+    'motherTongue'     => $input['motherTongue'] ?? null,
+    'physicalStatus'   => $input['physicalStatus'] ?? null,
+    'bodyType'         => $input['bodyType'] ?? null,
+    'profileCreatedBy' => $input['profileCreatedBy'] ?? null,
+    'eatingHabits'     => $input['eatingHabits'] ?? null,
+    'drinkingHabits'   => $input['drinkingHabits'] ?? null,
+    'smokingHabits'    => $input['smokingHabits'] ?? null,
+
+    // 🔹 Add religion-related fields
+    'religion'         => $input['religion'] ?? null,
+    'cast'             => $input['caste'] ?? null,
+    'community'        => $input['community'] ?? null,
+    'stars'            => $input['stars'] ?? null,
+    'rashi'            => $input['rashi'] ?? null,
+    'zodiac'           => $input['zodiac'] ?? null,
+    'dosh'             => $input['havingDosh'] ?? null,
+    'otherCommunities' => $input['otherCommunities'] ?? 0,
+
+    'createdDate'      => date('Y-m-d H:i:s'),
+    'modifiedDate'     => date('Y-m-d H:i:s'),
+    'createdBy'        => $decoded->userId ?? null,
+    'modifiedBy'       => $decoded->userId ?? null,
+    'isActive'         => 1,
+    'isDeleted'        => 0,
+];
+
+    $tenantService = new TenantService();
+    $db = $tenantService->getTenantConfig($this->request->getHeaderLine('X-Tenant-Config'));
+    $model = new CandidateModel($db);
+
+    $id = $model->insert($data);
+
+    return $this->respond([
+        'status' => true,
+        'message' => 'Candidate created successfully',
+        'data' => $id
+    ], 200);
+}
+
+
 
 }

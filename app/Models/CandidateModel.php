@@ -12,7 +12,7 @@ class CandidateModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['candidateId', 'coverImage','businessId','name', 'about', 'age', 'height', 'weight', 'maritalStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'religion', 'cast', 'community', 'stars', 'rashi', 'zodiac', 'dosh', 'otherCommunities', 'country', 'state', 'residingCity', 'currentCity', 'citizenship', 'hobbies', 'musicGenre', 'typeOfBooks', 'typeOfMovies', 'sports', 'favCuisine', 'knownLanguages', 'createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['candidateId','mobileNo','email','coverImage','businessId','name', 'about', 'age', 'height', 'weight', 'maritalStatus', 'motherTongue', 'physicalStatus', 'bodyType', 'profileCreatedBy', 'eatingHabits', 'drinkingHabits', 'smokingHabits', 'religion', 'cast', 'community', 'stars', 'rashi', 'zodiac', 'dosh', 'otherCommunities', 'country', 'state', 'residingCity', 'currentCity', 'citizenship', 'hobbies', 'musicGenre', 'typeOfBooks', 'typeOfMovies', 'sports', 'favCuisine', 'knownLanguages', 'createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

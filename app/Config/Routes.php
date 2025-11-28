@@ -1037,6 +1037,8 @@ $routes->group('color_code', function($routes) {
 
     $routes->post('communiteelogin','Communitee::communiteeLogin');
     $routes->post('registercommunitee','Communitee::registerCommunitee');
+    $routes->post('createcandidate', 'Communitee::createCandidate',['filter' => ['tenantFilter']]);
+
 
   });
 $routes->group('address', function ($routes) {

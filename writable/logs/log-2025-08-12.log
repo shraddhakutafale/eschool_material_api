@@ -1,0 +1,1592 @@
+ERROR - 2025-08-12 04:16:17 --> CORS Filter
+ERROR - 2025-08-12 04:16:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:16:34 --> CORS Filter
+ERROR - 2025-08-12 04:16:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:17:08 --> CORS Filter
+ERROR - 2025-08-12 04:17:08 --> Origin: 
+CRITICAL - 2025-08-12 04:17:09 --> ErrorException: Undefined property: stdClass::$filter
+[Method: POST, Route: webapi/staff/getallpaging]
+in APPPATH\Controllers\Staff.php on line 57.
+ 1 APPPATH\Controllers\Staff.php(57): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$filter', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Staff.php', 57)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 04:17:10 --> CORS Filter
+ERROR - 2025-08-12 04:17:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:17:10 --> CORS Filter
+ERROR - 2025-08-12 04:17:10 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-12 04:17:10 --> ErrorException: Undefined property: stdClass::$filter
+[Method: POST, Route: webapi/staff/getallpaging]
+in APPPATH\Controllers\Staff.php on line 57.
+ 1 APPPATH\Controllers\Staff.php(57): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$filter', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Staff.php', 57)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 04:17:25 --> CORS Filter
+ERROR - 2025-08-12 04:17:25 --> Origin: 
+CRITICAL - 2025-08-12 04:17:26 --> ErrorException: Undefined property: stdClass::$filter
+[Method: POST, Route: webapi/staff/getallpaging]
+in APPPATH\Controllers\Staff.php on line 57.
+ 1 APPPATH\Controllers\Staff.php(57): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$filter', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Staff.php', 57)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 04:17:28 --> CORS Filter
+ERROR - 2025-08-12 04:17:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:17:28 --> CORS Filter
+ERROR - 2025-08-12 04:17:28 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-12 04:17:28 --> ErrorException: Undefined property: stdClass::$filter
+[Method: POST, Route: webapi/staff/getallpaging]
+in APPPATH\Controllers\Staff.php on line 57.
+ 1 APPPATH\Controllers\Staff.php(57): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$filter', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Staff.php', 57)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 04:20:15 --> CORS Filter
+ERROR - 2025-08-12 04:20:15 --> Origin: 
+ERROR - 2025-08-12 04:20:18 --> CORS Filter
+ERROR - 2025-08-12 04:20:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:20:19 --> CORS Filter
+ERROR - 2025-08-12 04:20:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:20:51 --> CORS Filter
+ERROR - 2025-08-12 04:20:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:21:13 --> CORS Filter
+ERROR - 2025-08-12 04:21:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:22:00 --> CORS Filter
+ERROR - 2025-08-12 04:22:00 --> Origin: 
+ERROR - 2025-08-12 04:22:01 --> CORS Filter
+ERROR - 2025-08-12 04:22:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:22:01 --> CORS Filter
+ERROR - 2025-08-12 04:22:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:24:16 --> CORS Filter
+ERROR - 2025-08-12 04:24:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:26:49 --> CORS Filter
+ERROR - 2025-08-12 04:26:49 --> Origin: 
+ERROR - 2025-08-12 04:26:50 --> CORS Filter
+ERROR - 2025-08-12 04:26:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:26:50 --> CORS Filter
+ERROR - 2025-08-12 04:26:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 04:42:23 --> CORS Filter
+ERROR - 2025-08-12 04:42:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:12:24 --> CORS Filter
+ERROR - 2025-08-12 05:12:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:12:28 --> CORS Filter
+ERROR - 2025-08-12 05:12:28 --> Origin: 
+ERROR - 2025-08-12 05:12:29 --> CORS Filter
+ERROR - 2025-08-12 05:12:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:12:29 --> CORS Filter
+ERROR - 2025-08-12 05:12:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:19 --> CORS Filter
+ERROR - 2025-08-12 05:17:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:19 --> CORS Filter
+ERROR - 2025-08-12 05:17:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:20 --> CORS Filter
+ERROR - 2025-08-12 05:17:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:20 --> CORS Filter
+ERROR - 2025-08-12 05:17:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:20 --> CORS Filter
+ERROR - 2025-08-12 05:17:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:20 --> CORS Filter
+ERROR - 2025-08-12 05:17:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:21 --> CORS Filter
+ERROR - 2025-08-12 05:17:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:17:21 --> CORS Filter
+ERROR - 2025-08-12 05:17:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:22:43 --> CORS Filter
+ERROR - 2025-08-12 05:22:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:22:43 --> CORS Filter
+ERROR - 2025-08-12 05:22:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:22:43 --> CORS Filter
+ERROR - 2025-08-12 05:22:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:22:44 --> CORS Filter
+ERROR - 2025-08-12 05:22:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:05 --> CORS Filter
+ERROR - 2025-08-12 05:26:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:06 --> CORS Filter
+ERROR - 2025-08-12 05:26:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:06 --> CORS Filter
+ERROR - 2025-08-12 05:26:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:07 --> CORS Filter
+ERROR - 2025-08-12 05:26:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:08 --> CORS Filter
+ERROR - 2025-08-12 05:26:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:08 --> CORS Filter
+ERROR - 2025-08-12 05:26:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:09 --> CORS Filter
+ERROR - 2025-08-12 05:26:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:09 --> CORS Filter
+ERROR - 2025-08-12 05:26:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:14 --> CORS Filter
+ERROR - 2025-08-12 05:26:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:14 --> CORS Filter
+ERROR - 2025-08-12 05:26:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:16 --> CORS Filter
+ERROR - 2025-08-12 05:26:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:16 --> CORS Filter
+ERROR - 2025-08-12 05:26:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:19 --> CORS Filter
+ERROR - 2025-08-12 05:26:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:20 --> CORS Filter
+ERROR - 2025-08-12 05:26:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:20 --> CORS Filter
+ERROR - 2025-08-12 05:26:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:20 --> CORS Filter
+ERROR - 2025-08-12 05:26:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:29 --> CORS Filter
+ERROR - 2025-08-12 05:26:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:29 --> CORS Filter
+ERROR - 2025-08-12 05:26:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:30 --> CORS Filter
+ERROR - 2025-08-12 05:26:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:30 --> CORS Filter
+ERROR - 2025-08-12 05:26:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:32 --> CORS Filter
+ERROR - 2025-08-12 05:26:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:33 --> CORS Filter
+ERROR - 2025-08-12 05:26:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:34 --> CORS Filter
+ERROR - 2025-08-12 05:26:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:34 --> CORS Filter
+ERROR - 2025-08-12 05:26:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:39 --> CORS Filter
+ERROR - 2025-08-12 05:26:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:40 --> CORS Filter
+ERROR - 2025-08-12 05:26:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:40 --> CORS Filter
+ERROR - 2025-08-12 05:26:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:40 --> CORS Filter
+ERROR - 2025-08-12 05:26:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:41 --> CORS Filter
+ERROR - 2025-08-12 05:26:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:41 --> CORS Filter
+ERROR - 2025-08-12 05:26:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:42 --> CORS Filter
+ERROR - 2025-08-12 05:26:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:42 --> CORS Filter
+ERROR - 2025-08-12 05:26:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:47 --> CORS Filter
+ERROR - 2025-08-12 05:26:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:47 --> CORS Filter
+ERROR - 2025-08-12 05:26:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:47 --> CORS Filter
+ERROR - 2025-08-12 05:26:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:48 --> CORS Filter
+ERROR - 2025-08-12 05:26:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:48 --> CORS Filter
+ERROR - 2025-08-12 05:26:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:49 --> CORS Filter
+ERROR - 2025-08-12 05:26:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:49 --> CORS Filter
+ERROR - 2025-08-12 05:26:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:49 --> CORS Filter
+ERROR - 2025-08-12 05:26:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:54 --> CORS Filter
+ERROR - 2025-08-12 05:26:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:54 --> CORS Filter
+ERROR - 2025-08-12 05:26:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:54 --> CORS Filter
+ERROR - 2025-08-12 05:26:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:54 --> CORS Filter
+ERROR - 2025-08-12 05:26:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:56 --> CORS Filter
+ERROR - 2025-08-12 05:26:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:56 --> CORS Filter
+ERROR - 2025-08-12 05:26:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:56 --> CORS Filter
+ERROR - 2025-08-12 05:26:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:26:57 --> CORS Filter
+ERROR - 2025-08-12 05:26:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:35 --> CORS Filter
+ERROR - 2025-08-12 05:27:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:36 --> CORS Filter
+ERROR - 2025-08-12 05:27:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:36 --> CORS Filter
+ERROR - 2025-08-12 05:27:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:37 --> CORS Filter
+ERROR - 2025-08-12 05:27:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:39 --> CORS Filter
+ERROR - 2025-08-12 05:27:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:39 --> CORS Filter
+ERROR - 2025-08-12 05:27:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:39 --> CORS Filter
+ERROR - 2025-08-12 05:27:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:40 --> CORS Filter
+ERROR - 2025-08-12 05:27:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:42 --> CORS Filter
+ERROR - 2025-08-12 05:27:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:42 --> CORS Filter
+ERROR - 2025-08-12 05:27:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:42 --> CORS Filter
+ERROR - 2025-08-12 05:27:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:43 --> CORS Filter
+ERROR - 2025-08-12 05:27:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:44 --> CORS Filter
+ERROR - 2025-08-12 05:27:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:44 --> CORS Filter
+ERROR - 2025-08-12 05:27:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:48 --> CORS Filter
+ERROR - 2025-08-12 05:27:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:48 --> CORS Filter
+ERROR - 2025-08-12 05:27:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:48 --> CORS Filter
+ERROR - 2025-08-12 05:27:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:48 --> CORS Filter
+ERROR - 2025-08-12 05:27:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:49 --> CORS Filter
+ERROR - 2025-08-12 05:27:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:49 --> CORS Filter
+ERROR - 2025-08-12 05:27:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:49 --> CORS Filter
+ERROR - 2025-08-12 05:27:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:27:50 --> CORS Filter
+ERROR - 2025-08-12 05:27:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:32:42 --> CORS Filter
+ERROR - 2025-08-12 05:32:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:32:42 --> CORS Filter
+ERROR - 2025-08-12 05:32:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:32:44 --> CORS Filter
+ERROR - 2025-08-12 05:32:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:32:44 --> CORS Filter
+ERROR - 2025-08-12 05:32:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:08 --> CORS Filter
+ERROR - 2025-08-12 05:43:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:09 --> CORS Filter
+ERROR - 2025-08-12 05:43:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:09 --> CORS Filter
+ERROR - 2025-08-12 05:43:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:09 --> CORS Filter
+ERROR - 2025-08-12 05:43:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:10 --> CORS Filter
+ERROR - 2025-08-12 05:43:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:10 --> CORS Filter
+ERROR - 2025-08-12 05:43:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:12 --> CORS Filter
+ERROR - 2025-08-12 05:43:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:13 --> CORS Filter
+ERROR - 2025-08-12 05:43:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:13 --> CORS Filter
+ERROR - 2025-08-12 05:43:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:43:13 --> CORS Filter
+ERROR - 2025-08-12 05:43:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:46:35 --> CORS Filter
+ERROR - 2025-08-12 05:46:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:46:35 --> CORS Filter
+ERROR - 2025-08-12 05:46:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:46:36 --> CORS Filter
+ERROR - 2025-08-12 05:46:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 05:46:36 --> CORS Filter
+ERROR - 2025-08-12 05:46:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 06:12:13 --> CORS Filter
+ERROR - 2025-08-12 06:12:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 06:12:19 --> CORS Filter
+ERROR - 2025-08-12 06:12:19 --> Origin: 
+ERROR - 2025-08-12 06:12:20 --> CORS Filter
+ERROR - 2025-08-12 06:12:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 06:12:21 --> CORS Filter
+ERROR - 2025-08-12 06:12:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 06:13:12 --> CORS Filter
+ERROR - 2025-08-12 06:13:12 --> Origin: 
+ERROR - 2025-08-12 06:13:13 --> CORS Filter
+ERROR - 2025-08-12 06:13:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 06:13:13 --> CORS Filter
+ERROR - 2025-08-12 06:13:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:02:53 --> CORS Filter
+ERROR - 2025-08-12 07:02:53 --> Origin: 
+ERROR - 2025-08-12 07:02:54 --> CORS Filter
+ERROR - 2025-08-12 07:02:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:02:54 --> CORS Filter
+ERROR - 2025-08-12 07:02:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:02:56 --> CORS Filter
+ERROR - 2025-08-12 07:02:56 --> Origin: 
+ERROR - 2025-08-12 07:02:57 --> CORS Filter
+ERROR - 2025-08-12 07:02:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:03:38 --> CORS Filter
+ERROR - 2025-08-12 07:03:38 --> Origin: 
+ERROR - 2025-08-12 07:03:39 --> CORS Filter
+ERROR - 2025-08-12 07:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:03:39 --> CORS Filter
+ERROR - 2025-08-12 07:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:04:13 --> CORS Filter
+ERROR - 2025-08-12 07:04:13 --> Origin: 
+ERROR - 2025-08-12 07:04:14 --> CORS Filter
+ERROR - 2025-08-12 07:04:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:04:14 --> CORS Filter
+ERROR - 2025-08-12 07:04:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:05:21 --> CORS Filter
+ERROR - 2025-08-12 07:05:21 --> Origin: 
+ERROR - 2025-08-12 07:05:22 --> CORS Filter
+ERROR - 2025-08-12 07:05:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:05:22 --> CORS Filter
+ERROR - 2025-08-12 07:05:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:06:49 --> CORS Filter
+ERROR - 2025-08-12 07:06:49 --> Origin: 
+ERROR - 2025-08-12 07:06:50 --> CORS Filter
+ERROR - 2025-08-12 07:06:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:06:51 --> CORS Filter
+ERROR - 2025-08-12 07:06:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:05 --> CORS Filter
+ERROR - 2025-08-12 07:07:05 --> Origin: 
+ERROR - 2025-08-12 07:07:05 --> CORS Filter
+ERROR - 2025-08-12 07:07:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:06 --> CORS Filter
+ERROR - 2025-08-12 07:07:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:17 --> CORS Filter
+ERROR - 2025-08-12 07:07:17 --> Origin: 
+ERROR - 2025-08-12 07:07:18 --> CORS Filter
+ERROR - 2025-08-12 07:07:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:18 --> CORS Filter
+ERROR - 2025-08-12 07:07:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:30 --> CORS Filter
+ERROR - 2025-08-12 07:07:30 --> Origin: 
+ERROR - 2025-08-12 07:07:30 --> CORS Filter
+ERROR - 2025-08-12 07:07:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:31 --> CORS Filter
+ERROR - 2025-08-12 07:07:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:36 --> CORS Filter
+ERROR - 2025-08-12 07:07:36 --> Origin: 
+ERROR - 2025-08-12 07:07:37 --> CORS Filter
+ERROR - 2025-08-12 07:07:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:07:37 --> CORS Filter
+ERROR - 2025-08-12 07:07:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:08:40 --> CORS Filter
+ERROR - 2025-08-12 07:08:40 --> Origin: 
+ERROR - 2025-08-12 07:08:41 --> CORS Filter
+ERROR - 2025-08-12 07:08:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:08:41 --> CORS Filter
+ERROR - 2025-08-12 07:08:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:11:50 --> CORS Filter
+ERROR - 2025-08-12 07:11:50 --> Origin: 
+ERROR - 2025-08-12 07:11:51 --> CORS Filter
+ERROR - 2025-08-12 07:11:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:11:51 --> CORS Filter
+ERROR - 2025-08-12 07:11:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:12:03 --> CORS Filter
+ERROR - 2025-08-12 07:12:03 --> Origin: 
+ERROR - 2025-08-12 07:12:04 --> CORS Filter
+ERROR - 2025-08-12 07:12:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:12:04 --> CORS Filter
+ERROR - 2025-08-12 07:12:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:13:35 --> CORS Filter
+ERROR - 2025-08-12 07:13:35 --> Origin: 
+ERROR - 2025-08-12 07:13:36 --> CORS Filter
+ERROR - 2025-08-12 07:13:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:13:36 --> CORS Filter
+ERROR - 2025-08-12 07:13:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:13:47 --> CORS Filter
+ERROR - 2025-08-12 07:13:47 --> Origin: 
+ERROR - 2025-08-12 07:13:47 --> CORS Filter
+ERROR - 2025-08-12 07:13:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:13:48 --> CORS Filter
+ERROR - 2025-08-12 07:13:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:14:07 --> CORS Filter
+ERROR - 2025-08-12 07:14:07 --> Origin: 
+ERROR - 2025-08-12 07:14:08 --> CORS Filter
+ERROR - 2025-08-12 07:14:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:14:08 --> CORS Filter
+ERROR - 2025-08-12 07:14:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:14:19 --> CORS Filter
+ERROR - 2025-08-12 07:14:19 --> Origin: 
+ERROR - 2025-08-12 07:14:20 --> CORS Filter
+ERROR - 2025-08-12 07:14:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:14:20 --> CORS Filter
+ERROR - 2025-08-12 07:14:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:15:12 --> CORS Filter
+ERROR - 2025-08-12 07:15:12 --> Origin: 
+ERROR - 2025-08-12 07:15:13 --> CORS Filter
+ERROR - 2025-08-12 07:15:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:15:13 --> CORS Filter
+ERROR - 2025-08-12 07:15:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:15:31 --> CORS Filter
+ERROR - 2025-08-12 07:15:31 --> Origin: 
+ERROR - 2025-08-12 07:15:32 --> CORS Filter
+ERROR - 2025-08-12 07:15:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:15:32 --> CORS Filter
+ERROR - 2025-08-12 07:15:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:15:44 --> CORS Filter
+ERROR - 2025-08-12 07:15:44 --> Origin: 
+ERROR - 2025-08-12 07:15:44 --> CORS Filter
+ERROR - 2025-08-12 07:15:44 --> Origin: 
+ERROR - 2025-08-12 07:15:45 --> CORS Filter
+ERROR - 2025-08-12 07:15:45 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:15:45 --> CORS Filter
+ERROR - 2025-08-12 07:15:45 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:14 --> CORS Filter
+ERROR - 2025-08-12 07:16:14 --> Origin: 
+ERROR - 2025-08-12 07:16:15 --> CORS Filter
+ERROR - 2025-08-12 07:16:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:15 --> CORS Filter
+ERROR - 2025-08-12 07:16:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:24 --> CORS Filter
+ERROR - 2025-08-12 07:16:24 --> Origin: 
+ERROR - 2025-08-12 07:16:25 --> CORS Filter
+ERROR - 2025-08-12 07:16:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:25 --> CORS Filter
+ERROR - 2025-08-12 07:16:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:37 --> CORS Filter
+ERROR - 2025-08-12 07:16:37 --> Origin: 
+ERROR - 2025-08-12 07:16:39 --> CORS Filter
+ERROR - 2025-08-12 07:16:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:39 --> CORS Filter
+ERROR - 2025-08-12 07:16:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:40 --> CORS Filter
+ERROR - 2025-08-12 07:16:40 --> Origin: 
+ERROR - 2025-08-12 07:16:41 --> CORS Filter
+ERROR - 2025-08-12 07:16:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:51 --> CORS Filter
+ERROR - 2025-08-12 07:16:51 --> Origin: 
+ERROR - 2025-08-12 07:16:53 --> CORS Filter
+ERROR - 2025-08-12 07:16:53 --> Origin: 
+ERROR - 2025-08-12 07:16:53 --> CORS Filter
+ERROR - 2025-08-12 07:16:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:16:54 --> CORS Filter
+ERROR - 2025-08-12 07:16:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:18:33 --> CORS Filter
+ERROR - 2025-08-12 07:18:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 07:25:26 --> CORS Filter
+ERROR - 2025-08-12 07:25:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:08:10 --> CORS Filter
+ERROR - 2025-08-12 12:08:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:09:29 --> CORS Filter
+ERROR - 2025-08-12 12:09:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:14:51 --> CORS Filter
+ERROR - 2025-08-12 12:14:51 --> Origin: 
+ERROR - 2025-08-12 12:14:59 --> CORS Filter
+ERROR - 2025-08-12 12:14:59 --> Origin: 
+ERROR - 2025-08-12 12:15:00 --> CORS Filter
+ERROR - 2025-08-12 12:15:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:15:01 --> CORS Filter
+ERROR - 2025-08-12 12:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:15:11 --> CORS Filter
+ERROR - 2025-08-12 12:15:11 --> Origin: 
+ERROR - 2025-08-12 12:15:13 --> CORS Filter
+ERROR - 2025-08-12 12:15:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:15:13 --> CORS Filter
+ERROR - 2025-08-12 12:15:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:15:37 --> CORS Filter
+ERROR - 2025-08-12 12:15:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:15:47 --> CORS Filter
+ERROR - 2025-08-12 12:15:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:17:23 --> CORS Filter
+ERROR - 2025-08-12 12:17:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:33:12 --> CORS Filter
+ERROR - 2025-08-12 12:33:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:33:13 --> CORS Filter
+ERROR - 2025-08-12 12:33:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:34:44 --> CORS Filter
+ERROR - 2025-08-12 12:34:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:34:44 --> CORS Filter
+ERROR - 2025-08-12 12:34:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:35:28 --> CORS Filter
+ERROR - 2025-08-12 12:35:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:35:29 --> CORS Filter
+ERROR - 2025-08-12 12:35:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:36:15 --> CORS Filter
+ERROR - 2025-08-12 12:36:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:36:16 --> CORS Filter
+ERROR - 2025-08-12 12:36:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:36:55 --> CORS Filter
+ERROR - 2025-08-12 12:36:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:36:55 --> CORS Filter
+ERROR - 2025-08-12 12:36:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:37:54 --> CORS Filter
+ERROR - 2025-08-12 12:37:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:37:55 --> CORS Filter
+ERROR - 2025-08-12 12:37:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:40:52 --> CORS Filter
+ERROR - 2025-08-12 12:40:52 --> Origin: 
+ERROR - 2025-08-12 12:40:55 --> CORS Filter
+ERROR - 2025-08-12 12:40:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:40:55 --> CORS Filter
+ERROR - 2025-08-12 12:40:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:40:55 --> CORS Filter
+ERROR - 2025-08-12 12:40:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:43:28 --> CORS Filter
+ERROR - 2025-08-12 12:43:28 --> Origin: 
+CRITICAL - 2025-08-12 12:43:28 --> ErrorException: Undefined variable $businessId
+[Method: POST, Route: webapi/website/getlogobanner]
+in APPPATH\Controllers\Website.php on line 429.
+ 1 APPPATH\Controllers\Website.php(429): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $businessId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 429)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 12:43:31 --> CORS Filter
+ERROR - 2025-08-12 12:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:43:31 --> CORS Filter
+ERROR - 2025-08-12 12:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:43:31 --> CORS Filter
+ERROR - 2025-08-12 12:43:31 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-12 12:43:31 --> ErrorException: Undefined variable $businessId
+[Method: POST, Route: webapi/website/getlogobanner]
+in APPPATH\Controllers\Website.php on line 429.
+ 1 APPPATH\Controllers\Website.php(429): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $businessId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 429)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 12:45:58 --> CORS Filter
+ERROR - 2025-08-12 12:45:58 --> Origin: 
+ERROR - 2025-08-12 12:46:00 --> CORS Filter
+ERROR - 2025-08-12 12:46:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:46:01 --> CORS Filter
+ERROR - 2025-08-12 12:46:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:46:01 --> CORS Filter
+ERROR - 2025-08-12 12:46:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:46:51 --> CORS Filter
+ERROR - 2025-08-12 12:46:51 --> Origin: 
+ERROR - 2025-08-12 12:46:53 --> CORS Filter
+ERROR - 2025-08-12 12:46:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:46:53 --> CORS Filter
+ERROR - 2025-08-12 12:46:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:46:53 --> CORS Filter
+ERROR - 2025-08-12 12:46:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:47:19 --> CORS Filter
+ERROR - 2025-08-12 12:47:19 --> Origin: 
+ERROR - 2025-08-12 12:47:23 --> CORS Filter
+ERROR - 2025-08-12 12:47:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:47:23 --> CORS Filter
+ERROR - 2025-08-12 12:47:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:47:24 --> CORS Filter
+ERROR - 2025-08-12 12:47:24 --> Origin: 
+ERROR - 2025-08-12 12:47:26 --> CORS Filter
+ERROR - 2025-08-12 12:47:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:47:28 --> CORS Filter
+ERROR - 2025-08-12 12:47:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:48:14 --> CORS Filter
+ERROR - 2025-08-12 12:48:14 --> Origin: 
+ERROR - 2025-08-12 12:48:16 --> CORS Filter
+ERROR - 2025-08-12 12:48:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:48:17 --> CORS Filter
+ERROR - 2025-08-12 12:48:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:48:18 --> CORS Filter
+ERROR - 2025-08-12 12:48:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:50:51 --> CORS Filter
+ERROR - 2025-08-12 12:50:51 --> Origin: 
+ERROR - 2025-08-12 12:50:55 --> CORS Filter
+ERROR - 2025-08-12 12:50:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:50:55 --> CORS Filter
+ERROR - 2025-08-12 12:50:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:50:56 --> CORS Filter
+ERROR - 2025-08-12 12:50:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:51:24 --> CORS Filter
+ERROR - 2025-08-12 12:51:24 --> Origin: 
+ERROR - 2025-08-12 12:51:27 --> CORS Filter
+ERROR - 2025-08-12 12:51:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:51:28 --> CORS Filter
+ERROR - 2025-08-12 12:51:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:51:28 --> CORS Filter
+ERROR - 2025-08-12 12:51:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:53:28 --> CORS Filter
+ERROR - 2025-08-12 12:53:28 --> Origin: 
+ERROR - 2025-08-12 12:53:31 --> CORS Filter
+ERROR - 2025-08-12 12:53:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:53:31 --> CORS Filter
+ERROR - 2025-08-12 12:53:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:53:32 --> CORS Filter
+ERROR - 2025-08-12 12:53:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:54:33 --> CORS Filter
+ERROR - 2025-08-12 12:54:33 --> Origin: 
+ERROR - 2025-08-12 12:54:36 --> CORS Filter
+ERROR - 2025-08-12 12:54:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:54:37 --> CORS Filter
+ERROR - 2025-08-12 12:54:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:54:38 --> CORS Filter
+ERROR - 2025-08-12 12:54:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:58:37 --> CORS Filter
+ERROR - 2025-08-12 12:58:37 --> Origin: 
+ERROR - 2025-08-12 12:58:37 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 12:58:38 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:58:38 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:58:38 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 12:58:41 --> CORS Filter
+ERROR - 2025-08-12 12:58:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:58:41 --> CORS Filter
+ERROR - 2025-08-12 12:58:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:58:42 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 12:58:42 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:58:42 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:58:42 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 12:58:42 --> CORS Filter
+ERROR - 2025-08-12 12:58:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:59:25 --> CORS Filter
+ERROR - 2025-08-12 12:59:25 --> Origin: 
+ERROR - 2025-08-12 12:59:25 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 12:59:25 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:59:25 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:59:25 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 12:59:28 --> CORS Filter
+ERROR - 2025-08-12 12:59:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:59:28 --> CORS Filter
+ERROR - 2025-08-12 12:59:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 12:59:28 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 12:59:28 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:59:28 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 12:59:28 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 12:59:29 --> CORS Filter
+ERROR - 2025-08-12 12:59:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:00:10 --> CORS Filter
+ERROR - 2025-08-12 13:00:10 --> Origin: 
+ERROR - 2025-08-12 13:00:10 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 13:00:10 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:00:10 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:00:10 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 13:00:14 --> CORS Filter
+ERROR - 2025-08-12 13:00:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:00:15 --> CORS Filter
+ERROR - 2025-08-12 13:00:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:00:15 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 13:00:15 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:00:15 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:00:15 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 13:00:18 --> CORS Filter
+ERROR - 2025-08-12 13:00:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:00:43 --> CORS Filter
+ERROR - 2025-08-12 13:00:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:01:20 --> CORS Filter
+ERROR - 2025-08-12 13:01:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:02:39 --> CORS Filter
+ERROR - 2025-08-12 13:02:39 --> Origin: 
+ERROR - 2025-08-12 13:02:39 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 13:02:39 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:02:39 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:02:39 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 13:02:40 --> CORS Filter
+ERROR - 2025-08-12 13:02:40 --> Origin: 
+ERROR - 2025-08-12 13:02:41 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 13:02:41 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:02:41 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:02:41 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 13:02:43 --> CORS Filter
+ERROR - 2025-08-12 13:02:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:02:43 --> CORS Filter
+ERROR - 2025-08-12 13:02:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:02:44 --> CORS Filter
+ERROR - 2025-08-12 13:02:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:02:44 --> mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-12 13:02:44 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+[Method: POST, Route: webapi/website/getlogobanner]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 2 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 4 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:02:44 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 4 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 6 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-12 13:02:44 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `department_mst`
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `department_mst`
+ LIMIT 1', [], false)
+ 5 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 7 APPPATH\Controllers\Website.php(428): CodeIgniter\BaseModel->first()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->getLogoBanner()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-12 13:03:25 --> CORS Filter
+ERROR - 2025-08-12 13:03:25 --> Origin: 
+ERROR - 2025-08-12 13:03:27 --> CORS Filter
+ERROR - 2025-08-12 13:03:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:03:27 --> CORS Filter
+ERROR - 2025-08-12 13:03:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:03:28 --> CORS Filter
+ERROR - 2025-08-12 13:03:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:03:59 --> CORS Filter
+ERROR - 2025-08-12 13:03:59 --> Origin: 
+ERROR - 2025-08-12 13:04:02 --> CORS Filter
+ERROR - 2025-08-12 13:04:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:02 --> CORS Filter
+ERROR - 2025-08-12 13:04:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:09 --> CORS Filter
+ERROR - 2025-08-12 13:04:09 --> Origin: 
+ERROR - 2025-08-12 13:04:11 --> CORS Filter
+ERROR - 2025-08-12 13:04:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:12 --> CORS Filter
+ERROR - 2025-08-12 13:04:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:12 --> CORS Filter
+ERROR - 2025-08-12 13:04:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:20 --> CORS Filter
+ERROR - 2025-08-12 13:04:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:47 --> CORS Filter
+ERROR - 2025-08-12 13:04:47 --> Origin: 
+ERROR - 2025-08-12 13:04:50 --> CORS Filter
+ERROR - 2025-08-12 13:04:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:51 --> CORS Filter
+ERROR - 2025-08-12 13:04:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:04:51 --> CORS Filter
+ERROR - 2025-08-12 13:04:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:44:32 --> CORS Filter
+ERROR - 2025-08-12 13:44:32 --> Origin: 
+ERROR - 2025-08-12 13:44:37 --> CORS Filter
+ERROR - 2025-08-12 13:44:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:44:37 --> CORS Filter
+ERROR - 2025-08-12 13:44:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:44:37 --> CORS Filter
+ERROR - 2025-08-12 13:44:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:45:16 --> CORS Filter
+ERROR - 2025-08-12 13:45:16 --> Origin: 
+ERROR - 2025-08-12 13:45:18 --> CORS Filter
+ERROR - 2025-08-12 13:45:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:45:18 --> CORS Filter
+ERROR - 2025-08-12 13:45:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:45:18 --> CORS Filter
+ERROR - 2025-08-12 13:45:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:49:07 --> CORS Filter
+ERROR - 2025-08-12 13:49:07 --> Origin: 
+ERROR - 2025-08-12 13:49:11 --> CORS Filter
+ERROR - 2025-08-12 13:49:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:49:11 --> CORS Filter
+ERROR - 2025-08-12 13:49:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:49:11 --> CORS Filter
+ERROR - 2025-08-12 13:49:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:53:51 --> CORS Filter
+ERROR - 2025-08-12 13:53:51 --> Origin: 
+ERROR - 2025-08-12 13:53:54 --> CORS Filter
+ERROR - 2025-08-12 13:53:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:53:54 --> CORS Filter
+ERROR - 2025-08-12 13:53:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:53:55 --> CORS Filter
+ERROR - 2025-08-12 13:53:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:55:39 --> CORS Filter
+ERROR - 2025-08-12 13:55:39 --> Origin: 
+ERROR - 2025-08-12 13:55:43 --> CORS Filter
+ERROR - 2025-08-12 13:55:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:55:43 --> CORS Filter
+ERROR - 2025-08-12 13:55:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:55:44 --> CORS Filter
+ERROR - 2025-08-12 13:55:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:56:42 --> CORS Filter
+ERROR - 2025-08-12 13:56:42 --> Origin: 
+ERROR - 2025-08-12 13:56:43 --> CORS Filter
+ERROR - 2025-08-12 13:56:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:56:43 --> CORS Filter
+ERROR - 2025-08-12 13:56:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:56:44 --> CORS Filter
+ERROR - 2025-08-12 13:56:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:57:41 --> CORS Filter
+ERROR - 2025-08-12 13:57:41 --> Origin: 
+ERROR - 2025-08-12 13:57:43 --> CORS Filter
+ERROR - 2025-08-12 13:57:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:57:43 --> CORS Filter
+ERROR - 2025-08-12 13:57:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 13:57:44 --> CORS Filter
+ERROR - 2025-08-12 13:57:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:01:24 --> CORS Filter
+ERROR - 2025-08-12 14:01:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:01:24 --> CORS Filter
+ERROR - 2025-08-12 14:01:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:01:24 --> CORS Filter
+ERROR - 2025-08-12 14:01:24 --> Origin: 
+ERROR - 2025-08-12 14:01:27 --> CORS Filter
+ERROR - 2025-08-12 14:01:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:01:27 --> CORS Filter
+ERROR - 2025-08-12 14:01:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:04:23 --> CORS Filter
+ERROR - 2025-08-12 14:04:23 --> Origin: 
+ERROR - 2025-08-12 14:04:25 --> CORS Filter
+ERROR - 2025-08-12 14:04:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:04:26 --> CORS Filter
+ERROR - 2025-08-12 14:04:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:04:26 --> CORS Filter
+ERROR - 2025-08-12 14:04:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:07:49 --> CORS Filter
+ERROR - 2025-08-12 14:07:49 --> Origin: 
+ERROR - 2025-08-12 14:07:51 --> CORS Filter
+ERROR - 2025-08-12 14:07:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:07:51 --> CORS Filter
+ERROR - 2025-08-12 14:07:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:07:52 --> CORS Filter
+ERROR - 2025-08-12 14:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:09:55 --> CORS Filter
+ERROR - 2025-08-12 14:09:55 --> Origin: 
+ERROR - 2025-08-12 14:09:57 --> CORS Filter
+ERROR - 2025-08-12 14:09:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:09:57 --> CORS Filter
+ERROR - 2025-08-12 14:09:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:09:59 --> CORS Filter
+ERROR - 2025-08-12 14:09:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:14:26 --> CORS Filter
+ERROR - 2025-08-12 14:14:26 --> Origin: 
+ERROR - 2025-08-12 14:14:27 --> CORS Filter
+ERROR - 2025-08-12 14:14:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:14:28 --> CORS Filter
+ERROR - 2025-08-12 14:14:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:14:28 --> CORS Filter
+ERROR - 2025-08-12 14:14:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:15:15 --> CORS Filter
+ERROR - 2025-08-12 14:15:15 --> Origin: 
+ERROR - 2025-08-12 14:15:16 --> CORS Filter
+ERROR - 2025-08-12 14:15:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:15:16 --> CORS Filter
+ERROR - 2025-08-12 14:15:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:15:17 --> CORS Filter
+ERROR - 2025-08-12 14:15:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:18:08 --> CORS Filter
+ERROR - 2025-08-12 14:18:08 --> Origin: 
+ERROR - 2025-08-12 14:18:10 --> CORS Filter
+ERROR - 2025-08-12 14:18:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:18:10 --> CORS Filter
+ERROR - 2025-08-12 14:18:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:18:10 --> CORS Filter
+ERROR - 2025-08-12 14:18:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:19:21 --> CORS Filter
+ERROR - 2025-08-12 14:19:21 --> Origin: 
+ERROR - 2025-08-12 14:19:23 --> CORS Filter
+ERROR - 2025-08-12 14:19:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:19:23 --> CORS Filter
+ERROR - 2025-08-12 14:19:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:19:23 --> CORS Filter
+ERROR - 2025-08-12 14:19:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:20:38 --> CORS Filter
+ERROR - 2025-08-12 14:20:38 --> Origin: 
+ERROR - 2025-08-12 14:20:40 --> CORS Filter
+ERROR - 2025-08-12 14:20:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:20:40 --> CORS Filter
+ERROR - 2025-08-12 14:20:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:20:40 --> CORS Filter
+ERROR - 2025-08-12 14:20:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:25:14 --> CORS Filter
+ERROR - 2025-08-12 14:25:14 --> Origin: 
+ERROR - 2025-08-12 14:25:16 --> CORS Filter
+ERROR - 2025-08-12 14:25:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:25:16 --> CORS Filter
+ERROR - 2025-08-12 14:25:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:25:16 --> CORS Filter
+ERROR - 2025-08-12 14:25:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:26:36 --> CORS Filter
+ERROR - 2025-08-12 14:26:36 --> Origin: 
+ERROR - 2025-08-12 14:26:37 --> CORS Filter
+ERROR - 2025-08-12 14:26:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:26:37 --> CORS Filter
+ERROR - 2025-08-12 14:26:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:26:38 --> CORS Filter
+ERROR - 2025-08-12 14:26:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:29:55 --> CORS Filter
+ERROR - 2025-08-12 14:29:55 --> Origin: 
+ERROR - 2025-08-12 14:29:59 --> CORS Filter
+ERROR - 2025-08-12 14:29:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:30:00 --> CORS Filter
+ERROR - 2025-08-12 14:30:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:30:00 --> CORS Filter
+ERROR - 2025-08-12 14:30:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:30:03 --> CORS Filter
+ERROR - 2025-08-12 14:30:03 --> Origin: 
+ERROR - 2025-08-12 14:30:04 --> CORS Filter
+ERROR - 2025-08-12 14:30:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:07 --> CORS Filter
+ERROR - 2025-08-12 14:31:07 --> Origin: 
+ERROR - 2025-08-12 14:31:08 --> CORS Filter
+ERROR - 2025-08-12 14:31:08 --> Origin: 
+ERROR - 2025-08-12 14:31:09 --> CORS Filter
+ERROR - 2025-08-12 14:31:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:09 --> CORS Filter
+ERROR - 2025-08-12 14:31:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:10 --> CORS Filter
+ERROR - 2025-08-12 14:31:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:12 --> CORS Filter
+ERROR - 2025-08-12 14:31:12 --> Origin: 
+ERROR - 2025-08-12 14:31:13 --> CORS Filter
+ERROR - 2025-08-12 14:31:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:25 --> CORS Filter
+ERROR - 2025-08-12 14:31:25 --> Origin: 
+ERROR - 2025-08-12 14:31:26 --> CORS Filter
+ERROR - 2025-08-12 14:31:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:26 --> CORS Filter
+ERROR - 2025-08-12 14:31:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:26 --> CORS Filter
+ERROR - 2025-08-12 14:31:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:50 --> CORS Filter
+ERROR - 2025-08-12 14:31:50 --> Origin: 
+ERROR - 2025-08-12 14:31:50 --> CORS Filter
+ERROR - 2025-08-12 14:31:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:50 --> CORS Filter
+ERROR - 2025-08-12 14:31:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:31:51 --> CORS Filter
+ERROR - 2025-08-12 14:31:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:32:00 --> CORS Filter
+ERROR - 2025-08-12 14:32:00 --> Origin: 
+ERROR - 2025-08-12 14:32:02 --> CORS Filter
+ERROR - 2025-08-12 14:32:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:32:02 --> CORS Filter
+ERROR - 2025-08-12 14:32:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 14:32:02 --> CORS Filter
+ERROR - 2025-08-12 14:32:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 16:17:19 --> CORS Filter
+ERROR - 2025-08-12 16:17:19 --> Origin: 
+ERROR - 2025-08-12 16:17:21 --> CORS Filter
+ERROR - 2025-08-12 16:17:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 16:17:22 --> CORS Filter
+ERROR - 2025-08-12 16:17:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-12 16:17:22 --> CORS Filter
+ERROR - 2025-08-12 16:17:22 --> Origin: http://localhost:4200

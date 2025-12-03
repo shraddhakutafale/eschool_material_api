@@ -1,0 +1,2406 @@
+ERROR - 2025-11-21 04:08:45 --> CORS Filter
+ERROR - 2025-11-21 04:08:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:08:45 --> CORS Filter
+ERROR - 2025-11-21 04:08:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:15:44 --> CORS Filter
+ERROR - 2025-11-21 04:15:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:15:44 --> CORS Filter
+ERROR - 2025-11-21 04:15:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:22:19 --> CORS Filter
+ERROR - 2025-11-21 04:22:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:22:19 --> CORS Filter
+ERROR - 2025-11-21 04:22:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:22:19 --> CORS Filter
+ERROR - 2025-11-21 04:22:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:22:22 --> CORS Filter
+ERROR - 2025-11-21 04:22:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:22:47 --> CORS Filter
+ERROR - 2025-11-21 04:22:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:22:47 --> CORS Filter
+ERROR - 2025-11-21 04:22:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:22 --> CORS Filter
+ERROR - 2025-11-21 04:23:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:22 --> CORS Filter
+ERROR - 2025-11-21 04:23:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:22 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:23:22 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:23:22 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:23:22 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:23:27 --> CORS Filter
+ERROR - 2025-11-21 04:23:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:28 --> CORS Filter
+ERROR - 2025-11-21 04:23:28 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:44 --> CORS Filter
+ERROR - 2025-11-21 04:23:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:44 --> CORS Filter
+ERROR - 2025-11-21 04:23:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:44 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:23:44 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:23:44 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:23:44 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:23:47 --> CORS Filter
+ERROR - 2025-11-21 04:23:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:23:47 --> CORS Filter
+ERROR - 2025-11-21 04:23:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:24:47 --> CORS Filter
+ERROR - 2025-11-21 04:24:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:24:47 --> CORS Filter
+ERROR - 2025-11-21 04:24:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:24:47 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:24:47 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:24:47 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:24:47 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:24:56 --> CORS Filter
+ERROR - 2025-11-21 04:24:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:24:56 --> CORS Filter
+ERROR - 2025-11-21 04:24:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:24:59 --> CORS Filter
+ERROR - 2025-11-21 04:24:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:25:00 --> CORS Filter
+ERROR - 2025-11-21 04:25:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:25:00 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:25:00 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:25:00 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:25:00 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:25:02 --> CORS Filter
+ERROR - 2025-11-21 04:25:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:25:02 --> CORS Filter
+ERROR - 2025-11-21 04:25:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:25:24 --> CORS Filter
+ERROR - 2025-11-21 04:25:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:25:24 --> CORS Filter
+ERROR - 2025-11-21 04:25:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:25:24 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:25:24 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:25:24 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:25:24 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:25:26 --> CORS Filter
+ERROR - 2025-11-21 04:25:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:25:26 --> CORS Filter
+ERROR - 2025-11-21 04:25:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:26:18 --> CORS Filter
+ERROR - 2025-11-21 04:26:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:26:18 --> CORS Filter
+ERROR - 2025-11-21 04:26:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:26:18 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:26:18 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:26:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:26:18 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:26:22 --> CORS Filter
+ERROR - 2025-11-21 04:26:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:26:23 --> CORS Filter
+ERROR - 2025-11-21 04:26:23 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:26:26 --> CORS Filter
+ERROR - 2025-11-21 04:26:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:26:26 --> CORS Filter
+ERROR - 2025-11-21 04:26:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:26:26 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:26:26 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:26:26 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:26:26 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:28:42 --> CORS Filter
+ERROR - 2025-11-21 04:28:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:28:42 --> CORS Filter
+ERROR - 2025-11-21 04:28:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:29:07 --> CORS Filter
+ERROR - 2025-11-21 04:29:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:29:07 --> CORS Filter
+ERROR - 2025-11-21 04:29:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:29:07 --> mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-11-21 04:29:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+[Method: POST, Route: api/business/getallbusinesssubcategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:29:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:29:07 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.business_sub_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = \'18\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `business_sub_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Business.php(245): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Business->getAllBusinessSubCategory()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Business))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:49:40 --> CORS Filter
+ERROR - 2025-11-21 04:49:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:49:40 --> CORS Filter
+ERROR - 2025-11-21 04:49:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:53:13 --> CORS Filter
+ERROR - 2025-11-21 04:53:13 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:53:13 --> CORS Filter
+ERROR - 2025-11-21 04:53:13 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:53:38 --> CORS Filter
+ERROR - 2025-11-21 04:53:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:53:38 --> CORS Filter
+ERROR - 2025-11-21 04:53:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:54:38 --> CORS Filter
+ERROR - 2025-11-21 04:54:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:54:39 --> CORS Filter
+ERROR - 2025-11-21 04:54:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:54:57 --> CORS Filter
+ERROR - 2025-11-21 04:54:57 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:54:57 --> CORS Filter
+ERROR - 2025-11-21 04:54:57 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:55:37 --> CORS Filter
+ERROR - 2025-11-21 04:55:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:55:37 --> CORS Filter
+ERROR - 2025-11-21 04:55:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:56:39 --> CORS Filter
+ERROR - 2025-11-21 04:56:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:56:39 --> CORS Filter
+ERROR - 2025-11-21 04:56:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:56:42 --> mysqli_sql_exception: Unknown column 'businessSubCategoryId' in 'field list' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `bu...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `bu...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `bu...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `bu...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\User.php(547): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-11-21 04:56:42 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessSubCategoryId' in 'field list'
+[Method: POST, Route: api/user/registerbusinessuser]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (:businessName:, :businessSubCategoryId:, :createdDate:, :modifiedDate:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\User.php(547): CodeIgniter\Model->insert([...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:56:42 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessSubCategoryId' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Communitee\', \'\', \'2025-11-21 04:56:42\', \'2025-11-21 04:56:42\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Communitee\', \'\', \'2025-11-21 04:56:42\', \'2025-11-21 04:56:42\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (:businessName:, :businessSubCategoryId:, :createdDate:, :modifiedDate:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\User.php(547): CodeIgniter\Model->insert([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 04:56:42 --> [Caused by] mysqli_sql_exception: Unknown column 'businessSubCategoryId' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Communitee\', \'\', \'2025-11-21 04:56:42\', \'2025-11-21 04:56:42\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Communitee\', \'\', \'2025-11-21 04:56:42\', \'2025-11-21 04:56:42\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Communitee\', \'\', \'2025-11-21 04:56:42\', \'2025-11-21 04:56:42\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (:businessName:, :businessSubCategoryId:, :createdDate:, :modifiedDate:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\User.php(547): CodeIgniter\Model->insert([...])
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 04:57:18 --> CORS Filter
+ERROR - 2025-11-21 04:57:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:57:18 --> CORS Filter
+ERROR - 2025-11-21 04:57:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:57:30 --> CORS Filter
+ERROR - 2025-11-21 04:57:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:57:30 --> CORS Filter
+ERROR - 2025-11-21 04:57:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:59:39 --> CORS Filter
+ERROR - 2025-11-21 04:59:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 04:59:39 --> CORS Filter
+ERROR - 2025-11-21 04:59:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:00:20 --> CORS Filter
+ERROR - 2025-11-21 05:00:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:00:20 --> CORS Filter
+ERROR - 2025-11-21 05:00:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:03:25 --> CORS Filter
+ERROR - 2025-11-21 05:03:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:03:25 --> CORS Filter
+ERROR - 2025-11-21 05:03:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:07:00 --> CORS Filter
+ERROR - 2025-11-21 05:07:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:07:00 --> CORS Filter
+ERROR - 2025-11-21 05:07:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:07:30 --> CORS Filter
+ERROR - 2025-11-21 05:07:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:07:30 --> CORS Filter
+ERROR - 2025-11-21 05:07:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:08:58 --> CORS Filter
+ERROR - 2025-11-21 05:08:58 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:08:58 --> CORS Filter
+ERROR - 2025-11-21 05:08:58 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:09:21 --> CORS Filter
+ERROR - 2025-11-21 05:09:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:09:21 --> CORS Filter
+ERROR - 2025-11-21 05:09:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:12:22 --> CORS Filter
+ERROR - 2025-11-21 05:12:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:12:22 --> CORS Filter
+ERROR - 2025-11-21 05:12:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:12:35 --> CORS Filter
+ERROR - 2025-11-21 05:12:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:12:35 --> CORS Filter
+ERROR - 2025-11-21 05:12:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:13:18 --> CORS Filter
+ERROR - 2025-11-21 05:13:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:13:18 --> CORS Filter
+ERROR - 2025-11-21 05:13:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:15:12 --> CORS Filter
+ERROR - 2025-11-21 05:15:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:15:13 --> CORS Filter
+ERROR - 2025-11-21 05:15:13 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:15:13 --> mysqli_sql_exception: Unknown column 'businessSubCategoryId' in 'field list' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `bu...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `bu...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `bu...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `bu...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\User.php(547): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-11-21 05:15:13 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessSubCategoryId' in 'field list'
+[Method: POST, Route: api/user/registerbusinessuser]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (:businessName:, :businessSubCategoryId:, :createdDate:, :modifiedDate:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\User.php(547): CodeIgniter\Model->insert([...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 05:15:13 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessSubCategoryId' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Vivah\', \'11\', \'2025-11-21 05:15:13\', \'2025-11-21 05:15:13\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Vivah\', \'11\', \'2025-11-21 05:15:13\', \'2025-11-21 05:15:13\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (:businessName:, :businessSubCategoryId:, :createdDate:, :modifiedDate:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\User.php(547): CodeIgniter\Model->insert([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-11-21 05:15:13 --> [Caused by] mysqli_sql_exception: Unknown column 'businessSubCategoryId' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Vivah\', \'11\', \'2025-11-21 05:15:13\', \'2025-11-21 05:15:13\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Vivah\', \'11\', \'2025-11-21 05:15:13\', \'2025-11-21 05:15:13\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (\'Vivah\', \'11\', \'2025-11-21 05:15:13\', \'2025-11-21 05:15:13\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `business_mst` (`businessName`, `businessSubCategoryId`, `createdDate`, `modifiedDate`) VALUES (:businessName:, :businessSubCategoryId:, :createdDate:, :modifiedDate:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\User.php(547): CodeIgniter\Model->insert([...])
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->registerBusinessUser()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-21 05:17:49 --> CORS Filter
+ERROR - 2025-11-21 05:17:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:17:49 --> CORS Filter
+ERROR - 2025-11-21 05:17:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:24:51 --> CORS Filter
+ERROR - 2025-11-21 05:24:51 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:24:52 --> CORS Filter
+ERROR - 2025-11-21 05:24:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:33:19 --> CORS Filter
+ERROR - 2025-11-21 05:33:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:33:19 --> CORS Filter
+ERROR - 2025-11-21 05:33:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:37:53 --> CORS Filter
+ERROR - 2025-11-21 05:37:53 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:37:54 --> CORS Filter
+ERROR - 2025-11-21 05:37:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:37:54 --> CORS Filter
+ERROR - 2025-11-21 05:37:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:37:55 --> CORS Filter
+ERROR - 2025-11-21 05:37:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:37:55 --> CORS Filter
+ERROR - 2025-11-21 05:37:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 05:37:55 --> CORS Filter
+ERROR - 2025-11-21 05:37:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:24 --> CORS Filter
+ERROR - 2025-11-21 07:26:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:24 --> CORS Filter
+ERROR - 2025-11-21 07:26:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:26 --> CORS Filter
+ERROR - 2025-11-21 07:26:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:26 --> CORS Filter
+ERROR - 2025-11-21 07:26:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:27 --> CORS Filter
+ERROR - 2025-11-21 07:26:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:27 --> CORS Filter
+ERROR - 2025-11-21 07:26:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:47 --> CORS Filter
+ERROR - 2025-11-21 07:26:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:47 --> CORS Filter
+ERROR - 2025-11-21 07:26:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:48 --> CORS Filter
+ERROR - 2025-11-21 07:26:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:26:48 --> CORS Filter
+ERROR - 2025-11-21 07:26:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:27:02 --> CORS Filter
+ERROR - 2025-11-21 07:27:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 07:27:02 --> CORS Filter
+ERROR - 2025-11-21 07:27:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:35 --> CORS Filter
+ERROR - 2025-11-21 08:29:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:36 --> CORS Filter
+ERROR - 2025-11-21 08:29:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:36 --> CORS Filter
+ERROR - 2025-11-21 08:29:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:36 --> CORS Filter
+ERROR - 2025-11-21 08:29:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:36 --> CORS Filter
+ERROR - 2025-11-21 08:29:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:36 --> CORS Filter
+ERROR - 2025-11-21 08:29:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:46 --> CORS Filter
+ERROR - 2025-11-21 08:29:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:47 --> CORS Filter
+ERROR - 2025-11-21 08:29:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:47 --> CORS Filter
+ERROR - 2025-11-21 08:29:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:29:47 --> CORS Filter
+ERROR - 2025-11-21 08:29:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:30:15 --> CORS Filter
+ERROR - 2025-11-21 08:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:30:15 --> CORS Filter
+ERROR - 2025-11-21 08:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:30:15 --> CORS Filter
+ERROR - 2025-11-21 08:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:30:15 --> CORS Filter
+ERROR - 2025-11-21 08:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:30:16 --> CORS Filter
+ERROR - 2025-11-21 08:30:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 08:30:16 --> CORS Filter
+ERROR - 2025-11-21 08:30:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:19:04 --> CORS Filter
+ERROR - 2025-11-21 09:19:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:19:04 --> CORS Filter
+ERROR - 2025-11-21 09:19:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:20:06 --> CORS Filter
+ERROR - 2025-11-21 09:20:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:20:07 --> CORS Filter
+ERROR - 2025-11-21 09:20:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:32 --> CORS Filter
+ERROR - 2025-11-21 09:28:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:33 --> CORS Filter
+ERROR - 2025-11-21 09:28:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:34 --> CORS Filter
+ERROR - 2025-11-21 09:28:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:34 --> CORS Filter
+ERROR - 2025-11-21 09:28:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:37 --> CORS Filter
+ERROR - 2025-11-21 09:28:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:39 --> CORS Filter
+ERROR - 2025-11-21 09:28:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:39 --> CORS Filter
+ERROR - 2025-11-21 09:28:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:41 --> CORS Filter
+ERROR - 2025-11-21 09:28:41 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:41 --> CORS Filter
+ERROR - 2025-11-21 09:28:41 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:42 --> CORS Filter
+ERROR - 2025-11-21 09:28:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:55 --> CORS Filter
+ERROR - 2025-11-21 09:28:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:28:56 --> CORS Filter
+ERROR - 2025-11-21 09:28:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:09 --> CORS Filter
+ERROR - 2025-11-21 09:29:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:09 --> CORS Filter
+ERROR - 2025-11-21 09:29:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:11 --> CORS Filter
+ERROR - 2025-11-21 09:29:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:11 --> CORS Filter
+ERROR - 2025-11-21 09:29:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:11 --> CORS Filter
+ERROR - 2025-11-21 09:29:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:11 --> CORS Filter
+ERROR - 2025-11-21 09:29:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:30 --> CORS Filter
+ERROR - 2025-11-21 09:29:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:31 --> CORS Filter
+ERROR - 2025-11-21 09:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:32 --> CORS Filter
+ERROR - 2025-11-21 09:29:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:33 --> CORS Filter
+ERROR - 2025-11-21 09:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:34 --> CORS Filter
+ERROR - 2025-11-21 09:29:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:34 --> CORS Filter
+ERROR - 2025-11-21 09:29:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:34 --> CORS Filter
+ERROR - 2025-11-21 09:29:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:34 --> CORS Filter
+ERROR - 2025-11-21 09:29:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:53 --> CORS Filter
+ERROR - 2025-11-21 09:29:53 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:53 --> CORS Filter
+ERROR - 2025-11-21 09:29:53 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:54 --> CORS Filter
+ERROR - 2025-11-21 09:29:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:55 --> CORS Filter
+ERROR - 2025-11-21 09:29:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:56 --> CORS Filter
+ERROR - 2025-11-21 09:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:29:56 --> CORS Filter
+ERROR - 2025-11-21 09:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:30:09 --> CORS Filter
+ERROR - 2025-11-21 09:30:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:30:09 --> CORS Filter
+ERROR - 2025-11-21 09:30:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:30:09 --> CORS Filter
+ERROR - 2025-11-21 09:30:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:30:09 --> CORS Filter
+ERROR - 2025-11-21 09:30:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:37:44 --> CORS Filter
+ERROR - 2025-11-21 09:37:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:37:45 --> CORS Filter
+ERROR - 2025-11-21 09:37:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:37:45 --> CORS Filter
+ERROR - 2025-11-21 09:37:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:37:45 --> CORS Filter
+ERROR - 2025-11-21 09:37:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:39:17 --> CORS Filter
+ERROR - 2025-11-21 09:39:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:39:18 --> CORS Filter
+ERROR - 2025-11-21 09:39:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:39:18 --> CORS Filter
+ERROR - 2025-11-21 09:39:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:39:18 --> CORS Filter
+ERROR - 2025-11-21 09:39:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:41:16 --> CORS Filter
+ERROR - 2025-11-21 09:41:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:41:16 --> CORS Filter
+ERROR - 2025-11-21 09:41:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:41:16 --> CORS Filter
+ERROR - 2025-11-21 09:41:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:41:17 --> CORS Filter
+ERROR - 2025-11-21 09:41:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:42:40 --> CORS Filter
+ERROR - 2025-11-21 09:42:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:42:40 --> CORS Filter
+ERROR - 2025-11-21 09:42:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:42:41 --> CORS Filter
+ERROR - 2025-11-21 09:42:41 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:42:41 --> CORS Filter
+ERROR - 2025-11-21 09:42:41 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:44:33 --> CORS Filter
+ERROR - 2025-11-21 09:44:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:44:33 --> CORS Filter
+ERROR - 2025-11-21 09:44:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:44:33 --> CORS Filter
+ERROR - 2025-11-21 09:44:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:44:33 --> CORS Filter
+ERROR - 2025-11-21 09:44:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:46:40 --> CORS Filter
+ERROR - 2025-11-21 09:46:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:46:40 --> CORS Filter
+ERROR - 2025-11-21 09:46:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:46:41 --> CORS Filter
+ERROR - 2025-11-21 09:46:41 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:46:41 --> CORS Filter
+ERROR - 2025-11-21 09:46:41 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:49:10 --> CORS Filter
+ERROR - 2025-11-21 09:49:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:49:10 --> CORS Filter
+ERROR - 2025-11-21 09:49:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:49:10 --> CORS Filter
+ERROR - 2025-11-21 09:49:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:49:10 --> CORS Filter
+ERROR - 2025-11-21 09:49:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:52:33 --> CORS Filter
+ERROR - 2025-11-21 09:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:52:33 --> CORS Filter
+ERROR - 2025-11-21 09:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:52:33 --> CORS Filter
+ERROR - 2025-11-21 09:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 09:52:33 --> CORS Filter
+ERROR - 2025-11-21 09:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:03:12 --> CORS Filter
+ERROR - 2025-11-21 10:03:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:03:12 --> CORS Filter
+ERROR - 2025-11-21 10:03:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:03:12 --> CORS Filter
+ERROR - 2025-11-21 10:03:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:03:13 --> CORS Filter
+ERROR - 2025-11-21 10:03:13 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:08:39 --> CORS Filter
+ERROR - 2025-11-21 10:08:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:08:40 --> CORS Filter
+ERROR - 2025-11-21 10:08:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:08:40 --> CORS Filter
+ERROR - 2025-11-21 10:08:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:08:40 --> CORS Filter
+ERROR - 2025-11-21 10:08:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:11:04 --> CORS Filter
+ERROR - 2025-11-21 10:11:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:11:04 --> CORS Filter
+ERROR - 2025-11-21 10:11:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:11:04 --> CORS Filter
+ERROR - 2025-11-21 10:11:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:11:04 --> CORS Filter
+ERROR - 2025-11-21 10:11:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:15:01 --> CORS Filter
+ERROR - 2025-11-21 10:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:15:01 --> CORS Filter
+ERROR - 2025-11-21 10:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:15:01 --> CORS Filter
+ERROR - 2025-11-21 10:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:15:01 --> CORS Filter
+ERROR - 2025-11-21 10:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:18:14 --> CORS Filter
+ERROR - 2025-11-21 10:18:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:18:14 --> CORS Filter
+ERROR - 2025-11-21 10:18:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:18:14 --> CORS Filter
+ERROR - 2025-11-21 10:18:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:18:14 --> CORS Filter
+ERROR - 2025-11-21 10:18:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:23:15 --> CORS Filter
+ERROR - 2025-11-21 10:23:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:23:15 --> CORS Filter
+ERROR - 2025-11-21 10:23:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:23:15 --> CORS Filter
+ERROR - 2025-11-21 10:23:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:23:15 --> CORS Filter
+ERROR - 2025-11-21 10:23:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:24:43 --> CORS Filter
+ERROR - 2025-11-21 10:24:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:24:43 --> CORS Filter
+ERROR - 2025-11-21 10:24:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:24:43 --> CORS Filter
+ERROR - 2025-11-21 10:24:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:24:43 --> CORS Filter
+ERROR - 2025-11-21 10:24:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:25:42 --> CORS Filter
+ERROR - 2025-11-21 10:25:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:25:42 --> CORS Filter
+ERROR - 2025-11-21 10:25:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:25:42 --> CORS Filter
+ERROR - 2025-11-21 10:25:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:25:42 --> CORS Filter
+ERROR - 2025-11-21 10:25:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:00 --> CORS Filter
+ERROR - 2025-11-21 10:29:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:01 --> CORS Filter
+ERROR - 2025-11-21 10:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:01 --> CORS Filter
+ERROR - 2025-11-21 10:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:01 --> CORS Filter
+ERROR - 2025-11-21 10:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:23 --> CORS Filter
+ERROR - 2025-11-21 10:29:23 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:23 --> CORS Filter
+ERROR - 2025-11-21 10:29:23 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:23 --> CORS Filter
+ERROR - 2025-11-21 10:29:23 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:23 --> CORS Filter
+ERROR - 2025-11-21 10:29:23 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:47 --> CORS Filter
+ERROR - 2025-11-21 10:29:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:47 --> CORS Filter
+ERROR - 2025-11-21 10:29:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:47 --> CORS Filter
+ERROR - 2025-11-21 10:29:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:29:47 --> CORS Filter
+ERROR - 2025-11-21 10:29:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:06 --> CORS Filter
+ERROR - 2025-11-21 10:30:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:06 --> CORS Filter
+ERROR - 2025-11-21 10:30:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:07 --> CORS Filter
+ERROR - 2025-11-21 10:30:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:07 --> CORS Filter
+ERROR - 2025-11-21 10:30:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:07 --> CORS Filter
+ERROR - 2025-11-21 10:30:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:07 --> CORS Filter
+ERROR - 2025-11-21 10:30:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:19 --> CORS Filter
+ERROR - 2025-11-21 10:30:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:19 --> CORS Filter
+ERROR - 2025-11-21 10:30:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:19 --> CORS Filter
+ERROR - 2025-11-21 10:30:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:30:19 --> CORS Filter
+ERROR - 2025-11-21 10:30:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:18 --> CORS Filter
+ERROR - 2025-11-21 10:32:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:18 --> CORS Filter
+ERROR - 2025-11-21 10:32:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:18 --> CORS Filter
+ERROR - 2025-11-21 10:32:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:18 --> CORS Filter
+ERROR - 2025-11-21 10:32:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:33 --> CORS Filter
+ERROR - 2025-11-21 10:32:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:33 --> CORS Filter
+ERROR - 2025-11-21 10:32:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:34 --> CORS Filter
+ERROR - 2025-11-21 10:32:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:34 --> CORS Filter
+ERROR - 2025-11-21 10:32:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:51 --> CORS Filter
+ERROR - 2025-11-21 10:32:51 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:52 --> CORS Filter
+ERROR - 2025-11-21 10:32:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:52 --> CORS Filter
+ERROR - 2025-11-21 10:32:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:52 --> CORS Filter
+ERROR - 2025-11-21 10:32:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:55 --> CORS Filter
+ERROR - 2025-11-21 10:32:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:32:55 --> CORS Filter
+ERROR - 2025-11-21 10:32:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:33:07 --> CORS Filter
+ERROR - 2025-11-21 10:33:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:33:08 --> CORS Filter
+ERROR - 2025-11-21 10:33:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:33:08 --> CORS Filter
+ERROR - 2025-11-21 10:33:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:33:08 --> CORS Filter
+ERROR - 2025-11-21 10:33:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:34:25 --> CORS Filter
+ERROR - 2025-11-21 10:34:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:34:25 --> CORS Filter
+ERROR - 2025-11-21 10:34:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:34:25 --> CORS Filter
+ERROR - 2025-11-21 10:34:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:34:25 --> CORS Filter
+ERROR - 2025-11-21 10:34:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:45 --> CORS Filter
+ERROR - 2025-11-21 10:37:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:45 --> CORS Filter
+ERROR - 2025-11-21 10:37:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:45 --> CORS Filter
+ERROR - 2025-11-21 10:37:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:45 --> CORS Filter
+ERROR - 2025-11-21 10:37:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:59 --> CORS Filter
+ERROR - 2025-11-21 10:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:59 --> CORS Filter
+ERROR - 2025-11-21 10:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:59 --> CORS Filter
+ERROR - 2025-11-21 10:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:37:59 --> CORS Filter
+ERROR - 2025-11-21 10:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:40:15 --> CORS Filter
+ERROR - 2025-11-21 10:40:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:40:15 --> CORS Filter
+ERROR - 2025-11-21 10:40:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:40:16 --> CORS Filter
+ERROR - 2025-11-21 10:40:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:40:16 --> CORS Filter
+ERROR - 2025-11-21 10:40:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:42:02 --> CORS Filter
+ERROR - 2025-11-21 10:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:42:02 --> CORS Filter
+ERROR - 2025-11-21 10:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:42:02 --> CORS Filter
+ERROR - 2025-11-21 10:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:42:02 --> CORS Filter
+ERROR - 2025-11-21 10:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:22 --> CORS Filter
+ERROR - 2025-11-21 10:49:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:22 --> CORS Filter
+ERROR - 2025-11-21 10:49:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:22 --> CORS Filter
+ERROR - 2025-11-21 10:49:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:22 --> CORS Filter
+ERROR - 2025-11-21 10:49:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:35 --> CORS Filter
+ERROR - 2025-11-21 10:49:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:35 --> CORS Filter
+ERROR - 2025-11-21 10:49:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:35 --> CORS Filter
+ERROR - 2025-11-21 10:49:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:49:35 --> CORS Filter
+ERROR - 2025-11-21 10:49:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:50:52 --> CORS Filter
+ERROR - 2025-11-21 10:50:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:50:52 --> CORS Filter
+ERROR - 2025-11-21 10:50:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:50:52 --> CORS Filter
+ERROR - 2025-11-21 10:50:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:50:52 --> CORS Filter
+ERROR - 2025-11-21 10:50:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:51:43 --> CORS Filter
+ERROR - 2025-11-21 10:51:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:51:43 --> CORS Filter
+ERROR - 2025-11-21 10:51:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:51:44 --> CORS Filter
+ERROR - 2025-11-21 10:51:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:51:44 --> CORS Filter
+ERROR - 2025-11-21 10:51:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:52:25 --> CORS Filter
+ERROR - 2025-11-21 10:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:52:25 --> CORS Filter
+ERROR - 2025-11-21 10:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:52:25 --> CORS Filter
+ERROR - 2025-11-21 10:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 10:52:26 --> CORS Filter
+ERROR - 2025-11-21 10:52:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:36 --> CORS Filter
+ERROR - 2025-11-21 11:30:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:37 --> CORS Filter
+ERROR - 2025-11-21 11:30:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:37 --> CORS Filter
+ERROR - 2025-11-21 11:30:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:37 --> CORS Filter
+ERROR - 2025-11-21 11:30:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:38 --> CORS Filter
+ERROR - 2025-11-21 11:30:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:38 --> CORS Filter
+ERROR - 2025-11-21 11:30:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:46 --> CORS Filter
+ERROR - 2025-11-21 11:30:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:46 --> CORS Filter
+ERROR - 2025-11-21 11:30:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:46 --> CORS Filter
+ERROR - 2025-11-21 11:30:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:30:47 --> CORS Filter
+ERROR - 2025-11-21 11:30:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:45 --> CORS Filter
+ERROR - 2025-11-21 11:41:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:45 --> CORS Filter
+ERROR - 2025-11-21 11:41:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:45 --> CORS Filter
+ERROR - 2025-11-21 11:41:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:45 --> CORS Filter
+ERROR - 2025-11-21 11:41:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:46 --> CORS Filter
+ERROR - 2025-11-21 11:41:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:46 --> CORS Filter
+ERROR - 2025-11-21 11:41:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:57 --> CORS Filter
+ERROR - 2025-11-21 11:41:57 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:57 --> CORS Filter
+ERROR - 2025-11-21 11:41:57 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:57 --> CORS Filter
+ERROR - 2025-11-21 11:41:57 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:41:57 --> CORS Filter
+ERROR - 2025-11-21 11:41:57 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:43:55 --> CORS Filter
+ERROR - 2025-11-21 11:43:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:43:55 --> CORS Filter
+ERROR - 2025-11-21 11:43:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:43:56 --> CORS Filter
+ERROR - 2025-11-21 11:43:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:43:56 --> CORS Filter
+ERROR - 2025-11-21 11:43:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:47:42 --> CORS Filter
+ERROR - 2025-11-21 11:47:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:47:42 --> CORS Filter
+ERROR - 2025-11-21 11:47:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:47:42 --> CORS Filter
+ERROR - 2025-11-21 11:47:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:47:42 --> CORS Filter
+ERROR - 2025-11-21 11:47:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:51:29 --> CORS Filter
+ERROR - 2025-11-21 11:51:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:51:29 --> CORS Filter
+ERROR - 2025-11-21 11:51:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:51:29 --> CORS Filter
+ERROR - 2025-11-21 11:51:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:51:29 --> CORS Filter
+ERROR - 2025-11-21 11:51:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:54:46 --> CORS Filter
+ERROR - 2025-11-21 11:54:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:54:46 --> CORS Filter
+ERROR - 2025-11-21 11:54:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:54:47 --> CORS Filter
+ERROR - 2025-11-21 11:54:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:54:47 --> CORS Filter
+ERROR - 2025-11-21 11:54:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:55:03 --> CORS Filter
+ERROR - 2025-11-21 11:55:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:55:03 --> CORS Filter
+ERROR - 2025-11-21 11:55:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:55:04 --> CORS Filter
+ERROR - 2025-11-21 11:55:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 11:55:04 --> CORS Filter
+ERROR - 2025-11-21 11:55:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:15:00 --> CORS Filter
+ERROR - 2025-11-21 12:15:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:15:00 --> CORS Filter
+ERROR - 2025-11-21 12:15:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:15:00 --> CORS Filter
+ERROR - 2025-11-21 12:15:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:15:00 --> CORS Filter
+ERROR - 2025-11-21 12:15:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:37:50 --> CORS Filter
+ERROR - 2025-11-21 12:37:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:37:50 --> CORS Filter
+ERROR - 2025-11-21 12:37:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:37:50 --> CORS Filter
+ERROR - 2025-11-21 12:37:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:37:50 --> CORS Filter
+ERROR - 2025-11-21 12:37:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:38:02 --> CORS Filter
+ERROR - 2025-11-21 12:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:38:02 --> CORS Filter
+ERROR - 2025-11-21 12:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:38:02 --> CORS Filter
+ERROR - 2025-11-21 12:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:38:02 --> CORS Filter
+ERROR - 2025-11-21 12:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:38:03 --> CORS Filter
+ERROR - 2025-11-21 12:38:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:38:03 --> CORS Filter
+ERROR - 2025-11-21 12:38:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:00 --> CORS Filter
+ERROR - 2025-11-21 12:39:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:02 --> CORS Filter
+ERROR - 2025-11-21 12:39:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:03 --> CORS Filter
+ERROR - 2025-11-21 12:39:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:03 --> CORS Filter
+ERROR - 2025-11-21 12:39:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:20 --> CORS Filter
+ERROR - 2025-11-21 12:39:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:20 --> CORS Filter
+ERROR - 2025-11-21 12:39:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:21 --> CORS Filter
+ERROR - 2025-11-21 12:39:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:39:21 --> CORS Filter
+ERROR - 2025-11-21 12:39:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:40:44 --> CORS Filter
+ERROR - 2025-11-21 12:40:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:40:44 --> CORS Filter
+ERROR - 2025-11-21 12:40:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:40:44 --> CORS Filter
+ERROR - 2025-11-21 12:40:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:40:44 --> CORS Filter
+ERROR - 2025-11-21 12:40:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:41:16 --> CORS Filter
+ERROR - 2025-11-21 12:41:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:41:16 --> CORS Filter
+ERROR - 2025-11-21 12:41:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:41:16 --> CORS Filter
+ERROR - 2025-11-21 12:41:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:41:17 --> CORS Filter
+ERROR - 2025-11-21 12:41:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:42:00 --> CORS Filter
+ERROR - 2025-11-21 12:42:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:42:00 --> CORS Filter
+ERROR - 2025-11-21 12:42:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:42:01 --> CORS Filter
+ERROR - 2025-11-21 12:42:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:42:01 --> CORS Filter
+ERROR - 2025-11-21 12:42:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:42:01 --> CORS Filter
+ERROR - 2025-11-21 12:42:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:42:01 --> CORS Filter
+ERROR - 2025-11-21 12:42:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:12 --> CORS Filter
+ERROR - 2025-11-21 12:43:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:12 --> CORS Filter
+ERROR - 2025-11-21 12:43:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:12 --> CORS Filter
+ERROR - 2025-11-21 12:43:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:12 --> CORS Filter
+ERROR - 2025-11-21 12:43:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:18 --> CORS Filter
+ERROR - 2025-11-21 12:43:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:18 --> CORS Filter
+ERROR - 2025-11-21 12:43:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:18 --> CORS Filter
+ERROR - 2025-11-21 12:43:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:18 --> CORS Filter
+ERROR - 2025-11-21 12:43:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:31 --> CORS Filter
+ERROR - 2025-11-21 12:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:31 --> CORS Filter
+ERROR - 2025-11-21 12:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:32 --> CORS Filter
+ERROR - 2025-11-21 12:43:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:43:32 --> CORS Filter
+ERROR - 2025-11-21 12:43:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:01 --> CORS Filter
+ERROR - 2025-11-21 12:44:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:02 --> CORS Filter
+ERROR - 2025-11-21 12:44:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:02 --> CORS Filter
+ERROR - 2025-11-21 12:44:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:02 --> CORS Filter
+ERROR - 2025-11-21 12:44:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:10 --> CORS Filter
+ERROR - 2025-11-21 12:44:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:10 --> CORS Filter
+ERROR - 2025-11-21 12:44:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:10 --> CORS Filter
+ERROR - 2025-11-21 12:44:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:10 --> CORS Filter
+ERROR - 2025-11-21 12:44:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:11 --> CORS Filter
+ERROR - 2025-11-21 12:44:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:11 --> CORS Filter
+ERROR - 2025-11-21 12:44:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:20 --> CORS Filter
+ERROR - 2025-11-21 12:44:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:21 --> CORS Filter
+ERROR - 2025-11-21 12:44:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:21 --> CORS Filter
+ERROR - 2025-11-21 12:44:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:21 --> CORS Filter
+ERROR - 2025-11-21 12:44:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:34 --> CORS Filter
+ERROR - 2025-11-21 12:44:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:34 --> CORS Filter
+ERROR - 2025-11-21 12:44:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:34 --> CORS Filter
+ERROR - 2025-11-21 12:44:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:44:34 --> CORS Filter
+ERROR - 2025-11-21 12:44:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:45:42 --> CORS Filter
+ERROR - 2025-11-21 12:45:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:45:43 --> CORS Filter
+ERROR - 2025-11-21 12:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:45:43 --> CORS Filter
+ERROR - 2025-11-21 12:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:45:43 --> CORS Filter
+ERROR - 2025-11-21 12:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:45:59 --> CORS Filter
+ERROR - 2025-11-21 12:45:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:45:59 --> CORS Filter
+ERROR - 2025-11-21 12:45:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:45:59 --> CORS Filter
+ERROR - 2025-11-21 12:45:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:00 --> CORS Filter
+ERROR - 2025-11-21 12:46:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:01 --> CORS Filter
+ERROR - 2025-11-21 12:46:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:01 --> CORS Filter
+ERROR - 2025-11-21 12:46:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:03 --> CORS Filter
+ERROR - 2025-11-21 12:46:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:03 --> CORS Filter
+ERROR - 2025-11-21 12:46:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:04 --> CORS Filter
+ERROR - 2025-11-21 12:46:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:04 --> CORS Filter
+ERROR - 2025-11-21 12:46:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:19 --> CORS Filter
+ERROR - 2025-11-21 12:46:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:19 --> CORS Filter
+ERROR - 2025-11-21 12:46:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:19 --> CORS Filter
+ERROR - 2025-11-21 12:46:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:19 --> CORS Filter
+ERROR - 2025-11-21 12:46:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:20 --> CORS Filter
+ERROR - 2025-11-21 12:46:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:46:20 --> CORS Filter
+ERROR - 2025-11-21 12:46:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:47:27 --> CORS Filter
+ERROR - 2025-11-21 12:47:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:47:27 --> CORS Filter
+ERROR - 2025-11-21 12:47:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:47:28 --> CORS Filter
+ERROR - 2025-11-21 12:47:28 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:47:28 --> CORS Filter
+ERROR - 2025-11-21 12:47:28 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:49:08 --> CORS Filter
+ERROR - 2025-11-21 12:49:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:49:08 --> CORS Filter
+ERROR - 2025-11-21 12:49:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:49:08 --> CORS Filter
+ERROR - 2025-11-21 12:49:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:49:08 --> CORS Filter
+ERROR - 2025-11-21 12:49:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:00 --> CORS Filter
+ERROR - 2025-11-21 12:51:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:00 --> CORS Filter
+ERROR - 2025-11-21 12:51:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:00 --> CORS Filter
+ERROR - 2025-11-21 12:51:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:00 --> CORS Filter
+ERROR - 2025-11-21 12:51:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:05 --> CORS Filter
+ERROR - 2025-11-21 12:51:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:05 --> CORS Filter
+ERROR - 2025-11-21 12:51:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:05 --> CORS Filter
+ERROR - 2025-11-21 12:51:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:51:06 --> CORS Filter
+ERROR - 2025-11-21 12:51:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:31 --> CORS Filter
+ERROR - 2025-11-21 12:58:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:31 --> CORS Filter
+ERROR - 2025-11-21 12:58:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:32 --> CORS Filter
+ERROR - 2025-11-21 12:58:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:32 --> CORS Filter
+ERROR - 2025-11-21 12:58:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:45 --> CORS Filter
+ERROR - 2025-11-21 12:58:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:45 --> CORS Filter
+ERROR - 2025-11-21 12:58:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:45 --> CORS Filter
+ERROR - 2025-11-21 12:58:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 12:58:46 --> CORS Filter
+ERROR - 2025-11-21 12:58:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:01:43 --> CORS Filter
+ERROR - 2025-11-21 13:01:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:01:43 --> CORS Filter
+ERROR - 2025-11-21 13:01:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:01:43 --> CORS Filter
+ERROR - 2025-11-21 13:01:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:01:43 --> CORS Filter
+ERROR - 2025-11-21 13:01:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:02:54 --> CORS Filter
+ERROR - 2025-11-21 13:02:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:02:54 --> CORS Filter
+ERROR - 2025-11-21 13:02:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:02:54 --> CORS Filter
+ERROR - 2025-11-21 13:02:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:02:55 --> CORS Filter
+ERROR - 2025-11-21 13:02:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:03:02 --> CORS Filter
+ERROR - 2025-11-21 13:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:03:02 --> CORS Filter
+ERROR - 2025-11-21 13:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:03:02 --> CORS Filter
+ERROR - 2025-11-21 13:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:03:02 --> CORS Filter
+ERROR - 2025-11-21 13:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:11:14 --> CORS Filter
+ERROR - 2025-11-21 13:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:11:14 --> CORS Filter
+ERROR - 2025-11-21 13:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:11:14 --> CORS Filter
+ERROR - 2025-11-21 13:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:11:14 --> CORS Filter
+ERROR - 2025-11-21 13:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:11:17 --> CORS Filter
+ERROR - 2025-11-21 13:11:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:11:17 --> CORS Filter
+ERROR - 2025-11-21 13:11:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:17:08 --> CORS Filter
+ERROR - 2025-11-21 13:17:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:17:08 --> CORS Filter
+ERROR - 2025-11-21 13:17:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:17:08 --> CORS Filter
+ERROR - 2025-11-21 13:17:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:17:08 --> CORS Filter
+ERROR - 2025-11-21 13:17:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:17:14 --> CORS Filter
+ERROR - 2025-11-21 13:17:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:17:14 --> CORS Filter
+ERROR - 2025-11-21 13:17:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:19:20 --> CORS Filter
+ERROR - 2025-11-21 13:19:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:19:21 --> CORS Filter
+ERROR - 2025-11-21 13:19:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:19:21 --> CORS Filter
+ERROR - 2025-11-21 13:19:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:19:22 --> CORS Filter
+ERROR - 2025-11-21 13:19:22 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:19:31 --> CORS Filter
+ERROR - 2025-11-21 13:19:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:19:31 --> CORS Filter
+ERROR - 2025-11-21 13:19:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:06 --> CORS Filter
+ERROR - 2025-11-21 13:20:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:06 --> CORS Filter
+ERROR - 2025-11-21 13:20:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:07 --> CORS Filter
+ERROR - 2025-11-21 13:20:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:08 --> CORS Filter
+ERROR - 2025-11-21 13:20:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:12 --> CORS Filter
+ERROR - 2025-11-21 13:20:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:12 --> CORS Filter
+ERROR - 2025-11-21 13:20:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:13 --> CORS Filter
+ERROR - 2025-11-21 13:20:13 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:13 --> CORS Filter
+ERROR - 2025-11-21 13:20:13 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:38 --> CORS Filter
+ERROR - 2025-11-21 13:20:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:39 --> CORS Filter
+ERROR - 2025-11-21 13:20:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:41 --> CORS Filter
+ERROR - 2025-11-21 13:20:41 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:42 --> CORS Filter
+ERROR - 2025-11-21 13:20:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:43 --> CORS Filter
+ERROR - 2025-11-21 13:20:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:20:43 --> CORS Filter
+ERROR - 2025-11-21 13:20:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:48 --> CORS Filter
+ERROR - 2025-11-21 13:23:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:48 --> CORS Filter
+ERROR - 2025-11-21 13:23:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:48 --> CORS Filter
+ERROR - 2025-11-21 13:23:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:48 --> CORS Filter
+ERROR - 2025-11-21 13:23:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:59 --> CORS Filter
+ERROR - 2025-11-21 13:23:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:59 --> CORS Filter
+ERROR - 2025-11-21 13:23:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:59 --> CORS Filter
+ERROR - 2025-11-21 13:23:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:23:59 --> CORS Filter
+ERROR - 2025-11-21 13:23:59 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:08 --> CORS Filter
+ERROR - 2025-11-21 13:24:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:08 --> CORS Filter
+ERROR - 2025-11-21 13:24:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:08 --> CORS Filter
+ERROR - 2025-11-21 13:24:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:08 --> CORS Filter
+ERROR - 2025-11-21 13:24:08 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:39 --> CORS Filter
+ERROR - 2025-11-21 13:24:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:39 --> CORS Filter
+ERROR - 2025-11-21 13:24:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:39 --> CORS Filter
+ERROR - 2025-11-21 13:24:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:40 --> CORS Filter
+ERROR - 2025-11-21 13:24:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:44 --> CORS Filter
+ERROR - 2025-11-21 13:24:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:44 --> CORS Filter
+ERROR - 2025-11-21 13:24:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:45 --> CORS Filter
+ERROR - 2025-11-21 13:24:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:24:45 --> CORS Filter
+ERROR - 2025-11-21 13:24:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:25:40 --> CORS Filter
+ERROR - 2025-11-21 13:25:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:25:40 --> CORS Filter
+ERROR - 2025-11-21 13:25:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:25:40 --> CORS Filter
+ERROR - 2025-11-21 13:25:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:25:40 --> CORS Filter
+ERROR - 2025-11-21 13:25:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:25:44 --> CORS Filter
+ERROR - 2025-11-21 13:25:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:25:44 --> CORS Filter
+ERROR - 2025-11-21 13:25:44 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:26:51 --> CORS Filter
+ERROR - 2025-11-21 13:26:51 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:26:51 --> CORS Filter
+ERROR - 2025-11-21 13:26:51 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:26:51 --> CORS Filter
+ERROR - 2025-11-21 13:26:51 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:26:51 --> CORS Filter
+ERROR - 2025-11-21 13:26:51 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:32:30 --> CORS Filter
+ERROR - 2025-11-21 13:32:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:32:30 --> CORS Filter
+ERROR - 2025-11-21 13:32:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:32:30 --> CORS Filter
+ERROR - 2025-11-21 13:32:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:32:30 --> CORS Filter
+ERROR - 2025-11-21 13:32:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:04 --> CORS Filter
+ERROR - 2025-11-21 13:34:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:04 --> CORS Filter
+ERROR - 2025-11-21 13:34:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:04 --> CORS Filter
+ERROR - 2025-11-21 13:34:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:05 --> CORS Filter
+ERROR - 2025-11-21 13:34:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:09 --> CORS Filter
+ERROR - 2025-11-21 13:34:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:09 --> CORS Filter
+ERROR - 2025-11-21 13:34:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:10 --> CORS Filter
+ERROR - 2025-11-21 13:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:34:10 --> CORS Filter
+ERROR - 2025-11-21 13:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:36:45 --> CORS Filter
+ERROR - 2025-11-21 13:36:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:36:45 --> CORS Filter
+ERROR - 2025-11-21 13:36:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:36:45 --> CORS Filter
+ERROR - 2025-11-21 13:36:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:36:45 --> CORS Filter
+ERROR - 2025-11-21 13:36:45 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:02 --> CORS Filter
+ERROR - 2025-11-21 13:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:02 --> CORS Filter
+ERROR - 2025-11-21 13:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:02 --> CORS Filter
+ERROR - 2025-11-21 13:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:03 --> CORS Filter
+ERROR - 2025-11-21 13:38:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:10 --> CORS Filter
+ERROR - 2025-11-21 13:38:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:10 --> CORS Filter
+ERROR - 2025-11-21 13:38:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:10 --> CORS Filter
+ERROR - 2025-11-21 13:38:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:10 --> CORS Filter
+ERROR - 2025-11-21 13:38:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:26 --> CORS Filter
+ERROR - 2025-11-21 13:38:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:26 --> CORS Filter
+ERROR - 2025-11-21 13:38:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:26 --> CORS Filter
+ERROR - 2025-11-21 13:38:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:27 --> CORS Filter
+ERROR - 2025-11-21 13:38:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:31 --> CORS Filter
+ERROR - 2025-11-21 13:38:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:31 --> CORS Filter
+ERROR - 2025-11-21 13:38:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:39 --> CORS Filter
+ERROR - 2025-11-21 13:38:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:39 --> CORS Filter
+ERROR - 2025-11-21 13:38:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:39 --> CORS Filter
+ERROR - 2025-11-21 13:38:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:39 --> CORS Filter
+ERROR - 2025-11-21 13:38:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:53 --> CORS Filter
+ERROR - 2025-11-21 13:38:53 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:53 --> CORS Filter
+ERROR - 2025-11-21 13:38:53 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:54 --> CORS Filter
+ERROR - 2025-11-21 13:38:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:38:54 --> CORS Filter
+ERROR - 2025-11-21 13:38:54 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:04 --> CORS Filter
+ERROR - 2025-11-21 13:46:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:04 --> CORS Filter
+ERROR - 2025-11-21 13:46:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:05 --> CORS Filter
+ERROR - 2025-11-21 13:46:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:05 --> CORS Filter
+ERROR - 2025-11-21 13:46:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:05 --> CORS Filter
+ERROR - 2025-11-21 13:46:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:05 --> CORS Filter
+ERROR - 2025-11-21 13:46:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:11 --> CORS Filter
+ERROR - 2025-11-21 13:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:11 --> CORS Filter
+ERROR - 2025-11-21 13:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:11 --> CORS Filter
+ERROR - 2025-11-21 13:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:46:12 --> CORS Filter
+ERROR - 2025-11-21 13:46:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:48:06 --> CORS Filter
+ERROR - 2025-11-21 13:48:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:48:07 --> CORS Filter
+ERROR - 2025-11-21 13:48:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:48:07 --> CORS Filter
+ERROR - 2025-11-21 13:48:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:48:07 --> CORS Filter
+ERROR - 2025-11-21 13:48:07 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:51:25 --> CORS Filter
+ERROR - 2025-11-21 13:51:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:51:25 --> CORS Filter
+ERROR - 2025-11-21 13:51:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:51:26 --> CORS Filter
+ERROR - 2025-11-21 13:51:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:51:26 --> CORS Filter
+ERROR - 2025-11-21 13:51:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:35 --> CORS Filter
+ERROR - 2025-11-21 13:53:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:37 --> CORS Filter
+ERROR - 2025-11-21 13:53:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:37 --> CORS Filter
+ERROR - 2025-11-21 13:53:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:38 --> CORS Filter
+ERROR - 2025-11-21 13:53:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:38 --> CORS Filter
+ERROR - 2025-11-21 13:53:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:42 --> CORS Filter
+ERROR - 2025-11-21 13:53:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:42 --> CORS Filter
+ERROR - 2025-11-21 13:53:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:42 --> CORS Filter
+ERROR - 2025-11-21 13:53:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:46 --> CORS Filter
+ERROR - 2025-11-21 13:53:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:46 --> CORS Filter
+ERROR - 2025-11-21 13:53:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:47 --> CORS Filter
+ERROR - 2025-11-21 13:53:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:52 --> CORS Filter
+ERROR - 2025-11-21 13:53:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:52 --> CORS Filter
+ERROR - 2025-11-21 13:53:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:52 --> CORS Filter
+ERROR - 2025-11-21 13:53:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:53 --> CORS Filter
+ERROR - 2025-11-21 13:53:53 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:56 --> CORS Filter
+ERROR - 2025-11-21 13:53:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:53:56 --> CORS Filter
+ERROR - 2025-11-21 13:53:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:00 --> CORS Filter
+ERROR - 2025-11-21 13:54:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:00 --> CORS Filter
+ERROR - 2025-11-21 13:54:00 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:01 --> CORS Filter
+ERROR - 2025-11-21 13:54:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:01 --> CORS Filter
+ERROR - 2025-11-21 13:54:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:17 --> CORS Filter
+ERROR - 2025-11-21 13:54:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:18 --> CORS Filter
+ERROR - 2025-11-21 13:54:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:18 --> CORS Filter
+ERROR - 2025-11-21 13:54:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:54:18 --> CORS Filter
+ERROR - 2025-11-21 13:54:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:06 --> CORS Filter
+ERROR - 2025-11-21 13:55:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:06 --> CORS Filter
+ERROR - 2025-11-21 13:55:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:06 --> CORS Filter
+ERROR - 2025-11-21 13:55:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:06 --> CORS Filter
+ERROR - 2025-11-21 13:55:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:19 --> CORS Filter
+ERROR - 2025-11-21 13:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:19 --> CORS Filter
+ERROR - 2025-11-21 13:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:19 --> CORS Filter
+ERROR - 2025-11-21 13:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:19 --> CORS Filter
+ERROR - 2025-11-21 13:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:29 --> CORS Filter
+ERROR - 2025-11-21 13:55:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:29 --> CORS Filter
+ERROR - 2025-11-21 13:55:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:30 --> CORS Filter
+ERROR - 2025-11-21 13:55:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:30 --> CORS Filter
+ERROR - 2025-11-21 13:55:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:37 --> CORS Filter
+ERROR - 2025-11-21 13:55:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:37 --> CORS Filter
+ERROR - 2025-11-21 13:55:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:37 --> CORS Filter
+ERROR - 2025-11-21 13:55:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:37 --> CORS Filter
+ERROR - 2025-11-21 13:55:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:42 --> CORS Filter
+ERROR - 2025-11-21 13:55:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:42 --> CORS Filter
+ERROR - 2025-11-21 13:55:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:49 --> CORS Filter
+ERROR - 2025-11-21 13:55:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:49 --> CORS Filter
+ERROR - 2025-11-21 13:55:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:49 --> CORS Filter
+ERROR - 2025-11-21 13:55:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:55:49 --> CORS Filter
+ERROR - 2025-11-21 13:55:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:02 --> CORS Filter
+ERROR - 2025-11-21 13:56:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:02 --> CORS Filter
+ERROR - 2025-11-21 13:56:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:03 --> CORS Filter
+ERROR - 2025-11-21 13:56:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:03 --> CORS Filter
+ERROR - 2025-11-21 13:56:03 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:05 --> CORS Filter
+ERROR - 2025-11-21 13:56:05 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:06 --> CORS Filter
+ERROR - 2025-11-21 13:56:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:09 --> CORS Filter
+ERROR - 2025-11-21 13:56:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:09 --> CORS Filter
+ERROR - 2025-11-21 13:56:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:10 --> CORS Filter
+ERROR - 2025-11-21 13:56:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:10 --> CORS Filter
+ERROR - 2025-11-21 13:56:10 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:27 --> CORS Filter
+ERROR - 2025-11-21 13:56:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:28 --> CORS Filter
+ERROR - 2025-11-21 13:56:28 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:28 --> CORS Filter
+ERROR - 2025-11-21 13:56:28 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:28 --> CORS Filter
+ERROR - 2025-11-21 13:56:28 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:46 --> CORS Filter
+ERROR - 2025-11-21 13:56:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:46 --> CORS Filter
+ERROR - 2025-11-21 13:56:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:46 --> CORS Filter
+ERROR - 2025-11-21 13:56:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:46 --> CORS Filter
+ERROR - 2025-11-21 13:56:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:49 --> CORS Filter
+ERROR - 2025-11-21 13:56:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:56:49 --> CORS Filter
+ERROR - 2025-11-21 13:56:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:57:32 --> CORS Filter
+ERROR - 2025-11-21 13:57:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:57:32 --> CORS Filter
+ERROR - 2025-11-21 13:57:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:57:32 --> CORS Filter
+ERROR - 2025-11-21 13:57:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 13:57:32 --> CORS Filter
+ERROR - 2025-11-21 13:57:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:00:48 --> CORS Filter
+ERROR - 2025-11-21 14:00:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:00:48 --> CORS Filter
+ERROR - 2025-11-21 14:00:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:00:48 --> CORS Filter
+ERROR - 2025-11-21 14:00:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:00:48 --> CORS Filter
+ERROR - 2025-11-21 14:00:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:14 --> CORS Filter
+ERROR - 2025-11-21 14:01:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:14 --> CORS Filter
+ERROR - 2025-11-21 14:01:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:14 --> CORS Filter
+ERROR - 2025-11-21 14:01:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:14 --> CORS Filter
+ERROR - 2025-11-21 14:01:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:46 --> CORS Filter
+ERROR - 2025-11-21 14:01:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:46 --> CORS Filter
+ERROR - 2025-11-21 14:01:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:46 --> CORS Filter
+ERROR - 2025-11-21 14:01:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:46 --> CORS Filter
+ERROR - 2025-11-21 14:01:46 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:52 --> CORS Filter
+ERROR - 2025-11-21 14:01:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:52 --> CORS Filter
+ERROR - 2025-11-21 14:01:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:52 --> CORS Filter
+ERROR - 2025-11-21 14:01:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:01:52 --> CORS Filter
+ERROR - 2025-11-21 14:01:52 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:04:38 --> CORS Filter
+ERROR - 2025-11-21 14:04:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:04:39 --> CORS Filter
+ERROR - 2025-11-21 14:04:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:04:39 --> CORS Filter
+ERROR - 2025-11-21 14:04:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:04:39 --> CORS Filter
+ERROR - 2025-11-21 14:04:39 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:04:43 --> CORS Filter
+ERROR - 2025-11-21 14:04:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:04:43 --> CORS Filter
+ERROR - 2025-11-21 14:04:43 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:06:32 --> CORS Filter
+ERROR - 2025-11-21 14:06:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:06:32 --> CORS Filter
+ERROR - 2025-11-21 14:06:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:06:32 --> CORS Filter
+ERROR - 2025-11-21 14:06:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:06:32 --> CORS Filter
+ERROR - 2025-11-21 14:06:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:11 --> CORS Filter
+ERROR - 2025-11-21 14:07:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:11 --> CORS Filter
+ERROR - 2025-11-21 14:07:11 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:12 --> CORS Filter
+ERROR - 2025-11-21 14:07:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:12 --> CORS Filter
+ERROR - 2025-11-21 14:07:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:19 --> CORS Filter
+ERROR - 2025-11-21 14:07:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:19 --> CORS Filter
+ERROR - 2025-11-21 14:07:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:20 --> CORS Filter
+ERROR - 2025-11-21 14:07:20 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:21 --> CORS Filter
+ERROR - 2025-11-21 14:07:21 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:23 --> CORS Filter
+ERROR - 2025-11-21 14:07:23 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:24 --> CORS Filter
+ERROR - 2025-11-21 14:07:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:26 --> CORS Filter
+ERROR - 2025-11-21 14:07:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:26 --> CORS Filter
+ERROR - 2025-11-21 14:07:26 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:27 --> CORS Filter
+ERROR - 2025-11-21 14:07:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:27 --> CORS Filter
+ERROR - 2025-11-21 14:07:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:35 --> CORS Filter
+ERROR - 2025-11-21 14:07:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:35 --> CORS Filter
+ERROR - 2025-11-21 14:07:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:35 --> CORS Filter
+ERROR - 2025-11-21 14:07:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:07:35 --> CORS Filter
+ERROR - 2025-11-21 14:07:35 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:08:24 --> CORS Filter
+ERROR - 2025-11-21 14:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:08:24 --> CORS Filter
+ERROR - 2025-11-21 14:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:08:24 --> CORS Filter
+ERROR - 2025-11-21 14:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:08:25 --> CORS Filter
+ERROR - 2025-11-21 14:08:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:11:27 --> CORS Filter
+ERROR - 2025-11-21 14:11:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:11:27 --> CORS Filter
+ERROR - 2025-11-21 14:11:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:11:27 --> CORS Filter
+ERROR - 2025-11-21 14:11:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:11:27 --> CORS Filter
+ERROR - 2025-11-21 14:11:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:11:29 --> CORS Filter
+ERROR - 2025-11-21 14:11:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:11:30 --> CORS Filter
+ERROR - 2025-11-21 14:11:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:31 --> CORS Filter
+ERROR - 2025-11-21 14:13:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:31 --> CORS Filter
+ERROR - 2025-11-21 14:13:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:31 --> CORS Filter
+ERROR - 2025-11-21 14:13:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:31 --> CORS Filter
+ERROR - 2025-11-21 14:13:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:32 --> CORS Filter
+ERROR - 2025-11-21 14:13:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:32 --> CORS Filter
+ERROR - 2025-11-21 14:13:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:36 --> CORS Filter
+ERROR - 2025-11-21 14:13:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:47 --> CORS Filter
+ERROR - 2025-11-21 14:13:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:47 --> CORS Filter
+ERROR - 2025-11-21 14:13:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:47 --> CORS Filter
+ERROR - 2025-11-21 14:13:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:47 --> CORS Filter
+ERROR - 2025-11-21 14:13:47 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:48 --> CORS Filter
+ERROR - 2025-11-21 14:13:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:13:48 --> CORS Filter
+ERROR - 2025-11-21 14:13:48 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:18 --> CORS Filter
+ERROR - 2025-11-21 14:16:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:18 --> CORS Filter
+ERROR - 2025-11-21 14:16:18 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:19 --> CORS Filter
+ERROR - 2025-11-21 14:16:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:19 --> CORS Filter
+ERROR - 2025-11-21 14:16:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:19 --> CORS Filter
+ERROR - 2025-11-21 14:16:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:19 --> CORS Filter
+ERROR - 2025-11-21 14:16:19 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:49 --> CORS Filter
+ERROR - 2025-11-21 14:16:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:49 --> CORS Filter
+ERROR - 2025-11-21 14:16:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:50 --> CORS Filter
+ERROR - 2025-11-21 14:16:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:16:50 --> CORS Filter
+ERROR - 2025-11-21 14:16:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:17:04 --> CORS Filter
+ERROR - 2025-11-21 14:17:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:17:04 --> CORS Filter
+ERROR - 2025-11-21 14:17:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:17:04 --> CORS Filter
+ERROR - 2025-11-21 14:17:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:17:04 --> CORS Filter
+ERROR - 2025-11-21 14:17:04 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:14 --> CORS Filter
+ERROR - 2025-11-21 14:20:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:14 --> CORS Filter
+ERROR - 2025-11-21 14:20:14 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:15 --> CORS Filter
+ERROR - 2025-11-21 14:20:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:15 --> CORS Filter
+ERROR - 2025-11-21 14:20:15 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:29 --> CORS Filter
+ERROR - 2025-11-21 14:20:29 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:30 --> CORS Filter
+ERROR - 2025-11-21 14:20:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:30 --> CORS Filter
+ERROR - 2025-11-21 14:20:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:30 --> CORS Filter
+ERROR - 2025-11-21 14:20:30 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:36 --> CORS Filter
+ERROR - 2025-11-21 14:20:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:36 --> CORS Filter
+ERROR - 2025-11-21 14:20:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:36 --> CORS Filter
+ERROR - 2025-11-21 14:20:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:20:36 --> CORS Filter
+ERROR - 2025-11-21 14:20:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:21:50 --> CORS Filter
+ERROR - 2025-11-21 14:21:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:21:50 --> CORS Filter
+ERROR - 2025-11-21 14:21:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:21:50 --> CORS Filter
+ERROR - 2025-11-21 14:21:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:21:50 --> CORS Filter
+ERROR - 2025-11-21 14:21:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:22:36 --> CORS Filter
+ERROR - 2025-11-21 14:22:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:22:36 --> CORS Filter
+ERROR - 2025-11-21 14:22:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:22:36 --> CORS Filter
+ERROR - 2025-11-21 14:22:36 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:22:37 --> CORS Filter
+ERROR - 2025-11-21 14:22:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:23:56 --> CORS Filter
+ERROR - 2025-11-21 14:23:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:23:56 --> CORS Filter
+ERROR - 2025-11-21 14:23:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:23:56 --> CORS Filter
+ERROR - 2025-11-21 14:23:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:23:56 --> CORS Filter
+ERROR - 2025-11-21 14:23:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:24:56 --> CORS Filter
+ERROR - 2025-11-21 14:24:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:24:56 --> CORS Filter
+ERROR - 2025-11-21 14:24:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:24:56 --> CORS Filter
+ERROR - 2025-11-21 14:24:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:24:57 --> CORS Filter
+ERROR - 2025-11-21 14:24:57 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:27:32 --> CORS Filter
+ERROR - 2025-11-21 14:27:32 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:27:33 --> CORS Filter
+ERROR - 2025-11-21 14:27:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:27:33 --> CORS Filter
+ERROR - 2025-11-21 14:27:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:27:33 --> CORS Filter
+ERROR - 2025-11-21 14:27:33 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:28:17 --> CORS Filter
+ERROR - 2025-11-21 14:28:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:28:17 --> CORS Filter
+ERROR - 2025-11-21 14:28:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:28:17 --> CORS Filter
+ERROR - 2025-11-21 14:28:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:28:17 --> CORS Filter
+ERROR - 2025-11-21 14:28:17 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:42 --> CORS Filter
+ERROR - 2025-11-21 14:29:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:42 --> CORS Filter
+ERROR - 2025-11-21 14:29:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:42 --> CORS Filter
+ERROR - 2025-11-21 14:29:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:42 --> CORS Filter
+ERROR - 2025-11-21 14:29:42 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:56 --> CORS Filter
+ERROR - 2025-11-21 14:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:56 --> CORS Filter
+ERROR - 2025-11-21 14:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:56 --> CORS Filter
+ERROR - 2025-11-21 14:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:29:56 --> CORS Filter
+ERROR - 2025-11-21 14:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:30:55 --> CORS Filter
+ERROR - 2025-11-21 14:30:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:30:55 --> CORS Filter
+ERROR - 2025-11-21 14:30:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:30:55 --> CORS Filter
+ERROR - 2025-11-21 14:30:55 --> Origin: http://localhost:4200
+ERROR - 2025-11-21 14:30:55 --> CORS Filter
+ERROR - 2025-11-21 14:30:55 --> Origin: http://localhost:4200

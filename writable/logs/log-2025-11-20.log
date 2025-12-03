@@ -1,0 +1,198 @@
+ERROR - 2025-11-20 10:15:37 --> CORS Filter
+ERROR - 2025-11-20 10:15:37 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:15:38 --> CORS Filter
+ERROR - 2025-11-20 10:15:38 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:15:39 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:19:34 --> CORS Filter
+ERROR - 2025-11-20 10:19:34 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:19:35 --> CORS Filter
+ERROR - 2025-11-20 10:19:35 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:19:35 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:23:49 --> CORS Filter
+ERROR - 2025-11-20 10:23:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:23:49 --> CORS Filter
+ERROR - 2025-11-20 10:23:49 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:23:49 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:28:58 --> CORS Filter
+ERROR - 2025-11-20 10:28:58 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:28:58 --> CORS Filter
+ERROR - 2025-11-20 10:28:58 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:30:16 --> CORS Filter
+ERROR - 2025-11-20 10:30:16 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:30:16 --> CORS Filter
+ERROR - 2025-11-20 10:30:16 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:30:16 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:34:49 --> CORS Filter
+ERROR - 2025-11-20 10:34:49 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:34:50 --> CORS Filter
+ERROR - 2025-11-20 10:34:50 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:36:31 --> CORS Filter
+ERROR - 2025-11-20 10:36:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:36:31 --> CORS Filter
+ERROR - 2025-11-20 10:36:31 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:37:09 --> CORS Filter
+ERROR - 2025-11-20 10:37:09 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:37:10 --> CORS Filter
+ERROR - 2025-11-20 10:37:10 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:37:10 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:38:27 --> CORS Filter
+ERROR - 2025-11-20 10:38:27 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:38:27 --> CORS Filter
+ERROR - 2025-11-20 10:38:27 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:38:27 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:38:31 --> CORS Filter
+ERROR - 2025-11-20 10:38:31 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:38:31 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:41:40 --> CORS Filter
+ERROR - 2025-11-20 10:41:40 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:41:41 --> CORS Filter
+ERROR - 2025-11-20 10:41:41 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:41:41 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:42:12 --> CORS Filter
+ERROR - 2025-11-20 10:42:12 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:42:12 --> CORS Filter
+ERROR - 2025-11-20 10:42:12 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:42:12 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 10:46:06 --> CORS Filter
+ERROR - 2025-11-20 10:46:06 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 10:46:07 --> CORS Filter
+ERROR - 2025-11-20 10:46:07 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 10:46:07 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 11:30:38 --> CORS Filter
+ERROR - 2025-11-20 11:30:38 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 11:30:38 --> CORS Filter
+ERROR - 2025-11-20 11:30:38 --> Origin: http://localhost:4200
+CRITICAL - 2025-11-20 11:30:38 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: POST, Route: webapi/event/getallpaging]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/event/getallpaging', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-11-20 11:32:25 --> CORS Filter
+ERROR - 2025-11-20 11:32:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 11:32:25 --> CORS Filter
+ERROR - 2025-11-20 11:32:25 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 12:21:02 --> CORS Filter
+ERROR - 2025-11-20 12:21:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 12:21:02 --> CORS Filter
+ERROR - 2025-11-20 12:21:02 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 13:29:01 --> CORS Filter
+ERROR - 2025-11-20 13:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-11-20 13:29:02 --> CORS Filter
+ERROR - 2025-11-20 13:29:02 --> Origin: http://localhost:4200

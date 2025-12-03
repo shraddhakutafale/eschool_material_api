@@ -1,0 +1,2765 @@
+ERROR - 2025-08-04 04:05:29 --> CORS Filter
+ERROR - 2025-08-04 04:05:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:05:29 --> CORS Filter
+ERROR - 2025-08-04 04:05:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:05:38 --> CORS Filter
+ERROR - 2025-08-04 04:05:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:05:38 --> CORS Filter
+ERROR - 2025-08-04 04:05:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:05:39 --> CORS Filter
+ERROR - 2025-08-04 04:05:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:05:39 --> CORS Filter
+ERROR - 2025-08-04 04:05:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:05:40 --> CORS Filter
+ERROR - 2025-08-04 04:05:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:05:41 --> CORS Filter
+ERROR - 2025-08-04 04:05:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:44:21 --> CORS Filter
+ERROR - 2025-08-04 04:44:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:44:21 --> CORS Filter
+ERROR - 2025-08-04 04:44:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:44:24 --> CORS Filter
+ERROR - 2025-08-04 04:44:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:44:24 --> CORS Filter
+ERROR - 2025-08-04 04:44:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:44:26 --> CORS Filter
+ERROR - 2025-08-04 04:44:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:44:26 --> CORS Filter
+ERROR - 2025-08-04 04:44:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:10 --> CORS Filter
+ERROR - 2025-08-04 04:57:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:11 --> CORS Filter
+ERROR - 2025-08-04 04:57:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:16 --> CORS Filter
+ERROR - 2025-08-04 04:57:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:16 --> CORS Filter
+ERROR - 2025-08-04 04:57:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:17 --> CORS Filter
+ERROR - 2025-08-04 04:57:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:22 --> CORS Filter
+ERROR - 2025-08-04 04:57:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:22 --> CORS Filter
+ERROR - 2025-08-04 04:57:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:22 --> CORS Filter
+ERROR - 2025-08-04 04:57:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:23 --> CORS Filter
+ERROR - 2025-08-04 04:57:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:25 --> CORS Filter
+ERROR - 2025-08-04 04:57:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:26 --> CORS Filter
+ERROR - 2025-08-04 04:57:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:36 --> CORS Filter
+ERROR - 2025-08-04 04:57:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:36 --> CORS Filter
+ERROR - 2025-08-04 04:57:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:36 --> CORS Filter
+ERROR - 2025-08-04 04:57:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:37 --> CORS Filter
+ERROR - 2025-08-04 04:57:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:37 --> CORS Filter
+ERROR - 2025-08-04 04:57:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:37 --> CORS Filter
+ERROR - 2025-08-04 04:57:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 04:57:37 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 04:57:38 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 04:57:38 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 04:57:38 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 05:05:31 --> CORS Filter
+ERROR - 2025-08-04 05:05:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:05:32 --> CORS Filter
+ERROR - 2025-08-04 05:05:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:05:32 --> CORS Filter
+ERROR - 2025-08-04 05:05:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:05:32 --> CORS Filter
+ERROR - 2025-08-04 05:05:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:05:32 --> CORS Filter
+ERROR - 2025-08-04 05:05:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:05:32 --> CORS Filter
+ERROR - 2025-08-04 05:05:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:34 --> CORS Filter
+ERROR - 2025-08-04 05:11:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:34 --> CORS Filter
+ERROR - 2025-08-04 05:11:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:35 --> CORS Filter
+ERROR - 2025-08-04 05:11:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:36 --> CORS Filter
+ERROR - 2025-08-04 05:11:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:36 --> CORS Filter
+ERROR - 2025-08-04 05:11:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:36 --> CORS Filter
+ERROR - 2025-08-04 05:11:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:37 --> CORS Filter
+ERROR - 2025-08-04 05:11:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:11:37 --> CORS Filter
+ERROR - 2025-08-04 05:11:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:15:49 --> CORS Filter
+ERROR - 2025-08-04 05:15:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:15:49 --> CORS Filter
+ERROR - 2025-08-04 05:15:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:15:50 --> CORS Filter
+ERROR - 2025-08-04 05:15:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:15:50 --> CORS Filter
+ERROR - 2025-08-04 05:15:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:15:52 --> CORS Filter
+ERROR - 2025-08-04 05:15:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:15:52 --> CORS Filter
+ERROR - 2025-08-04 05:15:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:16:03 --> CORS Filter
+ERROR - 2025-08-04 05:16:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:16:03 --> CORS Filter
+ERROR - 2025-08-04 05:16:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:16:03 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 05:16:03 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:16:03 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:16:03 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 05:25:42 --> CORS Filter
+ERROR - 2025-08-04 05:25:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:25:42 --> CORS Filter
+ERROR - 2025-08-04 05:25:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:25:46 --> CORS Filter
+ERROR - 2025-08-04 05:25:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:25:46 --> CORS Filter
+ERROR - 2025-08-04 05:25:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:18 --> CORS Filter
+ERROR - 2025-08-04 05:29:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:18 --> CORS Filter
+ERROR - 2025-08-04 05:29:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:19 --> CORS Filter
+ERROR - 2025-08-04 05:29:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:19 --> CORS Filter
+ERROR - 2025-08-04 05:29:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:19 --> CORS Filter
+ERROR - 2025-08-04 05:29:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:20 --> CORS Filter
+ERROR - 2025-08-04 05:29:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:20 --> CORS Filter
+ERROR - 2025-08-04 05:29:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:20 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 05:29:20 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:20 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:20 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 05:29:20 --> CORS Filter
+ERROR - 2025-08-04 05:29:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:20 --> CORS Filter
+ERROR - 2025-08-04 05:29:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:21 --> CORS Filter
+ERROR - 2025-08-04 05:29:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:26 --> CORS Filter
+ERROR - 2025-08-04 05:29:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:26 --> CORS Filter
+ERROR - 2025-08-04 05:29:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:26 --> mysqli_sql_exception: Table 'exiaa_ex0003.contact_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\contact.php(70): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Contact->getContactsPaging()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Contact))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-04 05:29:26 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.contact_mst' doesn't exist
+[Method: POST, Route: api/contact/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = :isDeleted:', [...], false)
+ 2 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 3 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 4 APPPATH\Controllers\contact.php(70): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Contact->getContactsPaging()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Contact))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:26 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.contact_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = 0')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = 0')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = :isDeleted:', [...], false)
+ 4 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 5 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 6 APPPATH\Controllers\contact.php(70): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Contact->getContactsPaging()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Contact))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:26 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0003.contact_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = 0', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = 0')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = 0')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `contact_mst`
+WHERE `isDeleted` = :isDeleted:', [...], false)
+ 5 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 6 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 7 APPPATH\Controllers\contact.php(70): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Contact->getContactsPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Contact))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 05:29:27 --> CORS Filter
+ERROR - 2025-08-04 05:29:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:27 --> CORS Filter
+ERROR - 2025-08-04 05:29:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:27 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 05:29:27 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:27 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:27 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 05:29:31 --> CORS Filter
+ERROR - 2025-08-04 05:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:29:31 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 05:29:31 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:31 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:29:31 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 05:37:00 --> CORS Filter
+ERROR - 2025-08-04 05:37:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:37:00 --> CORS Filter
+ERROR - 2025-08-04 05:37:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:37:01 --> CORS Filter
+ERROR - 2025-08-04 05:37:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:37:03 --> CORS Filter
+ERROR - 2025-08-04 05:37:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:37:04 --> CORS Filter
+ERROR - 2025-08-04 05:37:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:37:09 --> CORS Filter
+ERROR - 2025-08-04 05:37:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:37:09 --> CORS Filter
+ERROR - 2025-08-04 05:37:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 05:37:10 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 05:37:10 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:37:10 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 05:37:10 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 06:13:37 --> CORS Filter
+ERROR - 2025-08-04 06:13:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:37 --> CORS Filter
+ERROR - 2025-08-04 06:13:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:39 --> CORS Filter
+ERROR - 2025-08-04 06:13:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:40 --> CORS Filter
+ERROR - 2025-08-04 06:13:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:41 --> CORS Filter
+ERROR - 2025-08-04 06:13:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:41 --> CORS Filter
+ERROR - 2025-08-04 06:13:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:42 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 06:13:42 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:13:42 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:13:42 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 06:13:59 --> CORS Filter
+ERROR - 2025-08-04 06:13:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:59 --> CORS Filter
+ERROR - 2025-08-04 06:13:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:59 --> CORS Filter
+ERROR - 2025-08-04 06:13:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:13:59 --> CORS Filter
+ERROR - 2025-08-04 06:13:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:14:00 --> CORS Filter
+ERROR - 2025-08-04 06:14:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:14:00 --> CORS Filter
+ERROR - 2025-08-04 06:14:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:14:00 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 06:14:00 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:14:00 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:14:00 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 06:14:46 --> CORS Filter
+ERROR - 2025-08-04 06:14:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:14:46 --> CORS Filter
+ERROR - 2025-08-04 06:14:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:14:46 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 06:14:46 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:14:46 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:14:46 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 06:14:54 --> CORS Filter
+ERROR - 2025-08-04 06:14:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:14:54 --> CORS Filter
+ERROR - 2025-08-04 06:14:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:14:54 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 06:14:54 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:14:54 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:14:54 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 06:23:22 --> CORS Filter
+ERROR - 2025-08-04 06:23:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:23:22 --> CORS Filter
+ERROR - 2025-08-04 06:23:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:23:24 --> CORS Filter
+ERROR - 2025-08-04 06:23:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:23:28 --> CORS Filter
+ERROR - 2025-08-04 06:23:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:23:28 --> CORS Filter
+ERROR - 2025-08-04 06:23:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:24:57 --> CORS Filter
+ERROR - 2025-08-04 06:24:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:24:57 --> CORS Filter
+ERROR - 2025-08-04 06:24:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:24:57 --> CORS Filter
+ERROR - 2025-08-04 06:24:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:24:57 --> CORS Filter
+ERROR - 2025-08-04 06:24:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:24:58 --> CORS Filter
+ERROR - 2025-08-04 06:24:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:24:58 --> CORS Filter
+ERROR - 2025-08-04 06:24:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:25:04 --> CORS Filter
+ERROR - 2025-08-04 06:25:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:25:04 --> CORS Filter
+ERROR - 2025-08-04 06:25:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:25:04 --> mysqli_sql_exception: Unknown column 'departmentId' in 'order clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-08-04 06:25:04 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+[Method: POST, Route: api/staff/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:25:04 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:25:04 --> [Caused by] mysqli_sql_exception: Unknown column 'departmentId' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 8
+ORDER BY `departmentId` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `staff_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:
+ORDER BY `departmentId` DESC
+ LIMIT 10', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\Staff.php(104): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Staff->getStaffPaging()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Staff))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 06:29:14 --> CORS Filter
+ERROR - 2025-08-04 06:29:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:14 --> CORS Filter
+ERROR - 2025-08-04 06:29:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:14 --> CORS Filter
+ERROR - 2025-08-04 06:29:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:14 --> CORS Filter
+ERROR - 2025-08-04 06:29:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:14 --> CORS Filter
+ERROR - 2025-08-04 06:29:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:14 --> CORS Filter
+ERROR - 2025-08-04 06:29:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:14 --> CORS Filter
+ERROR - 2025-08-04 06:29:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:15 --> CORS Filter
+ERROR - 2025-08-04 06:29:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:15 --> CORS Filter
+ERROR - 2025-08-04 06:29:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:15 --> CORS Filter
+ERROR - 2025-08-04 06:29:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:15 --> CORS Filter
+ERROR - 2025-08-04 06:29:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:29:15 --> CORS Filter
+ERROR - 2025-08-04 06:29:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:34:31 --> CORS Filter
+ERROR - 2025-08-04 06:34:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:34:32 --> CORS Filter
+ERROR - 2025-08-04 06:34:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:34:35 --> CORS Filter
+ERROR - 2025-08-04 06:34:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:34:35 --> CORS Filter
+ERROR - 2025-08-04 06:34:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:34:35 --> CORS Filter
+ERROR - 2025-08-04 06:34:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:34:35 --> CORS Filter
+ERROR - 2025-08-04 06:34:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:35:20 --> CORS Filter
+ERROR - 2025-08-04 06:35:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:35:20 --> CORS Filter
+ERROR - 2025-08-04 06:35:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:35:40 --> CORS Filter
+ERROR - 2025-08-04 06:35:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:35:41 --> CORS Filter
+ERROR - 2025-08-04 06:35:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:47:06 --> CORS Filter
+ERROR - 2025-08-04 06:47:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:47:07 --> CORS Filter
+ERROR - 2025-08-04 06:47:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:47:09 --> CORS Filter
+ERROR - 2025-08-04 06:47:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:47:09 --> CORS Filter
+ERROR - 2025-08-04 06:47:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:49:40 --> CORS Filter
+ERROR - 2025-08-04 06:49:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:49:40 --> CORS Filter
+ERROR - 2025-08-04 06:49:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:49:41 --> mysqli_sql_exception: Table 'exiaa_ex0009.department_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Settings.php(86): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Settings->getSettingsPaging()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Settings))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-08-04 06:49:41 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0009.department_mst' doesn't exist
+[Method: POST, Route: api/settings/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:', [...], false)
+ 2 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 3 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 4 APPPATH\Controllers\Settings.php(86): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Settings->getSettingsPaging()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Settings))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:49:41 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0009.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 4')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 4')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:', [...], false)
+ 4 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 5 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 6 APPPATH\Controllers\Settings.php(86): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Settings->getSettingsPaging()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Settings))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-04 06:49:41 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0009.department_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 4', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 4')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = 0
+AND `businessId` = 4')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `department_mst`
+WHERE `isDeleted` = :isDeleted:
+AND `businessId` = :businessId:', [...], false)
+ 5 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 6 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 7 APPPATH\Controllers\Settings.php(86): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Settings->getSettingsPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Settings))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 06:55:00 --> CORS Filter
+ERROR - 2025-08-04 06:55:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:00 --> CORS Filter
+ERROR - 2025-08-04 06:55:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:16 --> CORS Filter
+ERROR - 2025-08-04 06:55:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:16 --> CORS Filter
+ERROR - 2025-08-04 06:55:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:16 --> CORS Filter
+ERROR - 2025-08-04 06:55:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:17 --> CORS Filter
+ERROR - 2025-08-04 06:55:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:17 --> CORS Filter
+ERROR - 2025-08-04 06:55:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:17 --> CORS Filter
+ERROR - 2025-08-04 06:55:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:18 --> CORS Filter
+ERROR - 2025-08-04 06:55:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:18 --> CORS Filter
+ERROR - 2025-08-04 06:55:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:19 --> CORS Filter
+ERROR - 2025-08-04 06:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:19 --> CORS Filter
+ERROR - 2025-08-04 06:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:24 --> CORS Filter
+ERROR - 2025-08-04 06:55:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 06:55:24 --> CORS Filter
+ERROR - 2025-08-04 06:55:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:17:03 --> CORS Filter
+ERROR - 2025-08-04 07:17:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:17:04 --> CORS Filter
+ERROR - 2025-08-04 07:17:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:17:04 --> CORS Filter
+ERROR - 2025-08-04 07:17:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:17:04 --> CORS Filter
+ERROR - 2025-08-04 07:17:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:17:05 --> CORS Filter
+ERROR - 2025-08-04 07:17:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:17:06 --> CORS Filter
+ERROR - 2025-08-04 07:17:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:20:46 --> CORS Filter
+ERROR - 2025-08-04 07:20:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:20:46 --> CORS Filter
+ERROR - 2025-08-04 07:20:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:20:46 --> CORS Filter
+ERROR - 2025-08-04 07:20:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:20:47 --> CORS Filter
+ERROR - 2025-08-04 07:20:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:20:48 --> CORS Filter
+ERROR - 2025-08-04 07:20:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:20:48 --> CORS Filter
+ERROR - 2025-08-04 07:20:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:55:18 --> CORS Filter
+ERROR - 2025-08-04 07:55:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:55:18 --> CORS Filter
+ERROR - 2025-08-04 07:55:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:55:18 --> CORS Filter
+ERROR - 2025-08-04 07:55:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:55:19 --> CORS Filter
+ERROR - 2025-08-04 07:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:55:19 --> CORS Filter
+ERROR - 2025-08-04 07:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 07:55:19 --> CORS Filter
+ERROR - 2025-08-04 07:55:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:01 --> CORS Filter
+ERROR - 2025-08-04 08:03:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:01 --> CORS Filter
+ERROR - 2025-08-04 08:03:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:02 --> CORS Filter
+ERROR - 2025-08-04 08:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:02 --> CORS Filter
+ERROR - 2025-08-04 08:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:03 --> CORS Filter
+ERROR - 2025-08-04 08:03:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:03 --> CORS Filter
+ERROR - 2025-08-04 08:03:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:04 --> CORS Filter
+ERROR - 2025-08-04 08:03:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:03:04 --> CORS Filter
+ERROR - 2025-08-04 08:03:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:04:58 --> CORS Filter
+ERROR - 2025-08-04 08:04:58 --> Origin: http://localhost:53240
+ERROR - 2025-08-04 08:06:49 --> CORS Filter
+ERROR - 2025-08-04 08:06:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:06:50 --> CORS Filter
+ERROR - 2025-08-04 08:06:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:06:50 --> CORS Filter
+ERROR - 2025-08-04 08:06:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:06:50 --> CORS Filter
+ERROR - 2025-08-04 08:06:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:09 --> CORS Filter
+ERROR - 2025-08-04 08:07:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:09 --> CORS Filter
+ERROR - 2025-08-04 08:07:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:10 --> CORS Filter
+ERROR - 2025-08-04 08:07:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:10 --> CORS Filter
+ERROR - 2025-08-04 08:07:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:10 --> CORS Filter
+ERROR - 2025-08-04 08:07:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:10 --> CORS Filter
+ERROR - 2025-08-04 08:07:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:15 --> CORS Filter
+ERROR - 2025-08-04 08:07:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:15 --> CORS Filter
+ERROR - 2025-08-04 08:07:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:32 --> CORS Filter
+ERROR - 2025-08-04 08:07:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:32 --> CORS Filter
+ERROR - 2025-08-04 08:07:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:35 --> CORS Filter
+ERROR - 2025-08-04 08:07:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:07:35 --> CORS Filter
+ERROR - 2025-08-04 08:07:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:24 --> CORS Filter
+ERROR - 2025-08-04 08:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:24 --> CORS Filter
+ERROR - 2025-08-04 08:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:24 --> CORS Filter
+ERROR - 2025-08-04 08:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:25 --> CORS Filter
+ERROR - 2025-08-04 08:08:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:26 --> CORS Filter
+ERROR - 2025-08-04 08:08:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:26 --> CORS Filter
+ERROR - 2025-08-04 08:08:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:38 --> CORS Filter
+ERROR - 2025-08-04 08:08:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:38 --> CORS Filter
+ERROR - 2025-08-04 08:08:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:49 --> CORS Filter
+ERROR - 2025-08-04 08:08:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:08:49 --> CORS Filter
+ERROR - 2025-08-04 08:08:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:29 --> CORS Filter
+ERROR - 2025-08-04 08:10:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:30 --> CORS Filter
+ERROR - 2025-08-04 08:10:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:30 --> CORS Filter
+ERROR - 2025-08-04 08:10:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:30 --> CORS Filter
+ERROR - 2025-08-04 08:10:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:30 --> CORS Filter
+ERROR - 2025-08-04 08:10:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:31 --> CORS Filter
+ERROR - 2025-08-04 08:10:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:35 --> CORS Filter
+ERROR - 2025-08-04 08:10:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:35 --> CORS Filter
+ERROR - 2025-08-04 08:10:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:35 --> CORS Filter
+ERROR - 2025-08-04 08:10:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:35 --> CORS Filter
+ERROR - 2025-08-04 08:10:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:37 --> CORS Filter
+ERROR - 2025-08-04 08:10:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:37 --> CORS Filter
+ERROR - 2025-08-04 08:10:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:38 --> CORS Filter
+ERROR - 2025-08-04 08:10:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:38 --> CORS Filter
+ERROR - 2025-08-04 08:10:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:39 --> CORS Filter
+ERROR - 2025-08-04 08:10:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:47 --> CORS Filter
+ERROR - 2025-08-04 08:10:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:47 --> CORS Filter
+ERROR - 2025-08-04 08:10:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:53 --> CORS Filter
+ERROR - 2025-08-04 08:10:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:53 --> CORS Filter
+ERROR - 2025-08-04 08:10:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:53 --> CORS Filter
+ERROR - 2025-08-04 08:10:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:53 --> CORS Filter
+ERROR - 2025-08-04 08:10:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:54 --> CORS Filter
+ERROR - 2025-08-04 08:10:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:10:54 --> CORS Filter
+ERROR - 2025-08-04 08:10:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:12:28 --> CORS Filter
+ERROR - 2025-08-04 08:12:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:12:28 --> CORS Filter
+ERROR - 2025-08-04 08:12:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:32:43 --> CORS Filter
+ERROR - 2025-08-04 08:32:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:32:44 --> CORS Filter
+ERROR - 2025-08-04 08:32:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:34:17 --> CORS Filter
+ERROR - 2025-08-04 08:34:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:34:17 --> CORS Filter
+ERROR - 2025-08-04 08:34:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:35:38 --> CORS Filter
+ERROR - 2025-08-04 08:35:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:35:38 --> CORS Filter
+ERROR - 2025-08-04 08:35:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:37:56 --> CORS Filter
+ERROR - 2025-08-04 08:37:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:37:56 --> CORS Filter
+ERROR - 2025-08-04 08:37:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:38:54 --> CORS Filter
+ERROR - 2025-08-04 08:38:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:38:54 --> CORS Filter
+ERROR - 2025-08-04 08:38:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:57:52 --> CORS Filter
+ERROR - 2025-08-04 08:57:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:57:52 --> CORS Filter
+ERROR - 2025-08-04 08:57:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:57:53 --> CORS Filter
+ERROR - 2025-08-04 08:57:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 08:57:53 --> CORS Filter
+ERROR - 2025-08-04 08:57:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:08:10 --> CORS Filter
+ERROR - 2025-08-04 09:08:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:08:10 --> CORS Filter
+ERROR - 2025-08-04 09:08:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:05 --> CORS Filter
+ERROR - 2025-08-04 09:09:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:05 --> CORS Filter
+ERROR - 2025-08-04 09:09:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:06 --> CORS Filter
+ERROR - 2025-08-04 09:09:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:06 --> CORS Filter
+ERROR - 2025-08-04 09:09:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:06 --> CORS Filter
+ERROR - 2025-08-04 09:09:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:07 --> CORS Filter
+ERROR - 2025-08-04 09:09:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:07 --> CORS Filter
+ERROR - 2025-08-04 09:09:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:07 --> CORS Filter
+ERROR - 2025-08-04 09:09:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:50 --> CORS Filter
+ERROR - 2025-08-04 09:09:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:09:50 --> CORS Filter
+ERROR - 2025-08-04 09:09:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:13:28 --> CORS Filter
+ERROR - 2025-08-04 09:13:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:13:28 --> CORS Filter
+ERROR - 2025-08-04 09:13:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:13:29 --> CORS Filter
+ERROR - 2025-08-04 09:13:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:13:29 --> CORS Filter
+ERROR - 2025-08-04 09:13:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:13:30 --> CORS Filter
+ERROR - 2025-08-04 09:13:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:13:30 --> CORS Filter
+ERROR - 2025-08-04 09:13:30 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:08 --> CORS Filter
+ERROR - 2025-08-04 09:18:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:08 --> CORS Filter
+ERROR - 2025-08-04 09:18:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:09 --> CORS Filter
+ERROR - 2025-08-04 09:18:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:09 --> CORS Filter
+ERROR - 2025-08-04 09:18:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:10 --> CORS Filter
+ERROR - 2025-08-04 09:18:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:10 --> CORS Filter
+ERROR - 2025-08-04 09:18:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:21 --> CORS Filter
+ERROR - 2025-08-04 09:18:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:18:21 --> CORS Filter
+ERROR - 2025-08-04 09:18:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:19:49 --> CORS Filter
+ERROR - 2025-08-04 09:19:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:19:50 --> CORS Filter
+ERROR - 2025-08-04 09:19:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:19:50 --> CORS Filter
+ERROR - 2025-08-04 09:19:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:19:50 --> CORS Filter
+ERROR - 2025-08-04 09:19:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:19:51 --> CORS Filter
+ERROR - 2025-08-04 09:19:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:19:51 --> CORS Filter
+ERROR - 2025-08-04 09:19:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:21:37 --> CORS Filter
+ERROR - 2025-08-04 09:21:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:21:37 --> CORS Filter
+ERROR - 2025-08-04 09:21:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:21:37 --> CORS Filter
+ERROR - 2025-08-04 09:21:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:21:37 --> CORS Filter
+ERROR - 2025-08-04 09:21:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:21:38 --> CORS Filter
+ERROR - 2025-08-04 09:21:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:21:38 --> CORS Filter
+ERROR - 2025-08-04 09:21:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:22:01 --> CORS Filter
+ERROR - 2025-08-04 09:22:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:22:01 --> CORS Filter
+ERROR - 2025-08-04 09:22:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:22:02 --> CORS Filter
+ERROR - 2025-08-04 09:22:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:22:02 --> CORS Filter
+ERROR - 2025-08-04 09:22:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:22:04 --> CORS Filter
+ERROR - 2025-08-04 09:22:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:22:05 --> CORS Filter
+ERROR - 2025-08-04 09:22:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:23:21 --> CORS Filter
+ERROR - 2025-08-04 09:23:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:23:22 --> CORS Filter
+ERROR - 2025-08-04 09:23:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:23:22 --> CORS Filter
+ERROR - 2025-08-04 09:23:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:23:23 --> CORS Filter
+ERROR - 2025-08-04 09:23:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:23:25 --> CORS Filter
+ERROR - 2025-08-04 09:23:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:23:25 --> CORS Filter
+ERROR - 2025-08-04 09:23:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:26:38 --> CORS Filter
+ERROR - 2025-08-04 09:26:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:26:39 --> CORS Filter
+ERROR - 2025-08-04 09:26:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:26:44 --> CORS Filter
+ERROR - 2025-08-04 09:26:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:26:45 --> CORS Filter
+ERROR - 2025-08-04 09:26:45 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:26:52 --> CORS Filter
+ERROR - 2025-08-04 09:26:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:26:53 --> CORS Filter
+ERROR - 2025-08-04 09:26:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:28:40 --> CORS Filter
+ERROR - 2025-08-04 09:28:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:28:40 --> CORS Filter
+ERROR - 2025-08-04 09:28:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:28:47 --> CORS Filter
+ERROR - 2025-08-04 09:28:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:28:48 --> CORS Filter
+ERROR - 2025-08-04 09:28:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:34:31 --> CORS Filter
+ERROR - 2025-08-04 09:34:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:34:32 --> CORS Filter
+ERROR - 2025-08-04 09:34:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:34:32 --> CORS Filter
+ERROR - 2025-08-04 09:34:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:34:33 --> CORS Filter
+ERROR - 2025-08-04 09:34:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:34:34 --> CORS Filter
+ERROR - 2025-08-04 09:34:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:34:35 --> CORS Filter
+ERROR - 2025-08-04 09:34:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:35:48 --> CORS Filter
+ERROR - 2025-08-04 09:35:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:35:48 --> CORS Filter
+ERROR - 2025-08-04 09:35:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:37:12 --> CORS Filter
+ERROR - 2025-08-04 09:37:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:37:13 --> CORS Filter
+ERROR - 2025-08-04 09:37:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:37:14 --> CORS Filter
+ERROR - 2025-08-04 09:37:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:37:14 --> CORS Filter
+ERROR - 2025-08-04 09:37:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:37:16 --> CORS Filter
+ERROR - 2025-08-04 09:37:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:37:17 --> CORS Filter
+ERROR - 2025-08-04 09:37:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:38:01 --> CORS Filter
+ERROR - 2025-08-04 09:38:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:38:01 --> CORS Filter
+ERROR - 2025-08-04 09:38:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:38:05 --> CORS Filter
+ERROR - 2025-08-04 09:38:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:38:05 --> CORS Filter
+ERROR - 2025-08-04 09:38:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:38:56 --> CORS Filter
+ERROR - 2025-08-04 09:38:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:38:56 --> CORS Filter
+ERROR - 2025-08-04 09:38:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:39:14 --> CORS Filter
+ERROR - 2025-08-04 09:39:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:39:14 --> CORS Filter
+ERROR - 2025-08-04 09:39:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:39:15 --> CORS Filter
+ERROR - 2025-08-04 09:39:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:39:15 --> CORS Filter
+ERROR - 2025-08-04 09:39:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:40:05 --> CORS Filter
+ERROR - 2025-08-04 09:40:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 09:40:05 --> CORS Filter
+ERROR - 2025-08-04 09:40:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:37 --> CORS Filter
+ERROR - 2025-08-04 10:02:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:37 --> CORS Filter
+ERROR - 2025-08-04 10:02:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:38 --> CORS Filter
+ERROR - 2025-08-04 10:02:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:38 --> CORS Filter
+ERROR - 2025-08-04 10:02:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:42 --> CORS Filter
+ERROR - 2025-08-04 10:02:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:42 --> CORS Filter
+ERROR - 2025-08-04 10:02:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:47 --> CORS Filter
+ERROR - 2025-08-04 10:02:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:47 --> CORS Filter
+ERROR - 2025-08-04 10:02:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:52 --> CORS Filter
+ERROR - 2025-08-04 10:02:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:52 --> CORS Filter
+ERROR - 2025-08-04 10:02:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:53 --> CORS Filter
+ERROR - 2025-08-04 10:02:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:53 --> CORS Filter
+ERROR - 2025-08-04 10:02:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:53 --> CORS Filter
+ERROR - 2025-08-04 10:02:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:54 --> CORS Filter
+ERROR - 2025-08-04 10:02:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:59 --> CORS Filter
+ERROR - 2025-08-04 10:02:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:02:59 --> CORS Filter
+ERROR - 2025-08-04 10:02:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:03:41 --> CORS Filter
+ERROR - 2025-08-04 10:03:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:03:41 --> CORS Filter
+ERROR - 2025-08-04 10:03:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:03:41 --> CORS Filter
+ERROR - 2025-08-04 10:03:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:03:42 --> CORS Filter
+ERROR - 2025-08-04 10:03:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:03:42 --> CORS Filter
+ERROR - 2025-08-04 10:03:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:03:43 --> CORS Filter
+ERROR - 2025-08-04 10:03:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:06:42 --> CORS Filter
+ERROR - 2025-08-04 10:06:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:06:42 --> CORS Filter
+ERROR - 2025-08-04 10:06:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:06:43 --> CORS Filter
+ERROR - 2025-08-04 10:06:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:06:43 --> CORS Filter
+ERROR - 2025-08-04 10:06:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:22 --> CORS Filter
+ERROR - 2025-08-04 10:08:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:22 --> CORS Filter
+ERROR - 2025-08-04 10:08:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:28 --> CORS Filter
+ERROR - 2025-08-04 10:08:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:28 --> CORS Filter
+ERROR - 2025-08-04 10:08:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:28 --> CORS Filter
+ERROR - 2025-08-04 10:08:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:28 --> CORS Filter
+ERROR - 2025-08-04 10:08:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:29 --> CORS Filter
+ERROR - 2025-08-04 10:08:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:29 --> CORS Filter
+ERROR - 2025-08-04 10:08:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:43 --> CORS Filter
+ERROR - 2025-08-04 10:08:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:43 --> CORS Filter
+ERROR - 2025-08-04 10:08:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:44 --> CORS Filter
+ERROR - 2025-08-04 10:08:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:08:44 --> CORS Filter
+ERROR - 2025-08-04 10:08:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:00 --> CORS Filter
+ERROR - 2025-08-04 10:09:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:00 --> CORS Filter
+ERROR - 2025-08-04 10:09:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:00 --> CORS Filter
+ERROR - 2025-08-04 10:09:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:00 --> CORS Filter
+ERROR - 2025-08-04 10:09:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:01 --> CORS Filter
+ERROR - 2025-08-04 10:09:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:01 --> CORS Filter
+ERROR - 2025-08-04 10:09:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:01 --> CORS Filter
+ERROR - 2025-08-04 10:09:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:01 --> CORS Filter
+ERROR - 2025-08-04 10:09:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:09:01 --> CORS Filter
+ERROR - 2025-08-04 10:09:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:48 --> CORS Filter
+ERROR - 2025-08-04 10:55:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:48 --> CORS Filter
+ERROR - 2025-08-04 10:55:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:49 --> CORS Filter
+ERROR - 2025-08-04 10:55:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:49 --> CORS Filter
+ERROR - 2025-08-04 10:55:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:49 --> CORS Filter
+ERROR - 2025-08-04 10:55:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:50 --> CORS Filter
+ERROR - 2025-08-04 10:55:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:50 --> CORS Filter
+ERROR - 2025-08-04 10:55:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:50 --> CORS Filter
+ERROR - 2025-08-04 10:55:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:55:59 --> CORS Filter
+ERROR - 2025-08-04 10:55:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 10:56:00 --> CORS Filter
+ERROR - 2025-08-04 10:56:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:26 --> CORS Filter
+ERROR - 2025-08-04 11:03:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:26 --> CORS Filter
+ERROR - 2025-08-04 11:03:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:27 --> CORS Filter
+ERROR - 2025-08-04 11:03:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:27 --> CORS Filter
+ERROR - 2025-08-04 11:03:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:28 --> CORS Filter
+ERROR - 2025-08-04 11:03:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:28 --> CORS Filter
+ERROR - 2025-08-04 11:03:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:39 --> CORS Filter
+ERROR - 2025-08-04 11:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:39 --> CORS Filter
+ERROR - 2025-08-04 11:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:39 --> CORS Filter
+ERROR - 2025-08-04 11:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:39 --> CORS Filter
+ERROR - 2025-08-04 11:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:40 --> CORS Filter
+ERROR - 2025-08-04 11:03:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:03:40 --> CORS Filter
+ERROR - 2025-08-04 11:03:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:08:42 --> CORS Filter
+ERROR - 2025-08-04 11:08:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:08:42 --> CORS Filter
+ERROR - 2025-08-04 11:08:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:10:16 --> CORS Filter
+ERROR - 2025-08-04 11:10:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:10:16 --> CORS Filter
+ERROR - 2025-08-04 11:10:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:11:10 --> CORS Filter
+ERROR - 2025-08-04 11:11:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:11:10 --> CORS Filter
+ERROR - 2025-08-04 11:11:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:11:10 --> CORS Filter
+ERROR - 2025-08-04 11:11:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:11:11 --> CORS Filter
+ERROR - 2025-08-04 11:11:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:11:12 --> CORS Filter
+ERROR - 2025-08-04 11:11:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:11:12 --> CORS Filter
+ERROR - 2025-08-04 11:11:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:19 --> CORS Filter
+ERROR - 2025-08-04 11:13:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:19 --> CORS Filter
+ERROR - 2025-08-04 11:13:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:20 --> CORS Filter
+ERROR - 2025-08-04 11:13:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:20 --> CORS Filter
+ERROR - 2025-08-04 11:13:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:21 --> CORS Filter
+ERROR - 2025-08-04 11:13:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:21 --> CORS Filter
+ERROR - 2025-08-04 11:13:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:22 --> CORS Filter
+ERROR - 2025-08-04 11:13:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:24 --> CORS Filter
+ERROR - 2025-08-04 11:13:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:24 --> CORS Filter
+ERROR - 2025-08-04 11:13:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:24 --> CORS Filter
+ERROR - 2025-08-04 11:13:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:25 --> CORS Filter
+ERROR - 2025-08-04 11:13:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:34 --> CORS Filter
+ERROR - 2025-08-04 11:13:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:35 --> CORS Filter
+ERROR - 2025-08-04 11:13:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:35 --> CORS Filter
+ERROR - 2025-08-04 11:13:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:35 --> CORS Filter
+ERROR - 2025-08-04 11:13:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:36 --> CORS Filter
+ERROR - 2025-08-04 11:13:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:36 --> CORS Filter
+ERROR - 2025-08-04 11:13:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:40 --> CORS Filter
+ERROR - 2025-08-04 11:13:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:40 --> CORS Filter
+ERROR - 2025-08-04 11:13:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:41 --> CORS Filter
+ERROR - 2025-08-04 11:13:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:41 --> CORS Filter
+ERROR - 2025-08-04 11:13:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:41 --> CORS Filter
+ERROR - 2025-08-04 11:13:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:42 --> CORS Filter
+ERROR - 2025-08-04 11:13:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:46 --> CORS Filter
+ERROR - 2025-08-04 11:13:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:46 --> CORS Filter
+ERROR - 2025-08-04 11:13:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:46 --> CORS Filter
+ERROR - 2025-08-04 11:13:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:46 --> CORS Filter
+ERROR - 2025-08-04 11:13:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:47 --> CORS Filter
+ERROR - 2025-08-04 11:13:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:47 --> CORS Filter
+ERROR - 2025-08-04 11:13:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:49 --> CORS Filter
+ERROR - 2025-08-04 11:13:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:50 --> CORS Filter
+ERROR - 2025-08-04 11:13:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:50 --> CORS Filter
+ERROR - 2025-08-04 11:13:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:52 --> CORS Filter
+ERROR - 2025-08-04 11:13:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:53 --> CORS Filter
+ERROR - 2025-08-04 11:13:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:53 --> CORS Filter
+ERROR - 2025-08-04 11:13:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:53 --> CORS Filter
+ERROR - 2025-08-04 11:13:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:54 --> CORS Filter
+ERROR - 2025-08-04 11:13:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:54 --> CORS Filter
+ERROR - 2025-08-04 11:13:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:56 --> CORS Filter
+ERROR - 2025-08-04 11:13:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:57 --> CORS Filter
+ERROR - 2025-08-04 11:13:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:13:57 --> CORS Filter
+ERROR - 2025-08-04 11:13:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:42 --> CORS Filter
+ERROR - 2025-08-04 11:20:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:43 --> CORS Filter
+ERROR - 2025-08-04 11:20:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:46 --> CORS Filter
+ERROR - 2025-08-04 11:20:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:46 --> CORS Filter
+ERROR - 2025-08-04 11:20:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:51 --> CORS Filter
+ERROR - 2025-08-04 11:20:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:51 --> CORS Filter
+ERROR - 2025-08-04 11:20:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:59 --> CORS Filter
+ERROR - 2025-08-04 11:20:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:20:59 --> CORS Filter
+ERROR - 2025-08-04 11:20:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:00 --> CORS Filter
+ERROR - 2025-08-04 11:21:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:00 --> CORS Filter
+ERROR - 2025-08-04 11:21:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:01 --> CORS Filter
+ERROR - 2025-08-04 11:21:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:02 --> CORS Filter
+ERROR - 2025-08-04 11:21:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:20 --> CORS Filter
+ERROR - 2025-08-04 11:21:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:21 --> CORS Filter
+ERROR - 2025-08-04 11:21:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:21 --> CORS Filter
+ERROR - 2025-08-04 11:21:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:21 --> CORS Filter
+ERROR - 2025-08-04 11:21:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:22 --> CORS Filter
+ERROR - 2025-08-04 11:21:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:22 --> CORS Filter
+ERROR - 2025-08-04 11:21:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:27 --> CORS Filter
+ERROR - 2025-08-04 11:21:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:27 --> CORS Filter
+ERROR - 2025-08-04 11:21:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:37 --> CORS Filter
+ERROR - 2025-08-04 11:21:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:37 --> CORS Filter
+ERROR - 2025-08-04 11:21:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:38 --> CORS Filter
+ERROR - 2025-08-04 11:21:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:38 --> CORS Filter
+ERROR - 2025-08-04 11:21:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:39 --> CORS Filter
+ERROR - 2025-08-04 11:21:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:40 --> CORS Filter
+ERROR - 2025-08-04 11:21:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:41 --> CORS Filter
+ERROR - 2025-08-04 11:21:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:42 --> CORS Filter
+ERROR - 2025-08-04 11:21:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:42 --> CORS Filter
+ERROR - 2025-08-04 11:21:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:43 --> CORS Filter
+ERROR - 2025-08-04 11:21:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:49 --> CORS Filter
+ERROR - 2025-08-04 11:21:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:49 --> CORS Filter
+ERROR - 2025-08-04 11:21:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:50 --> CORS Filter
+ERROR - 2025-08-04 11:21:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:21:50 --> CORS Filter
+ERROR - 2025-08-04 11:21:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:22:19 --> CORS Filter
+ERROR - 2025-08-04 11:22:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:22:20 --> CORS Filter
+ERROR - 2025-08-04 11:22:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:03 --> CORS Filter
+ERROR - 2025-08-04 11:23:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:03 --> CORS Filter
+ERROR - 2025-08-04 11:23:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:03 --> CORS Filter
+ERROR - 2025-08-04 11:23:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:03 --> CORS Filter
+ERROR - 2025-08-04 11:23:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:04 --> CORS Filter
+ERROR - 2025-08-04 11:23:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:04 --> CORS Filter
+ERROR - 2025-08-04 11:23:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:06 --> CORS Filter
+ERROR - 2025-08-04 11:23:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:07 --> CORS Filter
+ERROR - 2025-08-04 11:23:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:08 --> CORS Filter
+ERROR - 2025-08-04 11:23:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:19 --> CORS Filter
+ERROR - 2025-08-04 11:23:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:19 --> CORS Filter
+ERROR - 2025-08-04 11:23:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:19 --> CORS Filter
+ERROR - 2025-08-04 11:23:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:19 --> CORS Filter
+ERROR - 2025-08-04 11:23:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:20 --> CORS Filter
+ERROR - 2025-08-04 11:23:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:20 --> CORS Filter
+ERROR - 2025-08-04 11:23:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:32 --> CORS Filter
+ERROR - 2025-08-04 11:23:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:32 --> CORS Filter
+ERROR - 2025-08-04 11:23:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:32 --> CORS Filter
+ERROR - 2025-08-04 11:23:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:32 --> CORS Filter
+ERROR - 2025-08-04 11:23:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:33 --> CORS Filter
+ERROR - 2025-08-04 11:23:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:23:34 --> CORS Filter
+ERROR - 2025-08-04 11:23:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:48 --> CORS Filter
+ERROR - 2025-08-04 11:24:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:48 --> CORS Filter
+ERROR - 2025-08-04 11:24:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:49 --> CORS Filter
+ERROR - 2025-08-04 11:24:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:49 --> CORS Filter
+ERROR - 2025-08-04 11:24:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:49 --> CORS Filter
+ERROR - 2025-08-04 11:24:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:50 --> CORS Filter
+ERROR - 2025-08-04 11:24:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:54 --> CORS Filter
+ERROR - 2025-08-04 11:24:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:54 --> CORS Filter
+ERROR - 2025-08-04 11:24:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:54 --> CORS Filter
+ERROR - 2025-08-04 11:24:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:55 --> CORS Filter
+ERROR - 2025-08-04 11:24:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:55 --> CORS Filter
+ERROR - 2025-08-04 11:24:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:24:57 --> CORS Filter
+ERROR - 2025-08-04 11:24:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:25:51 --> CORS Filter
+ERROR - 2025-08-04 11:25:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:25:51 --> CORS Filter
+ERROR - 2025-08-04 11:25:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:25:51 --> CORS Filter
+ERROR - 2025-08-04 11:25:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 11:25:51 --> CORS Filter
+ERROR - 2025-08-04 11:25:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:25 --> CORS Filter
+ERROR - 2025-08-04 13:20:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:25 --> CORS Filter
+ERROR - 2025-08-04 13:20:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:26 --> CORS Filter
+ERROR - 2025-08-04 13:20:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:26 --> CORS Filter
+ERROR - 2025-08-04 13:20:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:27 --> CORS Filter
+ERROR - 2025-08-04 13:20:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:27 --> CORS Filter
+ERROR - 2025-08-04 13:20:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:27 --> CORS Filter
+ERROR - 2025-08-04 13:20:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:20:28 --> CORS Filter
+ERROR - 2025-08-04 13:20:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:24 --> CORS Filter
+ERROR - 2025-08-04 13:59:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:24 --> CORS Filter
+ERROR - 2025-08-04 13:59:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:25 --> CORS Filter
+ERROR - 2025-08-04 13:59:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:25 --> CORS Filter
+ERROR - 2025-08-04 13:59:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:27 --> CORS Filter
+ERROR - 2025-08-04 13:59:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:28 --> CORS Filter
+ERROR - 2025-08-04 13:59:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:42 --> CORS Filter
+ERROR - 2025-08-04 13:59:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:42 --> CORS Filter
+ERROR - 2025-08-04 13:59:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:47 --> CORS Filter
+ERROR - 2025-08-04 13:59:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:47 --> CORS Filter
+ERROR - 2025-08-04 13:59:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:53 --> CORS Filter
+ERROR - 2025-08-04 13:59:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:54 --> CORS Filter
+ERROR - 2025-08-04 13:59:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:54 --> CORS Filter
+ERROR - 2025-08-04 13:59:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 13:59:54 --> CORS Filter
+ERROR - 2025-08-04 13:59:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:00:20 --> CORS Filter
+ERROR - 2025-08-04 14:00:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:00:20 --> CORS Filter
+ERROR - 2025-08-04 14:00:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:00:22 --> CORS Filter
+ERROR - 2025-08-04 14:00:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:00:22 --> CORS Filter
+ERROR - 2025-08-04 14:00:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:00:26 --> CORS Filter
+ERROR - 2025-08-04 14:00:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:00:26 --> CORS Filter
+ERROR - 2025-08-04 14:00:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:03:39 --> CORS Filter
+ERROR - 2025-08-04 14:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:03:39 --> CORS Filter
+ERROR - 2025-08-04 14:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:03:40 --> CORS Filter
+ERROR - 2025-08-04 14:03:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:03:47 --> CORS Filter
+ERROR - 2025-08-04 14:03:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:03:47 --> CORS Filter
+ERROR - 2025-08-04 14:03:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:03:47 --> CORS Filter
+ERROR - 2025-08-04 14:03:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:03:48 --> CORS Filter
+ERROR - 2025-08-04 14:03:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:07:51 --> CORS Filter
+ERROR - 2025-08-04 14:07:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:07:51 --> CORS Filter
+ERROR - 2025-08-04 14:07:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:07:51 --> CORS Filter
+ERROR - 2025-08-04 14:07:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 14:07:52 --> CORS Filter
+ERROR - 2025-08-04 14:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:26 --> CORS Filter
+ERROR - 2025-08-04 15:45:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:26 --> CORS Filter
+ERROR - 2025-08-04 15:45:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:27 --> CORS Filter
+ERROR - 2025-08-04 15:45:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:27 --> CORS Filter
+ERROR - 2025-08-04 15:45:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:27 --> CORS Filter
+ERROR - 2025-08-04 15:45:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:27 --> CORS Filter
+ERROR - 2025-08-04 15:45:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:27 --> CORS Filter
+ERROR - 2025-08-04 15:45:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:45:28 --> CORS Filter
+ERROR - 2025-08-04 15:45:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:58:13 --> CORS Filter
+ERROR - 2025-08-04 15:58:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:58:13 --> CORS Filter
+ERROR - 2025-08-04 15:58:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:58:17 --> CORS Filter
+ERROR - 2025-08-04 15:58:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:58:17 --> CORS Filter
+ERROR - 2025-08-04 15:58:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:58:18 --> CORS Filter
+ERROR - 2025-08-04 15:58:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 15:58:18 --> CORS Filter
+ERROR - 2025-08-04 15:58:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:05:19 --> CORS Filter
+ERROR - 2025-08-04 16:05:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:05:19 --> CORS Filter
+ERROR - 2025-08-04 16:05:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:05:19 --> CORS Filter
+ERROR - 2025-08-04 16:05:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:05:20 --> CORS Filter
+ERROR - 2025-08-04 16:05:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:08:26 --> CORS Filter
+ERROR - 2025-08-04 16:08:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:08:26 --> CORS Filter
+ERROR - 2025-08-04 16:08:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:08:26 --> CORS Filter
+ERROR - 2025-08-04 16:08:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:08:26 --> CORS Filter
+ERROR - 2025-08-04 16:08:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:14 --> CORS Filter
+ERROR - 2025-08-04 16:12:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:14 --> CORS Filter
+ERROR - 2025-08-04 16:12:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:14 --> CORS Filter
+ERROR - 2025-08-04 16:12:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:15 --> CORS Filter
+ERROR - 2025-08-04 16:12:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:33 --> CORS Filter
+ERROR - 2025-08-04 16:12:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:34 --> CORS Filter
+ERROR - 2025-08-04 16:12:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:34 --> CORS Filter
+ERROR - 2025-08-04 16:12:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:35 --> CORS Filter
+ERROR - 2025-08-04 16:12:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:12:49 --> CORS Filter
+ERROR - 2025-08-04 16:12:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:13:55 --> CORS Filter
+ERROR - 2025-08-04 16:13:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:13:56 --> CORS Filter
+ERROR - 2025-08-04 16:13:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:13:56 --> CORS Filter
+ERROR - 2025-08-04 16:13:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:13:56 --> CORS Filter
+ERROR - 2025-08-04 16:13:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:14:13 --> CORS Filter
+ERROR - 2025-08-04 16:14:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:14:13 --> CORS Filter
+ERROR - 2025-08-04 16:14:13 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 16:14:15 --> CodeIgniter\HTTP\Exceptions\HTTPException: Failed to parse JSON string. Error: Syntax error
+[Method: POST, Route: api/website/createlogobanner]
+in SYSTEMPATH\HTTP\IncomingRequest.php on line 537.
+ 1 SYSTEMPATH\HTTP\IncomingRequest.php(537): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidJSON('Syntax error')
+ 2 APPPATH\Controllers\Website.php(264): CodeIgniter\HTTP\IncomingRequest->getJSON(true)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 16:16:32 --> CORS Filter
+ERROR - 2025-08-04 16:16:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:16:33 --> CORS Filter
+ERROR - 2025-08-04 16:16:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:16:33 --> CORS Filter
+ERROR - 2025-08-04 16:16:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:16:34 --> CORS Filter
+ERROR - 2025-08-04 16:16:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:16:47 --> CORS Filter
+ERROR - 2025-08-04 16:16:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:16:47 --> CORS Filter
+ERROR - 2025-08-04 16:16:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:17:26 --> CORS Filter
+ERROR - 2025-08-04 16:17:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:17:26 --> CORS Filter
+ERROR - 2025-08-04 16:17:26 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:19:59 --> CORS Filter
+ERROR - 2025-08-04 16:19:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:20:00 --> CORS Filter
+ERROR - 2025-08-04 16:20:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:20:00 --> CORS Filter
+ERROR - 2025-08-04 16:20:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:20:00 --> CORS Filter
+ERROR - 2025-08-04 16:20:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:20:24 --> CORS Filter
+ERROR - 2025-08-04 16:20:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:20:24 --> CORS Filter
+ERROR - 2025-08-04 16:20:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:21:57 --> CORS Filter
+ERROR - 2025-08-04 16:21:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:21:57 --> CORS Filter
+ERROR - 2025-08-04 16:21:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:21:58 --> CORS Filter
+ERROR - 2025-08-04 16:21:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:21:58 --> CORS Filter
+ERROR - 2025-08-04 16:21:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:22:11 --> CORS Filter
+ERROR - 2025-08-04 16:22:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:22:12 --> CORS Filter
+ERROR - 2025-08-04 16:22:12 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 16:22:12 --> ErrorException: Undefined array key "id"
+[Method: POST, Route: api/website/createlogobanner]
+in APPPATH\Controllers\Website.php on line 296.
+ 1 APPPATH\Controllers\Website.php(296): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id"', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 296)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 16:22:37 --> CORS Filter
+ERROR - 2025-08-04 16:22:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:22:37 --> CORS Filter
+ERROR - 2025-08-04 16:22:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:22:37 --> CORS Filter
+ERROR - 2025-08-04 16:22:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:22:37 --> CORS Filter
+ERROR - 2025-08-04 16:22:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:24:03 --> CORS Filter
+ERROR - 2025-08-04 16:24:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:24:03 --> CORS Filter
+ERROR - 2025-08-04 16:24:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:24:04 --> CORS Filter
+ERROR - 2025-08-04 16:24:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:24:05 --> CORS Filter
+ERROR - 2025-08-04 16:24:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:24:17 --> CORS Filter
+ERROR - 2025-08-04 16:24:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:24:17 --> CORS Filter
+ERROR - 2025-08-04 16:24:17 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 16:24:17 --> ErrorException: Undefined array key "id"
+[Method: POST, Route: api/website/createlogobanner]
+in APPPATH\Controllers\Website.php on line 296.
+ 1 APPPATH\Controllers\Website.php(296): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id"', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 296)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 16:25:31 --> CORS Filter
+ERROR - 2025-08-04 16:25:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:25:32 --> CORS Filter
+ERROR - 2025-08-04 16:25:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:25:32 --> CORS Filter
+ERROR - 2025-08-04 16:25:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:25:33 --> CORS Filter
+ERROR - 2025-08-04 16:25:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:25:45 --> CORS Filter
+ERROR - 2025-08-04 16:25:45 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:25:45 --> CORS Filter
+ERROR - 2025-08-04 16:25:45 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 16:25:45 --> ErrorException: Undefined array key "businessIdd"
+[Method: POST, Route: api/website/createlogobanner]
+in APPPATH\Controllers\Website.php on line 296.
+ 1 APPPATH\Controllers\Website.php(296): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "businessIdd"', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 296)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 16:27:19 --> CORS Filter
+ERROR - 2025-08-04 16:27:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:27:20 --> CORS Filter
+ERROR - 2025-08-04 16:27:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:27:21 --> CORS Filter
+ERROR - 2025-08-04 16:27:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:27:21 --> CORS Filter
+ERROR - 2025-08-04 16:27:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:28:58 --> CORS Filter
+ERROR - 2025-08-04 16:28:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:28:58 --> CORS Filter
+ERROR - 2025-08-04 16:28:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:00 --> CORS Filter
+ERROR - 2025-08-04 16:30:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:00 --> CORS Filter
+ERROR - 2025-08-04 16:30:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:00 --> CORS Filter
+ERROR - 2025-08-04 16:30:00 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 16:30:01 --> ErrorException: Undefined array key "Id"
+[Method: POST, Route: api/website/createlogobanner]
+in APPPATH\Controllers\Website.php on line 296.
+ 1 APPPATH\Controllers\Website.php(296): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "Id"', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 296)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 16:30:01 --> CORS Filter
+ERROR - 2025-08-04 16:30:01 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 16:30:01 --> ErrorException: Undefined array key "Id"
+[Method: POST, Route: api/website/createlogobanner]
+in APPPATH\Controllers\Website.php on line 296.
+ 1 APPPATH\Controllers\Website.php(296): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "Id"', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 296)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 16:30:14 --> CORS Filter
+ERROR - 2025-08-04 16:30:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:15 --> CORS Filter
+ERROR - 2025-08-04 16:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:15 --> CORS Filter
+ERROR - 2025-08-04 16:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:15 --> CORS Filter
+ERROR - 2025-08-04 16:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:35 --> CORS Filter
+ERROR - 2025-08-04 16:30:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 16:30:35 --> CORS Filter
+ERROR - 2025-08-04 16:30:35 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 16:30:35 --> ErrorException: Undefined array key "Id"
+[Method: POST, Route: api/website/createlogobanner]
+in APPPATH\Controllers\Website.php on line 296.
+ 1 APPPATH\Controllers\Website.php(296): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "Id"', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 296)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 17:24:34 --> CORS Filter
+ERROR - 2025-08-04 17:24:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:34 --> CORS Filter
+ERROR - 2025-08-04 17:24:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:35 --> CORS Filter
+ERROR - 2025-08-04 17:24:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:36 --> CORS Filter
+ERROR - 2025-08-04 17:24:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:36 --> CORS Filter
+ERROR - 2025-08-04 17:24:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:37 --> CORS Filter
+ERROR - 2025-08-04 17:24:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:38 --> CORS Filter
+ERROR - 2025-08-04 17:24:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:38 --> CORS Filter
+ERROR - 2025-08-04 17:24:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:47 --> CORS Filter
+ERROR - 2025-08-04 17:24:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:47 --> CORS Filter
+ERROR - 2025-08-04 17:24:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:54 --> CORS Filter
+ERROR - 2025-08-04 17:24:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:55 --> CORS Filter
+ERROR - 2025-08-04 17:24:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:55 --> CORS Filter
+ERROR - 2025-08-04 17:24:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:24:56 --> CORS Filter
+ERROR - 2025-08-04 17:24:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:25:33 --> CORS Filter
+ERROR - 2025-08-04 17:25:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:25:33 --> CORS Filter
+ERROR - 2025-08-04 17:25:33 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-04 17:25:34 --> ErrorException: Undefined array key "Id"
+[Method: POST, Route: api/website/createlogobanner]
+in APPPATH\Controllers\Website.php on line 296.
+ 1 APPPATH\Controllers\Website.php(296): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "Id"', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Website.php', 296)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createLogoBanner()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-04 17:29:51 --> CORS Filter
+ERROR - 2025-08-04 17:29:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:29:52 --> CORS Filter
+ERROR - 2025-08-04 17:29:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:29:53 --> CORS Filter
+ERROR - 2025-08-04 17:29:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:29:53 --> CORS Filter
+ERROR - 2025-08-04 17:29:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:30:14 --> CORS Filter
+ERROR - 2025-08-04 17:30:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:30:15 --> CORS Filter
+ERROR - 2025-08-04 17:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:32:08 --> CORS Filter
+ERROR - 2025-08-04 17:32:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-04 17:32:09 --> CORS Filter
+ERROR - 2025-08-04 17:32:09 --> Origin: http://localhost:4200

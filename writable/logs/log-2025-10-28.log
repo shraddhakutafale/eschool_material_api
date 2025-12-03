@@ -1,0 +1,1106 @@
+ERROR - 2025-10-28 03:47:10 --> CORS Filter
+ERROR - 2025-10-28 03:47:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:47:10 --> CORS Filter
+ERROR - 2025-10-28 03:47:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:47:11 --> CORS Filter
+ERROR - 2025-10-28 03:47:11 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:47:11 --> CORS Filter
+ERROR - 2025-10-28 03:47:11 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:47:12 --> CORS Filter
+ERROR - 2025-10-28 03:47:12 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:47:17 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'exiaa_db', 3306, '', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Models\TenantModel.php(58): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php(46): App\Models\TenantModel->getTenantDatabaseConfig('exRetailWholesa...')
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), NULL)
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore(Array)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/item/get...', 'before')
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#16 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#5 C:\xampp\htdocs\exiaa-material-api\app\Models\TenantModel.php(58): CodeIgniter\BaseModel->first()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php(46): App\Models\TenantModel->getTenantDatabaseConfig('exRetailWholesa...')
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), NULL)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore(Array)
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/item/get...', 'before')
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-10-28 03:47:17 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+[Method: GET, Route: webapi/item/getfouritemproductbycategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `tenant_mst`
+WHERE `tenantName` = :tenantName:
+AND `isActive` = :isActive:
+AND `isDeleted` = :isDeleted:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 5 APPPATH\Models\TenantModel.php(58): CodeIgniter\BaseModel->first()
+ 6 APPPATH\Filters\TenantFilter.php(46): App\Models\TenantModel->getTenantDatabaseConfig('exRetailWholesaleEcommerce')
+ 7 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 8 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 9 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/item/getfouritemproductbycategory', 'before')
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-10-28 03:47:18 --> CORS Filter
+ERROR - 2025-10-28 03:47:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:47:18 --> CORS Filter
+ERROR - 2025-10-28 03:47:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:47:23 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'exiaa_db', 3306, '', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Models\TenantModel.php(58): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php(46): App\Models\TenantModel->getTenantDatabaseConfig('exRetailWholesa...')
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), NULL)
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore(Array)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/item/get...', 'before')
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#16 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(713): CodeIgniter\Model->doFirst()
+#5 C:\xampp\htdocs\exiaa-material-api\app\Models\TenantModel.php(58): CodeIgniter\BaseModel->first()
+#6 C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php(46): App\Models\TenantModel->getTenantDatabaseConfig('exRetailWholesa...')
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), NULL)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore(Array)
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/item/get...', 'before')
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-10-28 03:47:23 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+[Method: GET, Route: webapi/item/getfouritemproductbycategory]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `tenant_mst`
+WHERE `tenantName` = :tenantName:
+AND `isActive` = :isActive:
+AND `isDeleted` = :isDeleted:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(713): CodeIgniter\Model->doFirst()
+ 5 APPPATH\Models\TenantModel.php(58): CodeIgniter\BaseModel->first()
+ 6 APPPATH\Filters\TenantFilter.php(46): App\Models\TenantModel->getTenantDatabaseConfig('exRetailWholesaleEcommerce')
+ 7 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 8 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 9 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/item/getfouritemproductbycategory', 'before')
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-10-28 03:47:23 --> CORS Filter
+ERROR - 2025-10-28 03:47:23 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:39 --> CORS Filter
+ERROR - 2025-10-28 03:59:39 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:41 --> CORS Filter
+ERROR - 2025-10-28 03:59:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:41 --> CORS Filter
+ERROR - 2025-10-28 03:59:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:43 --> CORS Filter
+ERROR - 2025-10-28 03:59:43 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:44 --> CORS Filter
+ERROR - 2025-10-28 03:59:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:45 --> CORS Filter
+ERROR - 2025-10-28 03:59:45 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:46 --> CORS Filter
+ERROR - 2025-10-28 03:59:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 03:59:46 --> CORS Filter
+ERROR - 2025-10-28 03:59:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:04:28 --> CORS Filter
+ERROR - 2025-10-28 04:04:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:04:29 --> CORS Filter
+ERROR - 2025-10-28 04:04:29 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:04:29 --> CORS Filter
+ERROR - 2025-10-28 04:04:29 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:04:30 --> CORS Filter
+ERROR - 2025-10-28 04:04:30 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:04:47 --> CORS Filter
+ERROR - 2025-10-28 04:04:47 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:04:48 --> CORS Filter
+ERROR - 2025-10-28 04:04:48 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:05:04 --> CORS Filter
+ERROR - 2025-10-28 04:05:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:05:04 --> CORS Filter
+ERROR - 2025-10-28 04:05:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:05:05 --> CORS Filter
+ERROR - 2025-10-28 04:05:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:05:05 --> CORS Filter
+ERROR - 2025-10-28 04:05:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:05:18 --> CORS Filter
+ERROR - 2025-10-28 04:05:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:05:19 --> CORS Filter
+ERROR - 2025-10-28 04:05:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:07:52 --> CORS Filter
+ERROR - 2025-10-28 04:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:07:53 --> CORS Filter
+ERROR - 2025-10-28 04:07:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:07:53 --> CORS Filter
+ERROR - 2025-10-28 04:07:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:07:55 --> CORS Filter
+ERROR - 2025-10-28 04:07:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:07:56 --> CORS Filter
+ERROR - 2025-10-28 04:07:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:07:57 --> CORS Filter
+ERROR - 2025-10-28 04:07:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:30:51 --> CORS Filter
+ERROR - 2025-10-28 04:30:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:30:52 --> CORS Filter
+ERROR - 2025-10-28 04:30:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:30:52 --> CORS Filter
+ERROR - 2025-10-28 04:30:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:30:54 --> CORS Filter
+ERROR - 2025-10-28 04:30:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:30:55 --> CORS Filter
+ERROR - 2025-10-28 04:30:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:33 --> CORS Filter
+ERROR - 2025-10-28 04:33:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:33 --> CORS Filter
+ERROR - 2025-10-28 04:33:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:34 --> CORS Filter
+ERROR - 2025-10-28 04:33:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:34 --> CORS Filter
+ERROR - 2025-10-28 04:33:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:36 --> CORS Filter
+ERROR - 2025-10-28 04:33:36 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:36 --> CORS Filter
+ERROR - 2025-10-28 04:33:36 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:37 --> CORS Filter
+ERROR - 2025-10-28 04:33:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:33:37 --> CORS Filter
+ERROR - 2025-10-28 04:33:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:36:44 --> CORS Filter
+ERROR - 2025-10-28 04:36:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:36:46 --> CORS Filter
+ERROR - 2025-10-28 04:36:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:36:46 --> CORS Filter
+ERROR - 2025-10-28 04:36:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:36:47 --> CORS Filter
+ERROR - 2025-10-28 04:36:47 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:36:48 --> CORS Filter
+ERROR - 2025-10-28 04:36:48 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:21 --> CORS Filter
+ERROR - 2025-10-28 04:37:21 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:21 --> CORS Filter
+ERROR - 2025-10-28 04:37:21 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:22 --> CORS Filter
+ERROR - 2025-10-28 04:37:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:22 --> CORS Filter
+ERROR - 2025-10-28 04:37:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:26 --> CORS Filter
+ERROR - 2025-10-28 04:37:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:27 --> CORS Filter
+ERROR - 2025-10-28 04:37:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:58 --> CORS Filter
+ERROR - 2025-10-28 04:37:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:58 --> CORS Filter
+ERROR - 2025-10-28 04:37:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:58 --> CORS Filter
+ERROR - 2025-10-28 04:37:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:59 --> CORS Filter
+ERROR - 2025-10-28 04:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:37:59 --> CORS Filter
+ERROR - 2025-10-28 04:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:38:18 --> CORS Filter
+ERROR - 2025-10-28 04:38:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:38:18 --> CORS Filter
+ERROR - 2025-10-28 04:38:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:38:18 --> CORS Filter
+ERROR - 2025-10-28 04:38:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:38:19 --> CORS Filter
+ERROR - 2025-10-28 04:38:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:38:19 --> CORS Filter
+ERROR - 2025-10-28 04:38:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:43 --> CORS Filter
+ERROR - 2025-10-28 04:39:43 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:44 --> CORS Filter
+ERROR - 2025-10-28 04:39:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:44 --> CORS Filter
+ERROR - 2025-10-28 04:39:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:45 --> CORS Filter
+ERROR - 2025-10-28 04:39:45 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:49 --> CORS Filter
+ERROR - 2025-10-28 04:39:49 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:50 --> CORS Filter
+ERROR - 2025-10-28 04:39:50 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:51 --> CORS Filter
+ERROR - 2025-10-28 04:39:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:51 --> CORS Filter
+ERROR - 2025-10-28 04:39:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:51 --> CORS Filter
+ERROR - 2025-10-28 04:39:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:52 --> CORS Filter
+ERROR - 2025-10-28 04:39:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:52 --> CORS Filter
+ERROR - 2025-10-28 04:39:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:53 --> CORS Filter
+ERROR - 2025-10-28 04:39:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:53 --> CORS Filter
+ERROR - 2025-10-28 04:39:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:39:55 --> CORS Filter
+ERROR - 2025-10-28 04:39:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:40:08 --> CORS Filter
+ERROR - 2025-10-28 04:40:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:40:08 --> CORS Filter
+ERROR - 2025-10-28 04:40:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:40:08 --> Item Id: 3
+ERROR - 2025-10-28 04:41:22 --> CORS Filter
+ERROR - 2025-10-28 04:41:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:41:22 --> CORS Filter
+ERROR - 2025-10-28 04:41:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:41:22 --> CORS Filter
+ERROR - 2025-10-28 04:41:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:41:23 --> CORS Filter
+ERROR - 2025-10-28 04:41:23 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:41:24 --> CORS Filter
+ERROR - 2025-10-28 04:41:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:41:24 --> CORS Filter
+ERROR - 2025-10-28 04:41:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:41:24 --> Item Id: 3
+ERROR - 2025-10-28 04:43:04 --> CORS Filter
+ERROR - 2025-10-28 04:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:04 --> CORS Filter
+ERROR - 2025-10-28 04:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:04 --> CORS Filter
+ERROR - 2025-10-28 04:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:05 --> CORS Filter
+ERROR - 2025-10-28 04:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:05 --> CORS Filter
+ERROR - 2025-10-28 04:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:05 --> CORS Filter
+ERROR - 2025-10-28 04:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:06 --> Item Id: 3
+ERROR - 2025-10-28 04:43:35 --> CORS Filter
+ERROR - 2025-10-28 04:43:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:36 --> CORS Filter
+ERROR - 2025-10-28 04:43:36 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:36 --> CORS Filter
+ERROR - 2025-10-28 04:43:36 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:37 --> CORS Filter
+ERROR - 2025-10-28 04:43:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:38 --> CORS Filter
+ERROR - 2025-10-28 04:43:38 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:38 --> CORS Filter
+ERROR - 2025-10-28 04:43:38 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:38 --> Item Id: 3
+ERROR - 2025-10-28 04:43:49 --> CORS Filter
+ERROR - 2025-10-28 04:43:49 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:49 --> CORS Filter
+ERROR - 2025-10-28 04:43:49 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:53 --> CORS Filter
+ERROR - 2025-10-28 04:43:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:53 --> CORS Filter
+ERROR - 2025-10-28 04:43:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:54 --> CORS Filter
+ERROR - 2025-10-28 04:43:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:43:54 --> CORS Filter
+ERROR - 2025-10-28 04:43:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:44:13 --> CORS Filter
+ERROR - 2025-10-28 04:44:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:44:13 --> CORS Filter
+ERROR - 2025-10-28 04:44:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:41 --> CORS Filter
+ERROR - 2025-10-28 04:45:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:41 --> CORS Filter
+ERROR - 2025-10-28 04:45:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:42 --> CORS Filter
+ERROR - 2025-10-28 04:45:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:43 --> CORS Filter
+ERROR - 2025-10-28 04:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:44 --> CORS Filter
+ERROR - 2025-10-28 04:45:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:51 --> CORS Filter
+ERROR - 2025-10-28 04:45:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:51 --> CORS Filter
+ERROR - 2025-10-28 04:45:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:52 --> CORS Filter
+ERROR - 2025-10-28 04:45:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:53 --> CORS Filter
+ERROR - 2025-10-28 04:45:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:53 --> CORS Filter
+ERROR - 2025-10-28 04:45:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:45:54 --> CORS Filter
+ERROR - 2025-10-28 04:45:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:08 --> CORS Filter
+ERROR - 2025-10-28 04:46:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:09 --> CORS Filter
+ERROR - 2025-10-28 04:46:09 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:09 --> CORS Filter
+ERROR - 2025-10-28 04:46:09 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:10 --> CORS Filter
+ERROR - 2025-10-28 04:46:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:11 --> CORS Filter
+ERROR - 2025-10-28 04:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:53 --> CORS Filter
+ERROR - 2025-10-28 04:46:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:53 --> CORS Filter
+ERROR - 2025-10-28 04:46:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:53 --> CORS Filter
+ERROR - 2025-10-28 04:46:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:54 --> CORS Filter
+ERROR - 2025-10-28 04:46:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:46:55 --> CORS Filter
+ERROR - 2025-10-28 04:46:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:15 --> CORS Filter
+ERROR - 2025-10-28 04:47:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:15 --> CORS Filter
+ERROR - 2025-10-28 04:47:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:15 --> CORS Filter
+ERROR - 2025-10-28 04:47:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:16 --> CORS Filter
+ERROR - 2025-10-28 04:47:16 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:17 --> CORS Filter
+ERROR - 2025-10-28 04:47:17 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:24 --> CORS Filter
+ERROR - 2025-10-28 04:47:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:24 --> CORS Filter
+ERROR - 2025-10-28 04:47:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:25 --> CORS Filter
+ERROR - 2025-10-28 04:47:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:27 --> CORS Filter
+ERROR - 2025-10-28 04:47:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:47:27 --> CORS Filter
+ERROR - 2025-10-28 04:47:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:48:02 --> CORS Filter
+ERROR - 2025-10-28 04:48:02 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:48:03 --> CORS Filter
+ERROR - 2025-10-28 04:48:03 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:48:03 --> CORS Filter
+ERROR - 2025-10-28 04:48:03 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:48:03 --> CORS Filter
+ERROR - 2025-10-28 04:48:03 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:07 --> CORS Filter
+ERROR - 2025-10-28 04:50:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:08 --> CORS Filter
+ERROR - 2025-10-28 04:50:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:08 --> CORS Filter
+ERROR - 2025-10-28 04:50:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:09 --> CORS Filter
+ERROR - 2025-10-28 04:50:09 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:10 --> CORS Filter
+ERROR - 2025-10-28 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:10 --> CORS Filter
+ERROR - 2025-10-28 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:10 --> CORS Filter
+ERROR - 2025-10-28 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 04:50:10 --> CORS Filter
+ERROR - 2025-10-28 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:56 --> CORS Filter
+ERROR - 2025-10-28 06:07:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:56 --> CORS Filter
+ERROR - 2025-10-28 06:07:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:56 --> CORS Filter
+ERROR - 2025-10-28 06:07:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:56 --> CORS Filter
+ERROR - 2025-10-28 06:07:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:57 --> CORS Filter
+ERROR - 2025-10-28 06:07:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:57 --> CORS Filter
+ERROR - 2025-10-28 06:07:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:57 --> CORS Filter
+ERROR - 2025-10-28 06:07:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:07:58 --> CORS Filter
+ERROR - 2025-10-28 06:07:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:02 --> CORS Filter
+ERROR - 2025-10-28 06:08:02 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:03 --> CORS Filter
+ERROR - 2025-10-28 06:08:03 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:16 --> CORS Filter
+ERROR - 2025-10-28 06:08:16 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:16 --> CORS Filter
+ERROR - 2025-10-28 06:08:16 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:18 --> CORS Filter
+ERROR - 2025-10-28 06:08:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:18 --> CORS Filter
+ERROR - 2025-10-28 06:08:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:19 --> CORS Filter
+ERROR - 2025-10-28 06:08:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:19 --> CORS Filter
+ERROR - 2025-10-28 06:08:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:28 --> CORS Filter
+ERROR - 2025-10-28 06:08:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:08:28 --> CORS Filter
+ERROR - 2025-10-28 06:08:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:34 --> CORS Filter
+ERROR - 2025-10-28 06:09:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:34 --> CORS Filter
+ERROR - 2025-10-28 06:09:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:34 --> CORS Filter
+ERROR - 2025-10-28 06:09:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:35 --> CORS Filter
+ERROR - 2025-10-28 06:09:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:35 --> CORS Filter
+ERROR - 2025-10-28 06:09:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:35 --> CORS Filter
+ERROR - 2025-10-28 06:09:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:36 --> CORS Filter
+ERROR - 2025-10-28 06:09:36 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:09:36 --> CORS Filter
+ERROR - 2025-10-28 06:09:36 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:51 --> CORS Filter
+ERROR - 2025-10-28 06:15:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:51 --> CORS Filter
+ERROR - 2025-10-28 06:15:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:51 --> CORS Filter
+ERROR - 2025-10-28 06:15:51 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:52 --> CORS Filter
+ERROR - 2025-10-28 06:15:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:52 --> CORS Filter
+ERROR - 2025-10-28 06:15:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:52 --> CORS Filter
+ERROR - 2025-10-28 06:15:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:52 --> CORS Filter
+ERROR - 2025-10-28 06:15:52 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:53 --> CORS Filter
+ERROR - 2025-10-28 06:15:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:56 --> CORS Filter
+ERROR - 2025-10-28 06:15:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:15:56 --> CORS Filter
+ERROR - 2025-10-28 06:15:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:13 --> CORS Filter
+ERROR - 2025-10-28 06:16:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:13 --> CORS Filter
+ERROR - 2025-10-28 06:16:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:39 --> CORS Filter
+ERROR - 2025-10-28 06:16:39 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:40 --> CORS Filter
+ERROR - 2025-10-28 06:16:40 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:40 --> CORS Filter
+ERROR - 2025-10-28 06:16:40 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:41 --> CORS Filter
+ERROR - 2025-10-28 06:16:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:42 --> CORS Filter
+ERROR - 2025-10-28 06:16:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:42 --> CORS Filter
+ERROR - 2025-10-28 06:16:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:42 --> CORS Filter
+ERROR - 2025-10-28 06:16:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:16:42 --> CORS Filter
+ERROR - 2025-10-28 06:16:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:09 --> CORS Filter
+ERROR - 2025-10-28 06:21:09 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:09 --> CORS Filter
+ERROR - 2025-10-28 06:21:09 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:10 --> CORS Filter
+ERROR - 2025-10-28 06:21:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:14 --> CORS Filter
+ERROR - 2025-10-28 06:21:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:14 --> CORS Filter
+ERROR - 2025-10-28 06:21:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:14 --> CORS Filter
+ERROR - 2025-10-28 06:21:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:15 --> CORS Filter
+ERROR - 2025-10-28 06:21:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:15 --> CORS Filter
+ERROR - 2025-10-28 06:21:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:18 --> CORS Filter
+ERROR - 2025-10-28 06:21:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:18 --> CORS Filter
+ERROR - 2025-10-28 06:21:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:33 --> CORS Filter
+ERROR - 2025-10-28 06:21:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:21:33 --> CORS Filter
+ERROR - 2025-10-28 06:21:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:22:35 --> CORS Filter
+ERROR - 2025-10-28 06:22:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:22:35 --> CORS Filter
+ERROR - 2025-10-28 06:22:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:17 --> CORS Filter
+ERROR - 2025-10-28 06:26:17 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:17 --> CORS Filter
+ERROR - 2025-10-28 06:26:17 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:17 --> CORS Filter
+ERROR - 2025-10-28 06:26:17 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:18 --> CORS Filter
+ERROR - 2025-10-28 06:26:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:19 --> CORS Filter
+ERROR - 2025-10-28 06:26:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:19 --> CORS Filter
+ERROR - 2025-10-28 06:26:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:19 --> CORS Filter
+ERROR - 2025-10-28 06:26:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:19 --> CORS Filter
+ERROR - 2025-10-28 06:26:19 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:25 --> CORS Filter
+ERROR - 2025-10-28 06:26:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:25 --> CORS Filter
+ERROR - 2025-10-28 06:26:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:41 --> CORS Filter
+ERROR - 2025-10-28 06:26:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:41 --> CORS Filter
+ERROR - 2025-10-28 06:26:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:41 --> CORS Filter
+ERROR - 2025-10-28 06:26:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:42 --> CORS Filter
+ERROR - 2025-10-28 06:26:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:43 --> CORS Filter
+ERROR - 2025-10-28 06:26:43 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:44 --> CORS Filter
+ERROR - 2025-10-28 06:26:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:47 --> CORS Filter
+ERROR - 2025-10-28 06:26:47 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:48 --> CORS Filter
+ERROR - 2025-10-28 06:26:48 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:48 --> CORS Filter
+ERROR - 2025-10-28 06:26:48 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:26:49 --> CORS Filter
+ERROR - 2025-10-28 06:26:49 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:45:07 --> CORS Filter
+ERROR - 2025-10-28 06:45:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:45:07 --> CORS Filter
+ERROR - 2025-10-28 06:45:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:49:59 --> CORS Filter
+ERROR - 2025-10-28 06:49:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:01 --> CORS Filter
+ERROR - 2025-10-28 06:50:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:01 --> CORS Filter
+ERROR - 2025-10-28 06:50:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:02 --> CORS Filter
+ERROR - 2025-10-28 06:50:02 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:03 --> CORS Filter
+ERROR - 2025-10-28 06:50:03 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:04 --> CORS Filter
+ERROR - 2025-10-28 06:50:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:04 --> CORS Filter
+ERROR - 2025-10-28 06:50:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:05 --> CORS Filter
+ERROR - 2025-10-28 06:50:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:06 --> CORS Filter
+ERROR - 2025-10-28 06:50:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:06 --> CORS Filter
+ERROR - 2025-10-28 06:50:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:07 --> CORS Filter
+ERROR - 2025-10-28 06:50:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:07 --> CORS Filter
+ERROR - 2025-10-28 06:50:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 06:50:07 --> CORS Filter
+ERROR - 2025-10-28 06:50:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:32 --> CORS Filter
+ERROR - 2025-10-28 08:32:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:33 --> CORS Filter
+ERROR - 2025-10-28 08:32:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:33 --> CORS Filter
+ERROR - 2025-10-28 08:32:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:33 --> CORS Filter
+ERROR - 2025-10-28 08:32:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:33 --> CORS Filter
+ERROR - 2025-10-28 08:32:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:34 --> CORS Filter
+ERROR - 2025-10-28 08:32:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:34 --> CORS Filter
+ERROR - 2025-10-28 08:32:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:32:35 --> CORS Filter
+ERROR - 2025-10-28 08:32:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:53 --> CORS Filter
+ERROR - 2025-10-28 08:34:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:53 --> CORS Filter
+ERROR - 2025-10-28 08:34:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:54 --> CORS Filter
+ERROR - 2025-10-28 08:34:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:55 --> CORS Filter
+ERROR - 2025-10-28 08:34:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:58 --> CORS Filter
+ERROR - 2025-10-28 08:34:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:58 --> CORS Filter
+ERROR - 2025-10-28 08:34:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:58 --> CORS Filter
+ERROR - 2025-10-28 08:34:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:34:58 --> CORS Filter
+ERROR - 2025-10-28 08:34:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:53 --> CORS Filter
+ERROR - 2025-10-28 08:35:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:53 --> CORS Filter
+ERROR - 2025-10-28 08:35:53 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:54 --> CORS Filter
+ERROR - 2025-10-28 08:35:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:54 --> CORS Filter
+ERROR - 2025-10-28 08:35:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:54 --> CORS Filter
+ERROR - 2025-10-28 08:35:54 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:55 --> CORS Filter
+ERROR - 2025-10-28 08:35:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:55 --> CORS Filter
+ERROR - 2025-10-28 08:35:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:35:55 --> CORS Filter
+ERROR - 2025-10-28 08:35:55 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:05 --> CORS Filter
+ERROR - 2025-10-28 08:36:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:05 --> CORS Filter
+ERROR - 2025-10-28 08:36:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:06 --> CORS Filter
+ERROR - 2025-10-28 08:36:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:07 --> CORS Filter
+ERROR - 2025-10-28 08:36:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:07 --> CORS Filter
+ERROR - 2025-10-28 08:36:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:07 --> CORS Filter
+ERROR - 2025-10-28 08:36:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:08 --> CORS Filter
+ERROR - 2025-10-28 08:36:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:08 --> CORS Filter
+ERROR - 2025-10-28 08:36:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:30 --> CORS Filter
+ERROR - 2025-10-28 08:36:30 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:31 --> CORS Filter
+ERROR - 2025-10-28 08:36:31 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:31 --> CORS Filter
+ERROR - 2025-10-28 08:36:31 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:32 --> CORS Filter
+ERROR - 2025-10-28 08:36:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:32 --> CORS Filter
+ERROR - 2025-10-28 08:36:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:32 --> CORS Filter
+ERROR - 2025-10-28 08:36:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:33 --> CORS Filter
+ERROR - 2025-10-28 08:36:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:36:33 --> CORS Filter
+ERROR - 2025-10-28 08:36:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:49:59 --> CORS Filter
+ERROR - 2025-10-28 08:50:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:00 --> CORS Filter
+ERROR - 2025-10-28 08:50:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:00 --> CORS Filter
+ERROR - 2025-10-28 08:50:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:01 --> CORS Filter
+ERROR - 2025-10-28 08:50:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:01 --> CORS Filter
+ERROR - 2025-10-28 08:50:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:01 --> CORS Filter
+ERROR - 2025-10-28 08:50:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:02 --> CORS Filter
+ERROR - 2025-10-28 08:50:02 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:02 --> CORS Filter
+ERROR - 2025-10-28 08:50:02 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:14 --> CORS Filter
+ERROR - 2025-10-28 08:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:50:14 --> CORS Filter
+ERROR - 2025-10-28 08:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:52:46 --> CORS Filter
+ERROR - 2025-10-28 08:52:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 08:52:46 --> CORS Filter
+ERROR - 2025-10-28 08:52:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:17:57 --> CORS Filter
+ERROR - 2025-10-28 09:17:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:17:58 --> CORS Filter
+ERROR - 2025-10-28 09:17:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:17:58 --> CORS Filter
+ERROR - 2025-10-28 09:17:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:17:59 --> CORS Filter
+ERROR - 2025-10-28 09:17:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:17:59 --> CORS Filter
+ERROR - 2025-10-28 09:17:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:17:59 --> CORS Filter
+ERROR - 2025-10-28 09:17:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:18:00 --> CORS Filter
+ERROR - 2025-10-28 09:18:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:18:00 --> CORS Filter
+ERROR - 2025-10-28 09:18:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:20:13 --> CORS Filter
+ERROR - 2025-10-28 09:20:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:20:13 --> CORS Filter
+ERROR - 2025-10-28 09:20:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:30:14 --> CORS Filter
+ERROR - 2025-10-28 09:30:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:30:15 --> CORS Filter
+ERROR - 2025-10-28 09:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:30:25 --> CORS Filter
+ERROR - 2025-10-28 09:30:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:30:26 --> CORS Filter
+ERROR - 2025-10-28 09:30:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:04 --> CORS Filter
+ERROR - 2025-10-28 09:35:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:04 --> CORS Filter
+ERROR - 2025-10-28 09:35:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:05 --> CORS Filter
+ERROR - 2025-10-28 09:35:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:06 --> CORS Filter
+ERROR - 2025-10-28 09:35:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:06 --> CORS Filter
+ERROR - 2025-10-28 09:35:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:06 --> CORS Filter
+ERROR - 2025-10-28 09:35:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:08 --> CORS Filter
+ERROR - 2025-10-28 09:35:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:08 --> CORS Filter
+ERROR - 2025-10-28 09:35:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:08 --> CORS Filter
+ERROR - 2025-10-28 09:35:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:35:09 --> CORS Filter
+ERROR - 2025-10-28 09:35:09 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:40:41 --> CORS Filter
+ERROR - 2025-10-28 09:40:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 09:40:41 --> CORS Filter
+ERROR - 2025-10-28 09:40:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:31 --> CORS Filter
+ERROR - 2025-10-28 10:38:31 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:32 --> CORS Filter
+ERROR - 2025-10-28 10:38:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:32 --> CORS Filter
+ERROR - 2025-10-28 10:38:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:32 --> CORS Filter
+ERROR - 2025-10-28 10:38:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:32 --> CORS Filter
+ERROR - 2025-10-28 10:38:32 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:33 --> CORS Filter
+ERROR - 2025-10-28 10:38:33 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:34 --> CORS Filter
+ERROR - 2025-10-28 10:38:34 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:37 --> CORS Filter
+ERROR - 2025-10-28 10:38:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:37 --> CORS Filter
+ERROR - 2025-10-28 10:38:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:37 --> Item Id: 3
+ERROR - 2025-10-28 10:38:38 --> CORS Filter
+ERROR - 2025-10-28 10:38:38 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:38 --> CORS Filter
+ERROR - 2025-10-28 10:38:38 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:40 --> CORS Filter
+ERROR - 2025-10-28 10:38:40 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:40 --> CORS Filter
+ERROR - 2025-10-28 10:38:40 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:40 --> CORS Filter
+ERROR - 2025-10-28 10:38:40 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:40 --> CORS Filter
+ERROR - 2025-10-28 10:38:40 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:41 --> CORS Filter
+ERROR - 2025-10-28 10:38:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:41 --> CORS Filter
+ERROR - 2025-10-28 10:38:41 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:42 --> CORS Filter
+ERROR - 2025-10-28 10:38:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:49 --> CORS Filter
+ERROR - 2025-10-28 10:38:49 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:49 --> CORS Filter
+ERROR - 2025-10-28 10:38:49 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:38:49 --> Item Id: 4
+ERROR - 2025-10-28 10:39:10 --> CORS Filter
+ERROR - 2025-10-28 10:39:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:39:11 --> CORS Filter
+ERROR - 2025-10-28 10:39:11 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:39:14 --> CORS Filter
+ERROR - 2025-10-28 10:39:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:39:14 --> CORS Filter
+ERROR - 2025-10-28 10:39:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:39:15 --> CORS Filter
+ERROR - 2025-10-28 10:39:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:39:15 --> CORS Filter
+ERROR - 2025-10-28 10:39:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:39:26 --> CORS Filter
+ERROR - 2025-10-28 10:39:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:39:26 --> CORS Filter
+ERROR - 2025-10-28 10:39:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:42:11 --> CORS Filter
+ERROR - 2025-10-28 10:42:11 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:42:12 --> CORS Filter
+ERROR - 2025-10-28 10:42:12 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:13 --> CORS Filter
+ERROR - 2025-10-28 10:44:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:14 --> CORS Filter
+ERROR - 2025-10-28 10:44:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:14 --> CORS Filter
+ERROR - 2025-10-28 10:44:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:15 --> CORS Filter
+ERROR - 2025-10-28 10:44:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:16 --> CORS Filter
+ERROR - 2025-10-28 10:44:16 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:17 --> CORS Filter
+ERROR - 2025-10-28 10:44:17 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:17 --> CORS Filter
+ERROR - 2025-10-28 10:44:17 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:44:18 --> CORS Filter
+ERROR - 2025-10-28 10:44:18 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:48:56 --> CORS Filter
+ERROR - 2025-10-28 10:48:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:48:57 --> CORS Filter
+ERROR - 2025-10-28 10:48:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:48:57 --> CORS Filter
+ERROR - 2025-10-28 10:48:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:48:57 --> CORS Filter
+ERROR - 2025-10-28 10:48:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:48:59 --> CORS Filter
+ERROR - 2025-10-28 10:48:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:48:59 --> CORS Filter
+ERROR - 2025-10-28 10:48:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:49:00 --> CORS Filter
+ERROR - 2025-10-28 10:49:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:49:00 --> CORS Filter
+ERROR - 2025-10-28 10:49:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:23 --> CORS Filter
+ERROR - 2025-10-28 10:51:23 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:23 --> CORS Filter
+ERROR - 2025-10-28 10:51:23 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:24 --> CORS Filter
+ERROR - 2025-10-28 10:51:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:24 --> CORS Filter
+ERROR - 2025-10-28 10:51:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:25 --> CORS Filter
+ERROR - 2025-10-28 10:51:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:26 --> CORS Filter
+ERROR - 2025-10-28 10:51:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:26 --> CORS Filter
+ERROR - 2025-10-28 10:51:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:27 --> CORS Filter
+ERROR - 2025-10-28 10:51:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:37 --> CORS Filter
+ERROR - 2025-10-28 10:51:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:51:38 --> CORS Filter
+ERROR - 2025-10-28 10:51:38 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:36 --> CORS Filter
+ERROR - 2025-10-28 10:59:36 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:37 --> CORS Filter
+ERROR - 2025-10-28 10:59:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:37 --> CORS Filter
+ERROR - 2025-10-28 10:59:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:37 --> CORS Filter
+ERROR - 2025-10-28 10:59:37 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:38 --> CORS Filter
+ERROR - 2025-10-28 10:59:38 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:39 --> CORS Filter
+ERROR - 2025-10-28 10:59:39 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:39 --> CORS Filter
+ERROR - 2025-10-28 10:59:39 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:39 --> CORS Filter
+ERROR - 2025-10-28 10:59:39 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:46 --> CORS Filter
+ERROR - 2025-10-28 10:59:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 10:59:46 --> CORS Filter
+ERROR - 2025-10-28 10:59:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:24 --> CORS Filter
+ERROR - 2025-10-28 11:03:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:25 --> CORS Filter
+ERROR - 2025-10-28 11:03:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:26 --> CORS Filter
+ERROR - 2025-10-28 11:03:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:26 --> CORS Filter
+ERROR - 2025-10-28 11:03:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:26 --> CORS Filter
+ERROR - 2025-10-28 11:03:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:27 --> CORS Filter
+ERROR - 2025-10-28 11:03:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:27 --> CORS Filter
+ERROR - 2025-10-28 11:03:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:27 --> CORS Filter
+ERROR - 2025-10-28 11:03:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:28 --> CORS Filter
+ERROR - 2025-10-28 11:03:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:03:28 --> CORS Filter
+ERROR - 2025-10-28 11:03:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:24:58 --> CORS Filter
+ERROR - 2025-10-28 11:24:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:00 --> CORS Filter
+ERROR - 2025-10-28 11:25:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:00 --> CORS Filter
+ERROR - 2025-10-28 11:25:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:00 --> CORS Filter
+ERROR - 2025-10-28 11:25:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:01 --> CORS Filter
+ERROR - 2025-10-28 11:25:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:01 --> CORS Filter
+ERROR - 2025-10-28 11:25:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:02 --> CORS Filter
+ERROR - 2025-10-28 11:25:02 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:02 --> CORS Filter
+ERROR - 2025-10-28 11:25:02 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:13 --> CORS Filter
+ERROR - 2025-10-28 11:25:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:13 --> CORS Filter
+ERROR - 2025-10-28 11:25:13 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:14 --> CORS Filter
+ERROR - 2025-10-28 11:25:14 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:15 --> CORS Filter
+ERROR - 2025-10-28 11:25:15 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:21 --> CORS Filter
+ERROR - 2025-10-28 11:25:21 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:21 --> CORS Filter
+ERROR - 2025-10-28 11:25:21 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:22 --> CORS Filter
+ERROR - 2025-10-28 11:25:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:24 --> CORS Filter
+ERROR - 2025-10-28 11:25:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:24 --> CORS Filter
+ERROR - 2025-10-28 11:25:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:25 --> CORS Filter
+ERROR - 2025-10-28 11:25:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:25 --> CORS Filter
+ERROR - 2025-10-28 11:25:25 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:26 --> CORS Filter
+ERROR - 2025-10-28 11:25:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:26 --> CORS Filter
+ERROR - 2025-10-28 11:25:26 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:28 --> CORS Filter
+ERROR - 2025-10-28 11:25:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:25:28 --> CORS Filter
+ERROR - 2025-10-28 11:25:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:26:56 --> CORS Filter
+ERROR - 2025-10-28 11:26:56 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:26:57 --> CORS Filter
+ERROR - 2025-10-28 11:26:57 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:26:57 --> Item Id: 4
+ERROR - 2025-10-28 11:27:01 --> CORS Filter
+ERROR - 2025-10-28 11:27:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:27:01 --> CORS Filter
+ERROR - 2025-10-28 11:27:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:27:03 --> CORS Filter
+ERROR - 2025-10-28 11:27:03 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:27:04 --> CORS Filter
+ERROR - 2025-10-28 11:27:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:27:04 --> CORS Filter
+ERROR - 2025-10-28 11:27:04 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:27:05 --> CORS Filter
+ERROR - 2025-10-28 11:27:05 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:42 --> CORS Filter
+ERROR - 2025-10-28 11:35:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:42 --> CORS Filter
+ERROR - 2025-10-28 11:35:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:42 --> CORS Filter
+ERROR - 2025-10-28 11:35:42 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:44 --> CORS Filter
+ERROR - 2025-10-28 11:35:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:44 --> CORS Filter
+ERROR - 2025-10-28 11:35:44 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:45 --> CORS Filter
+ERROR - 2025-10-28 11:35:45 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:45 --> CORS Filter
+ERROR - 2025-10-28 11:35:45 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:35:46 --> CORS Filter
+ERROR - 2025-10-28 11:35:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:06 --> CORS Filter
+ERROR - 2025-10-28 11:49:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:07 --> CORS Filter
+ERROR - 2025-10-28 11:49:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:07 --> CORS Filter
+ERROR - 2025-10-28 11:49:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:08 --> CORS Filter
+ERROR - 2025-10-28 11:49:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:08 --> CORS Filter
+ERROR - 2025-10-28 11:49:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:09 --> CORS Filter
+ERROR - 2025-10-28 11:49:09 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:10 --> CORS Filter
+ERROR - 2025-10-28 11:49:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:10 --> CORS Filter
+ERROR - 2025-10-28 11:49:10 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:35 --> CORS Filter
+ERROR - 2025-10-28 11:49:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:35 --> CORS Filter
+ERROR - 2025-10-28 11:49:35 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:58 --> CORS Filter
+ERROR - 2025-10-28 11:49:58 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:49:59 --> CORS Filter
+ERROR - 2025-10-28 11:49:59 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:00 --> CORS Filter
+ERROR - 2025-10-28 11:50:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:00 --> CORS Filter
+ERROR - 2025-10-28 11:50:00 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:01 --> CORS Filter
+ERROR - 2025-10-28 11:50:01 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:06 --> CORS Filter
+ERROR - 2025-10-28 11:50:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:06 --> CORS Filter
+ERROR - 2025-10-28 11:50:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:06 --> CORS Filter
+ERROR - 2025-10-28 11:50:06 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:07 --> CORS Filter
+ERROR - 2025-10-28 11:50:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:07 --> CORS Filter
+ERROR - 2025-10-28 11:50:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:07 --> CORS Filter
+ERROR - 2025-10-28 11:50:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:08 --> CORS Filter
+ERROR - 2025-10-28 11:50:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:08 --> CORS Filter
+ERROR - 2025-10-28 11:50:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:21 --> CORS Filter
+ERROR - 2025-10-28 11:50:21 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:21 --> CORS Filter
+ERROR - 2025-10-28 11:50:21 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:24 --> CORS Filter
+ERROR - 2025-10-28 11:50:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:24 --> CORS Filter
+ERROR - 2025-10-28 11:50:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:24 --> Item Id: 4
+ERROR - 2025-10-28 11:50:27 --> CORS Filter
+ERROR - 2025-10-28 11:50:27 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:28 --> CORS Filter
+ERROR - 2025-10-28 11:50:28 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:30 --> CORS Filter
+ERROR - 2025-10-28 11:50:30 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:30 --> CORS Filter
+ERROR - 2025-10-28 11:50:30 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:31 --> CORS Filter
+ERROR - 2025-10-28 11:50:31 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:31 --> CORS Filter
+ERROR - 2025-10-28 11:50:31 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:46 --> CORS Filter
+ERROR - 2025-10-28 11:50:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:50:46 --> CORS Filter
+ERROR - 2025-10-28 11:50:46 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:51:07 --> CORS Filter
+ERROR - 2025-10-28 11:51:07 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 11:51:08 --> CORS Filter
+ERROR - 2025-10-28 11:51:08 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:07:22 --> CORS Filter
+ERROR - 2025-10-28 12:07:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:07:23 --> CORS Filter
+ERROR - 2025-10-28 12:07:23 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:07:23 --> CORS Filter
+ERROR - 2025-10-28 12:07:23 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:07:23 --> CORS Filter
+ERROR - 2025-10-28 12:07:23 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:07:24 --> CORS Filter
+ERROR - 2025-10-28 12:07:24 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:09:20 --> CORS Filter
+ERROR - 2025-10-28 12:09:20 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:09:21 --> CORS Filter
+ERROR - 2025-10-28 12:09:21 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:09:22 --> CORS Filter
+ERROR - 2025-10-28 12:09:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:09:22 --> CORS Filter
+ERROR - 2025-10-28 12:09:22 --> Origin: http://localhost:4200
+ERROR - 2025-10-28 12:09:23 --> CORS Filter
+ERROR - 2025-10-28 12:09:23 --> Origin: http://localhost:4200

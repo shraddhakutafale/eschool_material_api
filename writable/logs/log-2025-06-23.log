@@ -1,0 +1,1766 @@
+ERROR - 2025-06-23 04:30:44 --> CORS Filter
+ERROR - 2025-06-23 04:30:44 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:45 --> CORS Filter
+ERROR - 2025-06-23 04:30:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:52 --> CORS Filter
+ERROR - 2025-06-23 04:30:52 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:52 --> CORS Filter
+ERROR - 2025-06-23 04:30:52 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:53 --> CORS Filter
+ERROR - 2025-06-23 04:30:53 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:53 --> CORS Filter
+ERROR - 2025-06-23 04:30:53 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:54 --> CORS Filter
+ERROR - 2025-06-23 04:30:54 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:54 --> CORS Filter
+ERROR - 2025-06-23 04:30:54 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:30:55 --> mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\User->menu()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-06-23 04:30:55 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+[Method: GET, Route: api/user/usermenu]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:30:55 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:30:55 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 04:31:04 --> CORS Filter
+ERROR - 2025-06-23 04:31:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:31:04 --> CORS Filter
+ERROR - 2025-06-23 04:31:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:31:05 --> CORS Filter
+ERROR - 2025-06-23 04:31:05 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:31:05 --> CORS Filter
+ERROR - 2025-06-23 04:31:05 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:31:05 --> mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\User->menu()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-06-23 04:31:05 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+[Method: GET, Route: api/user/usermenu]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:31:05 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:31:05 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 04:33:54 --> CORS Filter
+ERROR - 2025-06-23 04:33:54 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:33:55 --> CORS Filter
+ERROR - 2025-06-23 04:33:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:33:56 --> CORS Filter
+ERROR - 2025-06-23 04:33:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:33:56 --> CORS Filter
+ERROR - 2025-06-23 04:33:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:33:57 --> mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\User->menu()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-06-23 04:33:57 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+[Method: GET, Route: api/user/usermenu]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:33:57 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:33:57 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 04:40:56 --> CORS Filter
+ERROR - 2025-06-23 04:40:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:40:57 --> CORS Filter
+ERROR - 2025-06-23 04:40:57 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:40:59 --> CORS Filter
+ERROR - 2025-06-23 04:40:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:41:00 --> CORS Filter
+ERROR - 2025-06-23 04:41:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:41:00 --> mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\User->menu()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-06-23 04:41:00 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+[Method: GET, Route: api/user/usermenu]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:41:00 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 04:41:00 --> [Caused by] mysqli_sql_exception: Table 'exiaa_db.right_business_category' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = \'15\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `right_business_category`
+WHERE `categoryId` = :categoryId:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\User.php(124): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->menu()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 04:50:38 --> CORS Filter
+ERROR - 2025-06-23 04:50:38 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:50:39 --> CORS Filter
+ERROR - 2025-06-23 04:50:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:50:40 --> CORS Filter
+ERROR - 2025-06-23 04:50:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:50:41 --> CORS Filter
+ERROR - 2025-06-23 04:50:41 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:50:58 --> CORS Filter
+ERROR - 2025-06-23 04:50:58 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:50:58 --> CORS Filter
+ERROR - 2025-06-23 04:50:58 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:50:59 --> CORS Filter
+ERROR - 2025-06-23 04:50:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:50:59 --> CORS Filter
+ERROR - 2025-06-23 04:50:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:53:15 --> CORS Filter
+ERROR - 2025-06-23 04:53:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:53:16 --> CORS Filter
+ERROR - 2025-06-23 04:53:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:53:16 --> CORS Filter
+ERROR - 2025-06-23 04:53:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:53:17 --> CORS Filter
+ERROR - 2025-06-23 04:53:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:58:11 --> CORS Filter
+ERROR - 2025-06-23 04:58:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:58:12 --> CORS Filter
+ERROR - 2025-06-23 04:58:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:58:13 --> CORS Filter
+ERROR - 2025-06-23 04:58:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:58:14 --> CORS Filter
+ERROR - 2025-06-23 04:58:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:58:43 --> CORS Filter
+ERROR - 2025-06-23 04:58:43 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 04:58:43 --> CORS Filter
+ERROR - 2025-06-23 04:58:43 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:00:06 --> CORS Filter
+ERROR - 2025-06-23 05:00:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:00:06 --> CORS Filter
+ERROR - 2025-06-23 05:00:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:00:39 --> CORS Filter
+ERROR - 2025-06-23 05:00:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:00:39 --> CORS Filter
+ERROR - 2025-06-23 05:00:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:01:28 --> CORS Filter
+ERROR - 2025-06-23 05:01:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:01:28 --> CORS Filter
+ERROR - 2025-06-23 05:01:28 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:01:29 --> ErrorException: Trying to access array offset on value of type null
+[Method: POST, Route: api/user/login]
+in APPPATH\Controllers\User.php on line 199.
+ 1 APPPATH\Controllers\User.php(199): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\User.php', 199)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->login()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:02:08 --> CORS Filter
+ERROR - 2025-06-23 05:02:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:02:08 --> CORS Filter
+ERROR - 2025-06-23 05:02:08 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:02:08 --> ErrorException: Trying to access array offset on value of type null
+[Method: POST, Route: api/user/login]
+in APPPATH\Controllers\User.php on line 199.
+ 1 APPPATH\Controllers\User.php(199): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\User.php', 199)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->login()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:03:10 --> CORS Filter
+ERROR - 2025-06-23 05:03:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:03:11 --> CORS Filter
+ERROR - 2025-06-23 05:03:11 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:03:11 --> ErrorException: Trying to access array offset on value of type null
+[Method: POST, Route: api/user/login]
+in APPPATH\Controllers\User.php on line 220.
+ 1 APPPATH\Controllers\User.php(220): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\User.php', 220)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->login()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:03:17 --> CORS Filter
+ERROR - 2025-06-23 05:03:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:03:18 --> CORS Filter
+ERROR - 2025-06-23 05:03:18 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:03:18 --> ErrorException: Trying to access array offset on value of type null
+[Method: POST, Route: api/user/login]
+in APPPATH\Controllers\User.php on line 220.
+ 1 APPPATH\Controllers\User.php(220): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\User.php', 220)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\User->login()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:05:45 --> CORS Filter
+ERROR - 2025-06-23 05:05:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:05:45 --> CORS Filter
+ERROR - 2025-06-23 05:05:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:05:46 --> CORS Filter
+ERROR - 2025-06-23 05:05:46 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:05:47 --> CORS Filter
+ERROR - 2025-06-23 05:05:47 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:05:48 --> CORS Filter
+ERROR - 2025-06-23 05:05:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:05:49 --> CORS Filter
+ERROR - 2025-06-23 05:05:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:00 --> CORS Filter
+ERROR - 2025-06-23 05:06:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:00 --> CORS Filter
+ERROR - 2025-06-23 05:06:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:01 --> CORS Filter
+ERROR - 2025-06-23 05:06:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:01 --> CORS Filter
+ERROR - 2025-06-23 05:06:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:42 --> CORS Filter
+ERROR - 2025-06-23 05:06:42 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:43 --> CORS Filter
+ERROR - 2025-06-23 05:06:43 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:44 --> CORS Filter
+ERROR - 2025-06-23 05:06:44 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:06:46 --> CORS Filter
+ERROR - 2025-06-23 05:06:46 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:10:47 --> CORS Filter
+ERROR - 2025-06-23 05:10:47 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:10:47 --> CORS Filter
+ERROR - 2025-06-23 05:10:47 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:10:47 --> CORS Filter
+ERROR - 2025-06-23 05:10:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:10:48 --> CORS Filter
+ERROR - 2025-06-23 05:10:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:11:32 --> CORS Filter
+ERROR - 2025-06-23 05:11:32 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:11:33 --> CORS Filter
+ERROR - 2025-06-23 05:11:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:11:34 --> CORS Filter
+ERROR - 2025-06-23 05:11:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:11:34 --> CORS Filter
+ERROR - 2025-06-23 05:11:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:15:00 --> CORS Filter
+ERROR - 2025-06-23 05:15:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:15:01 --> CORS Filter
+ERROR - 2025-06-23 05:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:15:01 --> CORS Filter
+ERROR - 2025-06-23 05:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:15:01 --> CORS Filter
+ERROR - 2025-06-23 05:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:35:19 --> CORS Filter
+ERROR - 2025-06-23 05:35:19 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:35:19 --> CORS Filter
+ERROR - 2025-06-23 05:35:19 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:35:21 --> CORS Filter
+ERROR - 2025-06-23 05:35:21 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:35:21 --> CORS Filter
+ERROR - 2025-06-23 05:35:21 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:13 --> CORS Filter
+ERROR - 2025-06-23 05:38:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:13 --> CORS Filter
+ERROR - 2025-06-23 05:38:13 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:38:14 --> ErrorException: Undefined variable $itemModel
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $itemModel', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:38:25 --> CORS Filter
+ERROR - 2025-06-23 05:38:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:26 --> CORS Filter
+ERROR - 2025-06-23 05:38:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:27 --> mysqli_sql_exception: Table 'exiaa_ex0003.event_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Event.php(85): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Event->getEventsPaging()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-06-23 05:38:27 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.event_mst' doesn't exist
+[Method: POST, Route: api/event/getallpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = :isDeleted:', [...], false)
+ 2 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 3 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 4 APPPATH\Controllers\Event.php(85): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->getEventsPaging()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 05:38:27 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.event_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = 0')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = 0')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = :isDeleted:', [...], false)
+ 4 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 5 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 6 APPPATH\Controllers\Event.php(85): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->getEventsPaging()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 05:38:27 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0003.event_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = 0', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = 0')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = 0')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `event_mst`
+WHERE `isDeleted` = :isDeleted:', [...], false)
+ 5 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+ 6 SYSTEMPATH\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+ 7 APPPATH\Controllers\Event.php(85): CodeIgniter\BaseModel->paginate(10, 'default', 1)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->getEventsPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:38:36 --> CORS Filter
+ERROR - 2025-06-23 05:38:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:36 --> CORS Filter
+ERROR - 2025-06-23 05:38:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:36 --> CORS Filter
+ERROR - 2025-06-23 05:38:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:36 --> CORS Filter
+ERROR - 2025-06-23 05:38:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:38:36 --> CORS Filter
+ERROR - 2025-06-23 05:38:36 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:38:37 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:38:37 --> CORS Filter
+ERROR - 2025-06-23 05:38:37 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:38:37 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 526.
+ 1 APPPATH\Controllers\Course.php(526): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 526)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:38:37 --> CORS Filter
+ERROR - 2025-06-23 05:38:37 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:38:37 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 535.
+ 1 APPPATH\Controllers\Course.php(535): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 535)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:43:02 --> CORS Filter
+ERROR - 2025-06-23 05:43:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:02 --> CORS Filter
+ERROR - 2025-06-23 05:43:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:02 --> CORS Filter
+ERROR - 2025-06-23 05:43:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:02 --> CORS Filter
+ERROR - 2025-06-23 05:43:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:04 --> CORS Filter
+ERROR - 2025-06-23 05:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:04 --> CORS Filter
+ERROR - 2025-06-23 05:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:04 --> CORS Filter
+ERROR - 2025-06-23 05:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:05 --> CORS Filter
+ERROR - 2025-06-23 05:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:43:05 --> CORS Filter
+ERROR - 2025-06-23 05:43:05 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:43:05 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:43:05 --> CORS Filter
+ERROR - 2025-06-23 05:43:05 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:43:05 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 526.
+ 1 APPPATH\Controllers\Course.php(526): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 526)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:43:05 --> CORS Filter
+ERROR - 2025-06-23 05:43:05 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:43:05 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 535.
+ 1 APPPATH\Controllers\Course.php(535): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 535)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:56:21 --> CORS Filter
+ERROR - 2025-06-23 05:56:21 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:22 --> CORS Filter
+ERROR - 2025-06-23 05:56:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:22 --> CORS Filter
+ERROR - 2025-06-23 05:56:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:22 --> CORS Filter
+ERROR - 2025-06-23 05:56:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:24 --> CORS Filter
+ERROR - 2025-06-23 05:56:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:24 --> CORS Filter
+ERROR - 2025-06-23 05:56:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:24 --> CORS Filter
+ERROR - 2025-06-23 05:56:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:25 --> CORS Filter
+ERROR - 2025-06-23 05:56:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 05:56:25 --> CORS Filter
+ERROR - 2025-06-23 05:56:25 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:56:25 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:56:26 --> CORS Filter
+ERROR - 2025-06-23 05:56:26 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:56:26 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 526.
+ 1 APPPATH\Controllers\Course.php(526): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 526)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 05:56:26 --> CORS Filter
+ERROR - 2025-06-23 05:56:26 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 05:56:26 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 535.
+ 1 APPPATH\Controllers\Course.php(535): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 535)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 06:08:01 --> CORS Filter
+ERROR - 2025-06-23 06:08:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 06:08:02 --> CORS Filter
+ERROR - 2025-06-23 06:08:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 06:08:23 --> CORS Filter
+ERROR - 2025-06-23 06:08:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 06:08:23 --> CORS Filter
+ERROR - 2025-06-23 06:08:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 06:08:23 --> CORS Filter
+ERROR - 2025-06-23 06:08:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 06:08:24 --> CORS Filter
+ERROR - 2025-06-23 06:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 06:08:24 --> CORS Filter
+ERROR - 2025-06-23 06:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 06:08:24 --> CORS Filter
+ERROR - 2025-06-23 06:08:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 08:59:45 --> CORS Filter
+ERROR - 2025-06-23 08:59:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 08:59:45 --> CORS Filter
+ERROR - 2025-06-23 08:59:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 08:59:46 --> CORS Filter
+ERROR - 2025-06-23 08:59:46 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 08:59:46 --> CORS Filter
+ERROR - 2025-06-23 08:59:46 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 08:59:47 --> CORS Filter
+ERROR - 2025-06-23 08:59:47 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 08:59:48 --> CORS Filter
+ERROR - 2025-06-23 08:59:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 09:09:25 --> CORS Filter
+ERROR - 2025-06-23 09:09:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 09:09:25 --> CORS Filter
+ERROR - 2025-06-23 09:09:25 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 09:09:26 --> ErrorException: Undefined property: stdClass::$businessId
+[Method: POST, Route: api/course/getallpaging]
+in APPPATH\Controllers\Course.php on line 64.
+ 1 APPPATH\Controllers\Course.php(64): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$businessId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 64)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 09:09:31 --> CORS Filter
+ERROR - 2025-06-23 09:09:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 09:09:31 --> CORS Filter
+ERROR - 2025-06-23 09:09:31 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 09:09:31 --> ErrorException: Undefined variable $itemModel
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $itemModel', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 09:09:33 --> CORS Filter
+ERROR - 2025-06-23 09:09:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 09:09:34 --> CORS Filter
+ERROR - 2025-06-23 09:09:34 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 09:09:34 --> ErrorException: Undefined property: stdClass::$itemId
+[Method: POST, Route: api/course/getsubjectpaging]
+in APPPATH\Controllers\Course.php on line 1188.
+ 1 APPPATH\Controllers\Course.php(1188): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 1188)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getSubjectPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 09:14:33 --> CORS Filter
+ERROR - 2025-06-23 09:14:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 09:14:33 --> CORS Filter
+ERROR - 2025-06-23 09:14:33 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 09:14:33 --> ErrorException: Undefined property: stdClass::$businessId
+[Method: POST, Route: api/course/getallpaging]
+in APPPATH\Controllers\Course.php on line 64.
+ 1 APPPATH\Controllers\Course.php(64): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$businessId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 64)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:02:59 --> CORS Filter
+ERROR - 2025-06-23 10:02:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:02:59 --> CORS Filter
+ERROR - 2025-06-23 10:02:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:01 --> CORS Filter
+ERROR - 2025-06-23 10:03:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:01 --> CORS Filter
+ERROR - 2025-06-23 10:03:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:01 --> CORS Filter
+ERROR - 2025-06-23 10:03:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:01 --> CORS Filter
+ERROR - 2025-06-23 10:03:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:02 --> CORS Filter
+ERROR - 2025-06-23 10:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:02 --> CORS Filter
+ERROR - 2025-06-23 10:03:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:35 --> CORS Filter
+ERROR - 2025-06-23 10:03:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:35 --> CORS Filter
+ERROR - 2025-06-23 10:03:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:35 --> CORS Filter
+ERROR - 2025-06-23 10:03:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:35 --> CORS Filter
+ERROR - 2025-06-23 10:03:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:43 --> CORS Filter
+ERROR - 2025-06-23 10:03:43 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:03:43 --> CORS Filter
+ERROR - 2025-06-23 10:03:43 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:03:43 --> ErrorException: Undefined variable $itemModel
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $itemModel', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:14:12 --> CORS Filter
+ERROR - 2025-06-23 10:14:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:14:12 --> CORS Filter
+ERROR - 2025-06-23 10:14:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:14:14 --> CORS Filter
+ERROR - 2025-06-23 10:14:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:14:14 --> CORS Filter
+ERROR - 2025-06-23 10:14:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:14:50 --> CORS Filter
+ERROR - 2025-06-23 10:14:50 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:14:50 --> CORS Filter
+ERROR - 2025-06-23 10:14:50 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:14:51 --> mysqli_sql_exception: Table 'exiaa_ex0003.event_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `ev...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ev...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ev...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ev...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Event.php(182): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Event->create()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-06-23 10:14:51 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.event_mst' doesn't exist
+[Method: POST, Route: api/event/create]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:eventId:, :eventName:, :eventDesc:, :venue:, :startDate:, :endDate:, :startTime:, :endTime:, :profilePic:, :businessId:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\Event.php(182): CodeIgniter\Model->insert([...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->create()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 10:14:51 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.event_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'dfsd\', \'<p>fsdfsdf</p>\', \'sfsdfsd\', \'2025-06-17\', \'2025-06-20\', \'16:44\', \'18:44\', \'-\', \'-\', \'2025-06-23 10:14:51\', \'2025-06-23 10:14:51\', \'9\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'dfsd\', \'<p>fsdfsdf</p>\', \'sfsdfsd\', \'2025-06-17\', \'2025-06-20\', \'16:44\', \'18:44\', \'-\', \'-\', \'2025-06-23 10:14:51\', \'2025-06-23 10:14:51\', \'9\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:eventId:, :eventName:, :eventDesc:, :venue:, :startDate:, :endDate:, :startTime:, :endTime:, :profilePic:, :businessId:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\Event.php(182): CodeIgniter\Model->insert([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->create()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 10:14:51 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0003.event_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'dfsd\', \'<p>fsdfsdf</p>\', \'sfsdfsd\', \'2025-06-17\', \'2025-06-20\', \'16:44\', \'18:44\', \'-\', \'-\', \'2025-06-23 10:14:51\', \'2025-06-23 10:14:51\', \'9\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'dfsd\', \'<p>fsdfsdf</p>\', \'sfsdfsd\', \'2025-06-17\', \'2025-06-20\', \'16:44\', \'18:44\', \'-\', \'-\', \'2025-06-23 10:14:51\', \'2025-06-23 10:14:51\', \'9\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'dfsd\', \'<p>fsdfsdf</p>\', \'sfsdfsd\', \'2025-06-17\', \'2025-06-20\', \'16:44\', \'18:44\', \'-\', \'-\', \'2025-06-23 10:14:51\', \'2025-06-23 10:14:51\', \'9\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:eventId:, :eventName:, :eventDesc:, :venue:, :startDate:, :endDate:, :startTime:, :endTime:, :profilePic:, :businessId:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\Event.php(182): CodeIgniter\Model->insert([...])
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->create()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:19:05 --> CORS Filter
+ERROR - 2025-06-23 10:19:05 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:19:05 --> CORS Filter
+ERROR - 2025-06-23 10:19:05 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:19:06 --> CORS Filter
+ERROR - 2025-06-23 10:19:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:19:06 --> CORS Filter
+ERROR - 2025-06-23 10:19:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:19:48 --> CORS Filter
+ERROR - 2025-06-23 10:19:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:19:48 --> CORS Filter
+ERROR - 2025-06-23 10:19:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:19:48 --> mysqli_sql_exception: Unknown column 'startTime' in 'field list' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `ev...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ev...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ev...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ev...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Event.php(182): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Event->create()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-06-23 10:19:48 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'startTime' in 'field list'
+[Method: POST, Route: api/event/create]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:eventId:, :eventName:, :eventDesc:, :venue:, :startDate:, :endDate:, :startTime:, :endTime:, :profilePic:, :businessId:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\Event.php(182): CodeIgniter\Model->insert([...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->create()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 10:19:48 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'startTime' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'aaa\', \'<p>fghfgf</p>\', \'dfdsf\', \'2025-06-16\', \'2025-06-25\', \'16:49\', \'19:49\', \'-\', \'-\', \'2025-06-23 10:19:48\', \'2025-06-23 10:19:48\', \'9\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'aaa\', \'<p>fghfgf</p>\', \'dfdsf\', \'2025-06-16\', \'2025-06-25\', \'16:49\', \'19:49\', \'-\', \'-\', \'2025-06-23 10:19:48\', \'2025-06-23 10:19:48\', \'9\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:eventId:, :eventName:, :eventDesc:, :venue:, :startDate:, :endDate:, :startTime:, :endTime:, :profilePic:, :businessId:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\Event.php(182): CodeIgniter\Model->insert([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->create()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 10:19:48 --> [Caused by] mysqli_sql_exception: Unknown column 'startTime' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'aaa\', \'<p>fghfgf</p>\', \'dfdsf\', \'2025-06-16\', \'2025-06-25\', \'16:49\', \'19:49\', \'-\', \'-\', \'2025-06-23 10:19:48\', \'2025-06-23 10:19:48\', \'9\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'aaa\', \'<p>fghfgf</p>\', \'dfdsf\', \'2025-06-16\', \'2025-06-25\', \'16:49\', \'19:49\', \'-\', \'-\', \'2025-06-23 10:19:48\', \'2025-06-23 10:19:48\', \'9\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'-\', \'aaa\', \'<p>fghfgf</p>\', \'dfdsf\', \'2025-06-16\', \'2025-06-25\', \'16:49\', \'19:49\', \'-\', \'-\', \'2025-06-23 10:19:48\', \'2025-06-23 10:19:48\', \'9\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `event_mst` (`eventId`, `eventName`, `eventDesc`, `venue`, `startDate`, `endDate`, `startTime`, `endTime`, `profilePic`, `businessId`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:eventId:, :eventName:, :eventDesc:, :venue:, :startDate:, :endDate:, :startTime:, :endTime:, :profilePic:, :businessId:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\Event.php(182): CodeIgniter\Model->insert([...])
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Event->create()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Event))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:28:55 --> CORS Filter
+ERROR - 2025-06-23 10:28:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:28:55 --> CORS Filter
+ERROR - 2025-06-23 10:28:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:29:11 --> CORS Filter
+ERROR - 2025-06-23 10:29:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:29:11 --> CORS Filter
+ERROR - 2025-06-23 10:29:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:29:12 --> CORS Filter
+ERROR - 2025-06-23 10:29:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:29:12 --> CORS Filter
+ERROR - 2025-06-23 10:29:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:37:31 --> CORS Filter
+ERROR - 2025-06-23 10:37:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:37:31 --> CORS Filter
+ERROR - 2025-06-23 10:37:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:37:48 --> CORS Filter
+ERROR - 2025-06-23 10:37:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:37:48 --> CORS Filter
+ERROR - 2025-06-23 10:37:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:37:49 --> CORS Filter
+ERROR - 2025-06-23 10:37:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:37:49 --> CORS Filter
+ERROR - 2025-06-23 10:37:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:07 --> CORS Filter
+ERROR - 2025-06-23 10:38:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:07 --> CORS Filter
+ERROR - 2025-06-23 10:38:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:08 --> CORS Filter
+ERROR - 2025-06-23 10:38:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:08 --> CORS Filter
+ERROR - 2025-06-23 10:38:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:35 --> CORS Filter
+ERROR - 2025-06-23 10:38:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:35 --> CORS Filter
+ERROR - 2025-06-23 10:38:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:35 --> CORS Filter
+ERROR - 2025-06-23 10:38:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:36 --> CORS Filter
+ERROR - 2025-06-23 10:38:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:38:36 --> CORS Filter
+ERROR - 2025-06-23 10:38:36 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:38:36 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:38:36 --> CORS Filter
+ERROR - 2025-06-23 10:38:36 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:38:36 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 526.
+ 1 APPPATH\Controllers\Course.php(526): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 526)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:38:36 --> CORS Filter
+ERROR - 2025-06-23 10:38:36 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:38:37 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 535.
+ 1 APPPATH\Controllers\Course.php(535): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 535)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:42:47 --> CORS Filter
+ERROR - 2025-06-23 10:42:47 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:48 --> CORS Filter
+ERROR - 2025-06-23 10:42:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:48 --> CORS Filter
+ERROR - 2025-06-23 10:42:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:48 --> CORS Filter
+ERROR - 2025-06-23 10:42:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:48 --> CORS Filter
+ERROR - 2025-06-23 10:42:48 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:42:48 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:42:48 --> CORS Filter
+ERROR - 2025-06-23 10:42:48 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:42:48 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 526.
+ 1 APPPATH\Controllers\Course.php(526): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 526)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:42:49 --> CORS Filter
+ERROR - 2025-06-23 10:42:49 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:42:49 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 535.
+ 1 APPPATH\Controllers\Course.php(535): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 535)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:42:54 --> CORS Filter
+ERROR - 2025-06-23 10:42:54 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:55 --> CORS Filter
+ERROR - 2025-06-23 10:42:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:55 --> CORS Filter
+ERROR - 2025-06-23 10:42:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:55 --> CORS Filter
+ERROR - 2025-06-23 10:42:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:56 --> CORS Filter
+ERROR - 2025-06-23 10:42:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:56 --> CORS Filter
+ERROR - 2025-06-23 10:42:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:56 --> CORS Filter
+ERROR - 2025-06-23 10:42:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:56 --> CORS Filter
+ERROR - 2025-06-23 10:42:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:42:56 --> CORS Filter
+ERROR - 2025-06-23 10:42:56 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:42:56 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 526.
+ 1 APPPATH\Controllers\Course.php(526): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 526)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:42:57 --> CORS Filter
+ERROR - 2025-06-23 10:42:57 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:42:57 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:42:57 --> CORS Filter
+ERROR - 2025-06-23 10:42:57 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:42:57 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 535.
+ 1 APPPATH\Controllers\Course.php(535): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 535)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:49:26 --> CORS Filter
+ERROR - 2025-06-23 10:49:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:26 --> CORS Filter
+ERROR - 2025-06-23 10:49:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:26 --> CORS Filter
+ERROR - 2025-06-23 10:49:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:27 --> CORS Filter
+ERROR - 2025-06-23 10:49:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:27 --> CORS Filter
+ERROR - 2025-06-23 10:49:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:27 --> CORS Filter
+ERROR - 2025-06-23 10:49:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:28 --> CORS Filter
+ERROR - 2025-06-23 10:49:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:28 --> CORS Filter
+ERROR - 2025-06-23 10:49:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:28 --> CORS Filter
+ERROR - 2025-06-23 10:49:28 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:49:28 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:49:28 --> CORS Filter
+ERROR - 2025-06-23 10:49:28 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:49:28 --> ErrorException: Undefined property: stdClass::$businessId
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 531.
+ 1 APPPATH\Controllers\Course.php(531): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$businessId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 531)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:49:28 --> CORS Filter
+ERROR - 2025-06-23 10:49:28 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 10:49:29 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 547.
+ 1 APPPATH\Controllers\Course.php(547): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 547)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 10:49:54 --> CORS Filter
+ERROR - 2025-06-23 10:49:54 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:55 --> CORS Filter
+ERROR - 2025-06-23 10:49:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:55 --> CORS Filter
+ERROR - 2025-06-23 10:49:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:49:55 --> CORS Filter
+ERROR - 2025-06-23 10:49:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:50:14 --> CORS Filter
+ERROR - 2025-06-23 10:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:50:14 --> CORS Filter
+ERROR - 2025-06-23 10:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:50:15 --> CORS Filter
+ERROR - 2025-06-23 10:50:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 10:50:15 --> CORS Filter
+ERROR - 2025-06-23 10:50:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:02:55 --> CORS Filter
+ERROR - 2025-06-23 11:02:55 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:02:55 --> CORS Filter
+ERROR - 2025-06-23 11:02:55 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 11:02:55 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getshiftpaging]
+in APPPATH\Controllers\Course.php on line 886.
+ 1 APPPATH\Controllers\Course.php(886): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 886)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 11:03:38 --> CORS Filter
+ERROR - 2025-06-23 11:03:38 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:03:38 --> CORS Filter
+ERROR - 2025-06-23 11:03:38 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:03:39 --> CORS Filter
+ERROR - 2025-06-23 11:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:03:39 --> CORS Filter
+ERROR - 2025-06-23 11:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:03:39 --> CORS Filter
+ERROR - 2025-06-23 11:03:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:03:40 --> CORS Filter
+ERROR - 2025-06-23 11:03:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:03:40 --> CORS Filter
+ERROR - 2025-06-23 11:03:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:03:41 --> CORS Filter
+ERROR - 2025-06-23 11:03:41 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:04:42 --> CORS Filter
+ERROR - 2025-06-23 11:04:42 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:04:42 --> CORS Filter
+ERROR - 2025-06-23 11:04:42 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 11:04:42 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getshiftpaging]
+in APPPATH\Controllers\Course.php on line 886.
+ 1 APPPATH\Controllers\Course.php(886): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 886)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 11:16:06 --> CORS Filter
+ERROR - 2025-06-23 11:16:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:07 --> CORS Filter
+ERROR - 2025-06-23 11:16:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:08 --> CORS Filter
+ERROR - 2025-06-23 11:16:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:08 --> CORS Filter
+ERROR - 2025-06-23 11:16:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:29 --> CORS Filter
+ERROR - 2025-06-23 11:16:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:30 --> CORS Filter
+ERROR - 2025-06-23 11:16:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:31 --> CORS Filter
+ERROR - 2025-06-23 11:16:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:32 --> CORS Filter
+ERROR - 2025-06-23 11:16:32 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:56 --> CORS Filter
+ERROR - 2025-06-23 11:16:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:56 --> CORS Filter
+ERROR - 2025-06-23 11:16:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:57 --> CORS Filter
+ERROR - 2025-06-23 11:16:57 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:57 --> CORS Filter
+ERROR - 2025-06-23 11:16:57 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:16:57 --> mysqli_sql_exception: Unknown column 'businessId' in 'where clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-06-23 11:16:58 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessId' in 'where clause'
+[Method: POST, Route: api/course/getshiftpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = :businessId:
+AND `isDeleted` = :isDeleted:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 11:16:58 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessId' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = :businessId:
+AND `isDeleted` = :isDeleted:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 11:16:58 --> [Caused by] mysqli_sql_exception: Unknown column 'businessId' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = :businessId:
+AND `isDeleted` = :isDeleted:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 11:19:05 --> CORS Filter
+ERROR - 2025-06-23 11:19:05 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:19:07 --> CORS Filter
+ERROR - 2025-06-23 11:19:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:19:07 --> CORS Filter
+ERROR - 2025-06-23 11:19:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:19:08 --> CORS Filter
+ERROR - 2025-06-23 11:19:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:19:29 --> CORS Filter
+ERROR - 2025-06-23 11:19:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:19:29 --> CORS Filter
+ERROR - 2025-06-23 11:19:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:19:29 --> mysqli_sql_exception: Unknown column 'businessId' in 'where clause' in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2025-06-23 11:19:29 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessId' in 'where clause'
+[Method: POST, Route: api/course/getshiftpaging]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = :businessId:
+AND `isDeleted` = :isDeleted:
+AND `businessId` = :businessId.1:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 11:19:29 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'businessId' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0
+AND `businessId` = 0')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0
+AND `businessId` = 0')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = :businessId:
+AND `isDeleted` = :isDeleted:
+AND `businessId` = :businessId.1:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 11:19:29 --> [Caused by] mysqli_sql_exception: Unknown column 'businessId' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0
+AND `businessId` = 0', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0
+AND `businessId` = 0')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = 0
+AND `isDeleted` = 0
+AND `businessId` = 0')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `shift_mst`
+WHERE `businessId` = :businessId:
+AND `isDeleted` = :isDeleted:
+AND `businessId` = :businessId.1:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Course.php(886): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 11:24:36 --> CORS Filter
+ERROR - 2025-06-23 11:24:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:24:37 --> CORS Filter
+ERROR - 2025-06-23 11:24:37 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:24:38 --> CORS Filter
+ERROR - 2025-06-23 11:24:38 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:24:38 --> CORS Filter
+ERROR - 2025-06-23 11:24:38 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:24:51 --> CORS Filter
+ERROR - 2025-06-23 11:24:51 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:24:52 --> CORS Filter
+ERROR - 2025-06-23 11:24:52 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 11:24:52 --> Error: Cannot use object of type stdClass as array
+[Method: POST, Route: api/course/getshiftpaging]
+in APPPATH\Controllers\Course.php on line 886.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 11:28:40 --> CORS Filter
+ERROR - 2025-06-23 11:28:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:28:40 --> CORS Filter
+ERROR - 2025-06-23 11:28:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:28:41 --> CORS Filter
+ERROR - 2025-06-23 11:28:41 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:28:41 --> CORS Filter
+ERROR - 2025-06-23 11:28:41 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:28:58 --> CORS Filter
+ERROR - 2025-06-23 11:28:58 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:28:59 --> CORS Filter
+ERROR - 2025-06-23 11:28:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:00 --> CORS Filter
+ERROR - 2025-06-23 11:29:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:01 --> CORS Filter
+ERROR - 2025-06-23 11:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:01 --> CORS Filter
+ERROR - 2025-06-23 11:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:01 --> CORS Filter
+ERROR - 2025-06-23 11:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:29 --> CORS Filter
+ERROR - 2025-06-23 11:29:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:30 --> CORS Filter
+ERROR - 2025-06-23 11:29:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:30 --> CORS Filter
+ERROR - 2025-06-23 11:29:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:30 --> CORS Filter
+ERROR - 2025-06-23 11:29:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:31 --> CORS Filter
+ERROR - 2025-06-23 11:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:31 --> CORS Filter
+ERROR - 2025-06-23 11:29:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:56 --> CORS Filter
+ERROR - 2025-06-23 11:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:56 --> CORS Filter
+ERROR - 2025-06-23 11:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:56 --> CORS Filter
+ERROR - 2025-06-23 11:29:56 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:29:57 --> CORS Filter
+ERROR - 2025-06-23 11:29:57 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:30:15 --> CORS Filter
+ERROR - 2025-06-23 11:30:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:30:16 --> CORS Filter
+ERROR - 2025-06-23 11:30:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:30:16 --> CORS Filter
+ERROR - 2025-06-23 11:30:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 11:30:16 --> CORS Filter
+ERROR - 2025-06-23 11:30:16 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-23 11:30:16 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getshiftpaging]
+in APPPATH\Controllers\Course.php on line 886.
+ 1 APPPATH\Controllers\Course.php(886): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 886)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getShiftPaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 12:05:36 --> CORS Filter
+ERROR - 2025-06-23 12:05:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:05:37 --> CORS Filter
+ERROR - 2025-06-23 12:05:37 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:05:37 --> CORS Filter
+ERROR - 2025-06-23 12:05:37 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:05:38 --> CORS Filter
+ERROR - 2025-06-23 12:05:38 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:02 --> CORS Filter
+ERROR - 2025-06-23 12:06:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:02 --> CORS Filter
+ERROR - 2025-06-23 12:06:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:03 --> CORS Filter
+ERROR - 2025-06-23 12:06:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:03 --> CORS Filter
+ERROR - 2025-06-23 12:06:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:28 --> CORS Filter
+ERROR - 2025-06-23 12:06:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:28 --> CORS Filter
+ERROR - 2025-06-23 12:06:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:29 --> CORS Filter
+ERROR - 2025-06-23 12:06:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:06:29 --> CORS Filter
+ERROR - 2025-06-23 12:06:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:13 --> CORS Filter
+ERROR - 2025-06-23 12:11:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:13 --> CORS Filter
+ERROR - 2025-06-23 12:11:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:14 --> CORS Filter
+ERROR - 2025-06-23 12:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:14 --> CORS Filter
+ERROR - 2025-06-23 12:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:14 --> CORS Filter
+ERROR - 2025-06-23 12:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:14 --> CORS Filter
+ERROR - 2025-06-23 12:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:14 --> CORS Filter
+ERROR - 2025-06-23 12:11:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:15 --> CORS Filter
+ERROR - 2025-06-23 12:11:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:30 --> CORS Filter
+ERROR - 2025-06-23 12:11:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:30 --> CORS Filter
+ERROR - 2025-06-23 12:11:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:11:30 --> mysqli_sql_exception: Table 'exiaa_ex0003.gallery_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `ga...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ga...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ga...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ga...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Gallery.php(218): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Gallery->create()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Gallery))
+#10 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#15 {main}
+CRITICAL - 2025-06-23 12:11:30 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.gallery_mst' doesn't exist
+[Method: POST, Route: api/gallery/create]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:galleryId:, :galleryTitle:, :coverImage:, :galleryImages:, :galleryDescription:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Controllers\Gallery.php(218): CodeIgniter\Model->insert([...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Gallery->create()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Gallery))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 12:11:30 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.gallery_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'null\', \'abc\', \'null\', \'null\', \'gfhgfghf\', \'2025-06-23 12:11:30\', \'2025-06-23 12:11:30\', \'9\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'null\', \'abc\', \'null\', \'null\', \'gfhgfghf\', \'2025-06-23 12:11:30\', \'2025-06-23 12:11:30\', \'9\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:galleryId:, :galleryTitle:, :coverImage:, :galleryImages:, :galleryDescription:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Controllers\Gallery.php(218): CodeIgniter\Model->insert([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Gallery->create()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Gallery))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+14 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-06-23 12:11:30 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0003.gallery_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'null\', \'abc\', \'null\', \'null\', \'gfhgfghf\', \'2025-06-23 12:11:30\', \'2025-06-23 12:11:30\', \'9\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'null\', \'abc\', \'null\', \'null\', \'gfhgfghf\', \'2025-06-23 12:11:30\', \'2025-06-23 12:11:30\', \'9\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (\'null\', \'abc\', \'null\', \'null\', \'gfhgfghf\', \'2025-06-23 12:11:30\', \'2025-06-23 12:11:30\', \'9\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `gallery_mst` (`galleryId`, `galleryTitle`, `coverImage`, `galleryImages`, `galleryDescription`, `createdDate`, `modifiedDate`, `createdBy`) VALUES (:galleryId:, :galleryTitle:, :coverImage:, :galleryImages:, :galleryDescription:, :createdDate:, :modifiedDate:, :createdBy:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(839): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(800): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\Gallery.php(218): CodeIgniter\Model->insert([...])
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Gallery->create()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Gallery))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+15 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-23 12:19:34 --> CORS Filter
+ERROR - 2025-06-23 12:19:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:19:34 --> CORS Filter
+ERROR - 2025-06-23 12:19:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:19:35 --> CORS Filter
+ERROR - 2025-06-23 12:19:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-23 12:19:35 --> CORS Filter
+ERROR - 2025-06-23 12:19:35 --> Origin: http://localhost:4200

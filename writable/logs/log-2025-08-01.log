@@ -1,0 +1,1388 @@
+ERROR - 2025-08-01 03:57:19 --> CORS Filter
+ERROR - 2025-08-01 03:57:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 03:57:19 --> CORS Filter
+ERROR - 2025-08-01 03:57:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 03:57:22 --> CORS Filter
+ERROR - 2025-08-01 03:57:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 03:57:23 --> CORS Filter
+ERROR - 2025-08-01 03:57:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 03:57:23 --> CORS Filter
+ERROR - 2025-08-01 03:57:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 03:57:23 --> CORS Filter
+ERROR - 2025-08-01 03:57:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 03:57:24 --> CORS Filter
+ERROR - 2025-08-01 03:57:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 03:57:24 --> CORS Filter
+ERROR - 2025-08-01 03:57:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:30:03 --> CORS Filter
+ERROR - 2025-08-01 04:30:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:30:03 --> CORS Filter
+ERROR - 2025-08-01 04:30:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:51:49 --> CORS Filter
+ERROR - 2025-08-01 04:51:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:51:49 --> CORS Filter
+ERROR - 2025-08-01 04:51:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:51:51 --> CORS Filter
+ERROR - 2025-08-01 04:51:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:51:51 --> CORS Filter
+ERROR - 2025-08-01 04:51:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:52:06 --> CORS Filter
+ERROR - 2025-08-01 04:52:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:52:06 --> CORS Filter
+ERROR - 2025-08-01 04:52:06 --> Origin: http://localhost:4200
+CRITICAL - 2025-08-01 04:52:07 --> Error: Class "App\Models\ContentMenuModel" not found
+[Method: POST, Route: api/website/create]
+in APPPATH\Controllers\Website.php on line 173.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->create()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-01 04:53:06 --> CORS Filter
+ERROR - 2025-08-01 04:53:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:53:06 --> CORS Filter
+ERROR - 2025-08-01 04:53:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:53:07 --> CORS Filter
+ERROR - 2025-08-01 04:53:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:53:59 --> CORS Filter
+ERROR - 2025-08-01 04:53:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:53:59 --> CORS Filter
+ERROR - 2025-08-01 04:53:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:53:59 --> CORS Filter
+ERROR - 2025-08-01 04:53:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:53:59 --> CORS Filter
+ERROR - 2025-08-01 04:53:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:00 --> CORS Filter
+ERROR - 2025-08-01 04:54:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:00 --> CORS Filter
+ERROR - 2025-08-01 04:54:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:01 --> CORS Filter
+ERROR - 2025-08-01 04:54:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:01 --> CORS Filter
+ERROR - 2025-08-01 04:54:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:02 --> CORS Filter
+ERROR - 2025-08-01 04:54:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:17 --> CORS Filter
+ERROR - 2025-08-01 04:54:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:18 --> CORS Filter
+ERROR - 2025-08-01 04:54:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:22 --> CORS Filter
+ERROR - 2025-08-01 04:54:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:22 --> CORS Filter
+ERROR - 2025-08-01 04:54:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:22 --> CORS Filter
+ERROR - 2025-08-01 04:54:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:22 --> CORS Filter
+ERROR - 2025-08-01 04:54:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:22 --> CORS Filter
+ERROR - 2025-08-01 04:54:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:54:23 --> CORS Filter
+ERROR - 2025-08-01 04:54:23 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:57:16 --> CORS Filter
+ERROR - 2025-08-01 04:57:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:57:17 --> CORS Filter
+ERROR - 2025-08-01 04:57:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:57:17 --> CORS Filter
+ERROR - 2025-08-01 04:57:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:57:17 --> CORS Filter
+ERROR - 2025-08-01 04:57:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:57:17 --> CORS Filter
+ERROR - 2025-08-01 04:57:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 04:57:17 --> CORS Filter
+ERROR - 2025-08-01 04:57:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:32 --> CORS Filter
+ERROR - 2025-08-01 05:01:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:32 --> CORS Filter
+ERROR - 2025-08-01 05:01:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:32 --> CORS Filter
+ERROR - 2025-08-01 05:01:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:33 --> CORS Filter
+ERROR - 2025-08-01 05:01:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:33 --> CORS Filter
+ERROR - 2025-08-01 05:01:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:33 --> CORS Filter
+ERROR - 2025-08-01 05:01:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:33 --> CORS Filter
+ERROR - 2025-08-01 05:01:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:01:33 --> CORS Filter
+ERROR - 2025-08-01 05:01:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:07:53 --> CORS Filter
+ERROR - 2025-08-01 05:07:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:07:53 --> CORS Filter
+ERROR - 2025-08-01 05:07:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:07:53 --> CORS Filter
+ERROR - 2025-08-01 05:07:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:07:54 --> CORS Filter
+ERROR - 2025-08-01 05:07:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:07:54 --> CORS Filter
+ERROR - 2025-08-01 05:07:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:07:55 --> CORS Filter
+ERROR - 2025-08-01 05:07:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:12:49 --> CORS Filter
+ERROR - 2025-08-01 05:12:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:12:49 --> CORS Filter
+ERROR - 2025-08-01 05:12:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:12:50 --> CORS Filter
+ERROR - 2025-08-01 05:12:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:12:50 --> CORS Filter
+ERROR - 2025-08-01 05:12:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:12:51 --> CORS Filter
+ERROR - 2025-08-01 05:12:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:12:51 --> CORS Filter
+ERROR - 2025-08-01 05:12:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:13:35 --> CORS Filter
+ERROR - 2025-08-01 05:13:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:13:36 --> CORS Filter
+ERROR - 2025-08-01 05:13:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:13:53 --> CORS Filter
+ERROR - 2025-08-01 05:13:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:13:53 --> CORS Filter
+ERROR - 2025-08-01 05:13:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:14:09 --> CORS Filter
+ERROR - 2025-08-01 05:14:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:14:09 --> CORS Filter
+ERROR - 2025-08-01 05:14:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:25:32 --> CORS Filter
+ERROR - 2025-08-01 05:25:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:25:32 --> CORS Filter
+ERROR - 2025-08-01 05:25:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:29:01 --> CORS Filter
+ERROR - 2025-08-01 05:29:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:29:02 --> CORS Filter
+ERROR - 2025-08-01 05:29:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:31:20 --> CORS Filter
+ERROR - 2025-08-01 05:31:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:31:20 --> CORS Filter
+ERROR - 2025-08-01 05:31:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:31:21 --> mysqli_sql_exception: Table 'exiaa_ex0003.content_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `c`.`con...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`con...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`con...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`con...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->createContent()
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2025-08-01 05:31:21 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.content_mst' doesn't exist
+[Method: POST, Route: api/website/createcontent]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 2 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-01 05:31:21 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.content_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 4 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-01 05:31:21 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0003.content_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 5 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-01 05:33:06 --> CORS Filter
+ERROR - 2025-08-01 05:33:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:33:07 --> CORS Filter
+ERROR - 2025-08-01 05:33:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:33:07 --> CORS Filter
+ERROR - 2025-08-01 05:33:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:33:07 --> CORS Filter
+ERROR - 2025-08-01 05:33:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:33:19 --> CORS Filter
+ERROR - 2025-08-01 05:33:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:33:19 --> CORS Filter
+ERROR - 2025-08-01 05:33:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:33:19 --> mysqli_sql_exception: Table 'exiaa_ex0003.content_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `c`.`con...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`con...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`con...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`con...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->createContent()
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2025-08-01 05:33:19 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.content_mst' doesn't exist
+[Method: POST, Route: api/website/createcontent]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 2 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-01 05:33:19 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.content_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 4 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-01 05:33:19 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0003.content_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_mst` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 5 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-01 05:34:42 --> CORS Filter
+ERROR - 2025-08-01 05:34:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:34:42 --> CORS Filter
+ERROR - 2025-08-01 05:34:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:34:43 --> CORS Filter
+ERROR - 2025-08-01 05:34:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:34:43 --> CORS Filter
+ERROR - 2025-08-01 05:34:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:34:54 --> CORS Filter
+ERROR - 2025-08-01 05:34:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:34:55 --> CORS Filter
+ERROR - 2025-08-01 05:34:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 05:34:55 --> mysqli_sql_exception: Table 'exiaa_ex0003.menu_mst' doesn't exist in C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `c`.`con...', 0)
+#1 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`con...')
+#2 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`con...')
+#3 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`con...', Array, false)
+#4 C:\xampp\htdocs\exiaa-material-api\app\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Website->createContent()
+#6 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+#7 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\exiaa-material-api\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\exiaa-material-api\vendor\codeigniter4\framework\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2025-08-01 05:34:55 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.menu_mst' doesn't exist
+[Method: POST, Route: api/website/createcontent]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 2 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-01 05:34:55 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'exiaa_ex0003.menu_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 4 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+CRITICAL - 2025-08-01 05:34:55 --> [Caused by] mysqli_sql_exception: Table 'exiaa_ex0003.menu_mst' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = \'URL\'
+AND `c`.`isDeleted` = 0
+AND   (
+`c`.`title` = \'\'
+OR `c`.`content` = \'\'
+ )')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`contentId`
+FROM `content_menu` AS `c`
+JOIN `menu_mst` AS `m` ON `m`.`menuId` = `c`.`menuId`
+WHERE `m`.`menuType` = :m.menuType:
+AND `c`.`isDeleted` = :c.isDeleted:
+AND   (
+`c`.`title` = :c.title:
+OR `c`.`content` = :c.content:
+ )', [...], false)
+ 5 APPPATH\Controllers\Website.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Website->createContent()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Website))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-08-01 06:05:54 --> CORS Filter
+ERROR - 2025-08-01 06:05:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:05:54 --> CORS Filter
+ERROR - 2025-08-01 06:05:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:05:54 --> CORS Filter
+ERROR - 2025-08-01 06:05:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:05:54 --> CORS Filter
+ERROR - 2025-08-01 06:05:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:05:55 --> CORS Filter
+ERROR - 2025-08-01 06:05:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:05:55 --> CORS Filter
+ERROR - 2025-08-01 06:05:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:05:55 --> CORS Filter
+ERROR - 2025-08-01 06:05:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:05:56 --> CORS Filter
+ERROR - 2025-08-01 06:05:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:06:04 --> CORS Filter
+ERROR - 2025-08-01 06:06:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:06:04 --> CORS Filter
+ERROR - 2025-08-01 06:06:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:06:20 --> CORS Filter
+ERROR - 2025-08-01 06:06:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:06:20 --> CORS Filter
+ERROR - 2025-08-01 06:06:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:06:21 --> CORS Filter
+ERROR - 2025-08-01 06:06:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:06:21 --> CORS Filter
+ERROR - 2025-08-01 06:06:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:42 --> CORS Filter
+ERROR - 2025-08-01 06:39:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:43 --> CORS Filter
+ERROR - 2025-08-01 06:39:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:43 --> CORS Filter
+ERROR - 2025-08-01 06:39:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:43 --> CORS Filter
+ERROR - 2025-08-01 06:39:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:43 --> CORS Filter
+ERROR - 2025-08-01 06:39:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:43 --> CORS Filter
+ERROR - 2025-08-01 06:39:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:49 --> CORS Filter
+ERROR - 2025-08-01 06:39:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:49 --> CORS Filter
+ERROR - 2025-08-01 06:39:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:49 --> CORS Filter
+ERROR - 2025-08-01 06:39:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:49 --> CORS Filter
+ERROR - 2025-08-01 06:39:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:50 --> CORS Filter
+ERROR - 2025-08-01 06:39:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:50 --> CORS Filter
+ERROR - 2025-08-01 06:39:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:52 --> CORS Filter
+ERROR - 2025-08-01 06:39:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:52 --> CORS Filter
+ERROR - 2025-08-01 06:39:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:39:52 --> CORS Filter
+ERROR - 2025-08-01 06:39:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:06 --> CORS Filter
+ERROR - 2025-08-01 06:40:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:06 --> CORS Filter
+ERROR - 2025-08-01 06:40:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:06 --> CORS Filter
+ERROR - 2025-08-01 06:40:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:06 --> CORS Filter
+ERROR - 2025-08-01 06:40:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:06 --> CORS Filter
+ERROR - 2025-08-01 06:40:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:07 --> CORS Filter
+ERROR - 2025-08-01 06:40:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:12 --> CORS Filter
+ERROR - 2025-08-01 06:40:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:12 --> CORS Filter
+ERROR - 2025-08-01 06:40:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:12 --> CORS Filter
+ERROR - 2025-08-01 06:40:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:13 --> CORS Filter
+ERROR - 2025-08-01 06:40:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:13 --> CORS Filter
+ERROR - 2025-08-01 06:40:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:13 --> CORS Filter
+ERROR - 2025-08-01 06:40:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:16 --> CORS Filter
+ERROR - 2025-08-01 06:40:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:16 --> CORS Filter
+ERROR - 2025-08-01 06:40:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:17 --> CORS Filter
+ERROR - 2025-08-01 06:40:17 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:36 --> CORS Filter
+ERROR - 2025-08-01 06:40:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:36 --> CORS Filter
+ERROR - 2025-08-01 06:40:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:37 --> CORS Filter
+ERROR - 2025-08-01 06:40:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:37 --> CORS Filter
+ERROR - 2025-08-01 06:40:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:37 --> CORS Filter
+ERROR - 2025-08-01 06:40:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:37 --> CORS Filter
+ERROR - 2025-08-01 06:40:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:37 --> CORS Filter
+ERROR - 2025-08-01 06:40:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:45 --> CORS Filter
+ERROR - 2025-08-01 06:40:45 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:45 --> CORS Filter
+ERROR - 2025-08-01 06:40:45 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:45 --> CORS Filter
+ERROR - 2025-08-01 06:40:45 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:46 --> CORS Filter
+ERROR - 2025-08-01 06:40:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:46 --> CORS Filter
+ERROR - 2025-08-01 06:40:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:40:46 --> CORS Filter
+ERROR - 2025-08-01 06:40:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:00 --> CORS Filter
+ERROR - 2025-08-01 06:41:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:00 --> CORS Filter
+ERROR - 2025-08-01 06:41:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:00 --> CORS Filter
+ERROR - 2025-08-01 06:41:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:00 --> CORS Filter
+ERROR - 2025-08-01 06:41:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:01 --> CORS Filter
+ERROR - 2025-08-01 06:41:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:01 --> CORS Filter
+ERROR - 2025-08-01 06:41:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:07 --> CORS Filter
+ERROR - 2025-08-01 06:41:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:07 --> CORS Filter
+ERROR - 2025-08-01 06:41:07 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:07 --> CORS Filter
+ERROR - 2025-08-01 06:41:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:08 --> CORS Filter
+ERROR - 2025-08-01 06:41:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:08 --> CORS Filter
+ERROR - 2025-08-01 06:41:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:08 --> CORS Filter
+ERROR - 2025-08-01 06:41:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:13 --> CORS Filter
+ERROR - 2025-08-01 06:41:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:13 --> CORS Filter
+ERROR - 2025-08-01 06:41:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:13 --> CORS Filter
+ERROR - 2025-08-01 06:41:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:13 --> CORS Filter
+ERROR - 2025-08-01 06:41:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:14 --> CORS Filter
+ERROR - 2025-08-01 06:41:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:14 --> CORS Filter
+ERROR - 2025-08-01 06:41:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:27 --> CORS Filter
+ERROR - 2025-08-01 06:41:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:27 --> CORS Filter
+ERROR - 2025-08-01 06:41:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:27 --> CORS Filter
+ERROR - 2025-08-01 06:41:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:28 --> CORS Filter
+ERROR - 2025-08-01 06:41:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:28 --> CORS Filter
+ERROR - 2025-08-01 06:41:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:28 --> CORS Filter
+ERROR - 2025-08-01 06:41:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:32 --> CORS Filter
+ERROR - 2025-08-01 06:41:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:33 --> CORS Filter
+ERROR - 2025-08-01 06:41:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:33 --> CORS Filter
+ERROR - 2025-08-01 06:41:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:33 --> CORS Filter
+ERROR - 2025-08-01 06:41:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:52 --> CORS Filter
+ERROR - 2025-08-01 06:41:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:52 --> CORS Filter
+ERROR - 2025-08-01 06:41:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:52 --> CORS Filter
+ERROR - 2025-08-01 06:41:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:52 --> CORS Filter
+ERROR - 2025-08-01 06:41:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:53 --> CORS Filter
+ERROR - 2025-08-01 06:41:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:41:53 --> CORS Filter
+ERROR - 2025-08-01 06:41:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:02 --> CORS Filter
+ERROR - 2025-08-01 06:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:02 --> CORS Filter
+ERROR - 2025-08-01 06:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:02 --> CORS Filter
+ERROR - 2025-08-01 06:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:02 --> CORS Filter
+ERROR - 2025-08-01 06:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:02 --> CORS Filter
+ERROR - 2025-08-01 06:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:02 --> CORS Filter
+ERROR - 2025-08-01 06:42:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:57 --> CORS Filter
+ERROR - 2025-08-01 06:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:57 --> CORS Filter
+ERROR - 2025-08-01 06:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:57 --> CORS Filter
+ERROR - 2025-08-01 06:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:57 --> CORS Filter
+ERROR - 2025-08-01 06:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:58 --> CORS Filter
+ERROR - 2025-08-01 06:42:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:42:58 --> CORS Filter
+ERROR - 2025-08-01 06:42:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:04 --> CORS Filter
+ERROR - 2025-08-01 06:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:04 --> CORS Filter
+ERROR - 2025-08-01 06:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:04 --> CORS Filter
+ERROR - 2025-08-01 06:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:04 --> CORS Filter
+ERROR - 2025-08-01 06:43:04 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:05 --> CORS Filter
+ERROR - 2025-08-01 06:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:05 --> CORS Filter
+ERROR - 2025-08-01 06:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:09 --> CORS Filter
+ERROR - 2025-08-01 06:43:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:09 --> CORS Filter
+ERROR - 2025-08-01 06:43:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:10 --> CORS Filter
+ERROR - 2025-08-01 06:43:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:10 --> CORS Filter
+ERROR - 2025-08-01 06:43:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:10 --> CORS Filter
+ERROR - 2025-08-01 06:43:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:10 --> CORS Filter
+ERROR - 2025-08-01 06:43:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:31 --> CORS Filter
+ERROR - 2025-08-01 06:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:31 --> CORS Filter
+ERROR - 2025-08-01 06:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:31 --> CORS Filter
+ERROR - 2025-08-01 06:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:31 --> CORS Filter
+ERROR - 2025-08-01 06:43:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:32 --> CORS Filter
+ERROR - 2025-08-01 06:43:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:32 --> CORS Filter
+ERROR - 2025-08-01 06:43:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:34 --> CORS Filter
+ERROR - 2025-08-01 06:43:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:34 --> CORS Filter
+ERROR - 2025-08-01 06:43:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:34 --> CORS Filter
+ERROR - 2025-08-01 06:43:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:42 --> CORS Filter
+ERROR - 2025-08-01 06:43:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:42 --> CORS Filter
+ERROR - 2025-08-01 06:43:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:42 --> CORS Filter
+ERROR - 2025-08-01 06:43:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:42 --> CORS Filter
+ERROR - 2025-08-01 06:43:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:43 --> CORS Filter
+ERROR - 2025-08-01 06:43:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:43 --> CORS Filter
+ERROR - 2025-08-01 06:43:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:44 --> CORS Filter
+ERROR - 2025-08-01 06:43:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:44 --> CORS Filter
+ERROR - 2025-08-01 06:43:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:43:44 --> CORS Filter
+ERROR - 2025-08-01 06:43:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:45:43 --> CORS Filter
+ERROR - 2025-08-01 06:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:45:43 --> CORS Filter
+ERROR - 2025-08-01 06:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:45:43 --> CORS Filter
+ERROR - 2025-08-01 06:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:45:43 --> CORS Filter
+ERROR - 2025-08-01 06:45:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:45:44 --> CORS Filter
+ERROR - 2025-08-01 06:45:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:45:44 --> CORS Filter
+ERROR - 2025-08-01 06:45:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:01 --> CORS Filter
+ERROR - 2025-08-01 06:46:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:01 --> CORS Filter
+ERROR - 2025-08-01 06:46:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:01 --> CORS Filter
+ERROR - 2025-08-01 06:46:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:02 --> CORS Filter
+ERROR - 2025-08-01 06:46:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:02 --> CORS Filter
+ERROR - 2025-08-01 06:46:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:02 --> CORS Filter
+ERROR - 2025-08-01 06:46:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:10 --> CORS Filter
+ERROR - 2025-08-01 06:46:10 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:11 --> CORS Filter
+ERROR - 2025-08-01 06:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:11 --> CORS Filter
+ERROR - 2025-08-01 06:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:11 --> CORS Filter
+ERROR - 2025-08-01 06:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:11 --> CORS Filter
+ERROR - 2025-08-01 06:46:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:12 --> CORS Filter
+ERROR - 2025-08-01 06:46:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:24 --> CORS Filter
+ERROR - 2025-08-01 06:46:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:24 --> CORS Filter
+ERROR - 2025-08-01 06:46:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:24 --> CORS Filter
+ERROR - 2025-08-01 06:46:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:24 --> CORS Filter
+ERROR - 2025-08-01 06:46:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:24 --> CORS Filter
+ERROR - 2025-08-01 06:46:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:25 --> CORS Filter
+ERROR - 2025-08-01 06:46:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:28 --> CORS Filter
+ERROR - 2025-08-01 06:46:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:28 --> CORS Filter
+ERROR - 2025-08-01 06:46:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:28 --> CORS Filter
+ERROR - 2025-08-01 06:46:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:33 --> CORS Filter
+ERROR - 2025-08-01 06:46:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:33 --> CORS Filter
+ERROR - 2025-08-01 06:46:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:33 --> CORS Filter
+ERROR - 2025-08-01 06:46:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:33 --> CORS Filter
+ERROR - 2025-08-01 06:46:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:34 --> CORS Filter
+ERROR - 2025-08-01 06:46:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:34 --> CORS Filter
+ERROR - 2025-08-01 06:46:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:37 --> CORS Filter
+ERROR - 2025-08-01 06:46:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:37 --> CORS Filter
+ERROR - 2025-08-01 06:46:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 06:46:37 --> CORS Filter
+ERROR - 2025-08-01 06:46:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:05:50 --> CORS Filter
+ERROR - 2025-08-01 07:05:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:05:50 --> CORS Filter
+ERROR - 2025-08-01 07:05:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:05:50 --> CORS Filter
+ERROR - 2025-08-01 07:05:50 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:05:51 --> CORS Filter
+ERROR - 2025-08-01 07:05:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:05:51 --> CORS Filter
+ERROR - 2025-08-01 07:05:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:05:51 --> CORS Filter
+ERROR - 2025-08-01 07:05:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:31 --> CORS Filter
+ERROR - 2025-08-01 07:33:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:31 --> CORS Filter
+ERROR - 2025-08-01 07:33:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:32 --> CORS Filter
+ERROR - 2025-08-01 07:33:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:32 --> CORS Filter
+ERROR - 2025-08-01 07:33:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:32 --> CORS Filter
+ERROR - 2025-08-01 07:33:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:32 --> CORS Filter
+ERROR - 2025-08-01 07:33:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:33 --> CORS Filter
+ERROR - 2025-08-01 07:33:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:33:33 --> CORS Filter
+ERROR - 2025-08-01 07:33:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:35:13 --> CORS Filter
+ERROR - 2025-08-01 07:35:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:35:13 --> CORS Filter
+ERROR - 2025-08-01 07:35:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:35:13 --> CORS Filter
+ERROR - 2025-08-01 07:35:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 07:35:14 --> CORS Filter
+ERROR - 2025-08-01 07:35:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:09:53 --> CORS Filter
+ERROR - 2025-08-01 08:09:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:09:53 --> CORS Filter
+ERROR - 2025-08-01 08:09:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:09:54 --> CORS Filter
+ERROR - 2025-08-01 08:09:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:09:54 --> CORS Filter
+ERROR - 2025-08-01 08:09:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:55 --> CORS Filter
+ERROR - 2025-08-01 08:40:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:55 --> CORS Filter
+ERROR - 2025-08-01 08:40:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:56 --> CORS Filter
+ERROR - 2025-08-01 08:40:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:56 --> CORS Filter
+ERROR - 2025-08-01 08:40:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:56 --> CORS Filter
+ERROR - 2025-08-01 08:40:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:56 --> CORS Filter
+ERROR - 2025-08-01 08:40:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:57 --> CORS Filter
+ERROR - 2025-08-01 08:40:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:40:57 --> CORS Filter
+ERROR - 2025-08-01 08:40:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:41:05 --> CORS Filter
+ERROR - 2025-08-01 08:41:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:41:05 --> CORS Filter
+ERROR - 2025-08-01 08:41:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:44:41 --> CORS Filter
+ERROR - 2025-08-01 08:44:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:44:41 --> CORS Filter
+ERROR - 2025-08-01 08:44:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:44:42 --> CORS Filter
+ERROR - 2025-08-01 08:44:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:44:42 --> CORS Filter
+ERROR - 2025-08-01 08:44:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:44:43 --> CORS Filter
+ERROR - 2025-08-01 08:44:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:44:43 --> CORS Filter
+ERROR - 2025-08-01 08:44:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:11 --> CORS Filter
+ERROR - 2025-08-01 08:45:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:11 --> CORS Filter
+ERROR - 2025-08-01 08:45:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:11 --> CORS Filter
+ERROR - 2025-08-01 08:45:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:11 --> CORS Filter
+ERROR - 2025-08-01 08:45:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:12 --> CORS Filter
+ERROR - 2025-08-01 08:45:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:13 --> CORS Filter
+ERROR - 2025-08-01 08:45:13 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:21 --> CORS Filter
+ERROR - 2025-08-01 08:45:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:21 --> CORS Filter
+ERROR - 2025-08-01 08:45:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:21 --> CORS Filter
+ERROR - 2025-08-01 08:45:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:21 --> CORS Filter
+ERROR - 2025-08-01 08:45:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:22 --> CORS Filter
+ERROR - 2025-08-01 08:45:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:22 --> CORS Filter
+ERROR - 2025-08-01 08:45:22 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:42 --> CORS Filter
+ERROR - 2025-08-01 08:45:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:45:42 --> CORS Filter
+ERROR - 2025-08-01 08:45:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:31 --> CORS Filter
+ERROR - 2025-08-01 08:48:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:31 --> CORS Filter
+ERROR - 2025-08-01 08:48:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:32 --> CORS Filter
+ERROR - 2025-08-01 08:48:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:32 --> CORS Filter
+ERROR - 2025-08-01 08:48:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:51 --> CORS Filter
+ERROR - 2025-08-01 08:48:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:52 --> CORS Filter
+ERROR - 2025-08-01 08:48:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:52 --> CORS Filter
+ERROR - 2025-08-01 08:48:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:48:52 --> CORS Filter
+ERROR - 2025-08-01 08:48:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:18 --> CORS Filter
+ERROR - 2025-08-01 08:49:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:18 --> CORS Filter
+ERROR - 2025-08-01 08:49:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:19 --> CORS Filter
+ERROR - 2025-08-01 08:49:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:19 --> CORS Filter
+ERROR - 2025-08-01 08:49:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:33 --> CORS Filter
+ERROR - 2025-08-01 08:49:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:33 --> CORS Filter
+ERROR - 2025-08-01 08:49:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:34 --> CORS Filter
+ERROR - 2025-08-01 08:49:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:34 --> CORS Filter
+ERROR - 2025-08-01 08:49:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:41 --> CORS Filter
+ERROR - 2025-08-01 08:49:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:42 --> CORS Filter
+ERROR - 2025-08-01 08:49:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:42 --> CORS Filter
+ERROR - 2025-08-01 08:49:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:49:42 --> CORS Filter
+ERROR - 2025-08-01 08:49:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:24 --> CORS Filter
+ERROR - 2025-08-01 08:50:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:24 --> CORS Filter
+ERROR - 2025-08-01 08:50:24 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:25 --> CORS Filter
+ERROR - 2025-08-01 08:50:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:25 --> CORS Filter
+ERROR - 2025-08-01 08:50:25 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:34 --> CORS Filter
+ERROR - 2025-08-01 08:50:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:34 --> CORS Filter
+ERROR - 2025-08-01 08:50:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:35 --> CORS Filter
+ERROR - 2025-08-01 08:50:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:35 --> CORS Filter
+ERROR - 2025-08-01 08:50:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:56 --> CORS Filter
+ERROR - 2025-08-01 08:50:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:56 --> CORS Filter
+ERROR - 2025-08-01 08:50:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:57 --> CORS Filter
+ERROR - 2025-08-01 08:50:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:50:58 --> CORS Filter
+ERROR - 2025-08-01 08:50:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:53:31 --> CORS Filter
+ERROR - 2025-08-01 08:53:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:53:31 --> CORS Filter
+ERROR - 2025-08-01 08:53:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 08:53:33 --> CORS Filter
+ERROR - 2025-08-01 08:53:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:06:14 --> CORS Filter
+ERROR - 2025-08-01 09:06:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:06:14 --> CORS Filter
+ERROR - 2025-08-01 09:06:14 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:06:15 --> CORS Filter
+ERROR - 2025-08-01 09:06:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:06:16 --> CORS Filter
+ERROR - 2025-08-01 09:06:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:07:18 --> CORS Filter
+ERROR - 2025-08-01 09:07:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:07:18 --> CORS Filter
+ERROR - 2025-08-01 09:07:18 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:07:52 --> CORS Filter
+ERROR - 2025-08-01 09:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:07:52 --> CORS Filter
+ERROR - 2025-08-01 09:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:08:19 --> CORS Filter
+ERROR - 2025-08-01 09:08:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:08:20 --> CORS Filter
+ERROR - 2025-08-01 09:08:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:17:57 --> CORS Filter
+ERROR - 2025-08-01 09:17:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:17:58 --> CORS Filter
+ERROR - 2025-08-01 09:17:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:17:58 --> CORS Filter
+ERROR - 2025-08-01 09:17:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:17:59 --> CORS Filter
+ERROR - 2025-08-01 09:17:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:18:39 --> CORS Filter
+ERROR - 2025-08-01 09:18:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:18:39 --> CORS Filter
+ERROR - 2025-08-01 09:18:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:18:40 --> CORS Filter
+ERROR - 2025-08-01 09:18:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:18:40 --> CORS Filter
+ERROR - 2025-08-01 09:18:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:00 --> CORS Filter
+ERROR - 2025-08-01 09:20:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:00 --> CORS Filter
+ERROR - 2025-08-01 09:20:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:00 --> CORS Filter
+ERROR - 2025-08-01 09:20:00 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:01 --> CORS Filter
+ERROR - 2025-08-01 09:20:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:06 --> CORS Filter
+ERROR - 2025-08-01 09:20:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:06 --> CORS Filter
+ERROR - 2025-08-01 09:20:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:06 --> CORS Filter
+ERROR - 2025-08-01 09:20:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:06 --> CORS Filter
+ERROR - 2025-08-01 09:20:06 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:15 --> CORS Filter
+ERROR - 2025-08-01 09:20:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:15 --> CORS Filter
+ERROR - 2025-08-01 09:20:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:15 --> CORS Filter
+ERROR - 2025-08-01 09:20:15 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:20:16 --> CORS Filter
+ERROR - 2025-08-01 09:20:16 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:33:54 --> CORS Filter
+ERROR - 2025-08-01 09:33:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:33:55 --> CORS Filter
+ERROR - 2025-08-01 09:33:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:33:55 --> CORS Filter
+ERROR - 2025-08-01 09:33:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:33:55 --> CORS Filter
+ERROR - 2025-08-01 09:33:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:33:56 --> CORS Filter
+ERROR - 2025-08-01 09:33:56 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:33:57 --> CORS Filter
+ERROR - 2025-08-01 09:33:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:41 --> CORS Filter
+ERROR - 2025-08-01 09:42:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:41 --> CORS Filter
+ERROR - 2025-08-01 09:42:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:42 --> CORS Filter
+ERROR - 2025-08-01 09:42:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:42 --> CORS Filter
+ERROR - 2025-08-01 09:42:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:42 --> CORS Filter
+ERROR - 2025-08-01 09:42:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:43 --> CORS Filter
+ERROR - 2025-08-01 09:42:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:44 --> CORS Filter
+ERROR - 2025-08-01 09:42:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:42:44 --> CORS Filter
+ERROR - 2025-08-01 09:42:44 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:48:46 --> CORS Filter
+ERROR - 2025-08-01 09:48:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:48:46 --> CORS Filter
+ERROR - 2025-08-01 09:48:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:50:19 --> CORS Filter
+ERROR - 2025-08-01 09:50:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:50:19 --> CORS Filter
+ERROR - 2025-08-01 09:50:19 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:50:20 --> CORS Filter
+ERROR - 2025-08-01 09:50:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:50:20 --> CORS Filter
+ERROR - 2025-08-01 09:50:20 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:50:21 --> CORS Filter
+ERROR - 2025-08-01 09:50:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 09:50:21 --> CORS Filter
+ERROR - 2025-08-01 09:50:21 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:11 --> CORS Filter
+ERROR - 2025-08-01 10:17:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:11 --> CORS Filter
+ERROR - 2025-08-01 10:17:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:12 --> CORS Filter
+ERROR - 2025-08-01 10:17:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:12 --> CORS Filter
+ERROR - 2025-08-01 10:17:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:31 --> CORS Filter
+ERROR - 2025-08-01 10:17:31 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:32 --> CORS Filter
+ERROR - 2025-08-01 10:17:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:32 --> CORS Filter
+ERROR - 2025-08-01 10:17:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:17:32 --> CORS Filter
+ERROR - 2025-08-01 10:17:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:36:46 --> CORS Filter
+ERROR - 2025-08-01 10:36:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:36:47 --> CORS Filter
+ERROR - 2025-08-01 10:36:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:36:47 --> CORS Filter
+ERROR - 2025-08-01 10:36:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:36:47 --> CORS Filter
+ERROR - 2025-08-01 10:36:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:42 --> CORS Filter
+ERROR - 2025-08-01 10:40:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:42 --> CORS Filter
+ERROR - 2025-08-01 10:40:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:42 --> CORS Filter
+ERROR - 2025-08-01 10:40:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:42 --> CORS Filter
+ERROR - 2025-08-01 10:40:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:48 --> CORS Filter
+ERROR - 2025-08-01 10:40:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:48 --> CORS Filter
+ERROR - 2025-08-01 10:40:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:49 --> CORS Filter
+ERROR - 2025-08-01 10:40:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:40:49 --> CORS Filter
+ERROR - 2025-08-01 10:40:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:09 --> CORS Filter
+ERROR - 2025-08-01 10:41:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:09 --> CORS Filter
+ERROR - 2025-08-01 10:41:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:11 --> CORS Filter
+ERROR - 2025-08-01 10:41:11 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:12 --> CORS Filter
+ERROR - 2025-08-01 10:41:12 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:28 --> CORS Filter
+ERROR - 2025-08-01 10:41:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:28 --> CORS Filter
+ERROR - 2025-08-01 10:41:28 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:29 --> CORS Filter
+ERROR - 2025-08-01 10:41:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:29 --> CORS Filter
+ERROR - 2025-08-01 10:41:29 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:32 --> CORS Filter
+ERROR - 2025-08-01 10:41:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:32 --> CORS Filter
+ERROR - 2025-08-01 10:41:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:34 --> CORS Filter
+ERROR - 2025-08-01 10:41:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:34 --> CORS Filter
+ERROR - 2025-08-01 10:41:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:34 --> CORS Filter
+ERROR - 2025-08-01 10:41:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:34 --> CORS Filter
+ERROR - 2025-08-01 10:41:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:35 --> CORS Filter
+ERROR - 2025-08-01 10:41:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:41 --> CORS Filter
+ERROR - 2025-08-01 10:41:41 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:41:42 --> CORS Filter
+ERROR - 2025-08-01 10:41:42 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:37 --> CORS Filter
+ERROR - 2025-08-01 10:42:37 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:38 --> CORS Filter
+ERROR - 2025-08-01 10:42:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:38 --> CORS Filter
+ERROR - 2025-08-01 10:42:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:38 --> CORS Filter
+ERROR - 2025-08-01 10:42:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:38 --> CORS Filter
+ERROR - 2025-08-01 10:42:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:39 --> CORS Filter
+ERROR - 2025-08-01 10:42:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:57 --> CORS Filter
+ERROR - 2025-08-01 10:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:57 --> CORS Filter
+ERROR - 2025-08-01 10:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:57 --> CORS Filter
+ERROR - 2025-08-01 10:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:57 --> CORS Filter
+ERROR - 2025-08-01 10:42:57 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:58 --> CORS Filter
+ERROR - 2025-08-01 10:42:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:58 --> CORS Filter
+ERROR - 2025-08-01 10:42:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:58 --> CORS Filter
+ERROR - 2025-08-01 10:42:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:58 --> CORS Filter
+ERROR - 2025-08-01 10:42:58 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:59 --> CORS Filter
+ERROR - 2025-08-01 10:42:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:42:59 --> CORS Filter
+ERROR - 2025-08-01 10:42:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:47:55 --> CORS Filter
+ERROR - 2025-08-01 10:47:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:47:55 --> CORS Filter
+ERROR - 2025-08-01 10:47:55 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:47:59 --> CORS Filter
+ERROR - 2025-08-01 10:47:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:48:03 --> CORS Filter
+ERROR - 2025-08-01 10:48:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:48:03 --> CORS Filter
+ERROR - 2025-08-01 10:48:03 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:51:51 --> CORS Filter
+ERROR - 2025-08-01 10:51:51 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:51:52 --> CORS Filter
+ERROR - 2025-08-01 10:51:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:51:52 --> CORS Filter
+ERROR - 2025-08-01 10:51:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:51:52 --> CORS Filter
+ERROR - 2025-08-01 10:51:52 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:51:54 --> CORS Filter
+ERROR - 2025-08-01 10:51:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:51:54 --> CORS Filter
+ERROR - 2025-08-01 10:51:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:52:08 --> CORS Filter
+ERROR - 2025-08-01 10:52:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:52:08 --> CORS Filter
+ERROR - 2025-08-01 10:52:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:52:08 --> CORS Filter
+ERROR - 2025-08-01 10:52:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:52:08 --> CORS Filter
+ERROR - 2025-08-01 10:52:08 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:52:09 --> CORS Filter
+ERROR - 2025-08-01 10:52:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 10:52:09 --> CORS Filter
+ERROR - 2025-08-01 10:52:09 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:10:53 --> CORS Filter
+ERROR - 2025-08-01 11:10:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:10:53 --> CORS Filter
+ERROR - 2025-08-01 11:10:53 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:10:54 --> CORS Filter
+ERROR - 2025-08-01 11:10:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:10:54 --> CORS Filter
+ERROR - 2025-08-01 11:10:54 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:32 --> CORS Filter
+ERROR - 2025-08-01 11:11:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:32 --> CORS Filter
+ERROR - 2025-08-01 11:11:32 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:33 --> CORS Filter
+ERROR - 2025-08-01 11:11:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:34 --> CORS Filter
+ERROR - 2025-08-01 11:11:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:39 --> CORS Filter
+ERROR - 2025-08-01 11:11:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:39 --> CORS Filter
+ERROR - 2025-08-01 11:11:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:39 --> CORS Filter
+ERROR - 2025-08-01 11:11:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:11:39 --> CORS Filter
+ERROR - 2025-08-01 11:11:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:16:02 --> CORS Filter
+ERROR - 2025-08-01 11:16:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:16:02 --> CORS Filter
+ERROR - 2025-08-01 11:16:02 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:16:05 --> CORS Filter
+ERROR - 2025-08-01 11:16:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:16:05 --> CORS Filter
+ERROR - 2025-08-01 11:16:05 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:46 --> CORS Filter
+ERROR - 2025-08-01 11:18:46 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:47 --> CORS Filter
+ERROR - 2025-08-01 11:18:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:47 --> CORS Filter
+ERROR - 2025-08-01 11:18:47 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:48 --> CORS Filter
+ERROR - 2025-08-01 11:18:48 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:49 --> CORS Filter
+ERROR - 2025-08-01 11:18:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:49 --> CORS Filter
+ERROR - 2025-08-01 11:18:49 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:59 --> CORS Filter
+ERROR - 2025-08-01 11:18:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:18:59 --> CORS Filter
+ERROR - 2025-08-01 11:18:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:27 --> CORS Filter
+ERROR - 2025-08-01 11:29:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:27 --> CORS Filter
+ERROR - 2025-08-01 11:29:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:27 --> CORS Filter
+ERROR - 2025-08-01 11:29:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:27 --> CORS Filter
+ERROR - 2025-08-01 11:29:27 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:33 --> CORS Filter
+ERROR - 2025-08-01 11:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:33 --> CORS Filter
+ERROR - 2025-08-01 11:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:33 --> CORS Filter
+ERROR - 2025-08-01 11:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:33 --> CORS Filter
+ERROR - 2025-08-01 11:29:33 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:43 --> CORS Filter
+ERROR - 2025-08-01 11:29:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:29:43 --> CORS Filter
+ERROR - 2025-08-01 11:29:43 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:36:34 --> CORS Filter
+ERROR - 2025-08-01 11:36:34 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 11:36:35 --> CORS Filter
+ERROR - 2025-08-01 11:36:35 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:36 --> CORS Filter
+ERROR - 2025-08-01 12:56:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:36 --> CORS Filter
+ERROR - 2025-08-01 12:56:36 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:38 --> CORS Filter
+ERROR - 2025-08-01 12:56:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:38 --> CORS Filter
+ERROR - 2025-08-01 12:56:38 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:39 --> CORS Filter
+ERROR - 2025-08-01 12:56:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:39 --> CORS Filter
+ERROR - 2025-08-01 12:56:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:39 --> CORS Filter
+ERROR - 2025-08-01 12:56:39 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:56:40 --> CORS Filter
+ERROR - 2025-08-01 12:56:40 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:58:59 --> CORS Filter
+ERROR - 2025-08-01 12:58:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:58:59 --> CORS Filter
+ERROR - 2025-08-01 12:58:59 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:59:01 --> CORS Filter
+ERROR - 2025-08-01 12:59:01 --> Origin: http://localhost:4200
+ERROR - 2025-08-01 12:59:01 --> CORS Filter
+ERROR - 2025-08-01 12:59:01 --> Origin: http://localhost:4200

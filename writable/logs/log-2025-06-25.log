@@ -1,0 +1,841 @@
+ERROR - 2025-06-25 03:50:02 --> CORS Filter
+ERROR - 2025-06-25 03:50:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:50:02 --> CORS Filter
+ERROR - 2025-06-25 03:50:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:50:03 --> CORS Filter
+ERROR - 2025-06-25 03:50:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:50:03 --> CORS Filter
+ERROR - 2025-06-25 03:50:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:50:04 --> CORS Filter
+ERROR - 2025-06-25 03:50:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:50:04 --> CORS Filter
+ERROR - 2025-06-25 03:50:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:50:04 --> CORS Filter
+ERROR - 2025-06-25 03:50:04 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:50:05 --> CORS Filter
+ERROR - 2025-06-25 03:50:05 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:11 --> CORS Filter
+ERROR - 2025-06-25 03:52:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:11 --> CORS Filter
+ERROR - 2025-06-25 03:52:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:17 --> CORS Filter
+ERROR - 2025-06-25 03:52:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:17 --> CORS Filter
+ERROR - 2025-06-25 03:52:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:22 --> CORS Filter
+ERROR - 2025-06-25 03:52:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:22 --> CORS Filter
+ERROR - 2025-06-25 03:52:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:30 --> CORS Filter
+ERROR - 2025-06-25 03:52:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:30 --> CORS Filter
+ERROR - 2025-06-25 03:52:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:33 --> CORS Filter
+ERROR - 2025-06-25 03:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:34 --> CORS Filter
+ERROR - 2025-06-25 03:52:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:40 --> CORS Filter
+ERROR - 2025-06-25 03:52:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:40 --> CORS Filter
+ERROR - 2025-06-25 03:52:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:43 --> CORS Filter
+ERROR - 2025-06-25 03:52:43 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:43 --> CORS Filter
+ERROR - 2025-06-25 03:52:43 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 03:52:43 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 03:52:45 --> CORS Filter
+ERROR - 2025-06-25 03:52:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:46 --> CORS Filter
+ERROR - 2025-06-25 03:52:46 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:48 --> CORS Filter
+ERROR - 2025-06-25 03:52:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:48 --> CORS Filter
+ERROR - 2025-06-25 03:52:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:49 --> CORS Filter
+ERROR - 2025-06-25 03:52:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:49 --> CORS Filter
+ERROR - 2025-06-25 03:52:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:49 --> CORS Filter
+ERROR - 2025-06-25 03:52:49 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 03:52:49 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallfee]
+in APPPATH\Controllers\Course.php on line 517.
+ 1 APPPATH\Controllers\Course.php(517): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 517)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllFee()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 03:52:49 --> CORS Filter
+ERROR - 2025-06-25 03:52:49 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 03:52:49 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallshift]
+in APPPATH\Controllers\Course.php on line 526.
+ 1 APPPATH\Controllers\Course.php(526): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 526)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllShift()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 03:52:49 --> CORS Filter
+ERROR - 2025-06-25 03:52:49 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 03:52:50 --> ErrorException: Undefined variable $model
+[Method: GET, Route: api/course/getallsubject]
+in APPPATH\Controllers\Course.php on line 535.
+ 1 APPPATH\Controllers\Course.php(535): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $model', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 535)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getAllSubject()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 03:52:50 --> CORS Filter
+ERROR - 2025-06-25 03:52:50 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:52:50 --> CORS Filter
+ERROR - 2025-06-25 03:52:50 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:53:03 --> CORS Filter
+ERROR - 2025-06-25 03:53:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 03:53:03 --> CORS Filter
+ERROR - 2025-06-25 03:53:03 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 03:53:03 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:01:13 --> CORS Filter
+ERROR - 2025-06-25 04:01:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:01:13 --> CORS Filter
+ERROR - 2025-06-25 04:01:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:01:33 --> CORS Filter
+ERROR - 2025-06-25 04:01:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:01:33 --> CORS Filter
+ERROR - 2025-06-25 04:01:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:20:16 --> CORS Filter
+ERROR - 2025-06-25 04:20:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:20:16 --> CORS Filter
+ERROR - 2025-06-25 04:20:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:25:36 --> CORS Filter
+ERROR - 2025-06-25 04:25:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:25:37 --> CORS Filter
+ERROR - 2025-06-25 04:25:37 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:25:37 --> ErrorException: Undefined property: stdClass::$businessId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$businessId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:26:34 --> CORS Filter
+ERROR - 2025-06-25 04:26:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:26:34 --> CORS Filter
+ERROR - 2025-06-25 04:26:34 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:26:34 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:27:15 --> CORS Filter
+ERROR - 2025-06-25 04:27:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:27:16 --> CORS Filter
+ERROR - 2025-06-25 04:27:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:27:17 --> CORS Filter
+ERROR - 2025-06-25 04:27:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:27:17 --> CORS Filter
+ERROR - 2025-06-25 04:27:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:27:18 --> CORS Filter
+ERROR - 2025-06-25 04:27:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:27:19 --> CORS Filter
+ERROR - 2025-06-25 04:27:19 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:27:19 --> ErrorException: Undefined variable $itemModel
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $itemModel', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:27:23 --> CORS Filter
+ERROR - 2025-06-25 04:27:23 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:27:23 --> ErrorException: Undefined variable $itemModel
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $itemModel', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:30:59 --> CORS Filter
+ERROR - 2025-06-25 04:30:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:30:59 --> CORS Filter
+ERROR - 2025-06-25 04:30:59 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:30:59 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:36:15 --> CORS Filter
+ERROR - 2025-06-25 04:36:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:36:16 --> CORS Filter
+ERROR - 2025-06-25 04:36:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:36:17 --> CORS Filter
+ERROR - 2025-06-25 04:36:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:36:18 --> CORS Filter
+ERROR - 2025-06-25 04:36:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:36:23 --> CORS Filter
+ERROR - 2025-06-25 04:36:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:36:24 --> CORS Filter
+ERROR - 2025-06-25 04:36:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:36:28 --> CORS Filter
+ERROR - 2025-06-25 04:36:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:36:28 --> CORS Filter
+ERROR - 2025-06-25 04:36:28 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:36:28 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:37:15 --> CORS Filter
+ERROR - 2025-06-25 04:37:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:15 --> CORS Filter
+ERROR - 2025-06-25 04:37:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:16 --> CORS Filter
+ERROR - 2025-06-25 04:37:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:16 --> CORS Filter
+ERROR - 2025-06-25 04:37:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:18 --> CORS Filter
+ERROR - 2025-06-25 04:37:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:18 --> CORS Filter
+ERROR - 2025-06-25 04:37:18 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:37:18 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:37:50 --> CORS Filter
+ERROR - 2025-06-25 04:37:50 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:51 --> CORS Filter
+ERROR - 2025-06-25 04:37:51 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:51 --> CORS Filter
+ERROR - 2025-06-25 04:37:51 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:52 --> CORS Filter
+ERROR - 2025-06-25 04:37:52 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:58 --> CORS Filter
+ERROR - 2025-06-25 04:37:58 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:59 --> CORS Filter
+ERROR - 2025-06-25 04:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:37:59 --> CORS Filter
+ERROR - 2025-06-25 04:37:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:38:00 --> CORS Filter
+ERROR - 2025-06-25 04:38:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:38:02 --> CORS Filter
+ERROR - 2025-06-25 04:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:38:02 --> CORS Filter
+ERROR - 2025-06-25 04:38:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:40:12 --> CORS Filter
+ERROR - 2025-06-25 04:40:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:40:12 --> CORS Filter
+ERROR - 2025-06-25 04:40:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:40:13 --> CORS Filter
+ERROR - 2025-06-25 04:40:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:40:13 --> CORS Filter
+ERROR - 2025-06-25 04:40:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:40:16 --> CORS Filter
+ERROR - 2025-06-25 04:40:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:40:16 --> CORS Filter
+ERROR - 2025-06-25 04:40:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:13 --> CORS Filter
+ERROR - 2025-06-25 04:41:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:13 --> CORS Filter
+ERROR - 2025-06-25 04:41:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:23 --> CORS Filter
+ERROR - 2025-06-25 04:41:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:24 --> CORS Filter
+ERROR - 2025-06-25 04:41:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:26 --> CORS Filter
+ERROR - 2025-06-25 04:41:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:26 --> CORS Filter
+ERROR - 2025-06-25 04:41:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:34 --> CORS Filter
+ERROR - 2025-06-25 04:41:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:35 --> CORS Filter
+ERROR - 2025-06-25 04:41:35 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:48 --> CORS Filter
+ERROR - 2025-06-25 04:41:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:48 --> CORS Filter
+ERROR - 2025-06-25 04:41:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:49 --> CORS Filter
+ERROR - 2025-06-25 04:41:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:49 --> CORS Filter
+ERROR - 2025-06-25 04:41:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:51 --> CORS Filter
+ERROR - 2025-06-25 04:41:51 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:41:52 --> CORS Filter
+ERROR - 2025-06-25 04:41:52 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:23 --> CORS Filter
+ERROR - 2025-06-25 04:44:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:23 --> CORS Filter
+ERROR - 2025-06-25 04:44:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:24 --> CORS Filter
+ERROR - 2025-06-25 04:44:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:24 --> CORS Filter
+ERROR - 2025-06-25 04:44:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:26 --> CORS Filter
+ERROR - 2025-06-25 04:44:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:28 --> CORS Filter
+ERROR - 2025-06-25 04:44:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:33 --> CORS Filter
+ERROR - 2025-06-25 04:44:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:44:34 --> CORS Filter
+ERROR - 2025-06-25 04:44:34 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:44:34 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:46:27 --> CORS Filter
+ERROR - 2025-06-25 04:46:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:46:28 --> CORS Filter
+ERROR - 2025-06-25 04:46:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:46:31 --> CORS Filter
+ERROR - 2025-06-25 04:46:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:46:31 --> CORS Filter
+ERROR - 2025-06-25 04:46:31 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:46:32 --> ErrorException: Undefined property: stdClass::$businessId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$businessId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:48:08 --> CORS Filter
+ERROR - 2025-06-25 04:48:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:48:08 --> CORS Filter
+ERROR - 2025-06-25 04:48:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:48:27 --> CORS Filter
+ERROR - 2025-06-25 04:48:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:48:28 --> CORS Filter
+ERROR - 2025-06-25 04:48:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:09 --> CORS Filter
+ERROR - 2025-06-25 04:50:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:09 --> CORS Filter
+ERROR - 2025-06-25 04:50:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:09 --> CORS Filter
+ERROR - 2025-06-25 04:50:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:09 --> CORS Filter
+ERROR - 2025-06-25 04:50:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:09 --> CORS Filter
+ERROR - 2025-06-25 04:50:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:10 --> CORS Filter
+ERROR - 2025-06-25 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:10 --> CORS Filter
+ERROR - 2025-06-25 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:10 --> CORS Filter
+ERROR - 2025-06-25 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:10 --> CORS Filter
+ERROR - 2025-06-25 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:10 --> CORS Filter
+ERROR - 2025-06-25 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:10 --> CORS Filter
+ERROR - 2025-06-25 04:50:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:11 --> CORS Filter
+ERROR - 2025-06-25 04:50:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:11 --> CORS Filter
+ERROR - 2025-06-25 04:50:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:11 --> CORS Filter
+ERROR - 2025-06-25 04:50:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:11 --> CORS Filter
+ERROR - 2025-06-25 04:50:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:11 --> CORS Filter
+ERROR - 2025-06-25 04:50:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:12 --> CORS Filter
+ERROR - 2025-06-25 04:50:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:12 --> CORS Filter
+ERROR - 2025-06-25 04:50:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:13 --> CORS Filter
+ERROR - 2025-06-25 04:50:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:13 --> CORS Filter
+ERROR - 2025-06-25 04:50:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:13 --> CORS Filter
+ERROR - 2025-06-25 04:50:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:13 --> CORS Filter
+ERROR - 2025-06-25 04:50:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:13 --> CORS Filter
+ERROR - 2025-06-25 04:50:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:13 --> CORS Filter
+ERROR - 2025-06-25 04:50:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:14 --> CORS Filter
+ERROR - 2025-06-25 04:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:14 --> CORS Filter
+ERROR - 2025-06-25 04:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:14 --> CORS Filter
+ERROR - 2025-06-25 04:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:14 --> CORS Filter
+ERROR - 2025-06-25 04:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:14 --> CORS Filter
+ERROR - 2025-06-25 04:50:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:50:15 --> CORS Filter
+ERROR - 2025-06-25 04:50:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:07 --> CORS Filter
+ERROR - 2025-06-25 04:51:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:08 --> CORS Filter
+ERROR - 2025-06-25 04:51:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:11 --> CORS Filter
+ERROR - 2025-06-25 04:51:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:11 --> CORS Filter
+ERROR - 2025-06-25 04:51:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:12 --> CORS Filter
+ERROR - 2025-06-25 04:51:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:12 --> CORS Filter
+ERROR - 2025-06-25 04:51:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:14 --> CORS Filter
+ERROR - 2025-06-25 04:51:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:14 --> CORS Filter
+ERROR - 2025-06-25 04:51:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:19 --> CORS Filter
+ERROR - 2025-06-25 04:51:19 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:51:20 --> CORS Filter
+ERROR - 2025-06-25 04:51:20 --> Origin: http://localhost:4200
+CRITICAL - 2025-06-25 04:51:20 --> ErrorException: Undefined property: stdClass::$itemTypeId
+[Method: POST, Route: api/course/getfeepaging]
+in APPPATH\Controllers\Course.php on line 589.
+ 1 APPPATH\Controllers\Course.php(589): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$itemTypeId', 'C:\\xampp\\htdocs\\exiaa-material-api\\app\\Controllers\\Course.php', 589)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->getFeePaging()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-06-25 04:54:27 --> CORS Filter
+ERROR - 2025-06-25 04:54:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:54:28 --> CORS Filter
+ERROR - 2025-06-25 04:54:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:54:29 --> CORS Filter
+ERROR - 2025-06-25 04:54:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:54:30 --> CORS Filter
+ERROR - 2025-06-25 04:54:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:54:32 --> CORS Filter
+ERROR - 2025-06-25 04:54:32 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 04:54:33 --> CORS Filter
+ERROR - 2025-06-25 04:54:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:13:45 --> CORS Filter
+ERROR - 2025-06-25 05:13:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:13:45 --> CORS Filter
+ERROR - 2025-06-25 05:13:45 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:13:46 --> CORS Filter
+ERROR - 2025-06-25 05:13:46 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:13:46 --> CORS Filter
+ERROR - 2025-06-25 05:13:46 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:13:48 --> CORS Filter
+ERROR - 2025-06-25 05:13:48 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:13:49 --> CORS Filter
+ERROR - 2025-06-25 05:13:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:13:59 --> CORS Filter
+ERROR - 2025-06-25 05:13:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:00 --> CORS Filter
+ERROR - 2025-06-25 05:14:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:00 --> CORS Filter
+ERROR - 2025-06-25 05:14:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:00 --> CORS Filter
+ERROR - 2025-06-25 05:14:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:03 --> CORS Filter
+ERROR - 2025-06-25 05:14:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:03 --> CORS Filter
+ERROR - 2025-06-25 05:14:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:10 --> CORS Filter
+ERROR - 2025-06-25 05:14:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:11 --> CORS Filter
+ERROR - 2025-06-25 05:14:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:11 --> CORS Filter
+ERROR - 2025-06-25 05:14:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:11 --> CORS Filter
+ERROR - 2025-06-25 05:14:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:17 --> CORS Filter
+ERROR - 2025-06-25 05:14:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:17 --> CORS Filter
+ERROR - 2025-06-25 05:14:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:18 --> CORS Filter
+ERROR - 2025-06-25 05:14:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:18 --> CORS Filter
+ERROR - 2025-06-25 05:14:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:23 --> CORS Filter
+ERROR - 2025-06-25 05:14:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:24 --> CORS Filter
+ERROR - 2025-06-25 05:14:24 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:28 --> CORS Filter
+ERROR - 2025-06-25 05:14:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:29 --> CORS Filter
+ERROR - 2025-06-25 05:14:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:29 --> CORS Filter
+ERROR - 2025-06-25 05:14:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:36 --> CORS Filter
+ERROR - 2025-06-25 05:14:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:36 --> CORS Filter
+ERROR - 2025-06-25 05:14:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:36 --> CORS Filter
+ERROR - 2025-06-25 05:14:36 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:37 --> CORS Filter
+ERROR - 2025-06-25 05:14:37 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:39 --> CORS Filter
+ERROR - 2025-06-25 05:14:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:14:39 --> CORS Filter
+ERROR - 2025-06-25 05:14:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:15:00 --> CORS Filter
+ERROR - 2025-06-25 05:15:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:15:01 --> CORS Filter
+ERROR - 2025-06-25 05:15:01 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:15:08 --> CORS Filter
+ERROR - 2025-06-25 05:15:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:15:09 --> CORS Filter
+ERROR - 2025-06-25 05:15:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:15:22 --> CORS Filter
+ERROR - 2025-06-25 05:15:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:15:23 --> CORS Filter
+ERROR - 2025-06-25 05:15:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:16:00 --> CORS Filter
+ERROR - 2025-06-25 05:16:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:16:00 --> CORS Filter
+ERROR - 2025-06-25 05:16:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:16:07 --> CORS Filter
+ERROR - 2025-06-25 05:16:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:16:08 --> CORS Filter
+ERROR - 2025-06-25 05:16:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:06 --> CORS Filter
+ERROR - 2025-06-25 05:51:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:06 --> CORS Filter
+ERROR - 2025-06-25 05:51:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:07 --> CORS Filter
+ERROR - 2025-06-25 05:51:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:07 --> CORS Filter
+ERROR - 2025-06-25 05:51:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:07 --> CORS Filter
+ERROR - 2025-06-25 05:51:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:08 --> CORS Filter
+ERROR - 2025-06-25 05:51:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:08 --> CORS Filter
+ERROR - 2025-06-25 05:51:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:08 --> CORS Filter
+ERROR - 2025-06-25 05:51:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:08 --> CORS Filter
+ERROR - 2025-06-25 05:51:08 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:09 --> CORS Filter
+ERROR - 2025-06-25 05:51:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:09 --> CORS Filter
+ERROR - 2025-06-25 05:51:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:09 --> CORS Filter
+ERROR - 2025-06-25 05:51:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:10 --> CORS Filter
+ERROR - 2025-06-25 05:51:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:10 --> CORS Filter
+ERROR - 2025-06-25 05:51:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:10 --> CORS Filter
+ERROR - 2025-06-25 05:51:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:11 --> CORS Filter
+ERROR - 2025-06-25 05:51:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:11 --> CORS Filter
+ERROR - 2025-06-25 05:51:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:11 --> CORS Filter
+ERROR - 2025-06-25 05:51:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:12 --> CORS Filter
+ERROR - 2025-06-25 05:51:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:12 --> CORS Filter
+ERROR - 2025-06-25 05:51:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:12 --> CORS Filter
+ERROR - 2025-06-25 05:51:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:12 --> CORS Filter
+ERROR - 2025-06-25 05:51:12 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:13 --> CORS Filter
+ERROR - 2025-06-25 05:51:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:13 --> CORS Filter
+ERROR - 2025-06-25 05:51:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:13 --> CORS Filter
+ERROR - 2025-06-25 05:51:13 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:14 --> CORS Filter
+ERROR - 2025-06-25 05:51:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:14 --> CORS Filter
+ERROR - 2025-06-25 05:51:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:14 --> CORS Filter
+ERROR - 2025-06-25 05:51:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:14 --> CORS Filter
+ERROR - 2025-06-25 05:51:14 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:51:15 --> CORS Filter
+ERROR - 2025-06-25 05:51:15 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:28 --> CORS Filter
+ERROR - 2025-06-25 05:52:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:29 --> CORS Filter
+ERROR - 2025-06-25 05:52:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:29 --> CORS Filter
+ERROR - 2025-06-25 05:52:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:29 --> CORS Filter
+ERROR - 2025-06-25 05:52:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:30 --> CORS Filter
+ERROR - 2025-06-25 05:52:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:31 --> CORS Filter
+ERROR - 2025-06-25 05:52:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:31 --> CORS Filter
+ERROR - 2025-06-25 05:52:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:31 --> CORS Filter
+ERROR - 2025-06-25 05:52:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:31 --> CORS Filter
+ERROR - 2025-06-25 05:52:31 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:32 --> CORS Filter
+ERROR - 2025-06-25 05:52:32 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:32 --> CORS Filter
+ERROR - 2025-06-25 05:52:32 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:32 --> CORS Filter
+ERROR - 2025-06-25 05:52:32 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:32 --> CORS Filter
+ERROR - 2025-06-25 05:52:32 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:33 --> CORS Filter
+ERROR - 2025-06-25 05:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:33 --> CORS Filter
+ERROR - 2025-06-25 05:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:33 --> CORS Filter
+ERROR - 2025-06-25 05:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:33 --> CORS Filter
+ERROR - 2025-06-25 05:52:33 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:34 --> CORS Filter
+ERROR - 2025-06-25 05:52:34 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:54 --> CORS Filter
+ERROR - 2025-06-25 05:52:54 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:52:54 --> CORS Filter
+ERROR - 2025-06-25 05:52:54 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:53:38 --> CORS Filter
+ERROR - 2025-06-25 05:53:38 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:53:39 --> CORS Filter
+ERROR - 2025-06-25 05:53:39 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:53:40 --> CORS Filter
+ERROR - 2025-06-25 05:53:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:53:40 --> CORS Filter
+ERROR - 2025-06-25 05:53:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:53:41 --> CORS Filter
+ERROR - 2025-06-25 05:53:41 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:53:42 --> CORS Filter
+ERROR - 2025-06-25 05:53:42 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:54:25 --> CORS Filter
+ERROR - 2025-06-25 05:54:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:54:25 --> CORS Filter
+ERROR - 2025-06-25 05:54:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:54:44 --> CORS Filter
+ERROR - 2025-06-25 05:54:44 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:54:44 --> CORS Filter
+ERROR - 2025-06-25 05:54:44 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:54:53 --> CORS Filter
+ERROR - 2025-06-25 05:54:53 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:54:53 --> CORS Filter
+ERROR - 2025-06-25 05:54:53 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:55:29 --> CORS Filter
+ERROR - 2025-06-25 05:55:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 05:55:29 --> CORS Filter
+ERROR - 2025-06-25 05:55:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:10:02 --> CORS Filter
+ERROR - 2025-06-25 06:10:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:10:02 --> CORS Filter
+ERROR - 2025-06-25 06:10:02 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:39:57 --> CORS Filter
+ERROR - 2025-06-25 06:39:57 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:39:57 --> CORS Filter
+ERROR - 2025-06-25 06:39:57 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:39:58 --> CORS Filter
+ERROR - 2025-06-25 06:39:58 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:39:58 --> CORS Filter
+ERROR - 2025-06-25 06:39:58 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:39:59 --> CORS Filter
+ERROR - 2025-06-25 06:39:59 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:40:00 --> CORS Filter
+ERROR - 2025-06-25 06:40:00 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:52:25 --> CORS Filter
+ERROR - 2025-06-25 06:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:52:25 --> CORS Filter
+ERROR - 2025-06-25 06:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:52:25 --> CORS Filter
+ERROR - 2025-06-25 06:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:52:25 --> CORS Filter
+ERROR - 2025-06-25 06:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:52:25 --> CORS Filter
+ERROR - 2025-06-25 06:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 06:52:25 --> CORS Filter
+ERROR - 2025-06-25 06:52:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:27 --> CORS Filter
+ERROR - 2025-06-25 09:59:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:27 --> CORS Filter
+ERROR - 2025-06-25 09:59:27 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:28 --> CORS Filter
+ERROR - 2025-06-25 09:59:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:28 --> CORS Filter
+ERROR - 2025-06-25 09:59:28 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:29 --> CORS Filter
+ERROR - 2025-06-25 09:59:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:29 --> CORS Filter
+ERROR - 2025-06-25 09:59:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:29 --> CORS Filter
+ERROR - 2025-06-25 09:59:29 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:30 --> CORS Filter
+ERROR - 2025-06-25 09:59:30 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:40 --> CORS Filter
+ERROR - 2025-06-25 09:59:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 09:59:40 --> CORS Filter
+ERROR - 2025-06-25 09:59:40 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:29:06 --> CORS Filter
+ERROR - 2025-06-25 10:29:06 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:29:07 --> CORS Filter
+ERROR - 2025-06-25 10:29:07 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:32:49 --> CORS Filter
+ERROR - 2025-06-25 10:32:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:32:49 --> CORS Filter
+ERROR - 2025-06-25 10:32:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:32:49 --> CORS Filter
+ERROR - 2025-06-25 10:32:49 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:32:50 --> CORS Filter
+ERROR - 2025-06-25 10:32:50 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:32:51 --> CORS Filter
+ERROR - 2025-06-25 10:32:51 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:32:51 --> CORS Filter
+ERROR - 2025-06-25 10:32:51 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:33:17 --> CORS Filter
+ERROR - 2025-06-25 10:33:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:33:17 --> CORS Filter
+ERROR - 2025-06-25 10:33:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:33:17 --> CORS Filter
+ERROR - 2025-06-25 10:33:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:33:18 --> CORS Filter
+ERROR - 2025-06-25 10:33:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:33:19 --> CORS Filter
+ERROR - 2025-06-25 10:33:19 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:33:20 --> CORS Filter
+ERROR - 2025-06-25 10:33:20 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:09 --> CORS Filter
+ERROR - 2025-06-25 10:34:09 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:10 --> CORS Filter
+ERROR - 2025-06-25 10:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:10 --> CORS Filter
+ERROR - 2025-06-25 10:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:10 --> CORS Filter
+ERROR - 2025-06-25 10:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:11 --> CORS Filter
+ERROR - 2025-06-25 10:34:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:11 --> CORS Filter
+ERROR - 2025-06-25 10:34:11 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:18 --> CORS Filter
+ERROR - 2025-06-25 10:34:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:34:18 --> CORS Filter
+ERROR - 2025-06-25 10:34:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:16 --> CORS Filter
+ERROR - 2025-06-25 10:37:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:16 --> CORS Filter
+ERROR - 2025-06-25 10:37:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:19 --> CORS Filter
+ERROR - 2025-06-25 10:37:19 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:20 --> CORS Filter
+ERROR - 2025-06-25 10:37:20 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:21 --> CORS Filter
+ERROR - 2025-06-25 10:37:21 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:22 --> CORS Filter
+ERROR - 2025-06-25 10:37:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:22 --> CORS Filter
+ERROR - 2025-06-25 10:37:22 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:25 --> CORS Filter
+ERROR - 2025-06-25 10:37:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:25 --> CORS Filter
+ERROR - 2025-06-25 10:37:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:25 --> CORS Filter
+ERROR - 2025-06-25 10:37:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:25 --> CORS Filter
+ERROR - 2025-06-25 10:37:25 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:37:26 --> CORS Filter
+ERROR - 2025-06-25 10:37:26 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:59:23 --> CORS Filter
+ERROR - 2025-06-25 10:59:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:59:23 --> CORS Filter
+ERROR - 2025-06-25 10:59:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:59:23 --> CORS Filter
+ERROR - 2025-06-25 10:59:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:59:23 --> CORS Filter
+ERROR - 2025-06-25 10:59:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 10:59:23 --> CORS Filter
+ERROR - 2025-06-25 10:59:23 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:16 --> CORS Filter
+ERROR - 2025-06-25 12:28:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:16 --> CORS Filter
+ERROR - 2025-06-25 12:28:16 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:17 --> CORS Filter
+ERROR - 2025-06-25 12:28:17 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:18 --> CORS Filter
+ERROR - 2025-06-25 12:28:18 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:19 --> CORS Filter
+ERROR - 2025-06-25 12:28:19 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:19 --> CORS Filter
+ERROR - 2025-06-25 12:28:19 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:20 --> CORS Filter
+ERROR - 2025-06-25 12:28:20 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:28:20 --> CORS Filter
+ERROR - 2025-06-25 12:28:20 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:36:03 --> CORS Filter
+ERROR - 2025-06-25 12:36:03 --> Origin: http://localhost:4200
+ERROR - 2025-06-25 12:36:04 --> CORS Filter
+ERROR - 2025-06-25 12:36:04 --> Origin: http://localhost:4200

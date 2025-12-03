@@ -1,0 +1,822 @@
+ERROR - 2025-05-29 03:42:42 --> CORS Filter
+ERROR - 2025-05-29 03:42:42 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 03:42:42 --> CORS Filter
+ERROR - 2025-05-29 03:42:42 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 03:42:45 --> CORS Filter
+ERROR - 2025-05-29 03:42:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 03:42:45 --> CORS Filter
+ERROR - 2025-05-29 03:42:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 03:42:46 --> CORS Filter
+ERROR - 2025-05-29 03:42:46 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 03:42:46 --> CORS Filter
+ERROR - 2025-05-29 03:42:46 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:20 --> CORS Filter
+ERROR - 2025-05-29 04:28:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:20 --> CORS Filter
+ERROR - 2025-05-29 04:28:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:20 --> CORS Filter
+ERROR - 2025-05-29 04:28:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:21 --> CORS Filter
+ERROR - 2025-05-29 04:28:21 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:39 --> CORS Filter
+ERROR - 2025-05-29 04:28:39 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:39 --> CORS Filter
+ERROR - 2025-05-29 04:28:39 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:39 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 04:28:39 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 04:28:56 --> CORS Filter
+ERROR - 2025-05-29 04:28:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:56 --> CORS Filter
+ERROR - 2025-05-29 04:28:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:28:57 --> Array
+(
+    [itemCategoryName] => Articles
+    [itemTypeId] => 3
+)
+
+ERROR - 2025-05-29 04:29:11 --> CORS Filter
+ERROR - 2025-05-29 04:29:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:29:12 --> CORS Filter
+ERROR - 2025-05-29 04:29:12 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:29:12 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 04:29:12 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 04:31:50 --> CORS Filter
+ERROR - 2025-05-29 04:31:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:31:50 --> CORS Filter
+ERROR - 2025-05-29 04:31:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:31:51 --> CORS Filter
+ERROR - 2025-05-29 04:31:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:31:51 --> CORS Filter
+ERROR - 2025-05-29 04:31:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:42:33 --> CORS Filter
+ERROR - 2025-05-29 04:42:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:42:33 --> CORS Filter
+ERROR - 2025-05-29 04:42:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 04:42:36 --> CORS Filter
+ERROR - 2025-05-29 04:42:36 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:07:52 --> CORS Filter
+ERROR - 2025-05-29 05:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:07:52 --> CORS Filter
+ERROR - 2025-05-29 05:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:07:52 --> CORS Filter
+ERROR - 2025-05-29 05:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:07:52 --> CORS Filter
+ERROR - 2025-05-29 05:07:52 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:07:53 --> CORS Filter
+ERROR - 2025-05-29 05:07:53 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:07:53 --> CORS Filter
+ERROR - 2025-05-29 05:07:53 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:08:03 --> CORS Filter
+ERROR - 2025-05-29 05:08:03 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:08:03 --> CORS Filter
+ERROR - 2025-05-29 05:08:03 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:08:03 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 05:08:03 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 05:10:33 --> CORS Filter
+ERROR - 2025-05-29 05:10:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:10:33 --> CORS Filter
+ERROR - 2025-05-29 05:10:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:10:33 --> Array
+(
+    [itemCategoryName] => Star Kids
+    [itemTypeId] => 3
+)
+
+ERROR - 2025-05-29 05:10:41 --> CORS Filter
+ERROR - 2025-05-29 05:10:41 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:10:41 --> CORS Filter
+ERROR - 2025-05-29 05:10:41 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:10:41 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 05:10:41 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 05:12:18 --> CORS Filter
+ERROR - 2025-05-29 05:12:18 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:19 --> CORS Filter
+ERROR - 2025-05-29 05:12:19 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:19 --> CORS Filter
+ERROR - 2025-05-29 05:12:19 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:19 --> CORS Filter
+ERROR - 2025-05-29 05:12:19 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:50 --> CORS Filter
+ERROR - 2025-05-29 05:12:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:51 --> CORS Filter
+ERROR - 2025-05-29 05:12:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:54 --> CORS Filter
+ERROR - 2025-05-29 05:12:54 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:58 --> CORS Filter
+ERROR - 2025-05-29 05:12:58 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:12:58 --> CORS Filter
+ERROR - 2025-05-29 05:12:58 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:15:23 --> CORS Filter
+ERROR - 2025-05-29 05:15:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:15:23 --> CORS Filter
+ERROR - 2025-05-29 05:15:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:25:44 --> CORS Filter
+ERROR - 2025-05-29 05:25:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:25:45 --> CORS Filter
+ERROR - 2025-05-29 05:25:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:58:27 --> CORS Filter
+ERROR - 2025-05-29 05:58:27 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:58:28 --> CORS Filter
+ERROR - 2025-05-29 05:58:28 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:58:28 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 05:58:28 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 05:58:53 --> CORS Filter
+ERROR - 2025-05-29 05:58:53 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:58:53 --> CORS Filter
+ERROR - 2025-05-29 05:58:53 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:59:47 --> CORS Filter
+ERROR - 2025-05-29 05:59:47 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:59:47 --> CORS Filter
+ERROR - 2025-05-29 05:59:47 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:59:47 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 05:59:47 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 05:59:50 --> CORS Filter
+ERROR - 2025-05-29 05:59:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 05:59:50 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 05:59:50 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:01:44 --> CORS Filter
+ERROR - 2025-05-29 06:01:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:01:45 --> CORS Filter
+ERROR - 2025-05-29 06:01:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:01:45 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:01:45 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:03:13 --> CORS Filter
+ERROR - 2025-05-29 06:03:13 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:03:13 --> CORS Filter
+ERROR - 2025-05-29 06:03:13 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:03:13 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:03:13 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:04:20 --> CORS Filter
+ERROR - 2025-05-29 06:04:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:04:20 --> CORS Filter
+ERROR - 2025-05-29 06:04:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:04:20 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:04:20 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:04:45 --> CORS Filter
+ERROR - 2025-05-29 06:04:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:04:46 --> CORS Filter
+ERROR - 2025-05-29 06:04:46 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:04:46 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:04:46 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:05:29 --> CORS Filter
+ERROR - 2025-05-29 06:05:29 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:05:29 --> CORS Filter
+ERROR - 2025-05-29 06:05:29 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:05:29 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:05:29 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:06:07 --> CORS Filter
+ERROR - 2025-05-29 06:06:07 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:06:07 --> CORS Filter
+ERROR - 2025-05-29 06:06:07 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:06:08 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:06:08 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:29:57 --> CORS Filter
+ERROR - 2025-05-29 06:29:57 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:29:57 --> CORS Filter
+ERROR - 2025-05-29 06:29:57 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:29:58 --> CORS Filter
+ERROR - 2025-05-29 06:29:58 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:29:58 --> CORS Filter
+ERROR - 2025-05-29 06:29:58 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:29:59 --> CORS Filter
+ERROR - 2025-05-29 06:29:59 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:30:00 --> CORS Filter
+ERROR - 2025-05-29 06:30:00 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:30:06 --> CORS Filter
+ERROR - 2025-05-29 06:30:06 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:30:07 --> CORS Filter
+ERROR - 2025-05-29 06:30:07 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:30:07 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:30:07 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:32:51 --> CORS Filter
+ERROR - 2025-05-29 06:32:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:32:51 --> CORS Filter
+ERROR - 2025-05-29 06:32:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:32:54 --> CORS Filter
+ERROR - 2025-05-29 06:32:54 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:32:54 --> CORS Filter
+ERROR - 2025-05-29 06:32:54 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:32:55 --> CORS Filter
+ERROR - 2025-05-29 06:32:55 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:32:55 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:32:55 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:32:55 --> CORS Filter
+ERROR - 2025-05-29 06:32:55 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:34:24 --> CORS Filter
+ERROR - 2025-05-29 06:34:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:34:24 --> CORS Filter
+ERROR - 2025-05-29 06:34:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:35:14 --> CORS Filter
+ERROR - 2025-05-29 06:35:14 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:35:14 --> CORS Filter
+ERROR - 2025-05-29 06:35:14 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:35:15 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:35:15 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 06:45:30 --> CORS Filter
+ERROR - 2025-05-29 06:45:30 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:45:31 --> CORS Filter
+ERROR - 2025-05-29 06:45:31 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:45:32 --> CORS Filter
+ERROR - 2025-05-29 06:45:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:45:32 --> CORS Filter
+ERROR - 2025-05-29 06:45:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:45:34 --> CORS Filter
+ERROR - 2025-05-29 06:45:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:45:35 --> CORS Filter
+ERROR - 2025-05-29 06:45:35 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 06:45:35 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 06:45:35 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:34:09 --> CORS Filter
+ERROR - 2025-05-29 07:34:09 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:09 --> CORS Filter
+ERROR - 2025-05-29 07:34:09 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:10 --> CORS Filter
+ERROR - 2025-05-29 07:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:10 --> CORS Filter
+ERROR - 2025-05-29 07:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:11 --> CORS Filter
+ERROR - 2025-05-29 07:34:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:11 --> CORS Filter
+ERROR - 2025-05-29 07:34:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:17 --> CORS Filter
+ERROR - 2025-05-29 07:34:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:17 --> CORS Filter
+ERROR - 2025-05-29 07:34:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:34:17 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:34:17 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:51:55 --> CORS Filter
+ERROR - 2025-05-29 07:51:55 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:51:55 --> CORS Filter
+ERROR - 2025-05-29 07:51:55 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:51:55 --> Array
+(
+    [itemCategoryName] => Articles
+    [itemTypeId] => 5
+)
+
+ERROR - 2025-05-29 07:52:32 --> CORS Filter
+ERROR - 2025-05-29 07:52:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:52:32 --> CORS Filter
+ERROR - 2025-05-29 07:52:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:52:32 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:52:32 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:54:23 --> CORS Filter
+ERROR - 2025-05-29 07:54:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:23 --> CORS Filter
+ERROR - 2025-05-29 07:54:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:25 --> CORS Filter
+ERROR - 2025-05-29 07:54:25 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:25 --> CORS Filter
+ERROR - 2025-05-29 07:54:25 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:27 --> CORS Filter
+ERROR - 2025-05-29 07:54:27 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:27 --> CORS Filter
+ERROR - 2025-05-29 07:54:27 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:27 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:54:27 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:54:31 --> CORS Filter
+ERROR - 2025-05-29 07:54:31 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:31 --> CORS Filter
+ERROR - 2025-05-29 07:54:31 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:32 --> CORS Filter
+ERROR - 2025-05-29 07:54:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:32 --> CORS Filter
+ERROR - 2025-05-29 07:54:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:33 --> CORS Filter
+ERROR - 2025-05-29 07:54:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:33 --> CORS Filter
+ERROR - 2025-05-29 07:54:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:34 --> CORS Filter
+ERROR - 2025-05-29 07:54:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:34 --> CORS Filter
+ERROR - 2025-05-29 07:54:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:34 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:54:34 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:54:38 --> CORS Filter
+ERROR - 2025-05-29 07:54:38 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:38 --> CORS Filter
+ERROR - 2025-05-29 07:54:38 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:38 --> CORS Filter
+ERROR - 2025-05-29 07:54:38 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:39 --> CORS Filter
+ERROR - 2025-05-29 07:54:39 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:39 --> CORS Filter
+ERROR - 2025-05-29 07:54:39 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:39 --> CORS Filter
+ERROR - 2025-05-29 07:54:39 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:39 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:54:39 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:54:44 --> CORS Filter
+ERROR - 2025-05-29 07:54:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:44 --> CORS Filter
+ERROR - 2025-05-29 07:54:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:44 --> CORS Filter
+ERROR - 2025-05-29 07:54:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:45 --> CORS Filter
+ERROR - 2025-05-29 07:54:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:45 --> CORS Filter
+ERROR - 2025-05-29 07:54:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:45 --> CORS Filter
+ERROR - 2025-05-29 07:54:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:46 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:54:46 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:54:48 --> CORS Filter
+ERROR - 2025-05-29 07:54:48 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:48 --> CORS Filter
+ERROR - 2025-05-29 07:54:48 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:49 --> CORS Filter
+ERROR - 2025-05-29 07:54:49 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:54:49 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:54:49 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:55:01 --> CORS Filter
+ERROR - 2025-05-29 07:55:01 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:01 --> CORS Filter
+ERROR - 2025-05-29 07:55:01 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:01 --> Array
+(
+    [itemCategoryName] => Articles
+    [itemTypeId] => 5
+)
+
+ERROR - 2025-05-29 07:55:17 --> CORS Filter
+ERROR - 2025-05-29 07:55:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:20 --> CORS Filter
+ERROR - 2025-05-29 07:55:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:20 --> CORS Filter
+ERROR - 2025-05-29 07:55:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:21 --> CORS Filter
+ERROR - 2025-05-29 07:55:21 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:21 --> CORS Filter
+ERROR - 2025-05-29 07:55:21 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:21 --> CORS Filter
+ERROR - 2025-05-29 07:55:21 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:55:21 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:55:21 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:57:24 --> CORS Filter
+ERROR - 2025-05-29 07:57:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:57:24 --> CORS Filter
+ERROR - 2025-05-29 07:57:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:57:24 --> CORS Filter
+ERROR - 2025-05-29 07:57:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:57:24 --> CORS Filter
+ERROR - 2025-05-29 07:57:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:57:36 --> CORS Filter
+ERROR - 2025-05-29 07:57:36 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:57:36 --> CORS Filter
+ERROR - 2025-05-29 07:57:36 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:57:40 --> CORS Filter
+ERROR - 2025-05-29 07:57:40 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:59:35 --> CORS Filter
+ERROR - 2025-05-29 07:59:35 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:59:36 --> CORS Filter
+ERROR - 2025-05-29 07:59:36 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:59:36 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 07:59:36 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 07:59:58 --> CORS Filter
+ERROR - 2025-05-29 07:59:58 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:59:58 --> CORS Filter
+ERROR - 2025-05-29 07:59:58 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 07:59:58 --> Array
+(
+    [itemCategoryName] => Star Kids
+    [itemTypeId] => 5
+)
+
+ERROR - 2025-05-29 08:00:15 --> CORS Filter
+ERROR - 2025-05-29 08:00:15 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:00:15 --> CORS Filter
+ERROR - 2025-05-29 08:00:15 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:00:15 --> CORS Filter
+ERROR - 2025-05-29 08:00:15 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:00:15 --> CORS Filter
+ERROR - 2025-05-29 08:00:15 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:00:16 --> CORS Filter
+ERROR - 2025-05-29 08:00:16 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:00:16 --> CORS Filter
+ERROR - 2025-05-29 08:00:16 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:00:16 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 08:00:16 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 08:02:42 --> CORS Filter
+ERROR - 2025-05-29 08:02:42 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:02:42 --> CORS Filter
+ERROR - 2025-05-29 08:02:42 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:02:44 --> CORS Filter
+ERROR - 2025-05-29 08:02:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:02:44 --> CORS Filter
+ERROR - 2025-05-29 08:02:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:10:30 --> CORS Filter
+ERROR - 2025-05-29 08:10:30 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:10:31 --> CORS Filter
+ERROR - 2025-05-29 08:10:31 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:10:31 --> CORS Filter
+ERROR - 2025-05-29 08:10:31 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:10:31 --> CORS Filter
+ERROR - 2025-05-29 08:10:31 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:11:07 --> CORS Filter
+ERROR - 2025-05-29 08:11:07 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:11:07 --> CORS Filter
+ERROR - 2025-05-29 08:11:07 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:11:08 --> CORS Filter
+ERROR - 2025-05-29 08:11:08 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:11:08 --> CORS Filter
+ERROR - 2025-05-29 08:11:08 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:12:33 --> CORS Filter
+ERROR - 2025-05-29 08:12:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:12:33 --> CORS Filter
+ERROR - 2025-05-29 08:12:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:12:34 --> CORS Filter
+ERROR - 2025-05-29 08:12:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:12:34 --> CORS Filter
+ERROR - 2025-05-29 08:12:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:12:34 --> CORS Filter
+ERROR - 2025-05-29 08:12:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:12:34 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 08:12:34 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 08:12:34 --> CORS Filter
+ERROR - 2025-05-29 08:12:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:11 --> CORS Filter
+ERROR - 2025-05-29 08:37:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:11 --> CORS Filter
+ERROR - 2025-05-29 08:37:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:11 --> CORS Filter
+ERROR - 2025-05-29 08:37:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:12 --> CORS Filter
+ERROR - 2025-05-29 08:37:12 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:12 --> CORS Filter
+ERROR - 2025-05-29 08:37:12 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:12 --> CORS Filter
+ERROR - 2025-05-29 08:37:12 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:12 --> CORS Filter
+ERROR - 2025-05-29 08:37:12 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:13 --> CORS Filter
+ERROR - 2025-05-29 08:37:13 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:13 --> CORS Filter
+ERROR - 2025-05-29 08:37:13 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:37:13 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 08:37:13 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 08:37:13 --> CORS Filter
+ERROR - 2025-05-29 08:37:13 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:16 --> CORS Filter
+ERROR - 2025-05-29 08:56:16 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:16 --> CORS Filter
+ERROR - 2025-05-29 08:56:16 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:16 --> CORS Filter
+ERROR - 2025-05-29 08:56:16 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:16 --> CORS Filter
+ERROR - 2025-05-29 08:56:16 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:17 --> CORS Filter
+ERROR - 2025-05-29 08:56:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:17 --> CORS Filter
+ERROR - 2025-05-29 08:56:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:17 --> CORS Filter
+ERROR - 2025-05-29 08:56:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:17 --> CORS Filter
+ERROR - 2025-05-29 08:56:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:17 --> CORS Filter
+ERROR - 2025-05-29 08:56:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:56:17 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 08:56:17 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 08:56:17 --> CORS Filter
+ERROR - 2025-05-29 08:56:17 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:59:19 --> CORS Filter
+ERROR - 2025-05-29 08:59:19 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:59:19 --> CORS Filter
+ERROR - 2025-05-29 08:59:19 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 08:59:19 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 08:59:19 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:06:48 --> CORS Filter
+ERROR - 2025-05-29 09:06:48 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:06:48 --> CORS Filter
+ERROR - 2025-05-29 09:06:48 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:06:50 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:06:50 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:10:23 --> CORS Filter
+ERROR - 2025-05-29 09:10:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:10:23 --> CORS Filter
+ERROR - 2025-05-29 09:10:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:10:23 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:10:23 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:16:23 --> CORS Filter
+ERROR - 2025-05-29 09:16:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:16:23 --> CORS Filter
+ERROR - 2025-05-29 09:16:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:16:23 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:16:23 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:16:26 --> CORS Filter
+ERROR - 2025-05-29 09:16:26 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:16:26 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:16:26 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:16:28 --> CORS Filter
+ERROR - 2025-05-29 09:16:28 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:16:28 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:16:28 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:17:03 --> CORS Filter
+ERROR - 2025-05-29 09:17:03 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:17:03 --> CORS Filter
+ERROR - 2025-05-29 09:17:03 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:17:03 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:17:03 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:28:56 --> CORS Filter
+ERROR - 2025-05-29 09:28:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:28:56 --> CORS Filter
+ERROR - 2025-05-29 09:28:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:28:56 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:28:56 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:29:34 --> CORS Filter
+ERROR - 2025-05-29 09:29:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:29:35 --> CORS Filter
+ERROR - 2025-05-29 09:29:35 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:29:35 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:29:35 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:36:46 --> CORS Filter
+ERROR - 2025-05-29 09:36:46 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:36:46 --> CORS Filter
+ERROR - 2025-05-29 09:36:46 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:36:46 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:36:46 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:37:29 --> CORS Filter
+ERROR - 2025-05-29 09:37:29 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:37:29 --> CORS Filter
+ERROR - 2025-05-29 09:37:29 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:37:29 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:37:29 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:42:51 --> CORS Filter
+ERROR - 2025-05-29 09:42:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:42:51 --> CORS Filter
+ERROR - 2025-05-29 09:42:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:42:51 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:42:51 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:43:05 --> CORS Filter
+ERROR - 2025-05-29 09:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:43:05 --> CORS Filter
+ERROR - 2025-05-29 09:43:05 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:43:05 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:43:05 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:43:33 --> CORS Filter
+ERROR - 2025-05-29 09:43:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:43:33 --> CORS Filter
+ERROR - 2025-05-29 09:43:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:43:33 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:43:33 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 09:58:32 --> CORS Filter
+ERROR - 2025-05-29 09:58:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:58:32 --> CORS Filter
+ERROR - 2025-05-29 09:58:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 09:58:32 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 09:58:32 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:00:22 --> CORS Filter
+ERROR - 2025-05-29 10:00:22 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:00:23 --> CORS Filter
+ERROR - 2025-05-29 10:00:23 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:00:23 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:00:23 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:00:32 --> CORS Filter
+ERROR - 2025-05-29 10:00:32 --> Origin: 
+CRITICAL - 2025-05-29 10:00:33 --> TypeError: Firebase\JWT\JWT::decode(): Argument #1 ($jwt) must be of type string, null given, called in C:\xampp\htdocs\exiaa-material-api\app\Filters\TenantFilter.php on line 31
+[Method: GET, Route: webapi/item/getallcategory]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 96.
+ 1 APPPATH\Filters\TenantFilter.php(31): Firebase\JWT\JWT::decode(null, Object(Firebase\JWT\Key))
+ 2 SYSTEMPATH\Filters\Filters.php(203): App\Filters\TenantFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 3 SYSTEMPATH\Filters\Filters.php(184): CodeIgniter\Filters\Filters->runBefore([...])
+ 4 SYSTEMPATH\CodeIgniter.php(481): CodeIgniter\Filters\Filters->run('webapi/item/getallcategory', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\exiaa-material-api\\public\\index.php')
+ERROR - 2025-05-29 10:03:11 --> CORS Filter
+ERROR - 2025-05-29 10:03:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:03:11 --> CORS Filter
+ERROR - 2025-05-29 10:03:11 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:03:11 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:03:11 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:16:49 --> CORS Filter
+ERROR - 2025-05-29 10:16:49 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:16:49 --> CORS Filter
+ERROR - 2025-05-29 10:16:49 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:16:49 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:16:49 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:20:50 --> CORS Filter
+ERROR - 2025-05-29 10:20:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:20:50 --> CORS Filter
+ERROR - 2025-05-29 10:20:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:20:50 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:20:50 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:21:44 --> CORS Filter
+ERROR - 2025-05-29 10:21:44 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:21:45 --> CORS Filter
+ERROR - 2025-05-29 10:21:45 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:21:45 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:21:45 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:22:20 --> CORS Filter
+ERROR - 2025-05-29 10:22:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:22:20 --> CORS Filter
+ERROR - 2025-05-29 10:22:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:22:20 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:22:20 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:23:01 --> CORS Filter
+ERROR - 2025-05-29 10:23:01 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:23:02 --> CORS Filter
+ERROR - 2025-05-29 10:23:02 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:23:02 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:23:02 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:23:28 --> CORS Filter
+ERROR - 2025-05-29 10:23:28 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:23:29 --> CORS Filter
+ERROR - 2025-05-29 10:23:29 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:23:29 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:23:29 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:25:01 --> CORS Filter
+ERROR - 2025-05-29 10:25:01 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:25:01 --> CORS Filter
+ERROR - 2025-05-29 10:25:01 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:25:01 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:25:01 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:25:48 --> CORS Filter
+ERROR - 2025-05-29 10:25:48 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:25:48 --> CORS Filter
+ERROR - 2025-05-29 10:25:48 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:25:48 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:25:48 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:25:56 --> CORS Filter
+ERROR - 2025-05-29 10:25:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:25:56 --> CORS Filter
+ERROR - 2025-05-29 10:25:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:25:56 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:25:56 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:32:37 --> CORS Filter
+ERROR - 2025-05-29 10:32:37 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:32:37 --> CORS Filter
+ERROR - 2025-05-29 10:32:37 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:32:37 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:32:37 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:34:04 --> CORS Filter
+ERROR - 2025-05-29 10:34:04 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:34:04 --> CORS Filter
+ERROR - 2025-05-29 10:34:04 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:34:04 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:34:04 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:34:10 --> CORS Filter
+ERROR - 2025-05-29 10:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:34:10 --> CORS Filter
+ERROR - 2025-05-29 10:34:10 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:34:10 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:34:10 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 10:37:25 --> CORS Filter
+ERROR - 2025-05-29 10:37:25 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:37:26 --> CORS Filter
+ERROR - 2025-05-29 10:37:26 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 10:37:26 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 10:37:26 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 11:54:33 --> CORS Filter
+ERROR - 2025-05-29 11:54:33 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 11:54:34 --> CORS Filter
+ERROR - 2025-05-29 11:54:34 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 11:54:34 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 11:54:34 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:09:59 --> CORS Filter
+ERROR - 2025-05-29 12:09:59 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:09:59 --> CORS Filter
+ERROR - 2025-05-29 12:09:59 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:10:50 --> CORS Filter
+ERROR - 2025-05-29 12:10:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:10:50 --> CORS Filter
+ERROR - 2025-05-29 12:10:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:10:51 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:10:51 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:10:57 --> CORS Filter
+ERROR - 2025-05-29 12:10:57 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:10:57 --> CORS Filter
+ERROR - 2025-05-29 12:10:57 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:31:03 --> CORS Filter
+ERROR - 2025-05-29 12:31:03 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:31:03 --> CORS Filter
+ERROR - 2025-05-29 12:31:03 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:31:03 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:31:03 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:31:56 --> CORS Filter
+ERROR - 2025-05-29 12:31:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:31:56 --> CORS Filter
+ERROR - 2025-05-29 12:31:56 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:31:56 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:31:56 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:34:32 --> CORS Filter
+ERROR - 2025-05-29 12:34:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:34:32 --> CORS Filter
+ERROR - 2025-05-29 12:34:32 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:34:32 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:34:32 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:34:50 --> CORS Filter
+ERROR - 2025-05-29 12:34:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:34:50 --> CORS Filter
+ERROR - 2025-05-29 12:34:50 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:34:50 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:34:50 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:36:55 --> CORS Filter
+ERROR - 2025-05-29 12:36:55 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:36:55 --> CORS Filter
+ERROR - 2025-05-29 12:36:55 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:36:55 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:36:55 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:37:20 --> CORS Filter
+ERROR - 2025-05-29 12:37:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:37:20 --> CORS Filter
+ERROR - 2025-05-29 12:37:20 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:37:20 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:37:20 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:44:51 --> CORS Filter
+ERROR - 2025-05-29 12:44:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:44:51 --> CORS Filter
+ERROR - 2025-05-29 12:44:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:44:51 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:44:51 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:45:00 --> CORS Filter
+ERROR - 2025-05-29 12:45:00 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:45:00 --> CORS Filter
+ERROR - 2025-05-29 12:45:00 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:45:00 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:45:00 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:45:15 --> CORS Filter
+ERROR - 2025-05-29 12:45:15 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:45:15 --> CORS Filter
+ERROR - 2025-05-29 12:45:15 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:45:15 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:45:15 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:45:24 --> CORS Filter
+ERROR - 2025-05-29 12:45:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:45:24 --> CORS Filter
+ERROR - 2025-05-29 12:45:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:45:24 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:45:24 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:50:05 --> CORS Filter
+ERROR - 2025-05-29 12:50:05 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:50:05 --> CORS Filter
+ERROR - 2025-05-29 12:50:05 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:50:05 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:50:05 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:50:24 --> CORS Filter
+ERROR - 2025-05-29 12:50:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:50:24 --> CORS Filter
+ERROR - 2025-05-29 12:50:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:50:24 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:50:24 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:55:53 --> CORS Filter
+ERROR - 2025-05-29 12:55:53 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:55:53 --> CORS Filter
+ERROR - 2025-05-29 12:55:53 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:55:53 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:55:53 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 12:55:59 --> CORS Filter
+ERROR - 2025-05-29 12:55:59 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:55:59 --> CORS Filter
+ERROR - 2025-05-29 12:55:59 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 12:55:59 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 12:55:59 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:02:53 --> CORS Filter
+ERROR - 2025-05-29 13:02:53 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:02:54 --> CORS Filter
+ERROR - 2025-05-29 13:02:54 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:02:54 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:02:54 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:02:55 --> CORS Filter
+ERROR - 2025-05-29 13:02:55 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:02:55 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:02:55 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:02:58 --> CORS Filter
+ERROR - 2025-05-29 13:02:58 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:02:58 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:02:58 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:03:51 --> CORS Filter
+ERROR - 2025-05-29 13:03:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:03:51 --> CORS Filter
+ERROR - 2025-05-29 13:03:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:03:51 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:03:51 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:05:24 --> CORS Filter
+ERROR - 2025-05-29 13:05:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:05:24 --> CORS Filter
+ERROR - 2025-05-29 13:05:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:05:24 --> CORS Filter
+ERROR - 2025-05-29 13:05:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:05:24 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:05:24 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:05:24 --> CORS Filter
+ERROR - 2025-05-29 13:05:24 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:05:27 --> CORS Filter
+ERROR - 2025-05-29 13:05:27 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:05:27 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:05:27 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:05:27 --> CORS Filter
+ERROR - 2025-05-29 13:05:27 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:06:19 --> CORS Filter
+ERROR - 2025-05-29 13:06:19 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:06:19 --> CORS Filter
+ERROR - 2025-05-29 13:06:19 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:06:19 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:06:19 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}
+ERROR - 2025-05-29 13:06:51 --> CORS Filter
+ERROR - 2025-05-29 13:06:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:06:51 --> CORS Filter
+ERROR - 2025-05-29 13:06:51 --> Origin: http://localhost:4200
+ERROR - 2025-05-29 13:06:51 --> Inside getAllItemCategory function
+ERROR - 2025-05-29 13:06:51 --> Tenant Header: {"DSN":"","hostname":"localhost","username":"root","password":"","database":"exiaa_ex0001","DBDriver":"MySQLi","DBPrefix":"","pConnect":false,"DBDebug":true,"charset":"utf8","DBCollat":"utf8_general_ci","swapPre":"","encrypt":false,"compress":false,"strictOn":false,"failover":[],"port":3306}

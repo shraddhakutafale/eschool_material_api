@@ -335,6 +335,34 @@ $routes->group('voterBusiness', function ($routes) {
   });
 
       
+
+    $routes->group('transport', function ($routes) {
+    //Routes for naac
+    $routes->get('getallvehicle', 'Transport::getAllVehicle',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('getallpaging', 'Transport::getVehiclesPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->get('view/(:segment)', 'Transport::show/$1',['filter' => 'authFilter']);
+    $routes->post('createvehicle', 'Transport::createVehicle',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updatevehicle', 'Transport::updateVehicle',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletevehicle', 'Transport::deleteVehicle',['filter' => ['authFilter','tenantFilter']]);
+    $routes->get('getallvendor', 'Transport::getAllVendor',['filter' => ['authFilter', 'tenantFilter']]);
+
+    $routes->post('getallvendorpaging', 'Transport::getVendorsPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createvendor', 'Transport::createVendor',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updatevendor', 'Transport::updateVendor',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletevendor', 'Transport::deleteVendor',['filter' => ['authFilter','tenantFilter']]);
+  
+    $routes->post('getallroutepaging', 'Transport::getRoutesPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createroute', 'Transport::createRoute',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updateroute', 'Transport::updateRoute',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deleteroute', 'Transport::deleteRoute',['filter' => ['authFilter','tenantFilter']]);
+  
+    $routes->post('getallstopagepaging', 'Transport::getStopagesPaging',['filter' => ['authFilter', 'tenantFilter']]);
+    $routes->post('createstopage', 'Transport::createStopage',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('updatestopage', 'Transport::updateStopage',['filter' => ['authFilter','tenantFilter']]);
+    $routes->post('deletestopage', 'Transport::deleteStopage',['filter' => ['authFilter','tenantFilter']]);
+  
+  });
+
     
   $routes->group('website', function ($routes) {
    

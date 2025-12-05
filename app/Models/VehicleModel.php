@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class VendorModel extends Model
+class VehicleModel extends Model
 {
-    protected $table            = 'vendor_mst';
-    protected $primaryKey       = 'vendorId';
+    protected $table            = 'vehicle_mst';
+    protected $primaryKey       = 'vehicleId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['vendorId', 'vendorName', 'mobNo', 'address', 'createdDate', 'modifiedDate', 'createdBy', 'modifiedBy', 'isActive', 'isDeleted'];
+    protected $allowedFields    = ['vehicleId', 'vendorId', 'vehicleNumber', 'vehicleName', 'driverName', 'driverMobile', 'createdDate', 'modifiedDate', 'modifiedBy', 'createdBy', 'isActive', 'isDeleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
